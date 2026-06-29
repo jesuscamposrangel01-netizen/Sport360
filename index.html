@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AnimeStream | Ver animes online gratis</title>
-    <meta name="description" content="AnimeStream - Plataforma para ver animes online gratis con catálogo actualizado." />
+    <title>AnimeStream | Ver animes online gratis en HD</title>
+    <meta name="description" content="AnimeStream - Plataforma para ver animes online gratis con catálogo actualizado, sin publicidad y en alta calidad." />
+    <meta property="og:title" content="AnimeStream | Ver animes online gratis" />
+    <meta property="og:description" content="Disfruta de los mejores animes en streaming gratis. Catálogo actualizado con los últimos episodios." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tu-dominio.com/" />
+    <meta name="theme-color" content="#0d0b1a" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== ESTILOS ===== */
+        /* ===== ESTILOS PROFESIONALES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -18,10 +24,14 @@
             background: #0d0b1a;
             color: #e0e0e0;
             min-height: 100vh;
+            line-height: 1.6;
         }
         a {
             color: #b388ff;
             text-decoration: none;
+        }
+        a:hover {
+            color: #d1b3ff;
         }
         button {
             cursor: pointer;
@@ -29,15 +39,35 @@
             background: none;
             font-family: inherit;
         }
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-        /* HEADER */
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1535;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b388ff;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9a6bdf;
+        }
+
+        /* ===== HEADER ===== */
         header {
             background: #1a1535;
-            padding: 16px 20px;
+            padding: 12px 20px;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid #2a2445;
         }
         .header-inner {
             max-width: 1280px;
@@ -49,24 +79,46 @@
             gap: 12px;
         }
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 900;
             color: #b388ff;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
         }
         .logo span {
             color: #fff;
         }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .nav-links a {
+            color: #aaa;
+            transition: color 0.2s;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #b388ff;
+            border-bottom-color: #b388ff;
+        }
         .search-box {
             display: flex;
             flex: 1;
-            max-width: 500px;
+            max-width: 400px;
             background: #2a2445;
             border-radius: 30px;
             overflow: hidden;
             border: 1px solid #3d3568;
+            transition: border-color 0.3s;
+        }
+        .search-box:focus-within {
+            border-color: #b388ff;
         }
         .search-box input {
             flex: 1;
@@ -78,7 +130,7 @@
             outline: none;
         }
         .search-box input::placeholder {
-            color: #888;
+            color: #777;
         }
         .search-box button {
             padding: 10px 20px;
@@ -91,90 +143,139 @@
             background: #9a6bdf;
         }
 
-        /* MAIN */
+        /* ===== MAIN ===== */
         main {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 24px 16px;
+            padding: 24px 16px 40px;
         }
 
-        /* BANNER */
+        /* ===== BANNER ===== */
         .banner {
             background: linear-gradient(135deg, #1a1535 0%, #2a1f5e 100%);
-            border-radius: 20px;
-            padding: 40px 36px;
-            margin-bottom: 32px;
+            border-radius: 24px;
+            padding: 48px 40px;
+            margin-bottom: 40px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 40px rgba(179, 136, 255, 0.15);
         }
         .banner::after {
             content: '🎬';
             position: absolute;
-            right: -20px;
-            bottom: -30px;
-            font-size: 140px;
-            opacity: 0.08;
+            right: -10px;
+            bottom: -40px;
+            font-size: 160px;
+            opacity: 0.06;
         }
         .banner h1 {
-            font-size: 2.2rem;
+            font-size: 2.6rem;
             font-weight: 900;
             color: #b388ff;
+            line-height: 1.2;
         }
         .banner p {
-            opacity: 0.8;
-            margin-top: 8px;
-            font-size: 1rem;
+            opacity: 0.85;
+            margin-top: 10px;
+            font-size: 1.1rem;
             max-width: 600px;
+            color: #d0d0d0;
+        }
+        .banner .btn {
+            display: inline-block;
+            margin-top: 18px;
+            background: #b388ff;
+            color: #0d0b1a;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            transition: background 0.2s, transform 0.2s;
+            font-size: 1rem;
+        }
+        .banner .btn:hover {
+            background: #9a6bdf;
+            transform: scale(1.02);
         }
 
-        /* TÍTULOS */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+        /* ===== SECCIÓN ===== */
+        .section {
+            margin-bottom: 48px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .section-title::before {
             content: '';
             display: block;
             width: 5px;
-            height: 30px;
+            height: 32px;
             background: #b388ff;
             border-radius: 4px;
         }
+        .section-link {
+            color: #b388ff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .section-link:hover {
+            color: #d1b3ff;
+        }
 
-        /* GRID DE ANIMES */
+        /* ===== GRID DE ANIMES ===== */
         .anime-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 24px;
         }
         .anime-card {
             background: #1a1535;
             border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.25s, box-shadow 0.25s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             cursor: pointer;
             border: 1px solid #2a2445;
+            position: relative;
         }
         .anime-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 30px rgba(179, 136, 255, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(179, 136, 255, 0.2);
             border-color: #b388ff;
         }
-        .anime-card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
+        .anime-card .card-img {
+            position: relative;
+            padding-top: 140%;
             background: #2a2445;
+            overflow: hidden;
         }
-        .anime-card .info {
-            padding: 14px 16px;
+        .anime-card .card-img img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
         }
-        .anime-card .info h3 {
+        .anime-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        .anime-card .card-body {
+            padding: 14px 16px 16px;
+        }
+        .anime-card .card-body h3 {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 4px;
@@ -182,75 +283,104 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .anime-card .info .meta {
+        .anime-card .card-body .meta {
             font-size: 0.8rem;
             color: #888;
             display: flex;
             justify-content: space-between;
         }
-        .anime-card .info .meta .score {
+        .anime-card .card-body .meta .score {
             color: #ffd54f;
             font-weight: 700;
         }
-        .anime-card .info .genres {
+        .anime-card .card-body .genres {
             font-size: 0.7rem;
             color: #b388ff;
-            margin-top: 6px;
+            margin-top: 8px;
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
         }
-        .anime-card .info .genres span {
+        .anime-card .card-body .genres span {
             background: #2a2445;
             padding: 2px 10px;
             border-radius: 20px;
         }
 
-        /* EPISODIOS / REPRODUCTOR */
+        /* ===== BOTÓN CARGAR MÁS ===== */
+        .load-more {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .load-more button {
+            background: #2a2445;
+            color: #b388ff;
+            padding: 12px 40px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 1px solid #3d3568;
+            transition: background 0.2s, color 0.2s;
+        }
+        .load-more button:hover {
+            background: #b388ff;
+            color: #0d0b1a;
+        }
+
+        /* ===== EPISODES SECTION ===== */
         .episode-section {
             background: #1a1535;
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 32px;
+            border-radius: 20px;
+            padding: 28px;
+            margin-top: 40px;
             border: 1px solid #2a2445;
             display: none;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
         }
         .episode-section.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeUp 0.4s ease;
         }
-        @keyframes fadeIn {
+        @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        .episode-section .anime-title {
-            font-size: 1.4rem;
+        .episode-section .ep-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .episode-section .ep-title {
+            font-size: 1.5rem;
             font-weight: 700;
             color: #b388ff;
-            margin-bottom: 8px;
         }
-        .episode-section .anime-synopsis {
+        .episode-section .ep-synopsis {
             color: #aaa;
             font-size: 0.95rem;
-            margin-bottom: 16px;
-            line-height: 1.6;
+            margin-bottom: 18px;
+            line-height: 1.7;
             max-height: 100px;
             overflow-y: auto;
+            padding-right: 8px;
         }
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 14px;
             background: #000;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
         .video-wrapper iframe {
             position: absolute;
@@ -260,22 +390,38 @@
             height: 100%;
             border: none;
         }
+        .episode-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .episode-controls .ep-label {
+            font-weight: 600;
+            color: #b388ff;
+        }
+        .episode-controls .ep-count {
+            font-size: 0.8rem;
+            color: #888;
+        }
         .episode-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            max-height: 200px;
+            max-height: 220px;
             overflow-y: auto;
             padding: 4px 0;
         }
         .episode-list button {
             background: #2a2445;
             color: #fff;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
             border: 1px solid #3d3568;
         }
         .episode-list button:hover {
@@ -288,21 +434,20 @@
             border-color: #b388ff;
         }
 
-        .close-btn {
+        .close-episodes {
             background: #e53935;
             color: #fff;
-            padding: 6px 18px;
+            padding: 6px 20px;
             border-radius: 30px;
             font-weight: 700;
             font-size: 0.8rem;
-            margin-bottom: 12px;
             transition: background 0.2s;
         }
-        .close-btn:hover {
+        .close-episodes:hover {
             background: #c62828;
         }
 
-        /* LOADING */
+        /* ===== SPINNER ===== */
         .spinner {
             width: 40px;
             height: 40px;
@@ -317,34 +462,105 @@
                 transform: rotate(360deg);
             }
         }
+        .loading-text {
+            text-align: center;
+            color: #888;
+            margin-top: 8px;
+        }
 
-        /* RESPONSIVE */
-        @media (max-width: 640px) {
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0d0b1a;
+            border-top: 1px solid #1a1535;
+            padding: 40px 20px 24px;
+            margin-top: 40px;
+        }
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+        .footer-col h4 {
+            color: #b388ff;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .footer-col p,
+        .footer-col a {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            display: block;
+        }
+        .footer-col a:hover {
+            color: #b388ff;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            margin-top: 24px;
+            border-top: 1px solid #1a1535;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
             .header-inner {
                 flex-direction: column;
                 align-items: stretch;
             }
+            .nav-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
             .search-box {
                 max-width: 100%;
             }
+            .banner {
+                padding: 32px 24px;
+            }
             .banner h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px;
             }
-            .anime-card img {
-                height: 200px;
+            .episode-section {
+                padding: 18px;
+            }
+            .footer-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .banner h1 {
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="header-inner">
             <div class="logo">🎬 Anime<span>Stream</span></div>
+            <nav class="nav-links">
+                <a href="#" class="active">Inicio</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#proximos">Próximos</a>
+                <a href="#noticias">Noticias</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Buscar anime..." />
                 <button id="searchBtn">Buscar</button>
@@ -352,44 +568,121 @@
         </div>
     </header>
 
-    <!-- MAIN -->
+    <!-- ===== MAIN ===== -->
     <main>
-        <!-- BANNER -->
-        <div class="banner">
+
+        <!-- ===== BANNER ===== -->
+        <section class="banner">
             <h1>Explora el mundo del anime</h1>
             <p>Catálogo actualizado con los animes más populares. Haz clic en cualquier título para ver sus episodios.</p>
-        </div>
+            <a href="#catalogo" class="btn">Ver catálogo</a>
+        </section>
 
-        <!-- CATÁLOGO -->
-        <div class="section-title">🔥 Animes populares</div>
-        <div id="animeGrid" class="anime-grid"></div>
+        <!-- ===== CATÁLOGO ===== -->
+        <section id="catalogo" class="section">
+            <div class="section-header">
+                <div class="section-title">🔥 Animes populares</div>
+                <a href="#" class="section-link">Ver todos →</a>
+            </div>
+            <div id="animeGrid" class="anime-grid"></div>
+            <div class="load-more" id="loadMoreContainer">
+                <button id="loadMoreBtn">Cargar más</button>
+            </div>
+        </section>
 
-        <!-- SECCIÓN DE EPISODIOS -->
+        <!-- ===== PRÓXIMOS ESTRENOS (simulado) ===== -->
+        <section id="proximos" class="section">
+            <div class="section-header">
+                <div class="section-title">📅 Próximos estrenos</div>
+                <span class="section-link">Próximamente</span>
+            </div>
+            <div style="background:#1a1535; border-radius:16px; padding:24px; border:1px solid #2a2445;">
+                <p style="color:#888;">Estamos preparando la sección de próximos estrenos. ¡Vuelve pronto!</p>
+            </div>
+        </section>
+
+        <!-- ===== NOTICIAS (simulado) ===== -->
+        <section id="noticias" class="section">
+            <div class="section-header">
+                <div class="section-title">📰 Noticias del mundo anime</div>
+                <span class="section-link">Más noticias</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px;">
+                <div style="background:#1a1535; border-radius:16px; padding:20px; border:1px solid #2a2445;">
+                    <span style="color:#b388ff; font-weight:600;">Nuevo anime</span>
+                    <h4 style="margin:8px 0 4px;">"Solo Leveling" temporada 2 confirmada</h4>
+                    <p style="color:#888; font-size:0.9rem;">La segunda temporada llegará en 2027 con más acción.</p>
+                </div>
+                <div style="background:#1a1535; border-radius:16px; padding:20px; border:1px solid #2a2445;">
+                    <span style="color:#b388ff; font-weight:600;">Evento</span>
+                    <h4 style="margin:8px 0 4px;">Anime Expo 2026: fechas y novedades</h4>
+                    <p style="color:#888; font-size:0.9rem;">El evento se realizará en Los Ángeles del 2 al 5 de julio.</p>
+                </div>
+                <div style="background:#1a1535; border-radius:16px; padding:20px; border:1px solid #2a2445;">
+                    <span style="color:#b388ff; font-weight:600;">Estreno</span>
+                    <h4 style="margin:8px 0 4px;">"Kimetsu no Yaiba" película en cines</h4>
+                    <p style="color:#888; font-size:0.9rem;">La nueva película llegará a cines en diciembre de 2026.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN DE EPISODIOS ===== -->
         <div id="episodeSection" class="episode-section">
-            <button class="close-btn" id="closeEpisodes">✕ Cerrar</button>
-            <div class="anime-title" id="epAnimeTitle">Título</div>
-            <div class="anime-synopsis" id="epSynopsis">Sinopsis</div>
+            <div class="ep-header">
+                <div class="ep-title" id="epAnimeTitle">Título</div>
+                <button class="close-episodes" id="closeEpisodes">✕ Cerrar</button>
+            </div>
+            <div class="ep-synopsis" id="epSynopsis">Sinopsis</div>
             <div class="video-wrapper" id="videoWrapper">
                 <iframe id="videoIframe" src="" allowfullscreen></iframe>
             </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-                <span style="font-weight:600; color:#b388ff;">Episodios:</span>
-                <span id="episodeCount" style="font-size:0.8rem; color:#888;"></span>
+            <div class="episode-controls">
+                <span class="ep-label">📺 Episodios:</span>
+                <span class="ep-count" id="episodeCount">0 episodios</span>
             </div>
             <div class="episode-list" id="episodeList"></div>
         </div>
 
-        <!-- LOADING (oculto) -->
+        <!-- ===== LOADING ===== -->
         <div id="loadingIndicator" style="display:none;">
             <div class="spinner"></div>
-            <p style="text-align:center; color:#888;">Cargando animes...</p>
+            <p class="loading-text">Cargando animes...</p>
         </div>
+
     </main>
 
-    <!-- FOOTER -->
-    <footer style="text-align:center; padding:20px 16px; color:#555; font-size:0.8rem; border-top:1px solid #1a1535; margin-top:40px;">
-        © 2026 AnimeStream – Todos los derechos reservados.<br>
-        Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API · Streaming vía Consumet API
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>🎬 AnimeStream</h4>
+                <p>Tu plataforma para ver animes online gratis. Catálogo actualizado con los mejores títulos.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces</h4>
+                <a href="#">Inicio</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#proximos">Próximos estrenos</a>
+                <a href="#noticias">Noticias</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Aviso legal</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos de uso</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Redes sociales</h4>
+                <a href="#">Twitter</a>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 AnimeStream – Todos los derechos reservados. | Datos de MyAnimeList vía Jikan API · Streaming vía Consumet API
+        </div>
     </footer>
 
     <script>
@@ -399,14 +692,19 @@
         const JIKAN_API = 'https://api.jikan.moe/v4';
         const CONSUMET_API = 'https://api.consumet.org/anime/gogoanime';
 
+        let currentPage = 1;
+        let currentQuery = '';
+        let isLoading = false;
+        let hasMore = true;
         let currentAnimeId = null;
         let currentAnimeTitle = '';
 
-        // Elementos DOM
+        // DOM
         const grid = document.getElementById('animeGrid');
-        const loading = document.getElementById('loadingIndicator');
+        const loadingEl = document.getElementById('loadingIndicator');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
 
         const episodeSection = document.getElementById('episodeSection');
         const epTitle = document.getElementById('epAnimeTitle');
@@ -420,91 +718,66 @@
         // FUNCIONES PRINCIPALES
         // ============================================================
 
-        // Obtener animes populares desde Jikan
-        async function fetchPopularAnimes() {
+        async function fetchAnimes(page = 1, query = '') {
             try {
-                const resp = await fetch(`${JIKAN_API}/top/anime?filter=bypopularity&limit=24`);
+                let url;
+                if (query) {
+                    url = `${JIKAN_API}/anime?q=${encodeURIComponent(query)}&page=${page}&limit=24`;
+                } else {
+                    url = `${JIKAN_API}/top/anime?filter=bypopularity&page=${page}&limit=24`;
+                }
+                const resp = await fetch(url);
                 if (!resp.ok) throw new Error('Error al obtener animes');
                 const data = await resp.json();
-                return data.data;
+                return data.data || [];
             } catch (error) {
-                console.error('Jikan error:', error);
+                console.error('Fetch error:', error);
                 return [];
             }
         }
 
-        // Buscar animes por nombre en Jikan
-        async function searchAnimes(query) {
-            try {
-                const resp = await fetch(`${JIKAN_API}/anime?q=${encodeURIComponent(query)}&limit=24`);
-                if (!resp.ok) throw new Error('Error en la búsqueda');
-                const data = await resp.json();
-                return data.data;
-            } catch (error) {
-                console.error('Jikan search error:', error);
-                return [];
-            }
-        }
-
-        // Obtener episodios de un anime desde Consumet (Gogoanime)
-        // Versión mejorada: intenta varias estrategias de búsqueda
         async function fetchEpisodes(animeTitle) {
-            // Lista de posibles títulos a probar (remover caracteres especiales)
-            const searchQueries = [
+            const queries = [
                 animeTitle,
-                animeTitle.replace(/[^a-zA-Z0-9 ]/g, ''), // sin caracteres especiales
-                animeTitle.split(':')[0].trim(), // solo la primera parte si tiene ":"
-                animeTitle.split('(')[0].trim() // quitar contenido entre paréntesis
+                animeTitle.replace(/[^a-zA-Z0-9 ]/g, ''),
+                animeTitle.split(':')[0].trim(),
+                animeTitle.split('(')[0].trim()
             ];
+            const unique = [...new Set(queries)].filter(q => q.length > 0);
 
-            // Eliminar duplicados
-            const uniqueQueries = [...new Set(searchQueries)].filter(q => q.length > 0);
-
-            for (const query of uniqueQueries) {
+            for (const q of unique) {
                 try {
-                    console.log(`Intentando buscar: "${query}"`);
-                    const searchResp = await fetch(`${CONSUMET_API}/search?query=${encodeURIComponent(query)}`);
+                    const searchResp = await fetch(`${CONSUMET_API}/search?query=${encodeURIComponent(q)}`);
                     if (!searchResp.ok) continue;
                     const searchData = await searchResp.json();
                     if (searchData.results && searchData.results.length > 0) {
-                        // Tomamos el primer resultado (el más relevante)
                         const gogoId = searchData.results[0].id;
-                        console.log(`Encontrado en Gogoanime: ${gogoId}`);
-                        // Obtenemos la lista de episodios
                         const epResp = await fetch(`${CONSUMET_API}/episodes/${gogoId}`);
                         if (!epResp.ok) continue;
                         const epData = await epResp.json();
                         if (epData.episodes && epData.episodes.length > 0) {
-                            return {
-                                gogoId,
-                                episodes: epData.episodes
-                            };
+                            return { gogoId, episodes: epData.episodes };
                         }
                     }
                 } catch (e) {
-                    console.warn(`Falló la búsqueda para "${query}":`, e);
+                    console.warn('Falló búsqueda en Consumet:', e);
                 }
             }
             return null;
         }
 
-        // Obtener enlace de reproducción de un episodio específico
         async function fetchStreamLink(gogoId, episodeNumber) {
             try {
                 const resp = await fetch(`${CONSUMET_API}/watch/${gogoId}-episode-${episodeNumber}`);
-                if (!resp.ok) throw new Error('Error al obtener el enlace');
+                if (!resp.ok) throw new Error('Error al obtener enlace');
                 const data = await resp.json();
                 if (data.sources && data.sources.length > 0) {
-                    // Intentar obtener una fuente que no sea .m3u8 (a veces falla)
-                    // Buscamos primero un .mp4
-                    const mp4Source = data.sources.find(s => s.url && s.url.endsWith('.mp4'));
-                    if (mp4Source) return mp4Source.url;
-                    // Si no, devolvemos la primera fuente
-                    return data.sources[0].url;
+                    const mp4 = data.sources.find(s => s.url && s.url.endsWith('.mp4'));
+                    return mp4 ? mp4.url : data.sources[0].url;
                 }
                 return null;
-            } catch (error) {
-                console.error('Stream link error:', error);
+            } catch (e) {
+                console.error('Stream error:', e);
                 return null;
             }
         }
@@ -513,22 +786,27 @@
         // RENDERIZADO
         // ============================================================
 
-        function renderAnimeList(animes) {
+        function renderAnimeList(animes, append = false) {
             if (!animes || animes.length === 0) {
-                grid.innerHTML = `<p style="color:#888; text-align:center; grid-column:1/-1;">No se encontraron animes.</p>`;
+                if (!append) {
+                    grid.innerHTML = `<p style="color:#888; text-align:center; grid-column:1/-1; padding:40px 0;">No se encontraron animes.</p>`;
+                }
+                hasMore = false;
+                loadMoreBtn.style.display = 'none';
                 return;
             }
 
-            grid.innerHTML = animes.map(anime => {
-                const image = anime.images?.jpg?.image_url || 'https://via.placeholder.com/200x280/1a1535/888?text=No+Image';
+            const html = animes.map(anime => {
+                const img = anime.images?.jpg?.image_url || 'https://via.placeholder.com/300x420/1a1535/888?text=No+Image';
                 const genres = anime.genres?.slice(0, 3).map(g => g.name).join(' · ') || 'Sin género';
                 const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
                 const title = anime.title || 'Título desconocido';
-
                 return `
                     <div class="anime-card" data-malid="${anime.mal_id}" data-title="${title}">
-                        <img src="${image}" alt="${title}" loading="lazy" />
-                        <div class="info">
+                        <div class="card-img">
+                            <img src="${img}" alt="${title}" loading="lazy" />
+                        </div>
+                        <div class="card-body">
                             <h3>${title}</h3>
                             <div class="meta">
                                 <span>${anime.year || '??'}</span>
@@ -542,13 +820,27 @@
                 `;
             }).join('');
 
+            if (append) {
+                grid.insertAdjacentHTML('beforeend', html);
+            } else {
+                grid.innerHTML = html;
+            }
+
+            // Event listeners
             document.querySelectorAll('.anime-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const malId = parseInt(card.dataset.malid);
-                    const title = card.dataset.title;
-                    openAnime(malId, title);
-                });
+                card.removeEventListener('click', handleCardClick);
+                card.addEventListener('click', handleCardClick);
             });
+
+            hasMore = animes.length === 24;
+            loadMoreBtn.style.display = hasMore ? 'block' : 'none';
+        }
+
+        function handleCardClick(e) {
+            const card = e.currentTarget;
+            const malId = parseInt(card.dataset.malid);
+            const title = card.dataset.title;
+            openAnime(malId, title);
         }
 
         async function openAnime(malId, title) {
@@ -562,13 +854,12 @@
             videoIframe.src = '';
             episodeCount.textContent = '';
 
-            // Obtener sinopsis
+            // Sinopsis
             try {
                 const resp = await fetch(`${JIKAN_API}/anime/${malId}`);
                 if (resp.ok) {
                     const data = await resp.json();
-                    const anime = data.data;
-                    epSynopsis.textContent = anime.synopsis || 'Sin sinopsis disponible.';
+                    epSynopsis.textContent = data.data?.synopsis || 'Sin sinopsis disponible.';
                 } else {
                     epSynopsis.textContent = 'Sinopsis no disponible.';
                 }
@@ -576,7 +867,7 @@
                 epSynopsis.textContent = 'Error al cargar sinopsis.';
             }
 
-            // Obtener episodios
+            // Episodios
             const result = await fetchEpisodes(title);
             if (!result || !result.episodes || result.episodes.length === 0) {
                 episodeList.innerHTML = '<p style="color:#888;">No se encontraron episodios para este anime. Intenta con otro.</p>';
@@ -584,65 +875,64 @@
                 return;
             }
 
-            const episodes = result.episodes;
+            const episodes = result.episodes.sort((a, b) => a.number - b.number);
             const gogoId = result.gogoId;
             episodeCount.textContent = `${episodes.length} episodios`;
 
-            // Mostrar episodios en orden ascendente (algunos vienen desordenados)
-            const sortedEpisodes = episodes.sort((a, b) => a.number - b.number);
-
-            episodeList.innerHTML = sortedEpisodes.map(ep => {
-                const epNum = ep.number;
-                return `<button data-ep="${epNum}" data-gogo="${gogoId}">Ep ${epNum}</button>`;
-            }).join('');
+            episodeList.innerHTML = episodes.map(ep =>
+                `<button data-ep="${ep.number}" data-gogo="${gogoId}">Ep ${ep.number}</button>`
+            ).join('');
 
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const epNum = parseInt(btn.dataset.ep);
                     const gogo = btn.dataset.gogo;
-
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-
-                    const streamUrl = await fetchStreamLink(gogo, epNum);
-                    if (streamUrl) {
-                        videoIframe.src = streamUrl;
-                    } else {
-                        videoIframe.src = '';
-                        alert('No se pudo cargar el episodio. Intenta con otro.');
-                    }
+                    const url = await fetchStreamLink(gogo, epNum);
+                    videoIframe.src = url || '';
+                    if (!url) alert('No se pudo cargar el episodio. Intenta con otro.');
                 });
             });
 
-            if (sortedEpisodes.length > 0) {
-                const firstBtn = episodeList.querySelector('button');
-                if (firstBtn) firstBtn.click();
-            }
+            // Auto-reproducir primero
+            const first = episodeList.querySelector('button');
+            if (first) first.click();
         }
 
         // ============================================================
-        // CONTROLADORES DE BÚSQUEDA
+        // CARGA Y BÚSQUEDA
         // ============================================================
+
+        async function loadAnimes(page = 1, query = '', append = false) {
+            if (isLoading) return;
+            isLoading = true;
+            loadingEl.style.display = 'block';
+            if (!append) grid.innerHTML = '';
+
+            const animes = await fetchAnimes(page, query);
+            loadingEl.style.display = 'none';
+            isLoading = false;
+
+            if (animes.length === 0 && !append) {
+                renderAnimeList([]);
+                return;
+            }
+            renderAnimeList(animes, append);
+        }
 
         async function performSearch() {
             const query = searchInput.value.trim();
-            if (!query) {
-                loadPopular();
-                return;
-            }
-            loading.style.display = 'block';
-            grid.innerHTML = '';
-            const results = await searchAnimes(query);
-            loading.style.display = 'none';
-            renderAnimeList(results);
+            currentQuery = query;
+            currentPage = 1;
+            await loadAnimes(currentPage, query, false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        async function loadPopular() {
-            loading.style.display = 'block';
-            grid.innerHTML = '';
-            const animes = await fetchPopularAnimes();
-            loading.style.display = 'none';
-            renderAnimeList(animes);
+        async function loadMore() {
+            if (isLoading || !hasMore) return;
+            currentPage++;
+            await loadAnimes(currentPage, currentQuery, true);
         }
 
         // ============================================================
@@ -650,9 +940,11 @@
         // ============================================================
 
         searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keydown', (e) => {
+        searchInput.addEventListener('keydown', e => {
             if (e.key === 'Enter') performSearch();
         });
+
+        loadMoreBtn.addEventListener('click', loadMore);
 
         closeBtn.addEventListener('click', () => {
             episodeSection.classList.remove('active');
@@ -663,7 +955,7 @@
         // INICIALIZACIÓN
         // ============================================================
 
-        loadPopular();
+        loadAnimes(1, '', false);
     </script>
 </body>
 </html>
