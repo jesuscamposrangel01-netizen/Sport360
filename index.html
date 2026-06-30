@@ -6,7 +6,11 @@
     <title>AnimeStream | Ver animes online</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background: #0a0a1a;
@@ -14,13 +18,13 @@
             min-height: 100vh;
         }
         header {
-            background: rgba(10,10,26,0.95);
+            background: rgba(10, 10, 26, 0.95);
             backdrop-filter: blur(12px);
             padding: 12px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(124,58,237,0.15);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.15);
         }
         .header-inner {
             max-width: 1360px;
@@ -31,13 +35,19 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-        .logo { font-size: 1.5rem; font-weight: 900; color: #a78bfa; }
-        .logo span { color: #fff; }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #a78bfa;
+        }
+        .logo span {
+            color: #fff;
+        }
         .search-box {
             display: flex;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             overflow: hidden;
             flex: 1;
             max-width: 400px;
@@ -51,7 +61,9 @@
             font-size: 0.9rem;
             outline: none;
         }
-        .search-box input::placeholder { color: #888; }
+        .search-box input::placeholder {
+            color: #888;
+        }
         .search-box button {
             padding: 10px 22px;
             background: #7c3aed;
@@ -60,20 +72,35 @@
             transition: background 0.3s;
             font-size: 0.85rem;
         }
-        .search-box button:hover { background: #5b21b6; }
+        .search-box button:hover {
+            background: #5b21b6;
+        }
 
-        main { max-width: 1360px; margin: 0 auto; padding: 24px 20px; }
+        main {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 24px 20px;
+        }
 
         .hero {
             background: linear-gradient(135deg, #1a1a4e 0%, #0d0d2b 50%, #1a0a2e 100%);
             border-radius: 24px;
             padding: 40px 36px;
             margin-bottom: 32px;
-            border: 1px solid rgba(124,58,237,0.15);
+            border: 1px solid rgba(124, 58, 237, 0.15);
         }
-        .hero h1 { font-size: 2.5rem; font-weight: 900; }
-        .hero h1 .highlight { color: #a78bfa; }
-        .hero p { color: #a0a0c0; margin-top: 8px; max-width: 500px; }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .hero h1 .highlight {
+            color: #a78bfa;
+        }
+        .hero p {
+            color: #a0a0c0;
+            margin-top: 8px;
+            max-width: 500px;
+        }
 
         .section-title {
             font-size: 1.3rem;
@@ -107,7 +134,7 @@
         .anime-card:hover {
             transform: translateY(-6px);
             border-color: #7c3aed;
-            box-shadow: 0 8px 30px rgba(124,58,237,0.2);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.2);
         }
         .anime-card img {
             width: 100%;
@@ -115,7 +142,9 @@
             object-fit: cover;
             background: #12122a;
         }
-        .anime-card .info { padding: 12px 14px 14px; }
+        .anime-card .info {
+            padding: 12px 14px 14px;
+        }
         .anime-card .info h3 {
             font-size: 0.9rem;
             font-weight: 600;
@@ -130,7 +159,10 @@
             justify-content: space-between;
             margin-top: 4px;
         }
-        .anime-card .info .meta .score { color: #fcd34d; font-weight: 700; }
+        .anime-card .info .meta .score {
+            color: #fcd34d;
+            font-weight: 700;
+        }
 
         .player-section {
             background: #1a1a3e;
@@ -145,8 +177,14 @@
             animation: fadeUp 0.4s ease;
         }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .player-section .player-header {
             display: flex;
@@ -164,7 +202,7 @@
         .player-section .player-status {
             font-size: 0.8rem;
             color: #888;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             padding: 4px 14px;
             border-radius: 20px;
             border: 1px solid #2a2a5a;
@@ -193,7 +231,11 @@
             text-align: center;
             color: #888;
         }
-        .video-wrapper .placeholder .icon { font-size: 3rem; display: block; margin-bottom: 8px; }
+        .video-wrapper .placeholder .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 8px;
+        }
 
         .episode-list {
             display: flex;
@@ -205,7 +247,7 @@
             padding: 4px 0;
         }
         .episode-list button {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: #a0a0c0;
             padding: 6px 16px;
             border-radius: 30px;
@@ -231,20 +273,27 @@
             text-align: center;
             width: 100%;
         }
-        .episode-list .no-episodes .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+        .episode-list .no-episodes .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
 
         .close-btn {
-            background: rgba(239,68,68,0.15);
+            background: rgba(239, 68, 68, 0.15);
             color: #ef4444;
             padding: 4px 18px;
             border-radius: 30px;
             font-weight: 700;
             font-size: 0.8rem;
-            border: 1px solid rgba(239,68,68,0.2);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             transition: all 0.3s;
             cursor: pointer;
         }
-        .close-btn:hover { background: #ef4444; color: #fff; }
+        .close-btn:hover {
+            background: #ef4444;
+            color: #fff;
+        }
 
         .spinner {
             width: 40px;
@@ -255,11 +304,18 @@
             animation: spin 0.8s linear infinite;
             margin: 30px auto;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-        .load-more { text-align: center; margin-top: 30px; }
+        .load-more {
+            text-align: center;
+            margin-top: 30px;
+        }
         .load-more button {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: #a0a0c0;
             padding: 12px 40px;
             border-radius: 40px;
@@ -282,14 +338,30 @@
             border-top: 1px solid #1a1a3e;
             margin-top: 40px;
         }
-        footer a { color: #a78bfa; text-decoration: none; }
+        footer a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
 
         @media (max-width: 768px) {
-            .header-inner { flex-direction: column; align-items: stretch; gap: 10px; }
-            .search-box { max-width: 100%; }
-            .hero h1 { font-size: 1.8rem; }
-            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
-            .anime-card img { height: 200px; }
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 14px;
+            }
+            .anime-card img {
+                height: 200px;
+            }
         }
     </style>
 </head>
@@ -308,8 +380,7 @@
     <main>
         <div class="hero">
             <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Haz clic en cualquier anime para ver sus episodios.</p>
-            <p style="font-size:0.8rem; color:#666; margin-top:12px;">⚠️ Algunos animes pueden no tener episodios disponibles en la fuente gratuita.</p>
+            <p>Haz clic en cualquier anime para ver sus episodios. El primer episodio se reproduce automáticamente.</p>
         </div>
 
         <div class="section-title">🔥 Animes populares</div>
@@ -344,32 +415,24 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API
+        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a>
     </footer>
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN - USANDO JIKAN Y ANILIST (SIN CONSUMET)
+        // FRONTEND - CONEXIÓN CON BACKEND
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
 
-        // Datos de ejemplo de episodios para animes populares
-        // (Esto es una alternativa cuando no hay API de streaming)
-        const EPISODIOS_DEMO = {
-            'Naruto': { total: 220, source: 'https://www.youtube.com/embed/embed/Naruto' },
-            'One Piece': { total: 1000, source: 'https://www.youtube.com/embed/embed/OnePiece' },
-            'Attack on Titan': { total: 87, source: 'https://www.youtube.com/embed/embed/AOT' },
-            'Demon Slayer': { total: 55, source: 'https://www.youtube.com/embed/embed/DemonSlayer' },
-            'Jujutsu Kaisen': { total: 47, source: 'https://www.youtube.com/embed/embed/JJK' },
-            'My Hero Academia': { total: 138, source: 'https://www.youtube.com/embed/embed/MHA' },
-        };
+        // IMPORTANTE: Cambia esta URL por la de tu backend desplegado
+        // Ejemplo: 'https://tu-backend.vercel.app/api'
+        const BACKEND_API = window.location.origin + '/api';
 
         let currentPage = 1;
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
 
-        // DOM
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
         const searchInput = document.getElementById('searchInput');
@@ -385,9 +448,8 @@
         const closeBtn = document.getElementById('closePlayer');
 
         // ============================================================
-        // FUNCIONES PRINCIPALES
+        // OBTENER ANIMES DESDE JIKAN (público, sin backend)
         // ============================================================
-
         async function fetchAnimes(page = 1, query = '') {
             try {
                 let url;
@@ -407,46 +469,39 @@
         }
 
         // ============================================================
-        // BUSCAR EPISODIOS (usando datos de ejemplo + búsqueda en internet)
+        // BUSCAR EPISODIOS DESDE EL BACKEND
         // ============================================================
-        async function buscarEpisodios(title) {
-            // Buscar en los datos de ejemplo
-            for (const [key, data] of Object.entries(EPISODIOS_DEMO)) {
-                if (title.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(title.toLowerCase())) {
-                    return {
-                        total: data.total,
-                        source: data.source,
-                        found: true
-                    };
-                }
-            }
-
-            // Si no está en los datos de ejemplo, intentar buscar en una API alternativa
+        async function fetchEpisodesFromBackend(title) {
             try {
-                // Intentar buscar en AniList (sin clave, público)
-                const searchResp = await fetch(`https://api.anilist.co/api/v2/search/anime?q=${encodeURIComponent(title)}`);
-                if (searchResp.ok) {
-                    const searchData = await searchResp.json();
-                    if (searchData && searchData.length > 0) {
-                        const anime = searchData[0];
-                        return {
-                            total: anime.episodes || 24,
-                            source: `https://www.youtube.com/embed/embed/${anime.id}`,
-                            found: true,
-                            title: anime.title
-                        };
-                    }
+                const resp = await fetch(`${BACKEND_API}/search?q=${encodeURIComponent(title)}`);
+                if (!resp.ok) {
+                    const errorData = await resp.json();
+                    throw new Error(errorData.error || 'Error en el backend');
                 }
-            } catch (e) {
-                console.warn('AniList search failed:', e);
+                const data = await resp.json();
+                return data;
+            } catch (error) {
+                console.error('Backend error:', error);
+                return null;
             }
+        }
 
-            // Si no se encuentra, devolver datos genéricos
-            return {
-                total: 24,
-                source: 'https://www.youtube.com/embed/embed/generic',
-                found: false
-            };
+        // ============================================================
+        // OBTENER STREAM DEL BACKEND
+        // ============================================================
+        async function fetchStreamFromBackend(animeId, episodeNumber) {
+            try {
+                const resp = await fetch(`${BACKEND_API}/stream/${animeId}/episode/${episodeNumber}`);
+                if (!resp.ok) {
+                    const errorData = await resp.json();
+                    throw new Error(errorData.error || 'Error al obtener el stream');
+                }
+                const data = await resp.json();
+                return data;
+            } catch (error) {
+                console.error('Stream error:', error);
+                return null;
+            }
         }
 
         // ============================================================
@@ -470,7 +525,7 @@
                 const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
                 const title = anime.title || 'Título desconocido';
                 return `
-                            <div class="anime-card" data-malid="${anime.mal_id}" data-title="${title}">
+                            <div class="anime-card" data-title="${title}">
                                 <img src="${img}" alt="${title}" loading="lazy" />
                                 <div class="info">
                                     <h3>${title}</h3>
@@ -500,15 +555,14 @@
 
         function handleCardClick(e) {
             const card = e.currentTarget;
-            const malId = parseInt(card.dataset.malid);
             const title = card.dataset.title;
-            openAnime(malId, title);
+            openAnime(title);
         }
 
         // ============================================================
         // ABRIR ANIME
         // ============================================================
-        async function openAnime(malId, title) {
+        async function openAnime(title) {
             playerSection.classList.add('active');
             playerTitle.textContent = title;
             playerStatus.textContent = 'Buscando episodios...';
@@ -519,19 +573,16 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Buscar episodios
-            const result = await buscarEpisodios(title);
+            // Buscar episodios en el backend
+            const result = await fetchEpisodesFromBackend(title);
 
-            if (!result.found) {
+            if (!result || !result.episodes || result.episodes.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
                                 No se encontraron episodios para "${title}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    La API de streaming gratuita ya no está disponible.
-                                </span>
-                                <span style="font-size:0.8rem; color:#888; display:block; margin-top:6px;">
-                                    💡 Puedes buscar este anime en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}" target="_blank" style="color:#a78bfa;">YouTube</a> o en plataformas oficiales.
+                                    Asegúrate de que el backend esté funcionando.
                                 </span>
                             </div>
                         `;
@@ -540,26 +591,23 @@
                 return;
             }
 
-            const totalEpisodios = result.total || 24;
-            const sourceUrl = result.source;
-            const foundTitle = result.title || title;
+            const episodes = result.episodes;
+            const animeId = result.animeId;
+            const animeTitle = result.title || title;
+            playerStatus.textContent = `${episodes.length} episodios disponibles`;
 
-            playerStatus.textContent = `${totalEpisodios} episodios disponibles`;
-            if (foundTitle !== title) {
-                playerTitle.textContent = `${title} (${foundTitle})`;
+            if (animeTitle !== title) {
+                playerTitle.textContent = `${title} (${animeTitle})`;
             }
 
-            // Crear botones de episodios (simulados)
-            const episodios = Array.from({ length: Math.min(totalEpisodios, 50) }, (_, i) => i + 1);
-            episodeList.innerHTML = episodios.map(ep =>
-                `<button data-ep="${ep}" data-url="${sourceUrl}">Ep ${ep}</button>`
+            episodeList.innerHTML = episodes.map(ep =>
+                `<button data-ep="${ep.number}" data-id="${animeId}">Ep ${ep.number}</button>`
             ).join('');
 
-            // Evento para cada botón
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const epNum = parseInt(btn.dataset.ep);
-                    const url = btn.dataset.url;
+                    const id = btn.dataset.id;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -568,24 +616,46 @@
                     videoPlaceholder.innerHTML = `<span class="icon">⏳</span> Cargando episodio ${epNum}...`;
                     videoIframe.style.display = 'none';
 
-                    // Intentar cargar el video (puede que no funcione si el embed no existe)
-                    // Por ahora mostramos un mensaje
-                    videoPlaceholder.innerHTML = `
-                                <span class="icon">🎬</span>
-                                Episodio ${epNum}<br>
-                                <span style="font-size:0.8rem; color:#666;">
-                                    ℹ️ El streaming gratuito ya no está disponible.<br>
-                                    <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+episode+${epNum}" target="_blank" style="color:#a78bfa;">Buscar en YouTube</a>
-                                </span>
-                            `;
+                    // Obtener enlace de video desde el backend
+                    const streamData = await fetchStreamFromBackend(id, epNum);
+
+                    if (streamData && streamData.url) {
+                        // Si es un .m3u8, usamos un reproductor HLS
+                        // Por ahora, lo mostramos en un iframe (puede funcionar con algunos navegadores)
+                        videoPlaceholder.style.display = 'none';
+                        videoIframe.style.display = 'block';
+
+                        // Para .m3u8, muchos navegadores no lo soportan directamente en iframe
+                        // Usamos un embed de video si está disponible
+                        if (streamData.url.includes('.m3u8')) {
+                            // Si es .m3u8, mostrar mensaje y enlace para descargar
+                            videoPlaceholder.style.display = 'block';
+                            videoPlaceholder.innerHTML = `
+                                        <span class="icon">▶️</span>
+                                        <strong>Episodio ${epNum}</strong><br>
+                                        <span style="font-size:0.8rem; color:#888;">
+                                            El enlace es un stream HLS (.m3u8).<br>
+                                            <a href="${streamData.url}" target="_blank" style="color:#a78bfa; text-decoration:underline;">
+                                                Abrir en reproductor externo
+                                            </a>
+                                        </span>
+                                    `;
+                            videoIframe.style.display = 'none';
+                        } else {
+                            videoIframe.src = streamData.url;
+                        }
+                    } else {
+                        videoPlaceholder.innerHTML =
+                            `<span class="icon">❌</span> No se pudo cargar el episodio ${epNum}.`;
+                    }
                 });
             });
 
-            // Auto-seleccionar el primer episodio
+            // Auto-reproducir el primer episodio
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) {
                 firstBtn.classList.add('active');
-                setTimeout(() => firstBtn.click(), 300);
+                setTimeout(() => firstBtn.click(), 500);
             }
         }
 
