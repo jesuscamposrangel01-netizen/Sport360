@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AnimeStream | Ver animes online gratis en HD</title>
-    <meta name="description" content="AnimeStream - Plataforma para ver animes online gratis con catálogo actualizado.">
-    <meta property="og:title" content="AnimeStream | Ver animes online gratis">
-    <meta property="og:description" content="Disfruta de los mejores animes en streaming gratis. Catálogo actualizado.">
-    <meta name="theme-color" content="#0d0b1a">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="AnimeStream - Plataforma para ver animes online gratis con catálogo actualizado." />
+    <meta property="og:title" content="AnimeStream | Ver animes online gratis" />
+    <meta property="og:description" content="Disfruta de los mejores animes en streaming gratis. Catálogo actualizado." />
+    <meta name="theme-color" content="#0d0b1a" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ============================================================
-           ESTILOS COMPLETOS (modernos)
-           ============================================================ */
+        /* ===== ESTILOS (mismos que antes, solo añado uno nuevo) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -46,7 +44,6 @@
         button { cursor: pointer; border: none; background: none; font-family: inherit; }
         img { max-width: 100%; display: block; }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
@@ -112,13 +109,9 @@
             transition: var(--transition);
         }
         .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
+        .nav-links a.active::after { width: 100%; }
         .nav-links a:hover,
-        .nav-links a.active {
-            color: #fff;
-        }
+        .nav-links a.active { color: #fff; }
 
         .search-box {
             display: flex;
@@ -144,9 +137,7 @@
             font-size: 0.9rem;
             outline: none;
         }
-        .search-box input::placeholder {
-            color: var(--text-secondary);
-        }
+        .search-box input::placeholder { color: var(--text-secondary); }
         .search-box button {
             padding: 10px 22px;
             background: var(--accent);
@@ -155,9 +146,7 @@
             transition: var(--transition);
             font-size: 0.85rem;
         }
-        .search-box button:hover {
-            background: var(--accent-dark);
-        }
+        .search-box button:hover { background: var(--accent-dark); }
 
         /* MAIN */
         main {
@@ -188,10 +177,7 @@
             border-radius: 50%;
             pointer-events: none;
         }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
+        .hero-content { position: relative; z-index: 1; }
         .hero-content .tag {
             display: inline-block;
             background: rgba(124, 58, 237, 0.2);
@@ -238,9 +224,7 @@
         }
 
         /* SECTION */
-        .section {
-            margin-bottom: 48px;
-        }
+        .section { margin-bottom: 48px; }
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -256,18 +240,14 @@
             align-items: center;
             gap: 10px;
         }
-        .section-title .emoji {
-            font-size: 1.6rem;
-        }
+        .section-title .emoji { font-size: 1.6rem; }
         .section-link {
             color: var(--text-secondary);
             font-size: 0.85rem;
             font-weight: 500;
             transition: var(--transition);
         }
-        .section-link:hover {
-            color: var(--accent-light);
-        }
+        .section-link:hover { color: var(--accent-light); }
 
         /* GRID DE ANIMES */
         .anime-grid {
@@ -304,9 +284,7 @@
             object-fit: cover;
             transition: transform 0.5s;
         }
-        .anime-card:hover .card-img img {
-            transform: scale(1.06);
-        }
+        .anime-card:hover .card-img img { transform: scale(1.06); }
         .anime-card .card-img .overlay {
             position: absolute;
             bottom: 0;
@@ -317,9 +295,7 @@
             opacity: 0;
             transition: var(--transition);
         }
-        .anime-card:hover .card-img .overlay {
-            opacity: 1;
-        }
+        .anime-card:hover .card-img .overlay { opacity: 1; }
         .anime-card .card-img .overlay .play-btn {
             background: var(--accent);
             color: #fff;
@@ -353,10 +329,7 @@
             display: flex;
             justify-content: space-between;
         }
-        .anime-card .card-body .meta .score {
-            color: #fcd34d;
-            font-weight: 700;
-        }
+        .anime-card .card-body .meta .score { color: #fcd34d; font-weight: 700; }
         .anime-card .card-body .genres {
             font-size: 0.65rem;
             color: var(--accent-light);
@@ -459,14 +432,8 @@
             gap: 12px;
             margin-bottom: 12px;
         }
-        .episode-controls .ep-label {
-            font-weight: 600;
-            color: var(--accent-light);
-        }
-        .episode-controls .ep-count {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
+        .episode-controls .ep-label { font-weight: 600; color: var(--accent-light); }
+        .episode-controls .ep-count { font-size: 0.8rem; color: var(--text-secondary); }
         .episode-list {
             display: flex;
             flex-wrap: wrap;
@@ -503,10 +470,16 @@
             text-align: center;
             width: 100%;
         }
-        .episode-list .no-episodes .icon {
-            font-size: 2rem;
+        .episode-list .no-episodes .icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+        .episode-list .no-episodes .suggestion {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
             display: block;
-            margin-bottom: 8px;
+        }
+        .episode-list .no-episodes .suggestion a {
+            color: var(--accent-light);
+            text-decoration: underline;
         }
 
         .close-episodes {
@@ -519,10 +492,7 @@
             border: 1px solid rgba(239, 68, 68, 0.2);
             transition: var(--transition);
         }
-        .close-episodes:hover {
-            background: #ef4444;
-            color: #fff;
-        }
+        .close-episodes:hover { background: #ef4444; color: #fff; }
 
         /* SPINNER */
         .spinner {
@@ -535,11 +505,7 @@
             margin: 40px auto;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 8px;
-        }
+        .loading-text { text-align: center; color: var(--text-secondary); margin-top: 8px; }
 
         /* FOOTER */
         footer {
@@ -555,21 +521,14 @@
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 40px;
         }
-        .footer-col h4 {
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 14px;
-            font-weight: 700;
-        }
+        .footer-col h4 { color: #fff; font-size: 1rem; margin-bottom: 14px; font-weight: 700; }
         .footer-col p, .footer-col a {
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.8;
             display: block;
         }
-        .footer-col a:hover {
-            color: var(--accent-light);
-        }
+        .footer-col a:hover { color: var(--accent-light); }
         .footer-col .social-icons {
             display: flex;
             gap: 12px;
@@ -600,9 +559,7 @@
             margin-right: auto;
         }
 
-        @media (max-width: 1024px) {
-            .footer-inner { grid-template-columns: 1fr 1fr; }
-        }
+        @media (max-width: 1024px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) {
             .header-inner { flex-direction: column; align-items: stretch; gap: 10px; }
             .nav-links { justify-content: center; flex-wrap: wrap; gap: 14px; }
@@ -788,6 +745,7 @@
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
         const CONSUMET_API = 'https://api.consumet.org/anime/gogoanime';
+        const ZORO_API = 'https://api.consumet.org/anime/zoro'; // alternativa
 
         let currentPage = 1;
         let currentQuery = '';
@@ -833,68 +791,91 @@
         }
 
         // ============================================================
-        // MEJORADA: BÚSQUEDA DE EPISODIOS CON MÚLTIPLES VARIANTES
+        // BÚSQUEDA DE EPISODIOS - PRUEBA CON MÚLTIPLES FUENTES
         // ============================================================
         async function fetchEpisodes(animeTitle) {
-            // Limpiar el título: eliminar " (TV)", " (Movie)", etc.
+            // Limpiar título
             let cleanTitle = animeTitle
-                .replace(/\s*\([^)]*\)/g, '') // elimina (TV), (Movie), etc.
-                .replace(/[^\w\s:]/g, '') // elimina caracteres especiales
+                .replace(/\s*\([^)]*\)/g, '')
+                .replace(/[^\w\s:]/g, '')
                 .trim();
 
-            // Generar variantes del título
             const variants = [
                 cleanTitle,
-                cleanTitle.replace(/:/g, '').trim(), // sin ":"
-                cleanTitle.split(':')[0].trim(), // solo parte antes de ":"
-                cleanTitle.split('(')[0].trim(), // sin paréntesis
-                cleanTitle.replace(/\s+/g, ' ').trim(), // espacios normales
-                cleanTitle.toLowerCase(), // minúsculas
-                cleanTitle.replace(/[^a-zA-Z0-9 ]/g, '').trim(), // solo letras y números
+                cleanTitle.replace(/:/g, '').trim(),
+                cleanTitle.split(':')[0].trim(),
+                cleanTitle.split('(')[0].trim(),
+                cleanTitle.replace(/\s+/g, ' ').trim(),
+                cleanTitle.toLowerCase(),
+                cleanTitle.replace(/[^a-zA-Z0-9 ]/g, '').trim(),
             ];
 
-            // Eliminar duplicados y vacíos
-            const uniqueVariants = [...new Set(variants)].filter(q => q.length > 3);
+            const uniqueVariants = [...new Set(variants)].filter(q => q.length > 2);
 
-            console.log('🔍 Buscando episodios para:', uniqueVariants);
+            // FUENTES: Gogoanime primero, luego Zoro como respaldo
+            const sources = [
+                { name: 'Gogoanime', api: CONSUMET_API },
+                { name: 'Zoro', api: ZORO_API }
+            ];
 
-            for (const query of uniqueVariants) {
-                try {
-                    // Primero buscar el anime en Gogoanime
-                    const searchResp = await fetch(`${CONSUMET_API}/search?query=${encodeURIComponent(query)}`);
-                    if (!searchResp.ok) continue;
-                    const searchData = await searchResp.json();
+            for (const source of sources) {
+                console.log(`🔍 Buscando en ${source.name}...`);
+                for (const query of uniqueVariants) {
+                    try {
+                        const searchResp = await fetch(`${source.api}/search?query=${encodeURIComponent(query)}`);
+                        if (!searchResp.ok) continue;
+                        const searchData = await searchResp.json();
 
-                    if (searchData.results && searchData.results.length > 0) {
-                        // Buscar el resultado más relevante (mayor coincidencia)
-                        let bestMatch = searchData.results[0];
-                        for (const result of searchData.results) {
-                            const titleLower = result.title?.toLowerCase() || '';
-                            const queryLower = query.toLowerCase();
-                            if (titleLower.includes(queryLower) || queryLower.includes(titleLower)) {
-                                bestMatch = result;
-                                break;
+                        if (searchData.results && searchData.results.length > 0) {
+                            // Buscar mejor coincidencia
+                            let bestMatch = searchData.results[0];
+                            for (const result of searchData.results) {
+                                const titleLower = result.title?.toLowerCase() || '';
+                                const queryLower = query.toLowerCase();
+                                if (titleLower.includes(queryLower) || queryLower.includes(titleLower)) {
+                                    bestMatch = result;
+                                    break;
+                                }
+                            }
+
+                            const sourceId = bestMatch.id;
+                            console.log(`✅ Encontrado en ${source.name}: ${sourceId} (${bestMatch.title})`);
+
+                            // Obtener episodios
+                            const epResp = await fetch(`${source.api}/episodes/${sourceId}`);
+                            if (!epResp.ok) continue;
+                            const epData = await epResp.json();
+
+                            if (epData.episodes && epData.episodes.length > 0) {
+                                return {
+                                    sourceId,
+                                    episodes: epData.episodes,
+                                    title: bestMatch.title,
+                                    source: source.name,
+                                    api: source.api
+                                };
+                            } else {
+                                // Si no tiene episodios, probar con /info
+                                try {
+                                    const infoResp = await fetch(`${source.api}/info/${sourceId}`);
+                                    if (infoResp.ok) {
+                                        const infoData = await infoResp.json();
+                                        if (infoData.episodes && infoData.episodes.length > 0) {
+                                            return {
+                                                sourceId,
+                                                episodes: infoData.episodes,
+                                                title: bestMatch.title,
+                                                source: source.name,
+                                                api: source.api
+                                            };
+                                        }
+                                    }
+                                } catch (e) { /* ignorar */ }
                             }
                         }
-
-                        const gogoId = bestMatch.id;
-                        console.log(`✅ Encontrado en Gogoanime: ${gogoId} (${bestMatch.title})`);
-
-                        // Obtener episodios
-                        const epResp = await fetch(`${CONSUMET_API}/episodes/${gogoId}`);
-                        if (!epResp.ok) continue;
-                        const epData = await epResp.json();
-
-                        if (epData.episodes && epData.episodes.length > 0) {
-                            return {
-                                gogoId,
-                                episodes: epData.episodes,
-                                title: bestMatch.title
-                            };
-                        }
+                    } catch (e) {
+                        console.warn(`⚠️ Falló búsqueda en ${source.name} para "${query}":`, e);
                     }
-                } catch (e) {
-                    console.warn(`⚠️ Falló búsqueda para "${query}":`, e);
                 }
             }
 
@@ -904,14 +885,14 @@
         // ============================================================
         // OBTENER ENLACE DE STREAMING
         // ============================================================
-        async function fetchStreamLink(gogoId, episodeNumber) {
+        async function fetchStreamLink(sourceApi, sourceId, episodeNumber) {
             try {
-                const resp = await fetch(`${CONSUMET_API}/watch/${gogoId}-episode-${episodeNumber}`);
+                const resp = await fetch(`${sourceApi}/watch/${sourceId}-episode-${episodeNumber}`);
                 if (!resp.ok) throw new Error('Error al obtener enlace');
                 const data = await resp.json();
 
                 if (data.sources && data.sources.length > 0) {
-                    // Intentar obtener fuente .mp4 (más estable)
+                    // Buscar .mp4 primero (más estable)
                     const mp4 = data.sources.find(s => s.url && s.url.endsWith('.mp4'));
                     if (mp4) return mp4.url;
 
@@ -974,7 +955,6 @@
                 grid.innerHTML = html;
             }
 
-            // Event listeners
             document.querySelectorAll('.anime-card').forEach(card => {
                 card.removeEventListener('click', handleCardClick);
                 card.addEventListener('click', handleCardClick);
@@ -992,7 +972,7 @@
         }
 
         // ============================================================
-        // ABRIR ANIME (MUESTRA EPISODIOS)
+        // ABRIR ANIME - CON SOPORTE PARA PELÍCULAS Y MÚLTIPLES FUENTES
         // ============================================================
         async function openAnime(malId, title) {
             currentAnimeTitle = title;
@@ -1017,7 +997,7 @@
                 epSynopsis.textContent = 'Error al cargar sinopsis.';
             }
 
-            // Obtener episodios con la función mejorada
+            // Buscar episodios con múltiples fuentes
             const result = await fetchEpisodes(title);
 
             if (!result || !result.episodes || result.episodes.length === 0) {
@@ -1026,7 +1006,10 @@
                                 <span class="icon">😅</span>
                                 No se encontraron episodios para "${title}".<br>
                                 <span style="font-size:0.8rem; color:var(--text-secondary);">
-                                    El anime puede no estar disponible en nuestra fuente o el título no coincidió exactamente.
+                                    El anime puede no estar disponible en nuestras fuentes.
+                                </span>
+                                <span class="suggestion">
+                                    💡 Sugerencia: Prueba con el título en inglés o busca otro anime.
                                 </span>
                             </div>
                         `;
@@ -1034,32 +1017,31 @@
                 return;
             }
 
-            // Ordenar episodios numéricamente
             const episodes = result.episodes.sort((a, b) => a.number - b.number);
-            const gogoId = result.gogoId;
+            const sourceId = result.sourceId;
+            const sourceApi = result.api;
             const foundTitle = result.title || title;
-            episodeCount.textContent = `${episodes.length} episodios`;
+            const sourceName = result.source || 'Gogoanime';
+            episodeCount.textContent = `${episodes.length} episodios (${sourceName})`;
 
-            // Mostrar título real encontrado en Gogoanime
             if (foundTitle !== title) {
                 epTitle.textContent = `${title} (${foundTitle})`;
             }
 
-            // Crear botones de episodios
             episodeList.innerHTML = episodes.map(ep =>
-                `<button data-ep="${ep.number}" data-gogo="${gogoId}">Ep ${ep.number}</button>`
+                `<button data-ep="${ep.number}" data-id="${sourceId}" data-api="${sourceApi}">Ep ${ep.number}</button>`
             ).join('');
 
-            // Evento para cada botón
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const epNum = parseInt(btn.dataset.ep);
-                    const gogo = btn.dataset.gogo;
+                    const id = btn.dataset.id;
+                    const api = btn.dataset.api;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    const url = await fetchStreamLink(gogo, epNum);
+                    const url = await fetchStreamLink(api, id, epNum);
                     if (url) {
                         videoIframe.src = url;
                     } else {
@@ -1069,7 +1051,6 @@
                 });
             });
 
-            // Auto-reproducir el primer episodio
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) firstBtn.click();
         }
