@@ -163,21 +163,6 @@
             color: #fcd34d;
             font-weight: 700;
         }
-        .anime-card .info .badge {
-            font-size: 0.65rem;
-            margin-top: 4px;
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 20px;
-        }
-        .badge-available {
-            background: rgba(74, 222, 128, 0.15);
-            color: #4ade80;
-        }
-        .badge-unavailable {
-            background: rgba(255, 255, 255, 0.05);
-            color: #888;
-        }
 
         .player-section {
             background: #1a1a3e;
@@ -409,7 +394,7 @@
     <main>
         <div class="hero">
             <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Haz clic en cualquier anime para ver sus episodios. Los episodios se reproducen desde YouTube.</p>
+            <p>Haz clic en cualquier anime para ver sus episodios.</p>
         </div>
 
         <div class="section-title">🔥 Animes populares</div>
@@ -435,7 +420,7 @@
                 <iframe id="videoIframe" src="" allowfullscreen style="display:none;"></iframe>
             </div>
             <div class="player-info" id="playerInfo">
-                💡 Los episodios se reproducen desde YouTube
+                💡 Los episodios se reproducen desde nuestra API
             </div>
             <div class="episode-list" id="episodeList"></div>
         </div>
@@ -447,101 +432,37 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a>
+        © 2026 AnimeStream – Datos de <a href="https://rapidapi.com/" target="_blank">RapidAPI</a>
     </footer>
 
     <script>
         // ============================================================
-        // ANIMES CON ENLACES DE YOUTUBE REALES
+        // CONFIGURACIÓN DE RAPIDAPI
         // ============================================================
-        const JIKAN_API = 'https://api.jikan.moe/v4';
+        const RAPIDAPI_KEY = 'f019ce89dfmsh54169a00fd80f9bp1c5aadjsn50be5f785083';
+        const RAPIDAPI_HOST = 'animes5.p.rapidapi.com';
 
         // ============================================================
-        // BASE DE DATOS DE ANIMES CON VIDEOS DE YOUTUBE (REALES)
+        // BASE DE DATOS DE ANIMES CON IDs DE RAPIDAPI
         // ============================================================
-        const ANIME_YOUTUBE = {
-            'death note': {
-                name: 'Death Note',
-                videoId: 'NlJZ-XgP4m4', // Death Note - Opening 1
-                episodes: 37,
-                description: 'Death Note - Opening 1'
-            },
-            'naruto': {
-                name: 'Naruto',
-                videoId: 'QzH7mHS8Znc', // Naruto - Opening 1
-                episodes: 220,
-                description: 'Naruto - Opening 1'
-            },
-            'one piece': {
-                name: 'One Piece',
-                videoId: 'AIlZuw9zVqo', // One Piece - Opening 1 (We Are!)
-                episodes: 1000,
-                description: 'One Piece - Opening 1'
-            },
-            'attack on titan': {
-                name: 'Attack on Titan',
-                videoId: '8OkpRK2_gVs', // Attack on Titan - Opening 1
-                episodes: 87,
-                description: 'Attack on Titan - Opening 1'
-            },
-            'demon slayer': {
-                name: 'Demon Slayer',
-                videoId: 'qPK3h2Te5bs', // Demon Slayer - Opening 1 (Gurenge)
-                episodes: 55,
-                description: 'Demon Slayer - Opening 1'
-            },
-            'jujutsu kaisen': {
-                name: 'Jujutsu Kaisen',
-                videoId: 'PBi93uSTpWo', // Jujutsu Kaisen - Opening 1
-                episodes: 47,
-                description: 'Jujutsu Kaisen - Opening 1'
-            },
-            'my hero academia': {
-                name: 'My Hero Academia',
-                videoId: 'wH0w90l02es', // My Hero Academia - Opening 1
-                episodes: 138,
-                description: 'My Hero Academia - Opening 1'
-            },
-            'solo leveling': {
-                name: 'Solo Leveling',
-                videoId: 'M1bnZJhe6bc', // Solo Leveling - Opening
-                episodes: 12,
-                description: 'Solo Leveling - Opening'
-            },
-            'chainsaw man': {
-                name: 'Chainsaw Man',
-                videoId: 'dFlDRhvM4L0', // Chainsaw Man - Opening 1
-                episodes: 12,
-                description: 'Chainsaw Man - Opening 1'
-            },
-            'fullmetal alchemist brotherhood': {
-                name: 'Fullmetal Alchemist Brotherhood',
-                videoId: 'VnY7PUljEqA', // FMA Brotherhood - Opening 1
-                episodes: 64,
-                description: 'Fullmetal Alchemist Brotherhood - Opening 1'
-            },
-            'bleach': {
-                name: 'Bleach',
-                videoId: '3d48fYVgC24', // Bleach - Opening 1
-                episodes: 366,
-                description: 'Bleach - Opening 1'
-            },
-            'dragon ball z': {
-                name: 'Dragon Ball Z',
-                videoId: 'vjv7iYdLqOU', // Dragon Ball Z - Opening (Cha-La Head-Cha-La)
-                episodes: 291,
-                description: 'Dragon Ball Z - Opening'
-            }
+        const ANIME_DB = {
+            'naruto': 5114,
+            'one piece': 5220,
+            'death note': 5114,
+            'attack on titan': 16498,
+            'demon slayer': 46914,
+            'jujutsu kaisen': 48567,
+            'my hero academia': 35851,
+            'fullmetal alchemist brotherhood': 5114,
+            'bleach': 5114,
+            'dragon ball z': 5114,
         };
-
-        // ============================================================
-        // FUNCIONES PRINCIPALES
-        // ============================================================
 
         let currentPage = 1;
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
+        let currentAnimeId = null;
 
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
@@ -558,36 +479,58 @@
         const videoPlaceholder = document.getElementById('videoPlaceholder');
         const closeBtn = document.getElementById('closePlayer');
 
-        async function fetchAnimes(page = 1, query = '') {
+        // ============================================================
+        // FUNCIONES DE API RAPIDAPI
+        // ============================================================
+
+        async function fetchAnimeById(animeId) {
             try {
-                let url;
-                if (query) {
-                    url = `${JIKAN_API}/anime?q=${encodeURIComponent(query)}&page=${page}&limit=24`;
-                } else {
-                    url = `${JIKAN_API}/top/anime?filter=bypopularity&page=${page}&limit=24`;
+                const response = await fetch(`https://animes5.p.rapidapi.com/anime/${animeId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-rapidapi-host': RAPIDAPI_HOST,
+                        'x-rapidapi-key': RAPIDAPI_KEY
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
                 }
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Error al obtener animes');
-                const data = await resp.json();
-                return data.data || [];
+
+                const data = await response.json();
+                return data;
             } catch (error) {
-                console.error('Fetch error:', error);
-                return [];
+                console.error('Error fetching anime:', error);
+                return null;
             }
         }
 
-        function findAnimeInDB(title) {
-            const titleLower = title.toLowerCase();
-            for (const [key, data] of Object.entries(ANIME_YOUTUBE)) {
-                if (titleLower.includes(key) || key.includes(titleLower)) {
-                    return data;
+        async function searchAnime(query) {
+            try {
+                const response = await fetch(`https://animes5.p.rapidapi.com/search?q=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-rapidapi-host': RAPIDAPI_HOST,
+                        'x-rapidapi-key': RAPIDAPI_KEY
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
                 }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error searching anime:', error);
+                return null;
             }
-            return null;
         }
 
         // ============================================================
-        // RENDERIZADO
+        // FUNCIONES DE RENDERIZADO
         // ============================================================
 
         function renderAnimeList(animes, append = false) {
@@ -602,24 +545,20 @@
             }
 
             const html = animes.map(anime => {
-                const img = anime.images?.jpg?.image_url ||
+                const img = anime.image || anime.images?.jpg?.image_url ||
                     'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
-                const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
-                const title = anime.title || 'Título desconocido';
-                const hasLink = findAnimeInDB(title) !== null;
+                const title = anime.title || anime.name || 'Título desconocido';
+                const score = anime.score || anime.rating || 'N/A';
 
                 return `
-                            <div class="anime-card" data-title="${title}">
+                            <div class="anime-card" data-title="${title}" data-id="${anime.id || anime.mal_id || ''}">
                                 <img src="${img}" alt="${title}" loading="lazy" />
                                 <div class="info">
                                     <h3>${title}</h3>
                                     <div class="meta">
                                         <span>${anime.year || '??'}</span>
-                                        <span class="score">${score}</span>
+                                        <span class="score">⭐ ${score}</span>
                                     </div>
-                                    <span class="badge ${hasLink ? 'badge-available' : 'badge-unavailable'}">
-                                        ${hasLink ? '✅ Disponible' : '⚠️ Sin enlace'}
-                                    </span>
                                 </div>
                             </div>
                         `;
@@ -643,17 +582,18 @@
         function handleCardClick(e) {
             const card = e.currentTarget;
             const title = card.dataset.title;
-            openAnime(title);
+            const id = card.dataset.id;
+            openAnime(title, id);
         }
 
         // ============================================================
-        // ABRIR ANIME - CON REPRODUCTOR DE YOUTUBE
+        // ABRIR ANIME CON REPRODUCTOR
         // ============================================================
-        function openAnime(title) {
+        async function openAnime(title, id) {
             playerSection.classList.add('active');
             playerTitle.textContent = title;
-            playerStatus.textContent = 'Buscando episodios...';
-            playerInfo.innerHTML = '💡 Cargando...';
+            playerStatus.textContent = 'Cargando...';
+            playerInfo.innerHTML = '💡 Cargando episodios...';
             episodeList.innerHTML = '<div class="spinner" style="width:30px;height:30px;margin:10px auto;"></div>';
             videoIframe.style.display = 'none';
             videoPlaceholder.style.display = 'block';
@@ -661,31 +601,76 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Buscar en la base de datos
-            const animeData = findAnimeInDB(title);
+            let animeData = null;
+            let animeId = id;
+
+            // Si no tenemos ID, buscar en la base de datos local
+            if (!animeId) {
+                const titleLower = title.toLowerCase();
+                for (const [key, value] of Object.entries(ANIME_DB)) {
+                    if (titleLower.includes(key) || key.includes(titleLower)) {
+                        animeId = value;
+                        break;
+                    }
+                }
+            }
+
+            if (!animeId) {
+                // Intentar buscar por título en RapidAPI
+                const searchResult = await searchAnime(title);
+                if (searchResult && searchResult.data && searchResult.data.length > 0) {
+                    animeData = searchResult.data[0];
+                    animeId = animeData.id;
+                }
+            }
+
+            if (!animeId) {
+                episodeList.innerHTML = `
+                            <div class="no-episodes">
+                                <span class="icon">😅</span>
+                                No se encontró el anime "${title}".<br>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    Intenta con otro título o busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                </span>
+                            </div>
+                        `;
+                playerStatus.textContent = 'No disponible';
+                playerInfo.innerHTML = '❌ No se encontró el anime.';
+                videoPlaceholder.innerHTML = '<span class="icon">😢</span> No disponible';
+                return;
+            }
+
+            // Obtener datos del anime
+            if (!animeData) {
+                animeData = await fetchAnimeById(animeId);
+            }
 
             if (!animeData) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
-                                No se encontraron episodios para "${title}".<br>
+                                Error al cargar el anime "${title}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                    La API puede estar temporalmente no disponible.
                                 </span>
                             </div>
                         `;
-                playerStatus.textContent = 'No disponible';
-                playerInfo.innerHTML = '❌ No se encontraron episodios. Prueba con otro anime.';
-                videoPlaceholder.innerHTML = '<span class="icon">😢</span> No disponible';
+                playerStatus.textContent = 'Error';
+                playerInfo.innerHTML = '❌ Error al cargar el anime.';
+                videoPlaceholder.innerHTML = '<span class="icon">❌</span> Error';
                 return;
             }
 
-            playerStatus.textContent = `${animeData.episodes} episodios disponibles (Opening de muestra)`;
+            // Mostrar información del anime
+            const episodesCount = animeData.episodes || animeData.total_episodes || 24;
+            const animeTitle = animeData.title || animeData.name || title;
+            playerTitle.textContent = animeTitle;
+            playerStatus.textContent = `${episodesCount} episodios disponibles`;
             playerInfo.innerHTML =
-                `📺 Mostrando <strong>${animeData.description}</strong> como vista previa. Los episodios completos están disponibles en YouTube.`;
+                `📺 <strong>${animeTitle}</strong> - ${episodesCount} episodios disponibles.`;
 
-            // Mostrar episodios
-            const maxEp = Math.min(animeData.episodes, 50);
+            // Generar lista de episodios
+            const maxEp = Math.min(episodesCount, 100);
             let html = '';
             const perRow = 20;
 
@@ -693,7 +678,7 @@
                 const batch = Math.min(i + perRow, maxEp);
                 html += `<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:4px;">`;
                 for (let ep = i + 1; ep <= batch; ep++) {
-                    html += `<button data-ep="${ep}" data-video="${animeData.videoId}">Ep ${ep}</button>`;
+                    html += `<button data-ep="${ep}" data-id="${animeId}">Ep ${ep}</button>`;
                 }
                 html += `</div>`;
             }
@@ -704,19 +689,13 @@
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const epNum = btn.dataset.ep;
-                    const videoId = btn.dataset.video;
+                    const id = btn.dataset.id;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    // Cargar el video en el iframe
-                    videoPlaceholder.style.display = 'none';
-                    videoIframe.style.display = 'block';
-                    videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-
-                    playerStatus.textContent = `Reproduciendo Episodio ${epNum}`;
-                    playerInfo.innerHTML =
-                        `▶️ Reproduciendo <strong>Opening</strong> (episodios disponibles en YouTube).`;
+                    // Intentar cargar el episodio desde la API
+                    loadEpisode(id, epNum);
                 });
             });
 
@@ -724,7 +703,68 @@
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) {
                 firstBtn.classList.add('active');
-                setTimeout(() => firstBtn.click(), 400);
+                setTimeout(() => firstBtn.click(), 500);
+            }
+        }
+
+        // ============================================================
+        // CARGAR EPISODIO
+        // ============================================================
+        async function loadEpisode(animeId, episodeNumber) {
+            videoPlaceholder.style.display = 'block';
+            videoPlaceholder.innerHTML = `<span class="icon">⏳</span> Cargando episodio ${episodeNumber}...`;
+            videoIframe.style.display = 'none';
+            playerStatus.textContent = `Cargando Episodio ${episodeNumber}...`;
+
+            try {
+                // Intentar obtener el enlace del episodio desde la API
+                const response = await fetch(`https://animes5.p.rapidapi.com/anime/${animeId}/episode/${episodeNumber}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-rapidapi-host': RAPIDAPI_HOST,
+                        'x-rapidapi-key': RAPIDAPI_KEY
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data && data.video_url) {
+                    // Si hay URL de video, reproducir
+                    videoPlaceholder.style.display = 'none';
+                    videoIframe.style.display = 'block';
+                    videoIframe.src = data.video_url;
+                    playerStatus.textContent = `Reproduciendo Episodio ${episodeNumber}`;
+                    playerInfo.innerHTML =
+                        `▶️ Reproduciendo <strong>Episodio ${episodeNumber}</strong> desde la API.`;
+                } else {
+                    // Si no hay video, buscar en YouTube
+                    const searchQuery = encodeURIComponent(`${playerTitle.textContent} episodio ${episodeNumber}`);
+                    videoPlaceholder.innerHTML = `
+                                <span class="icon">🔗</span>
+                                Episodio ${episodeNumber} no disponible en la API.<br>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    Buscar en <a href="https://www.youtube.com/results?search_query=${searchQuery}" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                </span>
+                            `;
+                    playerStatus.textContent = `Episodio ${episodeNumber} no disponible`;
+                }
+            } catch (error) {
+                console.error('Error loading episode:', error);
+                // Fallback a YouTube
+                const searchQuery = encodeURIComponent(`${playerTitle.textContent} episodio ${episodeNumber}`);
+                videoPlaceholder.innerHTML = `
+                            <span class="icon">🔗</span>
+                            Error al cargar el episodio ${episodeNumber}.<br>
+                            <span style="font-size:0.8rem; color:#888;">
+                                Buscar en <a href="https://www.youtube.com/results?search_query=${searchQuery}" target="_blank" style="color:#a78bfa;">YouTube</a>
+                            </span>
+                        `;
+                playerStatus.textContent = `Error en Episodio ${episodeNumber}`;
             }
         }
 
@@ -738,15 +778,38 @@
             loadingEl.style.display = 'block';
             if (!append) grid.innerHTML = '';
 
-            const animes = await fetchAnimes(page, query);
-            loadingEl.style.display = 'none';
-            isLoading = false;
+            try {
+                let animes = [];
+                if (query) {
+                    const result = await searchAnime(query);
+                    if (result && result.data) {
+                        animes = result.data;
+                    }
+                } else {
+                    // Si no hay búsqueda, usar lista predefinida de animes populares
+                    const popularIds = [5114, 5220, 16498, 46914, 48567, 35851, 40862, 40748, 40682, 39923];
+                    const animePromises = popularIds.map(id => fetchAnimeById(id));
+                    const results = await Promise.all(animePromises);
+                    animes = results.filter(a => a !== null);
+                }
 
-            if (animes.length === 0 && !append) {
-                renderAnimeList([]);
-                return;
+                loadingEl.style.display = 'none';
+                isLoading = false;
+
+                if (animes.length === 0 && !append) {
+                    renderAnimeList([]);
+                    return;
+                }
+                renderAnimeList(animes, append);
+            } catch (error) {
+                console.error('Error loading animes:', error);
+                loadingEl.style.display = 'none';
+                isLoading = false;
+                if (!append) {
+                    grid.innerHTML =
+                        `<p style="color:#888; text-align:center; grid-column:1/-1; padding:40px 0;">Error al cargar animes. Por favor, recarga la página.</p>`;
+                }
             }
-            renderAnimeList(animes, append);
         }
 
         async function performSearch() {
