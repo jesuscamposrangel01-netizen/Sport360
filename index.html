@@ -163,6 +163,21 @@
             color: #fcd34d;
             font-weight: 700;
         }
+        .anime-card .info .badge {
+            font-size: 0.65rem;
+            margin-top: 4px;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+        .badge-available {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+        }
+        .badge-unavailable {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+        }
 
         .player-section {
             background: #1a1a3e;
@@ -207,34 +222,18 @@
             border-radius: 20px;
             border: 1px solid #2a2a5a;
         }
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-        }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .video-wrapper .placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+        .player-section .player-info {
+            font-size: 0.85rem;
             color: #888;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            text-align: center;
         }
-        .video-wrapper .placeholder .icon {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 8px;
+        .player-section .player-info a {
+            color: #a78bfa;
+            text-decoration: underline;
         }
 
         .episode-list {
@@ -242,7 +241,7 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 16px;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             padding: 4px 0;
         }
@@ -380,7 +379,7 @@
     <main>
         <div class="hero">
             <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Haz clic en cualquier anime para ver sus episodios. Los episodios se abren en nueva pestaña para mejor reproducción.</p>
+            <p>Haz clic en cualquier anime para ver sus episodios. Los episodios se abren en una nueva pestaña para mejor compatibilidad.</p>
         </div>
 
         <div class="section-title">🔥 Animes populares</div>
@@ -398,12 +397,8 @@
                     <button class="close-btn" id="closePlayer">✕ Cerrar</button>
                 </div>
             </div>
-            <div class="video-wrapper" id="videoWrapper">
-                <div class="placeholder" id="videoPlaceholder">
-                    <span class="icon">🎬</span>
-                    Selecciona un episodio para ver
-                </div>
-                <iframe id="videoIframe" src="" allowfullscreen style="display:none;"></iframe>
+            <div class="player-info" id="playerInfo">
+                💡 Los episodios se abrirán en una nueva pestaña para mejor reproducción.
             </div>
             <div class="episode-list" id="episodeList"></div>
         </div>
@@ -420,78 +415,121 @@
 
     <script>
         // ============================================================
-        // ANIMES CON ENLACES DIRECTOS PARA VER (SIN BACKEND)
+        // ANIMES CON ENLACES DIRECTOS (SIN BACKEND)
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
 
         // ============================================================
-        // BASE DE DATOS DE ENLACES DE ANIMES (EN ESPAÑOL)
+        // BASE DE DATOS DE ENLACES DE ANIMES EN ESPAÑOL
         // ============================================================
-        const ANIME_LINKS = {
+        const ANIME_DB = {
             'naruto': {
+                name: 'Naruto',
                 url: 'https://www3.animeflv.net/anime/naruto',
                 episodes: 220,
-                source: 'animeflv'
+                source: 'AnimeFLV'
+            },
+            'naruto shippuuden': {
+                name: 'Naruto Shippuuden',
+                url: 'https://www3.animeflv.net/anime/naruto-shippuuden',
+                episodes: 500,
+                source: 'AnimeFLV'
             },
             'one piece': {
+                name: 'One Piece',
                 url: 'https://www3.animeflv.net/anime/one-piece',
                 episodes: 1000,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
-            'attack on titan': {
+            'shingeki no kyojin': {
+                name: 'Attack on Titan',
                 url: 'https://www3.animeflv.net/anime/shingeki-no-kyojin',
                 episodes: 87,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
-            'demon slayer': {
+            'kimetsu no yaiba': {
+                name: 'Demon Slayer',
                 url: 'https://www3.animeflv.net/anime/kimetsu-no-yaiba',
                 episodes: 55,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'jujutsu kaisen': {
+                name: 'Jujutsu Kaisen',
                 url: 'https://www3.animeflv.net/anime/jujutsu-kaisen-tv',
                 episodes: 47,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
-            'my hero academia': {
+            'boku no hero academia': {
+                name: 'My Hero Academia',
                 url: 'https://www3.animeflv.net/anime/boku-no-hero-academia',
                 episodes: 138,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'death note': {
+                name: 'Death Note',
                 url: 'https://www3.animeflv.net/anime/death-note',
                 episodes: 37,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
-            'fullmetal alchemist': {
+            'fullmetal alchemist brotherhood': {
+                name: 'Fullmetal Alchemist',
                 url: 'https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood',
                 episodes: 64,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'tokyo revengers': {
+                name: 'Tokyo Revengers',
                 url: 'https://www3.animeflv.net/anime/tokyo-revengers',
                 episodes: 50,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'spy x family': {
+                name: 'Spy x Family',
                 url: 'https://www3.animeflv.net/anime/spy-x-family',
                 episodes: 37,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'chainsaw man': {
+                name: 'Chainsaw Man',
                 url: 'https://www3.animeflv.net/anime/chainsaw-man',
                 episodes: 12,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'solo leveling': {
+                name: 'Solo Leveling',
                 url: 'https://www3.animeflv.net/anime/solo-leveling',
                 episodes: 12,
-                source: 'animeflv'
+                source: 'AnimeFLV'
             },
             'soul eater': {
+                name: 'Soul Eater',
                 url: 'https://www3.animeflv.net/anime/soul-eater',
                 episodes: 51,
-                source: 'animeflv'
+                source: 'AnimeFLV'
+            },
+            'bleach': {
+                name: 'Bleach',
+                url: 'https://www3.animeflv.net/anime/bleach',
+                episodes: 366,
+                source: 'AnimeFLV'
+            },
+            'dragon ball z': {
+                name: 'Dragon Ball Z',
+                url: 'https://www3.animeflv.net/anime/dragon-ball-z',
+                episodes: 291,
+                source: 'AnimeFLV'
+            },
+            'dragon ball super': {
+                name: 'Dragon Ball Super',
+                url: 'https://www3.animeflv.net/anime/dragon-ball-super',
+                episodes: 131,
+                source: 'AnimeFLV'
+            },
+            'hunter x hunter': {
+                name: 'Hunter x Hunter',
+                url: 'https://www3.animeflv.net/anime/hunter-x-hunter-2011',
+                episodes: 148,
+                source: 'AnimeFLV'
             }
         };
 
@@ -503,7 +541,6 @@
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
-        let currentAnimeTitle = '';
 
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
@@ -514,8 +551,7 @@
         const playerSection = document.getElementById('playerSection');
         const playerTitle = document.getElementById('playerTitle');
         const playerStatus = document.getElementById('playerStatus');
-        const videoIframe = document.getElementById('videoIframe');
-        const videoPlaceholder = document.getElementById('videoPlaceholder');
+        const playerInfo = document.getElementById('playerInfo');
         const episodeList = document.getElementById('episodeList');
         const closeBtn = document.getElementById('closePlayer');
 
@@ -537,9 +573,9 @@
             }
         }
 
-        function findAnimeLink(title) {
+        function findAnimeInDB(title) {
             const titleLower = title.toLowerCase();
-            for (const [key, data] of Object.entries(ANIME_LINKS)) {
+            for (const [key, data] of Object.entries(ANIME_DB)) {
                 if (titleLower.includes(key) || key.includes(titleLower)) {
                     return data;
                 }
@@ -547,29 +583,29 @@
             return null;
         }
 
-        function generateEpisodeLinks(animeTitle, totalEpisodes) {
+        function generateEpisodeLinks(animeTitle, totalEpisodes, baseUrl) {
             const episodes = [];
-            const linkData = findAnimeLink(animeTitle);
+            const maxEp = Math.min(totalEpisodes, 1000);
+            // Limitar a 100 episodios para no saturar
+            const showEp = Math.min(maxEp, 100);
 
-            if (linkData) {
-                // Si tiene enlace directo, generamos los episodios
-                for (let i = 1; i <= Math.min(totalEpisodes, 100); i++) {
-                    let url;
-                    if (linkData.source === 'animeflv') {
-                        // AnimeFLV usa formato: https://www3.animeflv.net/ver/naruto-1
-                        const name = animeTitle.toLowerCase().replace(/\s+/g, '-');
-                        url = `${linkData.url}/ver/${name}-${i}`;
-                    } else {
-                        url = `${linkData.url}/episodio/${i}`;
-                    }
-                    episodes.push({
-                        number: i,
-                        title: `Episodio ${i}`,
-                        url: url
-                    });
-                }
+            // Generar nombre para URL de AnimeFLV
+            let slug = animeTitle.toLowerCase()
+                .replace(/[^a-z0-9 ]/g, '')
+                .replace(/\s+/g, '-');
+
+            // Casos especiales
+            if (slug.includes('naruto-shippuuden')) slug = 'naruto-shippuuden';
+            if (slug.includes('one-piece')) slug = 'one-piece';
+            if (slug.includes('shingeki-no-kyojin')) slug = 'shingeki-no-kyojin';
+
+            for (let i = 1; i <= showEp; i++) {
+                episodes.push({
+                    number: i,
+                    title: `Episodio ${i}`,
+                    url: `${baseUrl}/ver/${slug}-${i}`
+                });
             }
-
             return episodes;
         }
 
@@ -593,10 +629,10 @@
                     'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
                 const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
                 const title = anime.title || 'Título desconocido';
-                const hasLink = findAnimeLink(title) !== null;
+                const hasLink = findAnimeInDB(title) !== null;
 
                 return `
-                            <div class="anime-card" data-title="${title}" style="${hasLink ? '' : 'opacity:0.7;'}">
+                            <div class="anime-card" data-title="${title}">
                                 <img src="${img}" alt="${title}" loading="lazy" />
                                 <div class="info">
                                     <h3>${title}</h3>
@@ -604,7 +640,9 @@
                                         <span>${anime.year || '??'}</span>
                                         <span class="score">${score}</span>
                                     </div>
-                                    ${hasLink ? '<div style="font-size:0.65rem;color:#4ade80;margin-top:4px;">✅ Disponible</div>' : '<div style="font-size:0.65rem;color:#888;margin-top:4px;">⚠️ Sin enlace</div>'}
+                                    <span class="badge ${hasLink ? 'badge-available' : 'badge-unavailable'}">
+                                        ${hasLink ? '✅ Disponible' : '⚠️ Sin enlace'}
+                                    </span>
                                 </div>
                             </div>
                         `;
@@ -634,23 +672,19 @@
         // ============================================================
         // ABRIR ANIME - CON ENLACES DIRECTOS
         // ============================================================
-        async function openAnime(title) {
-            currentAnimeTitle = title;
-
+        function openAnime(title) {
             playerSection.classList.add('active');
             playerTitle.textContent = title;
             playerStatus.textContent = 'Buscando episodios...';
-            videoIframe.style.display = 'none';
-            videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">⏳</span> Buscando episodios...';
+            playerInfo.innerHTML = '💡 Cargando episodios...';
             episodeList.innerHTML = '<div class="spinner" style="width:30px;height:30px;margin:10px auto;"></div>';
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Buscar el anime en nuestra base de datos
-            const linkData = findAnimeLink(title);
+            // Buscar en la base de datos
+            const animeData = findAnimeInDB(title);
 
-            if (!linkData) {
+            if (!animeData) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
@@ -662,12 +696,12 @@
                             </div>
                         `;
                 playerStatus.textContent = 'No disponible';
-                videoPlaceholder.innerHTML = '<span class="icon">😢</span> No se encontraron episodios';
+                playerInfo.innerHTML = '❌ No se encontraron episodios. Prueba con otro anime.';
                 return;
             }
 
             // Generar episodios
-            const episodes = generateEpisodeLinks(title, linkData.episodes || 24);
+            const episodes = generateEpisodeLinks(title, animeData.episodes || 24, animeData.url);
 
             if (episodes.length === 0) {
                 episodeList.innerHTML = `
@@ -675,22 +709,35 @@
                                 <span class="icon">😅</span>
                                 No se encontraron episodios para "${title}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    El anime está disponible en <a href="${linkData.url}" target="_blank" style="color:#a78bfa;">${linkData.source}</a>
+                                    El anime está disponible en <a href="${animeData.url}" target="_blank" style="color:#a78bfa;">${animeData.source}</a>
                                 </span>
                             </div>
                         `;
                 playerStatus.textContent = 'Enlace externo';
-                videoPlaceholder.innerHTML =
-                    `<span class="icon">🔗</span> Ver en <a href="${linkData.url}" target="_blank" style="color:#a78bfa;">${linkData.source}</a>`;
+                playerInfo.innerHTML =
+                    `🔗 Ver en <a href="${animeData.url}" target="_blank" style="color:#a78bfa;">${animeData.source}</a>`;
                 return;
             }
 
             playerStatus.textContent = `${episodes.length} episodios disponibles`;
+            playerInfo.innerHTML =
+                `📺 Los episodios se abren en <strong>nueva pestaña</strong> para mejor reproducción. Fuente: <strong>${animeData.source}</strong>`;
 
-            episodeList.innerHTML = episodes.map(ep =>
-                `<button data-ep="${ep.number}" data-url="${ep.url}">Ep ${ep.number}</button>`
-            ).join('');
+            // Mostrar episodios en grupos de 20
+            const episodesPerRow = 20;
+            let html = '';
+            for (let i = 0; i < episodes.length; i += episodesPerRow) {
+                const batch = episodes.slice(i, i + episodesPerRow);
+                html += `<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:4px;">`;
+                batch.forEach(ep => {
+                    html += `<button data-url="${ep.url}" data-ep="${ep.number}">Ep ${ep.number}</button>`;
+                });
+                html += `</div>`;
+            }
 
+            episodeList.innerHTML = html;
+
+            // Evento para cada botón
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const epNum = parseInt(btn.dataset.ep);
@@ -699,15 +746,12 @@
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    // Abrir en nueva pestaña (más fiable que iframe)
+                    // Abrir en nueva pestaña
                     window.open(url, '_blank');
 
-                    // También mostrar en iframe (por si acaso)
-                    videoPlaceholder.style.display = 'none';
-                    videoIframe.style.display = 'block';
-                    videoIframe.src = url;
-
-                    playerStatus.textContent = `Reproduciendo Episodio ${epNum}`;
+                    playerStatus.textContent = `Abriendo Episodio ${epNum}...`;
+                    playerInfo.innerHTML =
+                        `▶️ Abriendo <strong>Episodio ${epNum}</strong> en nueva pestaña. Si no se abre, <a href="${url}" target="_blank" style="color:#a78bfa;">haz clic aquí</a>.`;
                 });
             });
 
@@ -715,7 +759,7 @@
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) {
                 firstBtn.classList.add('active');
-                setTimeout(() => firstBtn.click(), 300);
+                setTimeout(() => firstBtn.click(), 400);
             }
         }
 
@@ -766,10 +810,6 @@
 
         closeBtn.addEventListener('click', () => {
             playerSection.classList.remove('active');
-            videoIframe.src = '';
-            videoIframe.style.display = 'none';
-            videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Selecciona un episodio para ver';
         });
 
         // ============================================================
