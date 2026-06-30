@@ -438,7 +438,7 @@
                 <iframe id="videoIframe" src="" allowfullscreen style="display:none;"></iframe>
             </div>
             <div class="player-info" id="playerInfo">
-                💡 Los episodios se cargan desde RapidAPI
+                💡 Los episodios se cargan desde Consumet API (Gogoanime)
             </div>
             <div class="episode-list" id="episodeList"></div>
         </div>
@@ -450,16 +450,16 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API · Streaming vía RapidAPI
+        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API · Streaming vía Consumet API (Gogoanime)
     </footer>
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN
+        // CONFIGURACIÓN - USANDO CONSUMET API (CON VIDEOS REALES)
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
-        const RAPIDAPI_KEY = 'f019ce89dfmsh54169a00fd80f9bp1c5aadjsn50be5f785083';
-        const RAPIDAPI_HOST = 'animes5.p.rapidapi.com';
+        // Usamos el proxy público de Consumet (Railway)
+        const CONSUMET_API = 'https://consumet-api-production-5c0c.up.railway.app';
 
         let currentPage = 1;
         let currentQuery = '';
@@ -503,18 +503,12 @@
         }
 
         // ============================================================
-        // FUNCIONES DE RAPIDAPI (BUSCAR Y OBTENER EPISODIOS)
+        // FUNCIONES DE CONSUMET API (VIDEOS REALES)
         // ============================================================
-        async function searchAnimeOnRapid(query) {
+        async function searchAnimeOnConsumet(query) {
             try {
-                console.log(`🔍 Buscando "${query}" en RapidAPI...`);
-                const response = await fetch(`https://${RAPIDAPI_HOST}/search?q=${encodeURIComponent(query)}`, {
-                    method: 'GET',
-                    headers: {
-                        'x-rapidapi-key': RAPIDAPI_KEY,
-                        'x-rapidapi-host': RAPIDAPI_HOST
-                    }
-                });
+                console.log(`🔍 Buscando "${query}" en Consumet...`);
+                const response = await fetch(`${CONSUMET_API}/anime/gogoanime/search?query=${encodeURIComponent(query)}`);
                 if (!response.ok) {
                     throw new Error(`Error ${response.status}`);
                 }
@@ -522,47 +516,35 @@
                 console.log(`✅ Encontrados ${data.results?.length || 0} resultados`);
                 return data;
             } catch (error) {
-                console.error('RapidAPI search error:', error);
+                console.error('Consumet search error:', error);
                 return null;
             }
         }
 
-        async function fetchAnimeFromRapid(animeId) {
+        async function fetchEpisodesFromConsumet(animeId) {
             try {
-                const response = await fetch(`https://${RAPIDAPI_HOST}/anime/${animeId}`, {
-                    method: 'GET',
-                    headers: {
-                        'x-rapidapi-key': RAPIDAPI_KEY,
-                        'x-rapidapi-host': RAPIDAPI_HOST
-                    }
-                });
+                const response = await fetch(`${CONSUMET_API}/anime/gogoanime/episodes/${animeId}`);
                 if (!response.ok) {
                     throw new Error(`Error ${response.status}`);
                 }
                 const data = await response.json();
                 return data;
             } catch (error) {
-                console.error('RapidAPI fetch error:', error);
+                console.error('Consumet episodes error:', error);
                 return null;
             }
         }
 
-        async function fetchEpisodeFromRapid(animeId, episodeNumber) {
+        async function fetchStreamFromConsumet(episodeId) {
             try {
-                const response = await fetch(`https://${RAPIDAPI_HOST}/anime/${animeId}/episode/${episodeNumber}`, {
-                    method: 'GET',
-                    headers: {
-                        'x-rapidapi-key': RAPIDAPI_KEY,
-                        'x-rapidapi-host': RAPIDAPI_HOST
-                    }
-                });
+                const response = await fetch(`${CONSUMET_API}/anime/gogoanime/watch/${episodeId}`);
                 if (!response.ok) {
                     throw new Error(`Error ${response.status}`);
                 }
                 const data = await response.json();
                 return data;
             } catch (error) {
-                console.error('RapidAPI episode error:', error);
+                console.error('Consumet stream error:', error);
                 return null;
             }
         }
@@ -634,7 +616,7 @@
             playerSection.classList.add('active');
             playerTitle.textContent = title;
             playerStatus.textContent = 'Buscando episodios...';
-            playerInfo.innerHTML = '💡 Conectando con RapidAPI...';
+            playerInfo.innerHTML = '💡 Conectando con Consumet API...';
             episodeList.innerHTML = '<div class="spinner" style="width:30px;height:30px;margin:10px auto;"></div>';
             videoIframe.style.display = 'none';
             videoPlaceholder.style.display = 'block';
@@ -642,21 +624,22 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // 1. Buscar el anime en RapidAPI
-            const searchResult = await searchAnimeOnRapid(title);
+            // 1. Buscar el anime en Consumet (Gogoanime)
+            const searchResult = await searchAnimeOnConsumet(title);
 
             if (!searchResult || !searchResult.results || searchResult.results.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
-                                No se encontró "${title}" en RapidAPI.<br>
+                                No se encontró "${title}" en Gogoanime.<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    El anime puede no estar disponible en esta fuente.
+                                    El anime puede no estar disponible en esta fuente.<br>
+                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
                                 </span>
                             </div>
                         `;
                 playerStatus.textContent = 'No disponible';
-                playerInfo.innerHTML = '❌ No se encontró en RapidAPI.';
+                playerInfo.innerHTML = '❌ No se encontró en Gogoanime.';
                 videoPlaceholder.innerHTML = '<span class="icon">😢</span> No disponible';
                 return;
             }
@@ -678,38 +661,38 @@
                 }
             }
 
-            const rapidAnimeId = bestMatch.id;
+            const animeId = bestMatch.id;
             const foundTitle = bestMatch.title || title;
-            console.log(`✅ Encontrado: ${foundTitle} (ID: ${rapidAnimeId})`);
+            console.log(`✅ Encontrado en Gogoanime: ${foundTitle} (ID: ${animeId})`);
 
-            // 2. Obtener datos del anime desde RapidAPI
-            const animeData = await fetchAnimeFromRapid(rapidAnimeId);
+            // 2. Obtener episodios
+            const episodesData = await fetchEpisodesFromConsumet(animeId);
 
-            if (!animeData) {
+            if (!episodesData || !episodesData.episodes || episodesData.episodes.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
-                                Error al cargar "${foundTitle}".<br>
+                                No se encontraron episodios para "${foundTitle}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    La API puede estar temporalmente no disponible.
+                                    El anime puede no tener episodios disponibles.
                                 </span>
                             </div>
                         `;
-                playerStatus.textContent = 'Error';
-                playerInfo.innerHTML = '❌ Error al cargar.';
-                videoPlaceholder.innerHTML = '<span class="icon">❌</span> Error';
+                playerStatus.textContent = 'Sin episodios';
+                playerInfo.innerHTML = '❌ No se encontraron episodios.';
+                videoPlaceholder.innerHTML = '<span class="icon">😢</span> Sin episodios';
                 return;
             }
 
             // 3. Mostrar información
-            const episodesCount = animeData.episodes || animeData.total_episodes || 24;
-            const animeTitle = animeData.title || animeData.name || foundTitle;
-            playerTitle.textContent = animeTitle;
-            playerStatus.textContent = `${episodesCount} episodios disponibles`;
-            playerInfo.innerHTML = `📺 <strong>${animeTitle}</strong> - ${episodesCount} episodios disponibles.`;
+            const episodes = episodesData.episodes;
+            const totalEpisodes = episodes.length;
+            playerTitle.textContent = foundTitle;
+            playerStatus.textContent = `${totalEpisodes} episodios disponibles`;
+            playerInfo.innerHTML = `📺 <strong>${foundTitle}</strong> - ${totalEpisodes} episodios disponibles.`;
 
             // 4. Generar lista de episodios
-            const maxEp = Math.min(episodesCount, 100);
+            const maxEp = Math.min(totalEpisodes, 100);
             let html = '';
             const perRow = 20;
 
@@ -717,7 +700,9 @@
                 const batch = Math.min(i + perRow, maxEp);
                 html += `<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:4px;">`;
                 for (let ep = i + 1; ep <= batch; ep++) {
-                    html += `<button data-ep="${ep}" data-id="${rapidAnimeId}">Ep ${ep}</button>`;
+                    const epObj = episodes[ep - 1];
+                    const episodeId = epObj?.id || `${animeId}-episode-${ep}`;
+                    html += `<button data-ep="${ep}" data-id="${episodeId}">Ep ${ep}</button>`;
                 }
                 html += `</div>`;
             }
@@ -728,7 +713,7 @@
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const epNum = parseInt(btn.dataset.ep);
-                    const id = btn.dataset.id;
+                    const episodeId = btn.dataset.id;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -738,21 +723,22 @@
                     videoIframe.style.display = 'none';
                     playerStatus.textContent = `Cargando Episodio ${epNum}...`;
 
-                    const episodeData = await fetchEpisodeFromRapid(id, epNum);
+                    const streamData = await fetchStreamFromConsumet(episodeId);
 
-                    if (episodeData && episodeData.video_url) {
+                    if (streamData && streamData.sources && streamData.sources.length > 0) {
+                        const videoUrl = streamData.sources[0].url;
                         videoPlaceholder.style.display = 'none';
                         videoIframe.style.display = 'block';
-                        videoIframe.src = episodeData.video_url;
+                        videoIframe.src = videoUrl;
                         playerStatus.textContent = `▶️ Episodio ${epNum}`;
                         playerInfo.innerHTML =
-                            `▶️ Reproduciendo <strong>Episodio ${epNum}</strong> desde RapidAPI.`;
+                            `▶️ Reproduciendo <strong>Episodio ${epNum}</strong> desde Gogoanime.`;
                     } else {
                         videoPlaceholder.innerHTML = `
                                     <span class="icon">🔗</span>
                                     Episodio ${epNum} no disponible.<br>
                                     <span style="font-size:0.8rem; color:#888;">
-                                        Buscar en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+episodio+${epNum}" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                        Buscar en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(foundTitle)}+episodio+${epNum}" target="_blank" style="color:#a78bfa;">YouTube</a>
                                     </span>
                                 `;
                         playerStatus.textContent = `Episodio ${epNum} no disponible`;
