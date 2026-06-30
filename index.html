@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>AnimeStream | Ver animes online</title>
-    <meta name="description" content="AnimeStream - Plataforma para ver animes online gratis desde tu celular." />
+    <title>AnimeStream | Ver animes online gratis</title>
+    <meta name="description" content="Plataforma para ver animes online gratis desde tu celular." />
     <meta name="theme-color" content="#0a0a1a" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
@@ -22,7 +22,7 @@
             padding-bottom: 20px;
             overflow-x: hidden;
         }
-        /* ===== HEADER ===== */
+
         header {
             background: rgba(10, 10, 26, 0.97);
             backdrop-filter: blur(12px);
@@ -98,7 +98,6 @@
             background: #5b21b6;
         }
 
-        /* ===== MAIN ===== */
         main {
             max-width: 600px;
             margin: 0 auto;
@@ -141,7 +140,6 @@
             border-radius: 4px;
         }
 
-        /* ===== GRID ANIMES ===== */
         .anime-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -200,7 +198,6 @@
             font-weight: 700;
         }
 
-        /* ===== PLAYER SECTION ===== */
         .player-section {
             background: #1a1a3e;
             border-radius: 18px;
@@ -292,7 +289,6 @@
             text-decoration: underline;
         }
 
-        /* ===== EPISODE LIST ===== */
         .episode-list {
             display: flex;
             flex-wrap: wrap;
@@ -357,7 +353,6 @@
             color: #fff;
         }
 
-        /* ===== SPINNER ===== */
         .spinner {
             width: 32px;
             height: 32px;
@@ -396,7 +391,6 @@
             border-color: #7c3aed;
         }
 
-        /* ===== FOOTER ===== */
         footer {
             text-align: center;
             padding: 20px 14px;
@@ -410,7 +404,6 @@
             text-decoration: none;
         }
 
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -450,7 +443,6 @@
             <button id="loadMoreBtn">Cargar más</button>
         </div>
 
-        <!-- Reproductor -->
         <div id="playerSection" class="player-section">
             <div class="player-header">
                 <div class="player-title" id="playerTitle">Título</div>
@@ -477,14 +469,13 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a>
+        © 2026 AnimeStream – Streaming vía <a href="https://consumet.org/" target="_blank">Consumet API</a>
     </footer>
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN
+        // CONFIGURACIÓN - CONSUMET API (CON VIDEOS REALES)
         // ============================================================
-        const JIKAN_API = 'https://api.jikan.moe/v4';
         const CONSUMET_API = 'https://consumet-api-production-5c0c.up.railway.app';
 
         let currentPage = 1;
@@ -510,57 +501,51 @@
         // ============================================================
         // FUNCIONES DE API
         // ============================================================
-        async function fetchAnimes(page = 1, query = '') {
+        async function fetchPopularAnimes() {
             try {
-                let url;
-                if (query) {
-                    url = `${JIKAN_API}/anime?q=${encodeURIComponent(query)}&page=${page}&limit=24`;
-                } else {
-                    url = `${JIKAN_API}/top/anime?filter=bypopularity&page=${page}&limit=24`;
-                }
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Error al obtener animes');
-                const data = await resp.json();
-                return data.data || [];
+                const response = await fetch(`${CONSUMET_API}/anime/gogoanime/top-airing`);
+                if (!response.ok) throw new Error(`Error ${response.status}`);
+                const data = await response.json();
+                return data.results || [];
             } catch (error) {
-                console.error('Jikan error:', error);
+                console.error('Error fetching popular:', error);
                 return [];
             }
         }
 
-        async function searchAnimeOnConsumet(query) {
+        async function searchAnime(query) {
             try {
                 const response = await fetch(`${CONSUMET_API}/anime/gogoanime/search?query=${encodeURIComponent(query)}`);
                 if (!response.ok) throw new Error(`Error ${response.status}`);
                 const data = await response.json();
-                return data;
+                return data.results || [];
             } catch (error) {
-                console.error('Consumet search error:', error);
-                return null;
+                console.error('Search error:', error);
+                return [];
             }
         }
 
-        async function fetchEpisodesFromConsumet(animeId) {
+        async function fetchEpisodes(animeId) {
             try {
                 const response = await fetch(`${CONSUMET_API}/anime/gogoanime/episodes/${animeId}`);
                 if (!response.ok) throw new Error(`Error ${response.status}`);
                 const data = await response.json();
-                return data;
+                return data.episodes || [];
             } catch (error) {
-                console.error('Consumet episodes error:', error);
-                return null;
+                console.error('Episodes error:', error);
+                return [];
             }
         }
 
-        async function fetchStreamFromConsumet(episodeId) {
+        async function fetchStream(episodeId) {
             try {
                 const response = await fetch(`${CONSUMET_API}/anime/gogoanime/watch/${episodeId}`);
                 if (!response.ok) throw new Error(`Error ${response.status}`);
                 const data = await response.json();
-                return data;
+                return data.sources || [];
             } catch (error) {
-                console.error('Consumet stream error:', error);
-                return null;
+                console.error('Stream error:', error);
+                return [];
             }
         }
 
@@ -580,13 +565,13 @@
             }
 
             const html = animes.map(anime => {
-                const img = anime.images?.jpg?.image_url ||
+                const img = anime.image || anime.images?.jpg?.image_url ||
                     'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
-                const title = anime.title || 'Título desconocido';
-                const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
-                const year = anime.year || '??';
+                const title = anime.title || anime.name || 'Título desconocido';
+                const score = anime.rating || anime.score || 'N/A';
+                const year = anime.releaseDate || anime.year || '??';
                 return `
-                            <div class="anime-card" data-title="${title}" data-malid="${anime.mal_id}">
+                            <div class="anime-card" data-title="${title}" data-id="${anime.id}">
                                 <div class="card-img">
                                     <img src="${img}" alt="${title}" loading="lazy" />
                                 </div>
@@ -594,7 +579,7 @@
                                     <h3>${title}</h3>
                                     <div class="meta">
                                         <span>${year}</span>
-                                        <span class="score">${score}</span>
+                                        <span class="score">⭐ ${score}</span>
                                     </div>
                                 </div>
                             </div>
@@ -619,68 +604,45 @@
         async function handleCardClick(e) {
             const card = e.currentTarget;
             const title = card.dataset.title;
-            const malId = card.dataset.malid;
-            await openAnime(title, malId);
+            const id = card.dataset.id;
+            await openAnime(title, id);
         }
 
         // ============================================================
         // ABRIR ANIME
         // ============================================================
-        async function openAnime(title, malId) {
-            playerSection.classList.add('active');
-            playerTitle.textContent = title;
-            playerStatus.textContent = 'Buscando...';
-            playerInfo.textContent = '💡 Conectando con el servidor...';
-            episodeList.innerHTML = '<div class="spinner" style="width:28px;height:28px;margin:16px auto;"></div>';
-            videoIframe.style.display = 'none';
-            videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">⏳</span> Cargando...';
-
-            playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            // Buscar en Consumet
-            const searchResult = await searchAnimeOnConsumet(title);
-
-            if (!searchResult || !searchResult.results || searchResult.results.length === 0) {
+        async function openAnime(title, id) {
+            if (!id) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
-                                No se encontró "${title}" en Gogoanime.<br>
-                                <span style="font-size:0.7rem; color:#888;">
-                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
-                                </span>
+                                No se encontró el ID del anime.
                             </div>
                         `;
-                playerStatus.textContent = 'No disponible';
-                playerInfo.textContent = '❌ No encontrado en Gogoanime';
-                videoPlaceholder.innerHTML = '<span class="icon">😢</span> No disponible';
                 return;
             }
 
-            let bestMatch = searchResult.results[0];
-            let bestScore = 0;
-            const titleLower = title.toLowerCase();
-            for (const result of searchResult.results) {
-                const resultTitle = (result.title || '').toLowerCase();
-                let score = 0;
-                if (resultTitle === titleLower) score = 100;
-                else if (resultTitle.includes(titleLower)) score = 50;
-                else if (titleLower.includes(resultTitle)) score = 30;
-                if (score > bestScore) { bestScore = score;
-                    bestMatch = result; }
-            }
+            playerSection.classList.add('active');
+            playerTitle.textContent = title;
+            playerStatus.textContent = 'Buscando episodios...';
+            playerInfo.textContent = '💡 Conectando con Consumet...';
+            episodeList.innerHTML = '<div class="spinner" style="width:28px;height:28px;margin:16px auto;"></div>';
+            videoIframe.style.display = 'none';
+            videoPlaceholder.style.display = 'block';
+            videoPlaceholder.innerHTML = '<span class="icon">⏳</span> Cargando episodios...';
 
-            const animeId = bestMatch.id;
-            const foundTitle = bestMatch.title || title;
-            console.log(`✅ Encontrado: ${foundTitle} (ID: ${animeId})`);
+            playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            const episodesData = await fetchEpisodesFromConsumet(animeId);
+            const episodes = await fetchEpisodes(id);
 
-            if (!episodesData || !episodesData.episodes || episodesData.episodes.length === 0) {
+            if (!episodes || episodes.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
-                                No hay episodios para "${foundTitle}".
+                                No hay episodios para "${title}".<br>
+                                <span style="font-size:0.7rem; color:#888;">
+                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                </span>
                             </div>
                         `;
                 playerStatus.textContent = 'Sin episodios';
@@ -689,9 +651,7 @@
                 return;
             }
 
-            const episodes = episodesData.episodes;
             const totalEpisodes = episodes.length;
-            playerTitle.textContent = foundTitle;
             playerStatus.textContent = `${totalEpisodes} episodios`;
             playerInfo.textContent = `📺 ${totalEpisodes} episodios disponibles. Toca uno para ver.`;
 
@@ -704,7 +664,7 @@
                 html += `<div style="display:flex;flex-wrap:wrap;gap:5px;width:100%;margin-bottom:4px;">`;
                 for (let ep = i + 1; ep <= batch; ep++) {
                     const epObj = episodes[ep - 1];
-                    const episodeId = epObj?.id || `${animeId}-episode-${ep}`;
+                    const episodeId = epObj?.id || `${id}-episode-${ep}`;
                     html += `<button data-ep="${ep}" data-id="${episodeId}">${ep}</button>`;
                 }
                 html += `</div>`;
@@ -725,10 +685,10 @@
                     videoIframe.style.display = 'none';
                     playerStatus.textContent = `Cargando Ep ${epNum}...`;
 
-                    const streamData = await fetchStreamFromConsumet(episodeId);
+                    const sources = await fetchStream(episodeId);
 
-                    if (streamData && streamData.sources && streamData.sources.length > 0) {
-                        const videoUrl = streamData.sources[0].url;
+                    if (sources && sources.length > 0) {
+                        const videoUrl = sources[0].url;
                         videoPlaceholder.style.display = 'none';
                         videoIframe.style.display = 'block';
                         videoIframe.src = videoUrl;
@@ -739,7 +699,7 @@
                                     <span class="icon">🔗</span>
                                     Episodio ${epNum} no disponible.<br>
                                     <span style="font-size:0.7rem; color:#888;">
-                                        <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(foundTitle)}+episodio+${epNum}" target="_blank" style="color:#a78bfa;">Buscar en YouTube</a>
+                                        <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+episodio+${epNum}" target="_blank" style="color:#a78bfa;">Buscar en YouTube</a>
                                     </span>
                                 `;
                         playerStatus.textContent = `Ep ${epNum} no disponible`;
@@ -764,7 +724,13 @@
             loadingEl.style.display = 'block';
             if (!append) grid.innerHTML = '';
 
-            const animes = await fetchAnimes(page, query);
+            let animes = [];
+            if (query) {
+                animes = await searchAnime(query);
+            } else {
+                animes = await fetchPopularAnimes();
+            }
+
             loadingEl.style.display = 'none';
             isLoading = false;
 
