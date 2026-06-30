@@ -31,11 +31,7 @@
             flex-wrap: wrap;
             gap: 12px;
         }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #a78bfa;
-        }
+        .logo { font-size: 1.5rem; font-weight: 900; color: #a78bfa; }
         .logo span { color: #fff; }
         .search-box {
             display: flex;
@@ -312,7 +308,8 @@
     <main>
         <div class="hero">
             <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Haz clic en cualquier anime para ver sus episodios. El primer episodio se reproduce automáticamente.</p>
+            <p>Haz clic en cualquier anime para ver sus episodios.</p>
+            <p style="font-size:0.8rem; color:#666; margin-top:12px;">⚠️ Algunos animes pueden no tener episodios disponibles en la fuente gratuita.</p>
         </div>
 
         <div class="section-title">🔥 Animes populares</div>
@@ -347,22 +344,32 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API · Streaming vía Consumet (Zoro)
+        © 2026 AnimeStream – Datos de <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a> vía Jikan API
     </footer>
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN - USANDO CONSUMET CON ZORO (ANIWATCH)
+        // CONFIGURACIÓN - USANDO JIKAN Y ANILIST (SIN CONSUMET)
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
-        const ZORO_API = 'https://api.consumet.org/anime/zoro'; // AniWatch (más fiable)
-        const GOGO_API = 'https://api.consumet.org/anime/gogoanime';
+
+        // Datos de ejemplo de episodios para animes populares
+        // (Esto es una alternativa cuando no hay API de streaming)
+        const EPISODIOS_DEMO = {
+            'Naruto': { total: 220, source: 'https://www.youtube.com/embed/embed/Naruto' },
+            'One Piece': { total: 1000, source: 'https://www.youtube.com/embed/embed/OnePiece' },
+            'Attack on Titan': { total: 87, source: 'https://www.youtube.com/embed/embed/AOT' },
+            'Demon Slayer': { total: 55, source: 'https://www.youtube.com/embed/embed/DemonSlayer' },
+            'Jujutsu Kaisen': { total: 47, source: 'https://www.youtube.com/embed/embed/JJK' },
+            'My Hero Academia': { total: 138, source: 'https://www.youtube.com/embed/embed/MHA' },
+        };
 
         let currentPage = 1;
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
 
+        // DOM
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
         const searchInput = document.getElementById('searchInput');
@@ -400,94 +407,46 @@
         }
 
         // ============================================================
-        // BÚSQUEDA DE EPISODIOS EN ZORO (ANIWATCH)
+        // BUSCAR EPISODIOS (usando datos de ejemplo + búsqueda en internet)
         // ============================================================
-        async function fetchEpisodes(animeTitle) {
-            const cleanTitle = animeTitle.replace(/[^\w\s:]/g, '').trim();
-            const variants = [
-                cleanTitle,
-                cleanTitle.replace(/:/g, '').trim(),
-                cleanTitle.split(':')[0].trim(),
-                cleanTitle.split('(')[0].trim(),
-                cleanTitle.replace(/\s+/g, ' ').trim(),
-                cleanTitle.toLowerCase(),
-                cleanTitle.replace(/[^a-zA-Z0-9 ]/g, '').trim(),
-            ];
+        async function buscarEpisodios(title) {
+            // Buscar en los datos de ejemplo
+            for (const [key, data] of Object.entries(EPISODIOS_DEMO)) {
+                if (title.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(title.toLowerCase())) {
+                    return {
+                        total: data.total,
+                        source: data.source,
+                        found: true
+                    };
+                }
+            }
 
-            const unique = [...new Set(variants)].filter(q => q.length > 2);
-
-            // Fuentes: Zoro primero, Gogoanime como respaldo
-            const sources = [
-                { name: 'Zoro (AniWatch)', api: ZORO_API },
-                { name: 'Gogoanime', api: GOGO_API }
-            ];
-
-            for (const source of sources) {
-                console.log(`🔍 Buscando en ${source.name}...`);
-                for (const query of unique) {
-                    try {
-                        const searchResp = await fetch(`${source.api}/search?query=${encodeURIComponent(query)}`);
-                        if (!searchResp.ok) continue;
-                        const searchData = await searchResp.json();
-
-                        if (searchData.results && searchData.results.length > 0) {
-                            let bestMatch = searchData.results[0];
-                            let bestScore = 0;
-                            for (const result of searchData.results) {
-                                const titleLower = result.title?.toLowerCase() || '';
-                                const queryLower = query.toLowerCase();
-                                let score = 0;
-                                if (titleLower.includes(queryLower)) score += 10;
-                                if (queryLower.includes(titleLower)) score += 5;
-                                if (titleLower === queryLower) score += 20;
-                                if (score > bestScore) { bestScore = score;
-                                    bestMatch = result; }
-                            }
-
-                            const sourceId = bestMatch.id;
-                            console.log(`✅ Encontrado en ${source.name}: ${sourceId} - ${bestMatch.title}`);
-
-                            const epResp = await fetch(`${source.api}/episodes/${sourceId}`);
-                            if (!epResp.ok) continue;
-                            const epData = await epResp.json();
-
-                            if (epData.episodes && epData.episodes.length > 0) {
-                                return {
-                                    sourceId: sourceId,
-                                    episodes: epData.episodes,
-                                    title: bestMatch.title,
-                                    source: source.name,
-                                    api: source.api
-                                };
-                            }
-                        }
-                    } catch (e) {
-                        console.warn(`⚠️ Falló búsqueda en ${source.name}:`, e);
+            // Si no está en los datos de ejemplo, intentar buscar en una API alternativa
+            try {
+                // Intentar buscar en AniList (sin clave, público)
+                const searchResp = await fetch(`https://api.anilist.co/api/v2/search/anime?q=${encodeURIComponent(title)}`);
+                if (searchResp.ok) {
+                    const searchData = await searchResp.json();
+                    if (searchData && searchData.length > 0) {
+                        const anime = searchData[0];
+                        return {
+                            total: anime.episodes || 24,
+                            source: `https://www.youtube.com/embed/embed/${anime.id}`,
+                            found: true,
+                            title: anime.title
+                        };
                     }
                 }
-            }
-
-            return null;
-        }
-
-        // ============================================================
-        // OBTENER ENLACE DE VIDEO
-        // ============================================================
-        async function fetchStreamLink(sourceApi, sourceId, episodeNumber) {
-            try {
-                const resp = await fetch(`${sourceApi}/watch/${sourceId}-episode-${episodeNumber}`);
-                if (!resp.ok) throw new Error('Error al obtener enlace');
-                const data = await resp.json();
-
-                if (data.sources && data.sources.length > 0) {
-                    const mp4 = data.sources.find(s => s.url && s.url.endsWith('.mp4'));
-                    return mp4 ? mp4.url : data.sources[0].url;
-                }
-                return null;
             } catch (e) {
-                console.error('Stream error:', e);
-                return null;
+                console.warn('AniList search failed:', e);
             }
+
+            // Si no se encuentra, devolver datos genéricos
+            return {
+                total: 24,
+                source: 'https://www.youtube.com/embed/embed/generic',
+                found: false
+            };
         }
 
         // ============================================================
@@ -560,15 +519,20 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            const result = await fetchEpisodes(title);
+            // Buscar episodios
+            const result = await buscarEpisodios(title);
 
-            if (!result || !result.episodes || result.episodes.length === 0) {
+            if (!result.found) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
                                 No se encontraron episodios para "${title}".<br>
-                                <span style="font-size:0.8rem; color:#888;">Probamos con Zoro (AniWatch) y Gogoanime.</span>
-                                <span style="font-size:0.8rem; color:#888; display:block; margin-top:6px;">💡 Prueba con el título en inglés o busca otro anime.</span>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    La API de streaming gratuita ya no está disponible.
+                                </span>
+                                <span style="font-size:0.8rem; color:#888; display:block; margin-top:6px;">
+                                    💡 Puedes buscar este anime en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}" target="_blank" style="color:#a78bfa;">YouTube</a> o en plataformas oficiales.
+                                </span>
                             </div>
                         `;
                 playerStatus.textContent = 'No disponible';
@@ -576,45 +540,48 @@
                 return;
             }
 
-            const episodes = result.episodes.sort((a, b) => a.number - b.number);
-            const sourceId = result.sourceId;
-            const sourceApi = result.api;
+            const totalEpisodios = result.total || 24;
+            const sourceUrl = result.source;
             const foundTitle = result.title || title;
-            const sourceName = result.source || 'Desconocido';
-            playerStatus.textContent = `${episodes.length} episodios (${sourceName})`;
+
+            playerStatus.textContent = `${totalEpisodios} episodios disponibles`;
             if (foundTitle !== title) {
                 playerTitle.textContent = `${title} (${foundTitle})`;
             }
 
-            episodeList.innerHTML = episodes.map(ep =>
-                `<button data-ep="${ep.number}" data-id="${sourceId}" data-api="${sourceApi}">Ep ${ep.number}</button>`
+            // Crear botones de episodios (simulados)
+            const episodios = Array.from({ length: Math.min(totalEpisodios, 50) }, (_, i) => i + 1);
+            episodeList.innerHTML = episodios.map(ep =>
+                `<button data-ep="${ep}" data-url="${sourceUrl}">Ep ${ep}</button>`
             ).join('');
 
+            // Evento para cada botón
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', async () => {
                     const epNum = parseInt(btn.dataset.ep);
-                    const id = btn.dataset.id;
-                    const api = btn.dataset.api;
+                    const url = btn.dataset.url;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
                     videoPlaceholder.style.display = 'block';
-                    videoPlaceholder.innerHTML = '<span class="icon">⏳</span> Cargando episodio...';
+                    videoPlaceholder.innerHTML = `<span class="icon">⏳</span> Cargando episodio ${epNum}...`;
                     videoIframe.style.display = 'none';
 
-                    const url = await fetchStreamLink(api, id, epNum);
-                    if (url) {
-                        videoPlaceholder.style.display = 'none';
-                        videoIframe.style.display = 'block';
-                        videoIframe.src = url;
-                    } else {
-                        videoPlaceholder.innerHTML =
-                            '<span class="icon">❌</span> No se pudo cargar. Intenta con otro episodio.';
-                    }
+                    // Intentar cargar el video (puede que no funcione si el embed no existe)
+                    // Por ahora mostramos un mensaje
+                    videoPlaceholder.innerHTML = `
+                                <span class="icon">🎬</span>
+                                Episodio ${epNum}<br>
+                                <span style="font-size:0.8rem; color:#666;">
+                                    ℹ️ El streaming gratuito ya no está disponible.<br>
+                                    <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+episode+${epNum}" target="_blank" style="color:#a78bfa;">Buscar en YouTube</a>
+                                </span>
+                            `;
                 });
             });
 
+            // Auto-seleccionar el primer episodio
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) {
                 firstBtn.classList.add('active');
