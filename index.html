@@ -380,7 +380,7 @@
     <main>
         <div class="hero">
             <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Haz clic en cualquier anime para ver sus episodios. El primer episodio se reproduce automáticamente.</p>
+            <p>Haz clic en cualquier anime para ver sus episodios. Los episodios se abren en nueva pestaña para mejor reproducción.</p>
         </div>
 
         <div class="section-title">🔥 Animes populares</div>
@@ -398,10 +398,10 @@
                     <button class="close-btn" id="closePlayer">✕ Cerrar</button>
                 </div>
             </div>
-            <div class="video-wrapper">
+            <div class="video-wrapper" id="videoWrapper">
                 <div class="placeholder" id="videoPlaceholder">
                     <span class="icon">🎬</span>
-                    Cargando episodio...
+                    Selecciona un episodio para ver
                 </div>
                 <iframe id="videoIframe" src="" allowfullscreen style="display:none;"></iframe>
             </div>
@@ -420,18 +420,90 @@
 
     <script>
         // ============================================================
-        // FRONTEND - CONEXIÓN CON BACKEND
+        // ANIMES CON ENLACES DIRECTOS PARA VER (SIN BACKEND)
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
 
-        // IMPORTANTE: Cambia esta URL por la de tu backend desplegado
-        // Ejemplo: 'https://tu-backend.vercel.app/api'
-        const BACKEND_API = window.location.origin + '/api';
+        // ============================================================
+        // BASE DE DATOS DE ENLACES DE ANIMES (EN ESPAÑOL)
+        // ============================================================
+        const ANIME_LINKS = {
+            'naruto': {
+                url: 'https://www3.animeflv.net/anime/naruto',
+                episodes: 220,
+                source: 'animeflv'
+            },
+            'one piece': {
+                url: 'https://www3.animeflv.net/anime/one-piece',
+                episodes: 1000,
+                source: 'animeflv'
+            },
+            'attack on titan': {
+                url: 'https://www3.animeflv.net/anime/shingeki-no-kyojin',
+                episodes: 87,
+                source: 'animeflv'
+            },
+            'demon slayer': {
+                url: 'https://www3.animeflv.net/anime/kimetsu-no-yaiba',
+                episodes: 55,
+                source: 'animeflv'
+            },
+            'jujutsu kaisen': {
+                url: 'https://www3.animeflv.net/anime/jujutsu-kaisen-tv',
+                episodes: 47,
+                source: 'animeflv'
+            },
+            'my hero academia': {
+                url: 'https://www3.animeflv.net/anime/boku-no-hero-academia',
+                episodes: 138,
+                source: 'animeflv'
+            },
+            'death note': {
+                url: 'https://www3.animeflv.net/anime/death-note',
+                episodes: 37,
+                source: 'animeflv'
+            },
+            'fullmetal alchemist': {
+                url: 'https://www3.animeflv.net/anime/fullmetal-alchemist-brotherhood',
+                episodes: 64,
+                source: 'animeflv'
+            },
+            'tokyo revengers': {
+                url: 'https://www3.animeflv.net/anime/tokyo-revengers',
+                episodes: 50,
+                source: 'animeflv'
+            },
+            'spy x family': {
+                url: 'https://www3.animeflv.net/anime/spy-x-family',
+                episodes: 37,
+                source: 'animeflv'
+            },
+            'chainsaw man': {
+                url: 'https://www3.animeflv.net/anime/chainsaw-man',
+                episodes: 12,
+                source: 'animeflv'
+            },
+            'solo leveling': {
+                url: 'https://www3.animeflv.net/anime/solo-leveling',
+                episodes: 12,
+                source: 'animeflv'
+            },
+            'soul eater': {
+                url: 'https://www3.animeflv.net/anime/soul-eater',
+                episodes: 51,
+                source: 'animeflv'
+            }
+        };
+
+        // ============================================================
+        // FUNCIONES PRINCIPALES
+        // ============================================================
 
         let currentPage = 1;
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
+        let currentAnimeTitle = '';
 
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
@@ -447,9 +519,6 @@
         const episodeList = document.getElementById('episodeList');
         const closeBtn = document.getElementById('closePlayer');
 
-        // ============================================================
-        // OBTENER ANIMES DESDE JIKAN (público, sin backend)
-        // ============================================================
         async function fetchAnimes(page = 1, query = '') {
             try {
                 let url;
@@ -468,40 +537,40 @@
             }
         }
 
-        // ============================================================
-        // BUSCAR EPISODIOS DESDE EL BACKEND
-        // ============================================================
-        async function fetchEpisodesFromBackend(title) {
-            try {
-                const resp = await fetch(`${BACKEND_API}/search?q=${encodeURIComponent(title)}`);
-                if (!resp.ok) {
-                    const errorData = await resp.json();
-                    throw new Error(errorData.error || 'Error en el backend');
+        function findAnimeLink(title) {
+            const titleLower = title.toLowerCase();
+            for (const [key, data] of Object.entries(ANIME_LINKS)) {
+                if (titleLower.includes(key) || key.includes(titleLower)) {
+                    return data;
                 }
-                const data = await resp.json();
-                return data;
-            } catch (error) {
-                console.error('Backend error:', error);
-                return null;
             }
+            return null;
         }
 
-        // ============================================================
-        // OBTENER STREAM DEL BACKEND
-        // ============================================================
-        async function fetchStreamFromBackend(animeId, episodeNumber) {
-            try {
-                const resp = await fetch(`${BACKEND_API}/stream/${animeId}/episode/${episodeNumber}`);
-                if (!resp.ok) {
-                    const errorData = await resp.json();
-                    throw new Error(errorData.error || 'Error al obtener el stream');
+        function generateEpisodeLinks(animeTitle, totalEpisodes) {
+            const episodes = [];
+            const linkData = findAnimeLink(animeTitle);
+
+            if (linkData) {
+                // Si tiene enlace directo, generamos los episodios
+                for (let i = 1; i <= Math.min(totalEpisodes, 100); i++) {
+                    let url;
+                    if (linkData.source === 'animeflv') {
+                        // AnimeFLV usa formato: https://www3.animeflv.net/ver/naruto-1
+                        const name = animeTitle.toLowerCase().replace(/\s+/g, '-');
+                        url = `${linkData.url}/ver/${name}-${i}`;
+                    } else {
+                        url = `${linkData.url}/episodio/${i}`;
+                    }
+                    episodes.push({
+                        number: i,
+                        title: `Episodio ${i}`,
+                        url: url
+                    });
                 }
-                const data = await resp.json();
-                return data;
-            } catch (error) {
-                console.error('Stream error:', error);
-                return null;
             }
+
+            return episodes;
         }
 
         // ============================================================
@@ -524,8 +593,10 @@
                     'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
                 const score = anime.score ? `⭐ ${anime.score}` : '⭐ N/A';
                 const title = anime.title || 'Título desconocido';
+                const hasLink = findAnimeLink(title) !== null;
+
                 return `
-                            <div class="anime-card" data-title="${title}">
+                            <div class="anime-card" data-title="${title}" style="${hasLink ? '' : 'opacity:0.7;'}">
                                 <img src="${img}" alt="${title}" loading="lazy" />
                                 <div class="info">
                                     <h3>${title}</h3>
@@ -533,6 +604,7 @@
                                         <span>${anime.year || '??'}</span>
                                         <span class="score">${score}</span>
                                     </div>
+                                    ${hasLink ? '<div style="font-size:0.65rem;color:#4ade80;margin-top:4px;">✅ Disponible</div>' : '<div style="font-size:0.65rem;color:#888;margin-top:4px;">⚠️ Sin enlace</div>'}
                                 </div>
                             </div>
                         `;
@@ -560,9 +632,11 @@
         }
 
         // ============================================================
-        // ABRIR ANIME
+        // ABRIR ANIME - CON ENLACES DIRECTOS
         // ============================================================
         async function openAnime(title) {
+            currentAnimeTitle = title;
+
             playerSection.classList.add('active');
             playerTitle.textContent = title;
             playerStatus.textContent = 'Buscando episodios...';
@@ -573,16 +647,17 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // Buscar episodios en el backend
-            const result = await fetchEpisodesFromBackend(title);
+            // Buscar el anime en nuestra base de datos
+            const linkData = findAnimeLink(title);
 
-            if (!result || !result.episodes || result.episodes.length === 0) {
+            if (!linkData) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
                                 No se encontraron episodios para "${title}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    Asegúrate de que el backend esté funcionando.
+                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                    o en <a href="https://www3.animeflv.net/browse?q=${encodeURIComponent(title)}" target="_blank" style="color:#a78bfa;">AnimeFLV</a>
                                 </span>
                             </div>
                         `;
@@ -591,71 +666,56 @@
                 return;
             }
 
-            const episodes = result.episodes;
-            const animeId = result.animeId;
-            const animeTitle = result.title || title;
-            playerStatus.textContent = `${episodes.length} episodios disponibles`;
+            // Generar episodios
+            const episodes = generateEpisodeLinks(title, linkData.episodes || 24);
 
-            if (animeTitle !== title) {
-                playerTitle.textContent = `${title} (${animeTitle})`;
+            if (episodes.length === 0) {
+                episodeList.innerHTML = `
+                            <div class="no-episodes">
+                                <span class="icon">😅</span>
+                                No se encontraron episodios para "${title}".<br>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    El anime está disponible en <a href="${linkData.url}" target="_blank" style="color:#a78bfa;">${linkData.source}</a>
+                                </span>
+                            </div>
+                        `;
+                playerStatus.textContent = 'Enlace externo';
+                videoPlaceholder.innerHTML =
+                    `<span class="icon">🔗</span> Ver en <a href="${linkData.url}" target="_blank" style="color:#a78bfa;">${linkData.source}</a>`;
+                return;
             }
 
+            playerStatus.textContent = `${episodes.length} episodios disponibles`;
+
             episodeList.innerHTML = episodes.map(ep =>
-                `<button data-ep="${ep.number}" data-id="${animeId}">Ep ${ep.number}</button>`
+                `<button data-ep="${ep.number}" data-url="${ep.url}">Ep ${ep.number}</button>`
             ).join('');
 
             episodeList.querySelectorAll('button').forEach(btn => {
-                btn.addEventListener('click', async () => {
+                btn.addEventListener('click', () => {
                     const epNum = parseInt(btn.dataset.ep);
-                    const id = btn.dataset.id;
+                    const url = btn.dataset.url;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
-                    videoPlaceholder.style.display = 'block';
-                    videoPlaceholder.innerHTML = `<span class="icon">⏳</span> Cargando episodio ${epNum}...`;
-                    videoIframe.style.display = 'none';
+                    // Abrir en nueva pestaña (más fiable que iframe)
+                    window.open(url, '_blank');
 
-                    // Obtener enlace de video desde el backend
-                    const streamData = await fetchStreamFromBackend(id, epNum);
+                    // También mostrar en iframe (por si acaso)
+                    videoPlaceholder.style.display = 'none';
+                    videoIframe.style.display = 'block';
+                    videoIframe.src = url;
 
-                    if (streamData && streamData.url) {
-                        // Si es un .m3u8, usamos un reproductor HLS
-                        // Por ahora, lo mostramos en un iframe (puede funcionar con algunos navegadores)
-                        videoPlaceholder.style.display = 'none';
-                        videoIframe.style.display = 'block';
-
-                        // Para .m3u8, muchos navegadores no lo soportan directamente en iframe
-                        // Usamos un embed de video si está disponible
-                        if (streamData.url.includes('.m3u8')) {
-                            // Si es .m3u8, mostrar mensaje y enlace para descargar
-                            videoPlaceholder.style.display = 'block';
-                            videoPlaceholder.innerHTML = `
-                                        <span class="icon">▶️</span>
-                                        <strong>Episodio ${epNum}</strong><br>
-                                        <span style="font-size:0.8rem; color:#888;">
-                                            El enlace es un stream HLS (.m3u8).<br>
-                                            <a href="${streamData.url}" target="_blank" style="color:#a78bfa; text-decoration:underline;">
-                                                Abrir en reproductor externo
-                                            </a>
-                                        </span>
-                                    `;
-                            videoIframe.style.display = 'none';
-                        } else {
-                            videoIframe.src = streamData.url;
-                        }
-                    } else {
-                        videoPlaceholder.innerHTML =
-                            `<span class="icon">❌</span> No se pudo cargar el episodio ${epNum}.`;
-                    }
+                    playerStatus.textContent = `Reproduciendo Episodio ${epNum}`;
                 });
             });
 
-            // Auto-reproducir el primer episodio
+            // Auto-seleccionar el primer episodio
             const firstBtn = episodeList.querySelector('button');
             if (firstBtn) {
                 firstBtn.classList.add('active');
-                setTimeout(() => firstBtn.click(), 500);
+                setTimeout(() => firstBtn.click(), 300);
             }
         }
 
@@ -709,7 +769,7 @@
             videoIframe.src = '';
             videoIframe.style.display = 'none';
             videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Cargando episodio...';
+            videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Selecciona un episodio para ver';
         });
 
         // ============================================================
