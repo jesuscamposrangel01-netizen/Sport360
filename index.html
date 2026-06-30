@@ -452,115 +452,85 @@
 
     <script>
         // ============================================================
-        // ANIMES CON ENLACES DE YOUTUBE (FUNCIONAN 100%)
+        // ANIMES CON ENLACES DE YOUTUBE REALES
         // ============================================================
         const JIKAN_API = 'https://api.jikan.moe/v4';
 
         // ============================================================
-        // BASE DE DATOS DE ANIMES CON VIDEOS DE YOUTUBE
+        // BASE DE DATOS DE ANIMES CON VIDEOS DE YOUTUBE (REALES)
         // ============================================================
         const ANIME_YOUTUBE = {
+            'death note': {
+                name: 'Death Note',
+                videoId: 'NlJZ-XgP4m4', // Death Note - Opening 1
+                episodes: 37,
+                description: 'Death Note - Opening 1'
+            },
             'naruto': {
                 name: 'Naruto',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'QzH7mHS8Znc', // Naruto - Opening 1
                 episodes: 220,
-                description: 'Naruto - Playlist completa'
-            },
-            'naruto shippuuden': {
-                name: 'Naruto Shippuuden',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 500,
-                description: 'Naruto Shippuuden - Playlist'
+                description: 'Naruto - Opening 1'
             },
             'one piece': {
                 name: 'One Piece',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'AIlZuw9zVqo', // One Piece - Opening 1 (We Are!)
                 episodes: 1000,
-                description: 'One Piece - Playlist'
+                description: 'One Piece - Opening 1'
             },
             'attack on titan': {
                 name: 'Attack on Titan',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: '8OkpRK2_gVs', // Attack on Titan - Opening 1
                 episodes: 87,
-                description: 'Attack on Titan - Playlist'
+                description: 'Attack on Titan - Opening 1'
             },
             'demon slayer': {
                 name: 'Demon Slayer',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'qPK3h2Te5bs', // Demon Slayer - Opening 1 (Gurenge)
                 episodes: 55,
-                description: 'Demon Slayer - Playlist'
+                description: 'Demon Slayer - Opening 1'
             },
             'jujutsu kaisen': {
                 name: 'Jujutsu Kaisen',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'PBi93uSTpWo', // Jujutsu Kaisen - Opening 1
                 episodes: 47,
-                description: 'Jujutsu Kaisen - Playlist'
+                description: 'Jujutsu Kaisen - Opening 1'
             },
             'my hero academia': {
                 name: 'My Hero Academia',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'wH0w90l02es', // My Hero Academia - Opening 1
                 episodes: 138,
-                description: 'My Hero Academia - Playlist'
-            },
-            'death note': {
-                name: 'Death Note',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 37,
-                description: 'Death Note - Playlist'
-            },
-            'fullmetal alchemist': {
-                name: 'Fullmetal Alchemist Brotherhood',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 64,
-                description: 'Fullmetal Alchemist Brotherhood - Playlist'
-            },
-            'tokyo revengers': {
-                name: 'Tokyo Revengers',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 50,
-                description: 'Tokyo Revengers - Playlist'
-            },
-            'spy x family': {
-                name: 'Spy x Family',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 37,
-                description: 'Spy x Family - Playlist'
-            },
-            'chainsaw man': {
-                name: 'Chainsaw Man',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 12,
-                description: 'Chainsaw Man - Playlist'
+                description: 'My Hero Academia - Opening 1'
             },
             'solo leveling': {
                 name: 'Solo Leveling',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'M1bnZJhe6bc', // Solo Leveling - Opening
                 episodes: 12,
-                description: 'Solo Leveling - Playlist'
+                description: 'Solo Leveling - Opening'
             },
-            'soul eater': {
-                name: 'Soul Eater',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 51,
-                description: 'Soul Eater - Playlist'
+            'chainsaw man': {
+                name: 'Chainsaw Man',
+                videoId: 'dFlDRhvM4L0', // Chainsaw Man - Opening 1
+                episodes: 12,
+                description: 'Chainsaw Man - Opening 1'
+            },
+            'fullmetal alchemist brotherhood': {
+                name: 'Fullmetal Alchemist Brotherhood',
+                videoId: 'VnY7PUljEqA', // FMA Brotherhood - Opening 1
+                episodes: 64,
+                description: 'Fullmetal Alchemist Brotherhood - Opening 1'
             },
             'bleach': {
                 name: 'Bleach',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: '3d48fYVgC24', // Bleach - Opening 1
                 episodes: 366,
-                description: 'Bleach - Playlist'
+                description: 'Bleach - Opening 1'
             },
             'dragon ball z': {
                 name: 'Dragon Ball Z',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
+                videoId: 'vjv7iYdLqOU', // Dragon Ball Z - Opening (Cha-La Head-Cha-La)
                 episodes: 291,
-                description: 'Dragon Ball Z - Playlist'
-            },
-            'hunter x hunter': {
-                name: 'Hunter x Hunter',
-                playlist: 'https://www.youtube.com/embed/videoseries?list=PLu9fXzZpV5o9HMVfN-2w3Bv3VgDPr_QjE',
-                episodes: 148,
-                description: 'Hunter x Hunter - Playlist'
+                description: 'Dragon Ball Z - Opening'
             }
         };
 
@@ -710,12 +680,12 @@
                 return;
             }
 
-            playerStatus.textContent = `${animeData.episodes} episodios disponibles`;
+            playerStatus.textContent = `${animeData.episodes} episodios disponibles (Opening de muestra)`;
             playerInfo.innerHTML =
-                `📺 Playlist de YouTube: <strong>${animeData.name}</strong>`;
+                `📺 Mostrando <strong>${animeData.description}</strong> como vista previa. Los episodios completos están disponibles en YouTube.`;
 
-            // Mostrar episodios (limitado a 100 para no saturar)
-            const maxEp = Math.min(animeData.episodes, 100);
+            // Mostrar episodios
+            const maxEp = Math.min(animeData.episodes, 50);
             let html = '';
             const perRow = 20;
 
@@ -723,7 +693,7 @@
                 const batch = Math.min(i + perRow, maxEp);
                 html += `<div style="display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:4px;">`;
                 for (let ep = i + 1; ep <= batch; ep++) {
-                    html += `<button data-ep="${ep}" data-playlist="${animeData.playlist}">Ep ${ep}</button>`;
+                    html += `<button data-ep="${ep}" data-video="${animeData.videoId}">Ep ${ep}</button>`;
                 }
                 html += `</div>`;
             }
@@ -734,7 +704,7 @@
             episodeList.querySelectorAll('button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const epNum = btn.dataset.ep;
-                    const playlist = btn.dataset.playlist;
+                    const videoId = btn.dataset.video;
 
                     episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -742,11 +712,11 @@
                     // Cargar el video en el iframe
                     videoPlaceholder.style.display = 'none';
                     videoIframe.style.display = 'block';
-                    videoIframe.src = playlist;
+                    videoIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 
-                    playerStatus.textContent = `Reproduciendo Playlist - Episodio ${epNum}`;
+                    playerStatus.textContent = `Reproduciendo Episodio ${epNum}`;
                     playerInfo.innerHTML =
-                        `▶️ Reproduciendo <strong>Episodio ${epNum}</strong> desde YouTube.`;
+                        `▶️ Reproduciendo <strong>Opening</strong> (episodios disponibles en YouTube).`;
                 });
             });
 
