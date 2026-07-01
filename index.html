@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inversión Literaria · Libros de Finanzas 2026</title>
-    <!-- Fuente moderna y geométrica -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome para iconos -->
+    <title>InversiónLiteral · Libros de Finanzas 2026</title>
+    <!-- Google Fonts: Space Grotesk (moderna y geométrica) -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome 6 (gratis) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ===== RESET Y VARIABLES ===== */
+        /* ============================================================
+                   RESET Y VARIABLES (Temática 2026: Data/Fintech)
+                   ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -17,27 +19,41 @@
         }
 
         :root {
-            --bg-primary: #0b0f1a;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --border-card: rgba(255, 255, 255, 0.08);
+            --bg-primary: #070b14;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-card: rgba(255, 255, 255, 0.06);
             --text-primary: #eef2f6;
-            --text-secondary: #8899aa;
+            --text-secondary: #7a8a9e;
+            --text-muted: #4a5a6e;
             --neon-green: #00f5a0;
-            --neon-yellow: #f5d300;
-            --glow-green: 0 0 20px rgba(0, 245, 160, 0.3);
-            --glow-yellow: 0 0 20px rgba(245, 211, 0, 0.25);
-            --radius: 16px;
+            --neon-blue: #4d8cf7;
+            --neon-purple: #a855f7;
+            --neon-yellow: #facc15;
+            --glow-green: 0 0 30px rgba(0, 245, 160, 0.25);
+            --glow-blue: 0 0 30px rgba(77, 140, 247, 0.2);
+            --radius: 20px;
             --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font: 'Space Grotesk', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font);
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             background-image:
-                radial-gradient(ellipse at 20% 50%, rgba(0, 245, 160, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(245, 211, 0, 0.05) 0%, transparent 50%);
+                radial-gradient(ellipse at 10% 20%, rgba(0, 245, 160, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(77, 140, 247, 0.04) 0%, transparent 50%);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         .container {
@@ -46,15 +62,18 @@
             padding: 0 24px;
         }
 
-        /* ===== HEADER ===== */
+        /* ============================================================
+                   NAVBAR (Sticky con vidrio)
+                   ============================================================ */
         .navbar {
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            background: rgba(11, 15, 26, 0.7);
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            background: rgba(7, 11, 20, 0.75);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            transition: background var(--transition);
         }
 
         .navbar .container {
@@ -73,10 +92,12 @@
             align-items: center;
             gap: 10px;
         }
+
         .logo i {
             color: var(--neon-green);
             text-shadow: var(--glow-green);
         }
+
         .logo span {
             color: var(--neon-yellow);
         }
@@ -85,57 +106,107 @@
             display: flex;
             gap: 28px;
             list-style: none;
+            align-items: center;
         }
+
         .nav-links a {
             color: var(--text-secondary);
-            text-decoration: none;
             font-weight: 500;
             font-size: 14px;
             letter-spacing: 0.3px;
             transition: color var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
         .nav-links a:hover {
             color: var(--neon-green);
         }
 
-        /* ===== HERO ===== */
+        .nav-links .legal-link {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .nav-links .legal-link:hover {
+            color: var(--neon-blue);
+        }
+
+        /* ============================================================
+                   HERO
+                   ============================================================ */
         .hero {
             padding: 60px 0 40px;
             text-align: center;
+            position: relative;
         }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), var(--neon-blue), transparent);
+            opacity: 0.3;
+        }
+
         .hero h1 {
             font-size: 52px;
             font-weight: 700;
             letter-spacing: -2px;
             line-height: 1.1;
+            margin-bottom: 12px;
         }
+
         .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--neon-green), var(--neon-yellow));
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .hero p {
             color: var(--text-secondary);
             font-size: 18px;
-            max-width: 580px;
-            margin: 16px auto 32px;
+            max-width: 600px;
+            margin: 0 auto 32px;
         }
 
-        /* ===== BUSCADOR ===== */
+        .hero .badge {
+            display: inline-block;
+            background: rgba(0, 245, 160, 0.1);
+            border: 1px solid rgba(0, 245, 160, 0.2);
+            border-radius: 50px;
+            padding: 4px 16px;
+            font-size: 12px;
+            color: var(--neon-green);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+                   BUSCADOR
+                   ============================================================ */
         .search-box {
             display: flex;
-            max-width: 560px;
-            margin: 0 auto 16px;
-            background: rgba(255, 255, 255, 0.05);
+            max-width: 640px;
+            margin: 0 auto 12px;
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: border var(--transition), box-shadow var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             overflow: hidden;
+            transition: border var(--transition), box-shadow var(--transition);
         }
+
         .search-box:focus-within {
             border-color: var(--neon-green);
             box-shadow: var(--glow-green);
         }
+
         .search-box input {
             flex: 1;
             background: transparent;
@@ -146,52 +217,65 @@
             font-family: inherit;
             outline: none;
         }
+
         .search-box input::placeholder {
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
+
         .search-box button {
             background: var(--neon-green);
             border: none;
-            padding: 0 28px;
-            color: #0b0f1a;
+            padding: 0 32px;
+            color: #070b14;
             font-weight: 700;
             font-size: 15px;
             cursor: pointer;
-            transition: background var(--transition);
+            transition: background var(--transition), transform 0.2s;
             font-family: inherit;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
         .search-box button:hover {
             background: #00d68a;
+            transform: scale(1.02);
         }
 
         .search-hint {
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 13px;
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
-        /* ===== RESULTADOS ===== */
+        .search-hint i {
+            color: var(--neon-blue);
+        }
+
+        /* ============================================================
+                   RESULTADOS
+                   ============================================================ */
         .results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 48px 0 20px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
+
         .results-header h2 {
             font-weight: 600;
             font-size: 20px;
             letter-spacing: -0.3px;
         }
+
         .results-header h2 i {
             color: var(--neon-yellow);
             margin-right: 10px;
         }
+
         .results-header .count {
             color: var(--text-secondary);
             font-size: 14px;
@@ -203,10 +287,12 @@
             color: var(--text-secondary);
             font-size: 18px;
         }
+
         #loading i {
             color: var(--neon-green);
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
             100% {
                 transform: rotate(360deg);
@@ -215,47 +301,77 @@
 
         .grid-books {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 24px;
             margin-bottom: 60px;
         }
 
-        /* ===== TARJETA DE LIBRO (GLASSMORPHISM) ===== */
+        /* ============================================================
+                   TARJETA DE LIBRO (Glassmorphism + hover)
+                   ============================================================ */
         .book-card {
             background: var(--bg-card);
             backdrop-filter: blur(8px);
             border: 1px solid var(--border-card);
             border-radius: var(--radius);
-            padding: 24px;
-            transition: transform var(--transition), box-shadow var(--transition);
-            cursor: default;
+            padding: 20px;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 245, 160, 0.02), transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition);
+            pointer-events: none;
+        }
+
+        .book-card:hover::before {
+            opacity: 1;
+        }
+
         .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
             border-color: rgba(0, 245, 160, 0.2);
         }
 
-        .book-card .cover-placeholder {
+        .book-cover {
             width: 100%;
             aspect-ratio: 2/3;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            color: var(--text-secondary);
             margin-bottom: 16px;
-            border: 1px dashed rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .book-card .cover-placeholder img {
+
+        .book-cover img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 8px;
+            transition: transform var(--transition);
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.02);
+        }
+
+        .book-cover i {
+            font-size: 48px;
+            color: var(--text-muted);
         }
 
         .book-card h3 {
@@ -264,17 +380,27 @@
             line-height: 1.3;
             margin-bottom: 4px;
         }
+
         .book-card .author {
-            color: var(--neon-green);
+            color: var(--neon-blue);
             font-size: 14px;
             font-weight: 400;
             margin-bottom: 6px;
         }
-        .book-card .year {
-            color: var(--text-secondary);
-            font-size: 13px;
-            margin-bottom: 12px;
+
+        .book-card .price-tag {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neon-yellow);
+            margin: 8px 0;
         }
+
+        .book-card .price-tag .no-price {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 14px;
+        }
+
         .book-card .description {
             color: var(--text-secondary);
             font-size: 14px;
@@ -284,48 +410,346 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-        }
-        .book-card .btn-detail {
-            margin-top: 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all var(--transition);
-            font-family: inherit;
-            width: fit-content;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .book-card .btn-detail:hover {
-            background: var(--neon-green);
-            border-color: var(--neon-green);
-            color: #0b0f1a;
+            margin-bottom: 12px;
         }
 
-        /* ===== FOOTER ===== */
-        .footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 32px 0;
-            margin-top: 20px;
+        .book-card .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-group a {
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1 1 auto;
+            justify-content: center;
+            border: 1px solid transparent;
+        }
+
+        .btn-amazon {
+            background: #1a2c3e;
+            color: white;
+            border-color: #ff9900;
+        }
+
+        .btn-amazon:hover {
+            background: #ff9900;
+            color: #070b14;
+        }
+
+        .btn-google {
+            background: transparent;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-google:hover {
+            background: white;
+            color: #070b14;
+        }
+
+        .btn-preview {
+            background: transparent;
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+        }
+
+        .btn-preview:hover {
+            background: var(--neon-green);
+            color: #070b14;
+        }
+
+        .btn-gutenberg {
+            background: transparent;
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+        }
+
+        .btn-gutenberg:hover {
+            background: var(--neon-purple);
+            color: #070b14;
+        }
+
+        /* ============================================================
+                   SECCIÓN DE CLÁSICOS GRATUITOS (Fijos)
+                   ============================================================ */
+        .classics-section {
+            margin: 60px 0 40px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .classics-section h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .classics-section h2 i {
+            color: var(--neon-purple);
+        }
+
+        .classics-section .sub {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .classics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .classic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius);
+            padding: 18px;
             text-align: center;
+            transition: transform var(--transition), border-color var(--transition);
+        }
+
+        .classic-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-purple);
+        }
+
+        .classic-card h4 {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .classic-card .author {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .classic-card .btn-group {
+            margin-top: 12px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .classic-card .btn-group a {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            transition: all var(--transition);
+        }
+
+        .classic-card .btn-group a:hover {
+            background: var(--neon-purple);
+            color: #070b14;
+            border-color: var(--neon-purple);
+        }
+
+        /* ============================================================
+                   FOOTER (con avisos legales)
+                   ============================================================ */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 40px 0 24px;
+            margin-top: 20px;
+            background: rgba(7, 11, 20, 0.6);
+        }
+
+        .footer .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .footer p,
+        .footer li {
             color: var(--text-secondary);
             font-size: 14px;
+            line-height: 1.8;
         }
-        .footer i {
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li a {
+            color: var(--text-secondary);
+            transition: color var(--transition);
+            cursor: pointer;
+        }
+
+        .footer ul li a:hover {
+            color: var(--neon-green);
+        }
+
+        .footer .legal-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+            padding: 2px 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 8px;
+        }
+
+        .footer .copy {
+            grid-column: 1 / -1;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer .copy i {
+            color: var(--neon-green);
+        }
+
+        /* ============================================================
+                   MODAL LEGAL (Política de Privacidad, Cookies, Afiliados)
+                   ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #101827;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius);
+            max-width: 720px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 32px 40px;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--neon-green);
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: color var(--transition);
+            padding: 0 8px;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .modal h2 i {
+            color: var(--neon-blue);
+            margin-right: 12px;
+        }
+
+        .modal h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 8px;
             color: var(--neon-yellow);
         }
 
-        /* ===== RESPONSIVE ===== */
+        .modal p,
+        .modal li {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .modal ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        .modal ul li {
+            margin-bottom: 4px;
+        }
+
+        .modal .highlight-box {
+            background: rgba(0, 245, 160, 0.05);
+            border-left: 3px solid var(--neon-green);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+
+        /* ============================================================
+                   RESPONSIVE
+                   ============================================================ */
+        @media (max-width: 992px) {
+            .footer .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 34px;
+            }
+            .hero p {
+                font-size: 16px;
             }
             .navbar .container {
                 flex-direction: column;
@@ -339,7 +763,7 @@
             .search-box {
                 flex-direction: column;
                 border-radius: 20px;
-                background: rgba(255, 255, 255, 0.03);
+                background: rgba(255, 255, 255, 0.02);
             }
             .search-box input {
                 padding: 14px 20px;
@@ -353,27 +777,56 @@
             .grid-books {
                 grid-template-columns: 1fr 1fr;
             }
-        }
-
-        @media (max-width: 480px) {
-            .grid-books {
+            .classics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer .container {
                 grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .modal {
+                padding: 24px;
             }
         }
 
-        /* ===== UTILITIES ===== */
-        .text-muted {
-            color: var(--text-secondary);
+        @media (max-width: 480px) {
+            .grid-books,
+            .classics-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
         }
-        .mt-2 {
+
+        /* ============================================================
+                   UTILITIES
+                   ============================================================ */
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .mt-1 {
             margin-top: 8px;
+        }
+        .mb-1 {
+            margin-bottom: 8px;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-2 {
+            gap: 8px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar" id="navbar">
         <div class="container">
             <div class="logo">
                 <i class="fas fa-chart-line"></i>
@@ -381,167 +834,449 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="#"><i class="fas fa-fire"></i> Top 2026</a></li>
-                <li><a href="#"><i class="fas fa-book-open"></i> Guías</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Contacto</a></li>
+                <li><a href="#classics"><i class="fas fa-book-open"></i> Clásicos</a></li>
+                <li><a href="#" id="openLegalModal" class="legal-link"><i class="fas fa-gavel"></i> Legal</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
     <section class="hero">
         <div class="container">
+            <div class="badge"><i class="fas fa-rocket"></i> 2026 · Data & Finanzas</div>
             <h1>Libros que <span class="highlight">mueven el mercado</span></h1>
-            <p>Buscá entre miles de títulos de finanzas, inversión y economía. Datos en tiempo real desde Open Library.</p>
+            <p>Buscá entre miles de títulos de finanzas e inversión. Compará precios, leé clásicos gratis y ganá comisiones con tus recomendaciones.</p>
 
-            <!-- Buscador -->
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Ej: 'El inversor inteligente' o 'Benjamin Graham'" />
+                <input type="text" id="searchInput" placeholder='Ej: "El inversor inteligente" o "Benjamin Graham"' />
                 <button id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
             </div>
             <div class="search-hint">
-                <i class="fas fa-database"></i> Más de 5 millones de libros · API en vivo
+                <i class="fas fa-database"></i> Datos de Google Books · Precios en tiempo real · Clásicos de Gutenberg
             </div>
         </div>
     </section>
 
-    <!-- ===== RESULTADOS ===== -->
+    <!-- ============================================================
+    RESULTADOS
+    ============================================================ -->
     <div class="container">
         <div class="results-header">
-            <h2><i class="fas fa-book"></i> Resultados</h2>
-            <span class="count" id="resultCount">0 libros encontrados</span>
+            <h2><i class="fas fa-dollar-sign"></i> Resultados con precios</h2>
+            <span class="count" id="resultCount">0 libros</span>
         </div>
-
         <div id="loading" style="display:none;">
-            <i class="fas fa-spinner"></i> Cargando libros...
+            <i class="fas fa-spinner"></i> Cargando ofertas...
         </div>
-
         <div class="grid-books" id="booksGrid">
-            <!-- Las tarjetas se inyectan acá con JavaScript -->
+            <!-- Inyectado por JavaScript -->
         </div>
     </div>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================
+    SECCIÓN DE CLÁSICOS GRATUITOS (FIJOS)
+    ============================================================ -->
+    <section class="classics-section" id="classics">
+        <div class="container">
+            <h2><i class="fas fa-scroll"></i> Clásicos gratuitos (dominio público)</h2>
+            <p class="sub">Obras fundamentales de la economía y las finanzas, disponibles para leer al instante gracias a Project Gutenberg.</p>
+            <div class="classics-grid">
+                <!-- Tarjeta 1 -->
+                <div class="classic-card">
+                    <h4>La riqueza de las naciones</h4>
+                    <div class="author">Adam Smith (1776)</div>
+                    <div class="btn-group">
+                        <a href="https://www.gutenberg.org/cache/epub/3300/pg3300.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
+                        <a href="https://www.gutenberg.org/ebooks/3300" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
+                    </div>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="classic-card">
+                    <h4>El manifiesto comunista</h4>
+                    <div class="author">Marx &amp; Engels (1848)</div>
+                    <div class="btn-group">
+                        <a href="https://www.gutenberg.org/cache/epub/61/pg61.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
+                        <a href="https://www.gutenberg.org/ebooks/61" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
+                    </div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="classic-card">
+                    <h4>La teoría de los sentimientos morales</h4>
+                    <div class="author">Adam Smith (1759)</div>
+                    <div class="btn-group">
+                        <a href="https://www.gutenberg.org/cache/epub/6737/pg6737.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
+                        <a href="https://www.gutenberg.org/ebooks/6737" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
+                    </div>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="classic-card">
+                    <h4>El arte de la guerra</h4>
+                    <div class="author">Sun Tzu (s. V a.C.)</div>
+                    <div class="btn-group">
+                        <a href="https://www.gutenberg.org/cache/epub/132/pg132.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
+                        <a href="https://www.gutenberg.org/ebooks/132" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
+                    </div>
+                </div>
+                <!-- Tarjeta 5 -->
+                <div class="classic-card">
+                    <h4>Principios de economía política</h4>
+                    <div class="author">John Stuart Mill (1848)</div>
+                    <div class="btn-group">
+                        <a href="https://www.gutenberg.org/cache/epub/30107/pg30107.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
+                        <a href="https://www.gutenberg.org/ebooks/30107" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER (con avisos legales y enlace al modal)
+    ============================================================ -->
     <footer class="footer">
         <div class="container">
-            <p>
-                <i class="fas fa-code"></i> Hecho con 
-                <i class="fas fa-heart" style="color:var(--neon-green);"></i> 
-                y la API de <strong>Open Library</strong> · 2026
-            </p>
-            <p style="margin-top:6px; font-size:13px; opacity:0.5;">
-                Datos proporcionados por <a href="https://openlibrary.org/" target="_blank" style="color:var(--neon-yellow);">OpenLibrary.org</a>
-            </p>
+            <div>
+                <h4><i class="fas fa-chart-line" style="color:var(--neon-green);"></i> InversiónLiteral</h4>
+                <p>Tu brújula en el mundo de los libros de finanzas. Reseñas, precios y clásicos gratuitos.</p>
+                <div class="legal-badge">
+                    <i class="fas fa-shield-alt"></i> Enlaces de afiliado · Política de privacidad
+                </div>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="#" id="openLegalModal2">Aviso legal</a></li>
+                    <li><a href="#" id="openLegalModal3">Política de cookies</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Monetización</h4>
+                <p style="font-size:14px;">
+                    <i class="fab fa-amazon" style="color:#ff9900;"></i> Amazon Associates<br />
+                    <i class="fab fa-google-play" style="color:#8ab4f8;"></i> Google Books<br />
+                    <i class="fas fa-book-open" style="color:var(--neon-purple);"></i> Project Gutenberg
+                </p>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                    Como asociado de Amazon, gano comisiones por las compras realizadas a través de estos enlaces.
+                </p>
+            </div>
+            <div class="copy">
+                &copy; 2026 InversiónLiteral · Hecho con <i class="fas fa-heart" style="color:var(--neon-green);"></i> y datos abiertos.
+            </div>
         </div>
     </footer>
 
-    <!-- ===== JAVASCRIPT ===== -->
+    <!-- ============================================================
+    MODAL LEGAL (Política de Privacidad, Cookies y Afiliados)
+    ============================================================ -->
+    <div class="modal-overlay" id="legalModal">
+        <div class="modal">
+            <button class="modal-close" id="closeLegalModal">&times;</button>
+            <h2><i class="fas fa-gavel"></i> Aviso legal</h2>
+            <p>Última actualización: 1 de julio de 2026</p>
+
+            <h3><i class="fas fa-user-shield"></i> Política de privacidad</h3>
+            <p>En <strong>InversiónLiteral</strong> respetamos tu privacidad. Esta página no recopila ni almacena datos personales de los usuarios. No utilizamos cookies propias de seguimiento, aunque terceros como Google Books o Amazon pueden establecer cookies para sus servicios.</p>
+            <p>No compartimos, vendemos ni alquilamos información de nuestros visitantes.</p>
+
+            <h3><i class="fas fa-cookie-bite"></i> Política de cookies</h3>
+            <p>Esta web utiliza cookies técnicas propias para el correcto funcionamiento del buscador y la visualización de contenido. No utilizamos cookies publicitarias ni de perfilado sin tu consentimiento explícito.</p>
+            <p>Los servicios de terceros (Google Books, Amazon, Project Gutenberg) pueden establecer cookies adicionales. Te recomendamos revisar sus políticas de privacidad.</p>
+
+            <h3><i class="fas fa-tag"></i> Enlaces de afiliado</h3>
+            <p>Algunos de los enlaces que aparecen en esta página son enlaces de afiliado de <strong>Amazon Associates</strong>. Esto significa que, si haces clic en ellos y realizas una compra, <strong>InversiónLiteral</strong> recibirá una pequeña comisión sin costo adicional para ti.</p>
+            <div class="highlight-box">
+                <i class="fas fa-info-circle" style="color:var(--neon-green);"></i>
+                <strong>Transparencia:</strong> Todos los libros recomendados son seleccionados de forma objetiva. Las opiniones son siempre independientes.
+            </div>
+            <p>Además, mostramos precios y enlaces de compra a través de la <strong>API de Google Books</strong>, que también puede generar comisiones para nosotros.</p>
+
+            <h3><i class="fas fa-book"></i> Contenido de dominio público</h3>
+            <p>Los clásicos ofrecidos en la sección "Clásicos gratuitos" son de dominio público y se proporcionan a través de <strong>Project Gutenberg</strong> bajo licencia libre. Puedes leerlos, descargarlos y compartirlos legalmente.</p>
+
+            <p style="margin-top:24px; font-size:13px; color:var(--text-muted);">
+                <i class="fas fa-check-circle" style="color:var(--neon-green);"></i> Esta página cumple con las normativas de transparencia de afiliados y protección de datos (RGPD).
+            </p>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT (Toda la lógica de búsqueda, APIs y modal)
+    ============================================================ -->
     <script>
         (function() {
+            'use strict';
+
+            // ============================================================
+            //  CONFIGURACIÓN (¡CAMBIÁ AQUÍ TUS DATOS!)
+            // ============================================================
+            const API_KEY = 'TU_API_KEY_DE_GOOGLE_BOOKS'; // Ej: 'AIzaSyD...'
+            const AMAZON_TAG = 'TU_TAG_AMAZON-20'; // Ej: 'milibro-20'
+            // ============================================================
+
+            // Elementos del DOM
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
             const booksGrid = document.getElementById('booksGrid');
             const loading = document.getElementById('loading');
             const resultCount = document.getElementById('resultCount');
 
-            // Función principal que busca en Open Library
+            // Modal legal
+            const modal = document.getElementById('legalModal');
+            const openBtns = document.querySelectorAll('#openLegalModal, #openLegalModal2, #openLegalModal3');
+            const closeBtn = document.getElementById('closeLegalModal');
+
+            // ============================================================
+            //  FUNCIONES AUXILIARES
+            // ============================================================
+            function getIsbn(industryIds) {
+                if (!industryIds) return null;
+                const isbn13 = industryIds.find(id => id.type === 'ISBN_13');
+                if (isbn13) return isbn13.identifier;
+                const isbn10 = industryIds.find(id => id.type === 'ISBN_10');
+                return isbn10 ? isbn10.identifier : null;
+            }
+
+            // ============================================================
+            //  BÚSQUEDA EN PROJECT GUTENBERG (API pública)
+            // ============================================================
+            async function searchGutenberg(query) {
+                try {
+                    // Limpiamos la query para mejorar la búsqueda
+                    const cleanQuery = query.split(':')[0].trim();
+                    const url =
+                        `https://www.gutenberg.org/ebooks/search/?query=${encodeURIComponent(cleanQuery)}&format=json`;
+                    const response = await fetch(url);
+                    if (!response.ok) return null;
+                    const data = await response.json();
+                    if (data.count === 0 || !data.results || data.results.length === 0) {
+                        return null;
+                    }
+                    const book = data.results[0];
+                    const formats = book.formats || {};
+                    // Prioridad: TXT plano > EPUB > HTML
+                    let readLink = null;
+                    let readType = null;
+                    if (formats['text/plain; charset=utf-8']) {
+                        readLink = formats['text/plain; charset=utf-8'];
+                        readType = 'TXT';
+                    } else if (formats['application/epub+zip']) {
+                        readLink = formats['application/epub+zip'];
+                        readType = 'EPUB';
+                    } else if (formats['text/html']) {
+                        readLink = formats['text/html'];
+                        readType = 'HTML';
+                    }
+                    if (!readLink) return null;
+                    return {
+                        id: book.id,
+                        title: book.title,
+                        link: readLink,
+                        type: readType,
+                        author: book.authors && book.authors.length > 0 ? book.authors[0].name : 'Autor clásico'
+                    };
+                } catch (error) {
+                    console.warn('Gutenberg API error (normal si no encuentra el libro):', error);
+                    return null;
+                }
+            }
+
+            // ============================================================
+            //  BÚSQUEDA PRINCIPAL (Google Books + Gutenberg)
+            // ============================================================
             async function searchBooks(query) {
                 if (!query.trim()) {
-                    booksGrid.innerHTML = `<p class="text-muted" style="grid-column:1/-1; text-align:center; padding:40px 0;">Escribí un libro o autor para comenzar.</p>`;
-                    resultCount.textContent = '0 libros encontrados';
+                    booksGrid.innerHTML =
+                        `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:var(--text-secondary);">Escribí un libro para ver precios y ofertas.</p>`;
+                    resultCount.textContent = '0 libros';
                     return;
                 }
 
-                // Mostrar loading
                 loading.style.display = 'block';
                 booksGrid.innerHTML = '';
 
                 try {
-                    // Open Library Search API - sin clave, gratis[reference:5]
+                    // 1. Llamada a Google Books API
                     const url =
-                        `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=12&fields=key,title,author_name,first_publish_year,cover_i,subject,editions`;
+                        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=12&orderBy=relevance&key=${API_KEY}`;
                     const response = await fetch(url);
                     const data = await response.json();
 
                     loading.style.display = 'none';
 
-                    const docs = data.docs || [];
-                    const total = data.num_found || 0;
-                    resultCount.textContent = `${total} libros encontrados`;
-
-                    if (docs.length === 0) {
+                    if (data.error) {
+                        console.error('Google Books API error:', data.error);
                         booksGrid.innerHTML =
-                            `<p class="text-muted" style="grid-column:1/-1; text-align:center; padding:40px 0;">No encontramos resultados para "<strong>${query}</strong>". Probá con otro término.</p>`;
+                            `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#ff6b6b;">
+                                <i class="fas fa-triangle-exclamation"></i> Error de API: ${data.error.message || 'Revisá tu clave de Google Books.'}<br>
+                                <span style="font-size:13px; color:var(--text-secondary);">Asegurate de habilitar Books API en Google Cloud.</span>
+                            </p>`;
+                        resultCount.textContent = 'Error';
                         return;
                     }
 
-                    // Renderizar tarjetas
-                    let html = '';
-                    docs.forEach(book => {
-                        const title = book.title || 'Sin título';
-                        const author = book.author_name ? book.author_name[0] : 'Autor desconocido';
-                        const year = book.first_publish_year || 'Año desconocido';
-                        const coverId = book.cover_i || null;
-                        const coverUrl = coverId ?
-                            `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` :
-                            null;
+                    const items = data.items || [];
+                    const total = data.totalItems || 0;
+                    resultCount.textContent = `${total} resultados`;
 
-                        // Tomamos un snippet de la primera edición si existe
-                        let description = '';
-                        if (book.editions && book.editions.docs && book.editions.docs.length > 0) {
-                            const firstEd = book.editions.docs[0];
-                            if (firstEd.subtitle) description = firstEd.subtitle;
-                            else if (firstEd.notes) description = firstEd.notes;
-                        }
-                        if (!description && book.subject && book.subject.length > 0) {
-                            description = book.subject.slice(0, 3).join(' · ');
-                        }
-                        if (!description) {
-                            description = 'Libro de finanzas e inversión.';
+                    if (items.length === 0) {
+                        booksGrid.innerHTML =
+                            `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:var(--text-secondary);">No se encontraron libros para "<strong>${query}</strong>".</p>`;
+                        return;
+                    }
+
+                    // 2. Procesar cada libro y buscar en Gutenberg (paralelo)
+                    const cards = [];
+                    for (const book of items) {
+                        const info = book.volumeInfo || {};
+                        const sale = book.saleInfo || {};
+                        const access = book.accessInfo || {};
+
+                        const title = info.title || 'Sin título';
+                        const authors = info.authors ? info.authors.join(', ') : 'Autor desconocido';
+                        const description = info.description ? info.description.replace(/<[^>]+>/g, '').slice(0,
+                            150) + '…' : 'Sin descripción.';
+                        const thumbnail = info.imageLinks ? info.imageLinks.thumbnail : null;
+
+                        // Precio y enlace Google Play
+                        let priceText = 'No disponible';
+                        let googleBuyLink = null;
+                        if (sale.listPrice) {
+                            priceText = `${sale.listPrice.amount} ${sale.listPrice.currencyCode}`;
+                            googleBuyLink = sale.buyLink || null;
                         }
 
-                        // Limitar descripción
-                        if (description.length > 120) description = description.slice(0, 120) + '…';
+                        // ISBN para Amazon
+                        const isbn = getIsbn(info.industryIdentifiers);
+                        let amazonLink = '#';
+                        if (isbn) {
+                            amazonLink = `https://www.amazon.com/dp/${isbn}/?tag=${AMAZON_TAG}`;
+                        }
 
-                        html += `
+                        // Vista previa de Google Books
+                        let previewLink = null;
+                        if (access.viewability === 'PARTIAL' || access.viewability === 'ALL_PAGES') {
+                            previewLink = info.previewLink || null;
+                        }
+
+                        // ----- INTEGRACIÓN CON GUTENBERG (solo para clásicos) -----
+                        let gutenbergData = null;
+                        // Palabras clave que sugieren dominio público
+                        const classicKeywords = ['economy', 'wealth', 'capital', 'smith', 'marx', 'mill', 'ricardo',
+                            'investor', 'graham', 'principle', 'political', 'wealth of nations'
+                        ];
+                        const titleLower = (info.title || '').toLowerCase();
+                        const authorLower = (info.authors ? info.authors.join(' ').toLowerCase() : '');
+                        const isClassic = classicKeywords.some(k => titleLower.includes(k) || authorLower.includes(
+                        k));
+
+                        if (isClassic) {
+                            gutenbergData = await searchGutenberg(info.title || 'economy');
+                        }
+
+                        // Construir la tarjeta
+                        let buttonsHtml = '';
+
+                        // Botón Amazon
+                        if (amazonLink !== '#') {
+                            buttonsHtml +=
+                                `<a href="${amazonLink}" target="_blank" class="btn-amazon"><i class="fab fa-amazon"></i> Amazon</a>`;
+                        }
+
+                        // Botón Google Play
+                        if (googleBuyLink) {
+                            buttonsHtml +=
+                                `<a href="${googleBuyLink}" target="_blank" class="btn-google"><i class="fab fa-google-play"></i> Comprar</a>`;
+                        }
+
+                        // Botón vista previa Google
+                        if (previewLink) {
+                            buttonsHtml +=
+                                `<a href="${previewLink}" target="_blank" class="btn-preview"><i class="fas fa-eye"></i> Vista previa</a>`;
+                        }
+
+                        // Botón Gutenberg (lectura gratis)
+                        if (gutenbergData) {
+                            buttonsHtml +=
+                                `<a href="${gutenbergData.link}" target="_blank" class="btn-gutenberg"><i class="fas fa-book-open"></i> Leer gratis (${gutenbergData.type})</a>`;
+                        }
+
+                        const cardHtml = `
                             <div class="book-card">
-                                <div class="cover-placeholder">
-                                    ${coverUrl ? `<img src="${coverUrl}" alt="${title}" loading="lazy" />` : `<i class="fas fa-book"></i>`}
+                                <div class="book-cover">
+                                    ${thumbnail ? `<img src="${thumbnail}" alt="${title}" loading="lazy" />` : `<i class="fas fa-book"></i>`}
                                 </div>
                                 <h3>${title}</h3>
-                                <div class="author"><i class="fas fa-user-pen"></i> ${author}</div>
-                                <div class="year"><i class="far fa-calendar-alt"></i> ${year}</div>
+                                <div class="author"><i class="fas fa-user-pen"></i> ${authors}</div>
+                                <div class="price-tag">
+                                    ${priceText !== 'No disponible' ? `<i class="fas fa-tag"></i> ${priceText}` : `<span class="no-price">${priceText}</span>`}
+                                </div>
                                 <div class="description">${description}</div>
-                                <a href="https://openlibrary.org${book.key || '#'}" target="_blank" class="btn-detail">
-                                    <i class="fas fa-external-link-alt"></i> Ver en Open Library
-                                </a>
+                                <div class="btn-group">
+                                    ${buttonsHtml}
+                                </div>
                             </div>
                         `;
-                    });
+                        cards.push(cardHtml);
+                    }
 
-                    booksGrid.innerHTML = html;
+                    booksGrid.innerHTML = cards.join('');
 
                 } catch (error) {
                     loading.style.display = 'none';
                     booksGrid.innerHTML =
                         `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#ff6b6b;">
-                            <i class="fas fa-triangle-exclamation"></i> Error al cargar los libros. 
-                            <br><span style="font-size:14px; color:var(--text-secondary);">${error.message}</span>
+                            <i class="fas fa-triangle-exclamation"></i> Error de red: ${error.message}
                         </p>`;
-                    console.error('Error en la API:', error);
+                    console.error(error);
                 }
             }
 
-            // === EVENTOS ===
+            // ============================================================
+            //  EVENTOS DE BÚSQUEDA
+            // ============================================================
             searchBtn.addEventListener('click', () => searchBooks(searchInput.value));
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') searchBooks(searchInput.value);
             });
 
-            // === CARGA INICIAL CON UN LIBRO DE FINANZAS POPULAR ===
-            // Para que la página no se vea vacía al abrirla
+            // ============================================================
+            //  MODAL LEGAL
+            // ============================================================
+            function openModal() {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            openBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+            });
+
+            // ============================================================
+            //  CARGA INICIAL
+            // ============================================================
             window.addEventListener('DOMContentLoaded', () => {
-                searchBooks('finanzas inversiones');
+                searchBooks('finanzas personales inversiones');
             });
 
         })();
