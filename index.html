@@ -1,1063 +1,481 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>AnimeStream | Ver animes online</title>
-    <meta name="description" content="Plataforma para ver animes online gratis con AniList, Consumet y Aniwatch." />
-    <meta name="theme-color" content="#0a0a1a" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversión Literaria · Libros de Finanzas</title>
+    <!-- Fuente profesional y elegante -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== ESTILOS (LOS MISMOS DE ANTES) ===== */
+        /* ----- RESET Y BASE ----- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a1a;
-            color: #f0f0ff;
-            min-height: 100vh;
-            padding-bottom: 20px;
-            overflow-x: hidden;
         }
 
-        header {
-            background: rgba(10, 10, 26, 0.97);
-            backdrop-filter: blur(12px);
-            padding: 10px 14px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f9;
+            color: #1a2634;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ----- HEADER (NAV) ----- */
+        .navbar {
+            background: #0b1a2e;
+            padding: 18px 0;
+            border-bottom: 4px solid #d4af37;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(124, 58, 237, 0.15);
-        }
-        .header-inner {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: #a78bfa;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-        }
-        .logo span {
-            color: #fff;
-        }
-        .logo .badge {
-            font-size: 0.45rem;
-            background: #7c3aed;
-            color: #fff;
-            padding: 1px 8px;
-            border-radius: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-left: 4px;
-        }
-        .search-box {
-            display: flex;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            overflow: hidden;
-            flex: 1;
-            min-width: 0;
-        }
-        .search-box input {
-            flex: 1;
-            padding: 8px 12px;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 0.8rem;
-            outline: none;
-            min-width: 40px;
-        }
-        .search-box input::placeholder {
-            color: #666;
-            font-size: 0.7rem;
-        }
-        .search-box button {
-            padding: 8px 14px;
-            background: #7c3aed;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.7rem;
-            white-space: nowrap;
-            transition: background 0.2s;
-        }
-        .search-box button:active {
-            background: #5b21b6;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        main {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 14px 14px 20px;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #1a1a4e 0%, #0d0d2b 50%, #1a0a2e 100%);
-            border-radius: 18px;
-            padding: 24px 20px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(124, 58, 237, 0.12);
-        }
-        .hero h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-        .hero h1 .highlight {
-            color: #a78bfa;
-        }
-        .hero p {
-            color: #a0a0c0;
-            font-size: 0.85rem;
-            margin-top: 6px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 22px;
-            background: #7c3aed;
-            border-radius: 4px;
-        }
-
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        @media (min-width: 420px) {
-            .anime-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        .anime-card {
-            background: #1a1a3e;
-            border-radius: 14px;
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            border: 1px solid #2a2a5a;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .anime-card:active {
-            transform: scale(0.96);
-        }
-        .anime-card .card-img {
-            position: relative;
-            padding-top: 140%;
-            background: #12122a;
-            overflow: hidden;
-        }
-        .anime-card .card-img img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .anime-card .info {
-            padding: 10px 12px 12px;
-        }
-        .anime-card .info h3 {
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .anime-card .info .meta {
-            font-size: 0.6rem;
-            color: #888;
+        .navbar .container {
             display: flex;
             justify-content: space-between;
-            margin-top: 2px;
-        }
-        .anime-card .info .meta .score {
-            color: #fcd34d;
-            font-weight: 700;
-        }
-        .anime-card .info .type {
-            font-size: 0.55rem;
-            color: #a78bfa;
-            background: rgba(124, 58, 237, 0.15);
-            padding: 1px 8px;
-            border-radius: 12px;
-            display: inline-block;
-            margin-top: 4px;
-        }
-
-        .player-section {
-            background: #1a1a3e;
-            border-radius: 18px;
-            padding: 16px;
-            margin-top: 24px;
-            border: 1px solid #2a2a5a;
-            display: none;
-        }
-        .player-section.active {
-            display: block;
-            animation: fadeUp 0.35s ease;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .player-section .player-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
         }
-        .player-section .player-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #a78bfa;
-            flex: 1;
-            min-width: 0;
-            word-break: break-word;
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 28px;
+            letter-spacing: 1px;
         }
-        .player-section .player-status {
-            font-size: 0.65rem;
-            color: #888;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 3px 12px;
-            border-radius: 20px;
-            border: 1px solid #2a2a5a;
-            white-space: nowrap;
+
+        .logo span {
+            color: #d4af37;
         }
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-            margin-bottom: 14px;
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
         }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+
+        .nav-links a {
+            color: #ccd6e0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .video-wrapper .placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        /* ----- HERO ----- */
+        .hero {
+            background: linear-gradient(135deg, #0b1a2e 0%, #1a3a4e 100%);
+            color: white;
+            padding: 70px 0;
             text-align: center;
-            color: #888;
+            border-bottom: 1px solid #d4af37;
         }
-        .video-wrapper .placeholder .icon {
-            font-size: 2.5rem;
-            display: block;
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: #d4af37;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #b0c7db;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn-cta {
+            background: #d4af37;
+            color: #0b1a2e;
+            padding: 14px 42px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        /* ----- SECCIÓN LIBROS DESTACADOS ----- */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            text-align: center;
+            margin: 60px 0 12px;
+            color: #0b1a2e;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #5e6f7e;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .grid-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* ----- TARJETA DE LIBRO (CARD) ----- */
+        .book-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid #e9ecf0;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .book-cover {
+            background: #eef2f6;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: 300;
+            color: #1a3a4e;
+            border-bottom: 3px solid #d4af37;
+            background-image: repeating-linear-gradient(45deg, #e9ecf0 0px, #e9ecf0 2px, #ffffff 2px, #ffffff 8px);
+        }
+
+        .book-cover span {
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+        }
+
+        .book-info {
+            padding: 24px;
+        }
+
+        .book-info h3 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            color: #0b1a2e;
+        }
+
+        .book-info .author {
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .book-info .rating {
+            color: #f5b342;
+            margin: 8px 0 12px;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .book-info p {
+            color: #3e4f5e;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        .book-info .price {
+            font-weight: 700;
+            font-size: 20px;
+            color: #0b1a2e;
+        }
+
+        .btn-buy {
+            background: #0b1a2e;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-left: 10px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .btn-buy:hover {
+            background: #d4af37;
+            color: #0b1a2e;
+            transform: scale(1.05);
+        }
+
+        /* ----- SECCIÓN DE ANÁLISIS / BLOG ----- */
+        .analysis-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0 60px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e9ecf0;
+        }
+
+        .analysis-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            border-left: 6px solid #d4af37;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .analysis-item {
+            background: #f8faff;
+            padding: 20px;
+            border-radius: 12px;
+            border-bottom: 2px solid transparent;
+            transition: border 0.3s;
+        }
+
+        .analysis-item:hover {
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .analysis-item h4 {
+            color: #0b1a2e;
             margin-bottom: 6px;
         }
-        .player-section .player-info {
-            font-size: 0.75rem;
-            color: #888;
-            padding: 8px 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .player-section .player-info a {
-            color: #a78bfa;
-            text-decoration: underline;
+
+        .analysis-item small {
+            color: #8a9aa8;
+            font-size: 13px;
         }
 
-        .episode-list {
+        /* ----- FOOTER ----- */
+        .footer {
+            background: #0b1a2e;
+            color: #9aabbb;
+            padding: 40px 0;
+            border-top: 4px solid #d4af37;
+            margin-top: 40px;
+        }
+
+        .footer-content {
             display: flex;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 2px 0;
-        }
-        .episode-list button {
-            background: rgba(255, 255, 255, 0.04);
-            color: #a0a0c0;
-            padding: 5px 12px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border: 1px solid #2a2a5a;
-            transition: all 0.2s;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .episode-list button:active {
-            transform: scale(0.95);
-        }
-        .episode-list button:hover {
-            background: #7c3aed;
-            color: #fff;
-            border-color: #7c3aed;
-        }
-        .episode-list button.active {
-            background: #7c3aed;
-            color: #fff;
-            border-color: #7c3aed;
-        }
-        .episode-list .no-episodes {
-            color: #888;
-            padding: 16px 0;
-            text-align: center;
-            width: 100%;
-            font-size: 0.85rem;
-        }
-        .episode-list .no-episodes .icon {
-            font-size: 1.8rem;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .episode-list .no-episodes .suggestion {
-            font-size: 0.7rem;
-            color: #888;
-            margin-top: 6px;
-            display: block;
-        }
-        .episode-list .no-episodes .suggestion a {
-            color: #a78bfa;
-            text-decoration: underline;
+            gap: 20px;
         }
 
-        .close-btn {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.7rem;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            transition: all 0.2s;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .close-btn:active {
-            background: #ef4444;
-            color: #fff;
+        .footer h4 {
+            color: white;
+            margin-bottom: 10px;
         }
 
-        .spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid #2a2a5a;
-            border-top-color: #7c3aed;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 24px auto;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .load-more {
-            text-align: center;
-            margin-top: 24px;
-        }
-        .load-more button {
-            background: rgba(255, 255, 255, 0.04);
-            color: #a0a0c0;
-            padding: 10px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            border: 1px solid #2a2a5a;
-            transition: all 0.2s;
-            cursor: pointer;
-            width: 100%;
-            max-width: 300px;
-        }
-        .load-more button:active {
-            background: #7c3aed;
-            color: #fff;
-            border-color: #7c3aed;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 14px;
-            color: #444;
-            font-size: 0.65rem;
-            border-top: 1px solid #1a1a3e;
-            margin-top: 30px;
-        }
-        footer a {
-            color: #a78bfa;
+        .footer a {
+            color: #d4af37;
             text-decoration: none;
         }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #12122a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #7c3aed;
-            border-radius: 4px;
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .nav-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .hero p {
+                font-size: 17px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-inner">
-            <div class="logo">
-                🎬 Anime<span>Stream</span>
-                <span class="badge">beta</span>
-            </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar..." />
-                <button id="searchBtn">Buscar</button>
-            </div>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">📘 <span>Inversión</span>Literal</div>
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Reseñas</a></li>
+                <li><a href="#">Top 10</a></li>
+                <li><a href="#">Guías</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <div class="hero">
-            <h1>Explora el <span class="highlight">mundo</span> del anime</h1>
-            <p>Toca cualquier anime y mira sus episodios gratis. ⚡ AniList · Consumet · Aniwatch</p>
+    <!-- HERO / PRESENTACIÓN -->
+    <section class="hero">
+        <div class="container">
+            <h1>Domina tus <span>Finanzas</span> leyendo</h1>
+            <p>Reseñas imparciales y profundas de los libros que todo inversor debe tener en su biblioteca. De principiante a experto.</p>
+            <a href="#" class="btn-cta">📖 Ver libros destacados</a>
         </div>
+    </section>
 
-        <div class="section-title">🔥 Animes populares</div>
-        <div id="animeGrid" class="anime-grid"></div>
-        <div class="load-more" id="loadMoreContainer">
-            <button id="loadMoreBtn">Cargar más</button>
-        </div>
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container">
 
-        <div id="playerSection" class="player-section">
-            <div class="player-header">
-                <div class="player-title" id="playerTitle">Título</div>
-                <div>
-                    <span class="player-status" id="playerStatus">Cargando...</span>
-                    <button class="close-btn" id="closePlayer">✕</button>
+        <!-- TÍTULO DE LA SECCIÓN -->
+        <h2 class="section-title">📚 Lecturas Esenciales 2026</h2>
+        <p class="section-subtitle">Los libros que están moviendo el dinero en Wall Street y el mundo</p>
+
+        <!-- GRID DE LIBROS (TARJETAS) -->
+        <div class="grid-books">
+
+            <!-- LIBRO 1 -->
+            <div class="book-card">
+                <div class="book-cover"><span>El Inversor Inteligente</span></div>
+                <div class="book-info">
+                    <h3>El inversor inteligente</h3>
+                    <div class="author">Benjamin Graham</div>
+                    <div class="rating">★★★★★</div>
+                    <p>El libro de cabecera de Warren Buffett. Enseña a invertir con valor y margen de seguridad.</p>
+                    <div>
+                        <span class="price">$18.99</span>
+                        <a href="#" class="btn-buy">Ver en Amazon</a>
+                    </div>
                 </div>
             </div>
-            <div class="video-wrapper">
-                <div class="placeholder" id="videoPlaceholder">
-                    <span class="icon">🎬</span>
-                    Selecciona un episodio
+
+            <!-- LIBRO 2 -->
+            <div class="book-card">
+                <div class="book-cover"><span>Psicología del Dinero</span></div>
+                <div class="book-info">
+                    <h3>La psicología del dinero</h3>
+                    <div class="author">Morgan Housel</div>
+                    <div class="rating">★★★★★</div>
+                    <p>Más que números: cómo nuestras emociones y sesgos afectan nuestras decisiones financieras.</p>
+                    <div>
+                        <span class="price">$15.50</span>
+                        <a href="#" class="btn-buy">Ver en Amazon</a>
+                    </div>
                 </div>
-                <iframe id="videoIframe" src="" allowfullscreen style="display:none;"></iframe>
             </div>
-            <div class="player-info" id="playerInfo">💡 Toca un episodio para ver</div>
-            <div class="episode-list" id="episodeList"></div>
+
+            <!-- LIBRO 3 -->
+            <div class="book-card">
+                <div class="book-cover"><span>Padre Rico, Padre Pobre</span></div>
+                <div class="book-info">
+                    <h3>Padre rico, padre pobre</h3>
+                    <div class="author">Robert Kiyosaki</div>
+                    <div class="rating">★★★★☆</div>
+                    <p>El clásico que cambia la mentalidad sobre el dinero, los activos y los pasivos.</p>
+                    <div>
+                        <span class="price">$12.99</span>
+                        <a href="#" class="btn-buy">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIBRO 4 -->
+            <div class="book-card">
+                <div class="book-cover"><span>El pequeño libro</span></div>
+                <div class="book-info">
+                    <h3>El pequeño libro para invertir</h3>
+                    <div class="author">John C. Bogle</div>
+                    <div class="rating">★★★★★</div>
+                    <p>El fundador de Vanguard explica por qué los fondos indexados son la mejor opción a largo plazo.</p>
+                    <div>
+                        <span class="price">$14.20</span>
+                        <a href="#" class="btn-buy">Ver en Amazon</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div id="loadingIndicator" style="display:none;">
-            <div class="spinner"></div>
-            <p style="text-align:center;color:#888;font-size:0.85rem;">Cargando animes...</p>
+        <!-- SECCIÓN DE ANÁLISIS / BLOG (DESTACADO) -->
+        <div class="analysis-section">
+            <h2>📝 Análisis de la semana</h2>
+            <div class="analysis-grid">
+                <div class="analysis-item">
+                    <h4>¿Merece la pena leer a Graham en 2026?</h4>
+                    <small>Por Admin · 1 julio 2026</small>
+                    <p style="margin-top:8px;">Analizamos si los principios del "value investing" siguen vigentes en la era de la IA y los algoritmos.</p>
+                </div>
+                <div class="analysis-item">
+                    <h4>Los 5 errores financieros que cometen los millennials</h4>
+                    <small>Por Admin · 29 junio 2026</small>
+                    <p style="margin-top:8px;">Basado en el libro de Housel, te contamos cómo evitarlos y construir riqueza desde cero.</p>
+                </div>
+                <div class="analysis-item">
+                    <h4>Comparativa: Inversión activa vs. pasiva</h4>
+                    <small>Por Admin · 25 junio 2026</small>
+                    <p style="margin-top:8px;">Reseña cruzada de los mejores libros para que decidas qué estrategia se adapta a ti.</p>
+                </div>
+            </div>
         </div>
-    </main>
 
-    <footer>
-        © 2026 AnimeStream – Datos: AniList · Streaming: Consumet + Aniwatch + YouTube (fallback)
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <h4>📘 InversiónLiteral</h4>
+                <p>Tu brújula en el mundo de los libros de finanzas. Reseñas honestas y contenido de valor.</p>
+            </div>
+            <div>
+                <h4>Enlaces rápidos</h4>
+                <a href="#">Política de privacidad</a><br>
+                <a href="#">Términos de uso</a><br>
+                <a href="#">Contacto</a>
+            </div>
+            <div>
+                <h4>Monetización</h4>
+                <p style="font-size:14px;">🔗 Enlaces de afiliado a Amazon</p>
+                <p style="font-size:14px;">📢 Espacio para Google AdSense</p>
+            </div>
+        </div>
+        <div class="container" style="text-align:center; margin-top:30px; border-top:1px solid #1e3347; padding-top:20px; font-size:14px;">
+            &copy; 2026 InversiónLiteral. Hecho con 📚 y pasión por las finanzas.
+        </div>
     </footer>
 
-    <script>
-        // ============================================================
-        // CONFIGURACIÓN - PROXIES ACTUALIZADOS
-        // ============================================================
-
-        const ANILIST_API = 'https://graphql.anilist.co';
-
-        // PROXIES DE CONSUMET (actualizados 30/06/2026)
-        const CONSUMET_SOURCES = [
-            'https://consumet-api.onrender.com',
-            'https://consumet-api-production-5c0c.up.railway.app',
-            'https://api.consumet.org', // La original (puede estar caída)
-            'https://consumet-api.vercel.app'
-        ];
-
-        // PROXIES DE ANIWATCH
-        const ANIWATCH_SOURCES = [
-            'https://aniwatch-api.vercel.app',
-            'https://aniwatch-api.onrender.com'
-        ];
-
-        // Lista de títulos en inglés para buscar mejor
-        const ENGLISH_TITLES = {
-            'Shigatsu wa Kimi no Uso': 'Your Lie in April',
-            'Kimetsu no Yaiba': 'Demon Slayer',
-            'Boku no Hero Academia': 'My Hero Academia',
-            'Shingeki no Kyojin': 'Attack on Titan',
-            'Re:Zero': 'Re:ZERO -Starting Life in Another World-',
-        };
-
-        let activeConsumet = null;
-        let activeAniwatch = null;
-
-        let currentPage = 1;
-        let currentQuery = '';
-        let isLoading = false;
-        let hasMore = true;
-
-        const grid = document.getElementById('animeGrid');
-        const loadingEl = document.getElementById('loadingIndicator');
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-
-        const playerSection = document.getElementById('playerSection');
-        const playerTitle = document.getElementById('playerTitle');
-        const playerStatus = document.getElementById('playerStatus');
-        const playerInfo = document.getElementById('playerInfo');
-        const episodeList = document.getElementById('episodeList');
-        const videoIframe = document.getElementById('videoIframe');
-        const videoPlaceholder = document.getElementById('videoPlaceholder');
-        const closeBtn = document.getElementById('closePlayer');
-
-        // ============================================================
-        // FUNCIÓN PARA OBTENER TÍTULO EN INGLÉS
-        // ============================================================
-        function getEnglishTitle(title) {
-            // Primero buscar en el mapa de traducciones
-            for (const [jp, en] of Object.entries(ENGLISH_TITLES)) {
-                if (title.includes(jp) || jp.includes(title)) {
-                    return en;
-                }
-            }
-            // Si no, devolver el título original
-            return title;
-        }
-
-        // ============================================================
-        // 1. PROBAR Y SELECCIONAR LA MEJOR API
-        // ============================================================
-        async function findWorkingConsumet() {
-            for (const api of CONSUMET_SOURCES) {
-                try {
-                    console.log(`🔍 Probando Consumet: ${api}`);
-                    const res = await fetch(`${api}/anime/gogoanime/top-airing`, { signal: AbortSignal.timeout(5000) });
-                    if (res.ok) {
-                        console.log(`✅ Consumet funciona: ${api}`);
-                        return api;
-                    }
-                } catch (e) {
-                    console.warn(`❌ Consumet falló: ${api}`);
-                }
-            }
-            return null;
-        }
-
-        async function findWorkingAniwatch() {
-            for (const api of ANIWATCH_SOURCES) {
-                try {
-                    console.log(`🔍 Probando Aniwatch: ${api}`);
-                    const res = await fetch(`${api}/api/v1/search?query=Naruto`, { signal: AbortSignal.timeout(5000) });
-                    if (res.ok) {
-                        console.log(`✅ Aniwatch funciona: ${api}`);
-                        return api;
-                    }
-                } catch (e) {
-                    console.warn(`❌ Aniwatch falló: ${api}`);
-                }
-            }
-            return null;
-        }
-
-        // ============================================================
-        // 2. ANILIST API - OBTENER ANIMES
-        // ============================================================
-        async function fetchAnimesFromAniList(page = 1, search = '') {
-            try {
-                let query = `
-                    query ($page: Int, $perPage: Int, $search: String) {
-                        Page (page: $page, perPage: $perPage) {
-                            pageInfo { hasNextPage }
-                            media (type: ANIME, search: $search, sort: POPULARITY_DESC) {
-                                id
-                                title { romaji english }
-                                coverImage { large }
-                                averageScore
-                                episodes
-                                format
-                                status
-                                startDate { year }
-                            }
-                        }
-                    }
-                `;
-
-                const variables = {
-                    page: page,
-                    perPage: 24,
-                    search: search || undefined
-                };
-
-                const response = await fetch(ANILIST_API, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ query, variables })
-                });
-
-                if (!response.ok) throw new Error('Error en AniList API');
-                const data = await response.json();
-                return data.data.Page;
-            } catch (error) {
-                console.error('AniList error:', error);
-                return null;
-            }
-        }
-
-        // ============================================================
-        // 3. CONSUMET API
-        // ============================================================
-        async function fetchEpisodesFromConsumet(animeId) {
-            if (!activeConsumet) return null;
-            try {
-                const res = await fetch(`${activeConsumet}/anime/gogoanime/episodes/${animeId}`);
-                if (!res.ok) throw new Error('Error en Consumet');
-                const data = await res.json();
-                return data.episodes || [];
-            } catch (e) {
-                console.error('Consumet episodes error:', e);
-                return null;
-            }
-        }
-
-        async function fetchStreamFromConsumet(episodeId) {
-            if (!activeConsumet) return null;
-            try {
-                const res = await fetch(`${activeConsumet}/anime/gogoanime/watch/${episodeId}`);
-                if (!res.ok) throw new Error('Error en Consumet');
-                const data = await res.json();
-                return data.sources || [];
-            } catch (e) {
-                console.error('Consumet stream error:', e);
-                return null;
-            }
-        }
-
-        // ============================================================
-        // 4. ANIWATCH API
-        // ============================================================
-        async function fetchEpisodesFromAniwatch(animeId) {
-            if (!activeAniwatch) return null;
-            try {
-                const res = await fetch(`${activeAniwatch}/api/v1/anime/${animeId}/episodes`);
-                if (!res.ok) throw new Error('Error en Aniwatch');
-                const data = await res.json();
-                return data.episodes || [];
-            } catch (e) {
-                console.error('Aniwatch episodes error:', e);
-                return null;
-            }
-        }
-
-        async function fetchStreamFromAniwatch(episodeId) {
-            if (!activeAniwatch) return null;
-            try {
-                const res = await fetch(`${activeAniwatch}/api/v1/episode/${episodeId}/sources`);
-                if (!res.ok) throw new Error('Error en Aniwatch');
-                const data = await res.json();
-                return data.sources || [];
-            } catch (e) {
-                console.error('Aniwatch stream error:', e);
-                return null;
-            }
-        }
-
-        // ============================================================
-        // 5. FALLBACK: BUSCAR EN YOUTUBE
-        // ============================================================
-        function searchOnYouTube(title, episode) {
-            const query = encodeURIComponent(`${title} episodio ${episode} completo`);
-            window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
-        }
-
-        // ============================================================
-        // RENDERIZADO
-        // ============================================================
-
-        function renderAnimeList(animes, append = false) {
-            if (!animes || animes.length === 0) {
-                if (!append) {
-                    grid.innerHTML =
-                        `<p style="color:#888; text-align:center; grid-column:1/-1; padding:30px 0; font-size:0.9rem;">No se encontraron animes. 😢</p>`;
-                }
-                hasMore = false;
-                loadMoreBtn.style.display = 'none';
-                return;
-            }
-
-            const html = animes.map(anime => {
-                const img = anime.coverImage?.large ||
-                    'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
-                const title = anime.title?.romaji || anime.title?.english || 'Título desconocido';
-                const score = anime.averageScore ? (anime.averageScore / 10).toFixed(1) : 'N/A';
-                const year = anime.startDate?.year || '??';
-                const format = anime.format || 'TV';
-                const typeLabel = format === 'MOVIE' ? '🎬 Película' :
-                    format === 'OVA' ? '📀 OVA' :
-                    format === 'SPECIAL' ? '⭐ Especial' :
-                    format === 'TV' ? '📺 Serie' :
-                    format === 'TV_SHORT' ? '📺 Corta' :
-                    format === 'ONA' ? '🌐 ONA' :
-                    format === 'MUSIC' ? '🎵 Música' : '📺 Serie';
-
-                return `
-                            <div class="anime-card" data-title="${title}" data-id="${anime.id}" data-format="${anime.format || ''}">
-                                <div class="card-img">
-                                    <img src="${img}" alt="${title}" loading="lazy" />
-                                </div>
-                                <div class="info">
-                                    <h3>${title}</h3>
-                                    <div class="meta">
-                                        <span>${year}</span>
-                                        <span class="score">⭐ ${score}</span>
-                                    </div>
-                                    <span class="type">${typeLabel}</span>
-                                </div>
-                            </div>
-                        `;
-            }).join('');
-
-            if (append) {
-                grid.insertAdjacentHTML('beforeend', html);
-            } else {
-                grid.innerHTML = html;
-            }
-
-            document.querySelectorAll('.anime-card').forEach(card => {
-                card.removeEventListener('click', handleCardClick);
-                card.addEventListener('click', handleCardClick);
-            });
-
-            hasMore = animes.length === 24;
-            loadMoreBtn.style.display = hasMore ? 'block' : 'none';
-        }
-
-        async function handleCardClick(e) {
-            const card = e.currentTarget;
-            const title = card.dataset.title;
-            const id = card.dataset.id;
-            const format = card.dataset.format || '';
-            await openAnime(title, id, format);
-        }
-
-        // ============================================================
-        // ABRIR ANIME
-        // ============================================================
-        async function openAnime(title, id, format) {
-            if (!id) {
-                episodeList.innerHTML = `
-                            <div class="no-episodes">
-                                <span class="icon">😅</span>
-                                No se encontró el ID del anime.
-                            </div>
-                        `;
-                return;
-            }
-
-            playerSection.classList.add('active');
-            playerTitle.textContent = title;
-            playerStatus.textContent = 'Buscando episodios...';
-            playerInfo.textContent = '💡 Conectando...';
-            episodeList.innerHTML = '<div class="spinner" style="width:28px;height:28px;margin:16px auto;"></div>';
-            videoIframe.style.display = 'none';
-            videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">⏳</span> Cargando episodios...';
-
-            playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            // Detectar películas
-            const isMovie = format === 'MOVIE';
-            const isOVA = format === 'OVA' || format === 'SPECIAL';
-
-            if (isMovie) {
-                episodeList.innerHTML = `
-                            <div class="no-episodes">
-                                <span class="icon">🎬</span>
-                                <strong>${title}</strong> es una película.<br>
-                                <span style="font-size:0.8rem; color:#888;">
-                                    Las películas no tienen episodios en las APIs de streaming.
-                                </span>
-                                <span class="suggestion">
-                                    💡 Busca la película en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+pelicula+completa" target="_blank" style="color:#a78bfa;">YouTube</a>
-                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
-                                </span>
-                            </div>
-                        `;
-                playerStatus.textContent = 'Película';
-                playerInfo.textContent = '🎬 Esta es una película, no tiene episodios.';
-                videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Película - sin episodios';
-                return;
-            }
-
-            if (isOVA) {
-                episodeList.innerHTML = `
-                            <div class="no-episodes">
-                                <span class="icon">📀</span>
-                                <strong>${title}</strong> es un OVA o Especial.<br>
-                                <span style="font-size:0.8rem; color:#888;">
-                                    Puede no estar disponible en las APIs de streaming.
-                                </span>
-                                <span class="suggestion">
-                                    💡 Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+OVA" target="_blank" style="color:#a78bfa;">YouTube</a>
-                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
-                                </span>
-                            </div>
-                        `;
-                playerStatus.textContent = 'OVA/Especial';
-                playerInfo.textContent = '📀 Esto es un OVA/Especial, puede no tener episodios.';
-                videoPlaceholder.innerHTML = '<span class="icon">📀</span> OVA - sin episodios';
-                return;
-            }
-
-            // ===== SERIE NORMAL =====
-
-            // OBTENER TÍTULO EN INGLÉS PARA MEJOR BÚSQUEDA
-            const englishTitle = getEnglishTitle(title);
-            console.log(`🔍 Título original: "${title}" → Buscando como: "${englishTitle}"`);
-
-            // 1. INTENTAR CON CONSUMET (usando el título en inglés)
-            let episodes = await fetchEpisodesFromConsumet(id);
-
-            // 2. SI CONSUMET FALLA, USAR ANIWATCH
-            if (!episodes || episodes.length === 0) {
-                playerInfo.textContent = '💡 Consumet sin datos, probando Aniwatch...';
-                episodes = await fetchEpisodesFromAniwatch(id);
-            }
-
-            // 3. SI AMBAS FALLAN - FALLBACK A YOUTUBE
-            if (!episodes || episodes.length === 0) {
-                episodeList.innerHTML = `
-                            <div class="no-episodes">
-                                <span class="icon">😅</span>
-                                No hay episodios para "${title}".<br>
-                                <span style="font-size:0.8rem; color:#888;">
-                                    La API de streaming puede estar caída o el anime no está disponible.
-                                </span>
-                                <span class="suggestion">
-                                    🔴 <a href="#" onclick="buscarEnYouTube('${encodeURIComponent(title)}')" style="color:#ef4444; font-weight:700;">Buscar en YouTube</a>
-                                    &nbsp;|&nbsp;
-                                    🔍 <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Buscar en Google</a>
-                                </span>
-                            </div>
-                        `;
-                playerStatus.textContent = 'Sin episodios';
-                playerInfo.textContent = '❌ No se encontraron episodios en Consumet ni Aniwatch';
-                videoPlaceholder.innerHTML = '<span class="icon">😢</span> Sin episodios';
-
-                // Botón de YouTube
-                window.buscarEnYouTube = function(t) {
-                    window.open(`https://www.youtube.com/results?search_query=${t}+episodio+1`, '_blank');
-                };
-                return;
-            }
-
-            const totalEpisodes = episodes.length;
-            playerStatus.textContent = `${totalEpisodes} episodios`;
-            playerInfo.textContent = `📺 ${totalEpisodes} episodios disponibles. Toca uno para ver.`;
-
-            const maxEp = Math.min(totalEpisodes, 100);
-            let html = '';
-            const perRow = 20;
-
-            for (let i = 0; i < maxEp; i += perRow) {
-                const batch = Math.min(i + perRow, maxEp);
-                html += `<div style="display:flex;flex-wrap:wrap;gap:5px;width:100%;margin-bottom:4px;">`;
-                for (let ep = i + 1; ep <= batch; ep++) {
-                    const epObj = episodes[ep - 1];
-                    const episodeId = epObj?.id || `${id}-episode-${ep}`;
-                    html += `<button data-ep="${ep}" data-id="${episodeId}">${ep}</button>`;
-                }
-                html += `</div>`;
-            }
-
-            episodeList.innerHTML = html;
-
-            episodeList.querySelectorAll('button').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    const epNum = parseInt(btn.dataset.ep);
-                    const episodeId = btn.dataset.id;
-
-                    episodeList.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    videoPlaceholder.style.display = 'block';
-                    videoPlaceholder.innerHTML = `<span class="icon">⏳</span> Cargando episodio ${epNum}...`;
-                    videoIframe.style.display = 'none';
-                    playerStatus.textContent = `Cargando Ep ${epNum}...`;
-
-                    // PRIMERO CONSUMET
-                    let sources = await fetchStreamFromConsumet(episodeId);
-
-                    // SI CONSUMET FALLA, ANIWATCH
-                    if (!sources || sources.length === 0) {
-                        playerInfo.textContent = '💡 Consumet sin stream, probando Aniwatch...';
-                        sources = await fetchStreamFromAniwatch(episodeId);
-                    }
-
-                    if (sources && sources.length > 0) {
-                        const videoUrl = sources[0].url;
-                        videoPlaceholder.style.display = 'none';
-                        videoIframe.style.display = 'block';
-                        videoIframe.src = videoUrl;
-                        playerStatus.textContent = `▶️ Episodio ${epNum}`;
-                        playerInfo.textContent = `▶️ Reproduciendo Episodio ${epNum}`;
-                    } else {
-                        // FALLBACK A YOUTUBE
-                        videoPlaceholder.innerHTML = `
-                                    <span class="icon">🔗</span>
-                                    Episodio ${epNum} no disponible en la API.<br>
-                                    <span style="font-size:0.7rem; color:#888;">
-                                        <a href="#" onclick="buscarEpisodioYouTube('${encodeURIComponent(title)}', ${epNum})" style="color:#ef4444; font-weight:700;">▶ Buscar en YouTube</a>
-                                    </span>
-                                `;
-                        playerStatus.textContent = `Ep ${epNum} no disponible`;
-                        window.buscarEpisodioYouTube = function(t, ep) {
-                            window.open(`https://www.youtube.com/results?search_query=${t}+episodio+${ep}`, '_blank');
-                        };
-                    }
-                });
-            });
-
-            const firstBtn = episodeList.querySelector('button');
-            if (firstBtn) {
-                firstBtn.classList.add('active');
-                setTimeout(() => firstBtn.click(), 500);
-            }
-        }
-
-        // ============================================================
-        // CARGA Y BÚSQUEDA
-        // ============================================================
-
-        async function loadAnimes(page = 1, query = '', append = false) {
-            if (isLoading) return;
-            isLoading = true;
-            loadingEl.style.display = 'block';
-            if (!append) grid.innerHTML = '';
-
-            const result = await fetchAnimesFromAniList(page, query);
-            const animes = result?.media || [];
-
-            loadingEl.style.display = 'none';
-            isLoading = false;
-
-            if (animes.length === 0 && !append) {
-                renderAnimeList([]);
-                return;
-            }
-            renderAnimeList(animes, append);
-        }
-
-        async function performSearch() {
-            const query = searchInput.value.trim();
-            currentQuery = query;
-            currentPage = 1;
-            await loadAnimes(currentPage, query, false);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        async function loadMore() {
-            if (isLoading || !hasMore) return;
-            currentPage++;
-            await loadAnimes(currentPage, currentQuery, true);
-        }
-
-        // ============================================================
-        // EVENTOS
-        // ============================================================
-
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') performSearch();
-        });
-        loadMoreBtn.addEventListener('click', loadMore);
-
-        closeBtn.addEventListener('click', () => {
-            playerSection.classList.remove('active');
-            videoIframe.src = '';
-            videoIframe.style.display = 'none';
-            videoPlaceholder.style.display = 'block';
-            videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Selecciona un episodio';
-        });
-
-        // ============================================================
-        // INICIO
-        // ============================================================
-
-        async function init() {
-            console.log('🔍 Iniciando AnimeStream...');
-
-            // Buscar APIs funcionales
-            activeConsumet = await findWorkingConsumet();
-            activeAniwatch = await findWorkingAniwatch();
-
-            if (activeConsumet) {
-                console.log(`✅ Consumet activo: ${activeConsumet}`);
-            } else {
-                console.warn('⚠️ No se encontró Consumet funcionando');
-            }
-
-            if (activeAniwatch) {
-                console.log(`✅ Aniwatch activo: ${activeAniwatch}`);
-            } else {
-                console.warn('⚠️ No se encontró Aniwatch funcionando');
-            }
-
-            if (!activeConsumet && !activeAniwatch) {
-                // Mostrar mensaje pero seguir cargando (con fallback a YouTube)
-                grid.innerHTML = `
-                            <p style="color:#888; text-align:center; grid-column:1/-1; padding:20px 0; font-size:0.9rem;">
-                                ⚠️ APIs de video no disponibles. 
-                                <span style="color:#a78bfa;">Los episodios te redirigirán a YouTube.</span>
-                            </p>
-                        `;
-                loadMoreBtn.style.display = 'none';
-                // Cargar animes igual (el catálogo funciona con AniList)
-                loadAnimes(1, '', false);
-                return;
-            }
-
-            loadAnimes(1, '', false);
-        }
-
-        init();
-    </script>
 </body>
 </html>
