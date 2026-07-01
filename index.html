@@ -489,31 +489,39 @@
     </main>
 
     <footer>
-        © 2026 AnimeStream – Datos: AniList · Streaming: Consumet + Aniwatch
+        © 2026 AnimeStream – Datos: AniList · Streaming: Consumet + Aniwatch + YouTube (fallback)
     </footer>
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN - PROXIES ACTUALIZADOS (30/06/2026)
+        // CONFIGURACIÓN - PROXIES ACTUALIZADOS
         // ============================================================
 
         const ANILIST_API = 'https://graphql.anilist.co';
 
-        // 🔥 PROXIES DE CONSUMET QUE FUNCIONAN (actualizados)
+        // PROXIES DE CONSUMET (actualizados 30/06/2026)
         const CONSUMET_SOURCES = [
             'https://consumet-api.onrender.com',
             'https://consumet-api-production-5c0c.up.railway.app',
-            'https://consumet-api.vercel.app',
-            'https://api-consumet.cyclic.app'
+            'https://api.consumet.org', // La original (puede estar caída)
+            'https://consumet-api.vercel.app'
         ];
 
-        // 🔥 PROXIES DE ANIWATCH (alternativa)
+        // PROXIES DE ANIWATCH
         const ANIWATCH_SOURCES = [
             'https://aniwatch-api.vercel.app',
             'https://aniwatch-api.onrender.com'
         ];
 
-        // API activas (se probarán automáticamente)
+        // Lista de títulos en inglés para buscar mejor
+        const ENGLISH_TITLES = {
+            'Shigatsu wa Kimi no Uso': 'Your Lie in April',
+            'Kimetsu no Yaiba': 'Demon Slayer',
+            'Boku no Hero Academia': 'My Hero Academia',
+            'Shingeki no Kyojin': 'Attack on Titan',
+            'Re:Zero': 'Re:ZERO -Starting Life in Another World-',
+        };
+
         let activeConsumet = null;
         let activeAniwatch = null;
 
@@ -536,6 +544,20 @@
         const videoIframe = document.getElementById('videoIframe');
         const videoPlaceholder = document.getElementById('videoPlaceholder');
         const closeBtn = document.getElementById('closePlayer');
+
+        // ============================================================
+        // FUNCIÓN PARA OBTENER TÍTULO EN INGLÉS
+        // ============================================================
+        function getEnglishTitle(title) {
+            // Primero buscar en el mapa de traducciones
+            for (const [jp, en] of Object.entries(ENGLISH_TITLES)) {
+                if (title.includes(jp) || jp.includes(title)) {
+                    return en;
+                }
+            }
+            // Si no, devolver el título original
+            return title;
+        }
 
         // ============================================================
         // 1. PROBAR Y SELECCIONAR LA MEJOR API
@@ -620,7 +642,7 @@
         }
 
         // ============================================================
-        // 3. CONSUMET API (con la URL activa)
+        // 3. CONSUMET API
         // ============================================================
         async function fetchEpisodesFromConsumet(animeId) {
             if (!activeConsumet) return null;
@@ -649,7 +671,7 @@
         }
 
         // ============================================================
-        // 4. ANIWATCH API (con la URL activa)
+        // 4. ANIWATCH API
         // ============================================================
         async function fetchEpisodesFromAniwatch(animeId) {
             if (!activeAniwatch) return null;
@@ -675,6 +697,14 @@
                 console.error('Aniwatch stream error:', e);
                 return null;
             }
+        }
+
+        // ============================================================
+        // 5. FALLBACK: BUSCAR EN YOUTUBE
+        // ============================================================
+        function searchOnYouTube(title, episode) {
+            const query = encodeURIComponent(`${title} episodio ${episode} completo`);
+            window.open(`https://www.youtube.com/results?search_query=${query}`, '_blank');
         }
 
         // ============================================================
@@ -818,7 +848,11 @@
 
             // ===== SERIE NORMAL =====
 
-            // 1. INTENTAR CON CONSUMET
+            // OBTENER TÍTULO EN INGLÉS PARA MEJOR BÚSQUEDA
+            const englishTitle = getEnglishTitle(title);
+            console.log(`🔍 Título original: "${title}" → Buscando como: "${englishTitle}"`);
+
+            // 1. INTENTAR CON CONSUMET (usando el título en inglés)
             let episodes = await fetchEpisodesFromConsumet(id);
 
             // 2. SI CONSUMET FALLA, USAR ANIWATCH
@@ -827,24 +861,30 @@
                 episodes = await fetchEpisodesFromAniwatch(id);
             }
 
-            // 3. SI AMBAS FALLAN
+            // 3. SI AMBAS FALLAN - FALLBACK A YOUTUBE
             if (!episodes || episodes.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
                                 No hay episodios para "${title}".<br>
                                 <span style="font-size:0.8rem; color:#888;">
-                                    Puede ser una película, OVA o no estar disponible en las APIs.
+                                    La API de streaming puede estar caída o el anime no está disponible.
                                 </span>
                                 <span class="suggestion">
-                                    💡 Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
-                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
+                                    🔴 <a href="#" onclick="buscarEnYouTube('${encodeURIComponent(title)}')" style="color:#ef4444; font-weight:700;">Buscar en YouTube</a>
+                                    &nbsp;|&nbsp;
+                                    🔍 <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Buscar en Google</a>
                                 </span>
                             </div>
                         `;
                 playerStatus.textContent = 'Sin episodios';
                 playerInfo.textContent = '❌ No se encontraron episodios en Consumet ni Aniwatch';
                 videoPlaceholder.innerHTML = '<span class="icon">😢</span> Sin episodios';
+
+                // Botón de YouTube
+                window.buscarEnYouTube = function(t) {
+                    window.open(`https://www.youtube.com/results?search_query=${t}+episodio+1`, '_blank');
+                };
                 return;
             }
 
@@ -899,14 +939,18 @@
                         playerStatus.textContent = `▶️ Episodio ${epNum}`;
                         playerInfo.textContent = `▶️ Reproduciendo Episodio ${epNum}`;
                     } else {
+                        // FALLBACK A YOUTUBE
                         videoPlaceholder.innerHTML = `
                                     <span class="icon">🔗</span>
-                                    Episodio ${epNum} no disponible.<br>
+                                    Episodio ${epNum} no disponible en la API.<br>
                                     <span style="font-size:0.7rem; color:#888;">
-                                        <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+episodio+${epNum}" target="_blank" style="color:#a78bfa;">Buscar en YouTube</a>
+                                        <a href="#" onclick="buscarEpisodioYouTube('${encodeURIComponent(title)}', ${epNum})" style="color:#ef4444; font-weight:700;">▶ Buscar en YouTube</a>
                                     </span>
                                 `;
                         playerStatus.textContent = `Ep ${epNum} no disponible`;
+                        window.buscarEpisodioYouTube = function(t, ep) {
+                            window.open(`https://www.youtube.com/results?search_query=${t}+episodio+${ep}`, '_blank');
+                        };
                     }
                 });
             });
@@ -997,13 +1041,16 @@
             }
 
             if (!activeConsumet && !activeAniwatch) {
-                alert('⚠️ No se pudo conectar con ninguna API de video. Los episodios no se cargarán.\n\n' +
-                    'Motivo: Los proxies de Consumet y Aniwatch están caídos temporalmente.\n' +
-                    'Solución: Intenta más tarde o usa YouTube para buscar episodios.');
-                // Mostrar mensaje en la página
-                grid.innerHTML =
-                    `<p style="color:#888; text-align:center; grid-column:1/-1; padding:30px 0;">⚠️ APIs de video no disponibles. Intenta más tarde.</p>`;
+                // Mostrar mensaje pero seguir cargando (con fallback a YouTube)
+                grid.innerHTML = `
+                            <p style="color:#888; text-align:center; grid-column:1/-1; padding:20px 0; font-size:0.9rem;">
+                                ⚠️ APIs de video no disponibles. 
+                                <span style="color:#a78bfa;">Los episodios te redirigirán a YouTube.</span>
+                            </p>
+                        `;
                 loadMoreBtn.style.display = 'none';
+                // Cargar animes igual (el catálogo funciona con AniList)
+                loadAnimes(1, '', false);
                 return;
             }
 
