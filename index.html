@@ -8,6 +8,7 @@
     <meta name="theme-color" content="#0a0a1a" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
+        /* ===== ESTILOS (los mismos de antes) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -197,6 +198,15 @@
             color: #fcd34d;
             font-weight: 700;
         }
+        .anime-card .info .type {
+            font-size: 0.55rem;
+            color: #a78bfa;
+            background: rgba(124, 58, 237, 0.15);
+            padding: 1px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 4px;
+        }
 
         .player-section {
             background: #1a1a3e;
@@ -334,6 +344,16 @@
             font-size: 1.8rem;
             display: block;
             margin-bottom: 4px;
+        }
+        .episode-list .no-episodes .suggestion {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 6px;
+            display: block;
+        }
+        .episode-list .no-episodes .suggestion a {
+            color: #a78bfa;
+            text-decoration: underline;
         }
 
         .close-btn {
@@ -477,18 +497,12 @@
         // CONFIGURACIÓN - TRES APIS (AniList + Consumet + Aniwatch)
         // ============================================================
 
-        // 1. ANILIST API (para datos de animes)
         const ANILIST_API = 'https://graphql.anilist.co';
-
-        // 2. CONSUMET API (para episodios y videos)
         const CONSUMET_API = 'https://consumet-api.onrender.com';
         const CONSUMET_API_ALT = 'https://consumet-api-production-5c0c.up.railway.app';
-
-        // 3. ANIWATCH API (alternativa para videos)
         const ANIWATCH_API = 'https://aniwatch-api.vercel.app';
         const ANIWATCH_API_ALT = 'https://aniwatch-api.onrender.com';
 
-        // APIs activas (se probarán automáticamente)
         let activeConsumet = CONSUMET_API;
         let activeAniwatch = ANIWATCH_API;
 
@@ -496,8 +510,6 @@
         let currentQuery = '';
         let isLoading = false;
         let hasMore = true;
-        let currentAnimeId = null;
-        let currentAnimeTitle = '';
 
         const grid = document.getElementById('animeGrid');
         const loadingEl = document.getElementById('loadingIndicator');
@@ -515,7 +527,7 @@
         const closeBtn = document.getElementById('closePlayer');
 
         // ============================================================
-        // 1. ANILIST API - OBTENER ANIMES POPULARES
+        // 1. ANILIST API - OBTENER ANIMES
         // ============================================================
         async function fetchAnimesFromAniList(page = 1, search = '') {
             try {
@@ -529,6 +541,7 @@
                                 coverImage { large }
                                 averageScore
                                 episodes
+                                format
                                 status
                                 startDate { year }
                             }
@@ -561,7 +574,7 @@
         }
 
         // ============================================================
-        // 2. CONSUMET API - OBTENER EPISODIOS
+        // 2. CONSUMET API
         // ============================================================
         async function testConsumetApi() {
             try {
@@ -606,7 +619,7 @@
         }
 
         // ============================================================
-        // 3. ANIWATCH API (alternativa)
+        // 3. ANIWATCH API
         // ============================================================
         async function testAniwatchApi() {
             try {
@@ -628,7 +641,6 @@
 
         async function fetchEpisodesFromAniwatch(animeId) {
             try {
-                // Aniwatch tiene un endpoint diferente
                 const res = await fetch(`${activeAniwatch}/api/v1/anime/${animeId}/episodes`);
                 if (!res.ok) throw new Error('Error en Aniwatch');
                 const data = await res.json();
@@ -667,14 +679,22 @@
             }
 
             const html = animes.map(anime => {
-                const img = anime.coverImage?.large || anime.image ||
+                const img = anime.coverImage?.large ||
                     'https://via.placeholder.com/300x420/1a1a3e/888?text=No+Image';
-                const title = anime.title?.romaji || anime.title?.english || anime.title || 'Título desconocido';
-                const score = anime.averageScore ? `${anime.averageScore / 10}` : 'N/A';
+                const title = anime.title?.romaji || anime.title?.english || 'Título desconocido';
+                const score = anime.averageScore ? (anime.averageScore / 10).toFixed(1) : 'N/A';
                 const year = anime.startDate?.year || '??';
+                const format = anime.format || 'TV';
+                const typeLabel = format === 'MOVIE' ? '🎬 Película' :
+                    format === 'OVA' ? '📀 OVA' :
+                    format === 'SPECIAL' ? '⭐ Especial' :
+                    format === 'TV' ? '📺 Serie' :
+                    format === 'TV_SHORT' ? '📺 Corta' :
+                    format === 'ONA' ? '🌐 ONA' :
+                    format === 'MUSIC' ? '🎵 Música' : '📺 Serie';
 
                 return `
-                            <div class="anime-card" data-title="${title}" data-id="${anime.id}">
+                            <div class="anime-card" data-title="${title}" data-id="${anime.id}" data-format="${anime.format || ''}">
                                 <div class="card-img">
                                     <img src="${img}" alt="${title}" loading="lazy" />
                                 </div>
@@ -684,6 +704,7 @@
                                         <span>${year}</span>
                                         <span class="score">⭐ ${score}</span>
                                     </div>
+                                    <span class="type">${typeLabel}</span>
                                 </div>
                             </div>
                         `;
@@ -708,13 +729,14 @@
             const card = e.currentTarget;
             const title = card.dataset.title;
             const id = card.dataset.id;
-            await openAnime(title, id);
+            const format = card.dataset.format || '';
+            await openAnime(title, id, format);
         }
 
         // ============================================================
-        // ABRIR ANIME - USANDO CONSUMET PRIMERO, ANIWATCH COMO RESERVA
+        // ABRIR ANIME - CON DETECCIÓN DE PELÍCULAS
         // ============================================================
-        async function openAnime(title, id) {
+        async function openAnime(title, id, format) {
             if (!id) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
@@ -736,7 +758,58 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // INTENTAR CON CONSUMET PRIMERO
+            // ============================================================
+            // 🎬 DETECTAR SI ES PELÍCULA
+            // ============================================================
+            const isMovie = format === 'MOVIE';
+            const isOVA = format === 'OVA' || format === 'SPECIAL';
+
+            if (isMovie) {
+                episodeList.innerHTML = `
+                            <div class="no-episodes">
+                                <span class="icon">🎬</span>
+                                <strong>${title}</strong> es una película.<br>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    Las películas no tienen episodios en las APIs de streaming.
+                                </span>
+                                <span class="suggestion">
+                                    💡 Busca la película en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+pelicula+completa" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
+                                </span>
+                            </div>
+                        `;
+                playerStatus.textContent = 'Película';
+                playerInfo.textContent = '🎬 Esta es una película, no tiene episodios.';
+                videoPlaceholder.innerHTML = '<span class="icon">🎬</span> Película - sin episodios';
+                return;
+            }
+
+            // Para OVAs/Especiales, mostrar mensaje especial
+            if (isOVA) {
+                episodeList.innerHTML = `
+                            <div class="no-episodes">
+                                <span class="icon">📀</span>
+                                <strong>${title}</strong> es un OVA o Especial.<br>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    Puede no estar disponible en las APIs de streaming.
+                                </span>
+                                <span class="suggestion">
+                                    💡 Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+OVA" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
+                                </span>
+                            </div>
+                        `;
+                playerStatus.textContent = 'OVA/Especial';
+                playerInfo.textContent = '📀 Esto es un OVA/Especial, puede no tener episodios.';
+                videoPlaceholder.innerHTML = '<span class="icon">📀</span> OVA - sin episodios';
+                return;
+            }
+
+            // ============================================================
+            // SERIE NORMAL - BUSCAR EPISODIOS
+            // ============================================================
+
+            // INTENTAR CON CONSUMET
             let episodes = await fetchEpisodesFromConsumet(id);
 
             // SI CONSUMET FALLA, USAR ANIWATCH
@@ -751,8 +824,12 @@
                             <div class="no-episodes">
                                 <span class="icon">😅</span>
                                 No hay episodios para "${title}".<br>
-                                <span style="font-size:0.7rem; color:#888;">
-                                    Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                <span style="font-size:0.8rem; color:#888;">
+                                    Puede ser una película, OVA o no estar disponible en las APIs.
+                                </span>
+                                <span class="suggestion">
+                                    💡 Busca en <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(title)}+anime" target="_blank" style="color:#a78bfa;">YouTube</a>
+                                    o en <a href="https://www.google.com/search?q=${encodeURIComponent(title)}+ver+online" target="_blank" style="color:#a78bfa;">Google</a>.
                                 </span>
                             </div>
                         `;
@@ -891,7 +968,6 @@
         // INICIO
         // ============================================================
 
-        // Probar APIs al inicio
         console.log('🔍 Probando APIs...');
         testConsumetApi().then(ok => {
             console.log(`✅ Consumet: ${ok ? 'Funciona' : 'No funciona'}`);
