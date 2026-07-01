@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#0a0a1a" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ===== ESTILOS (los mismos de antes) ===== */
+        /* ===== ESTILOS (LOS MISMOS DE ANTES) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -494,17 +494,28 @@
 
     <script>
         // ============================================================
-        // CONFIGURACIÓN - TRES APIS (AniList + Consumet + Aniwatch)
+        // CONFIGURACIÓN - PROXIES ACTUALIZADOS (30/06/2026)
         // ============================================================
 
         const ANILIST_API = 'https://graphql.anilist.co';
-        const CONSUMET_API = 'https://consumet-api.onrender.com';
-        const CONSUMET_API_ALT = 'https://consumet-api-production-5c0c.up.railway.app';
-        const ANIWATCH_API = 'https://aniwatch-api.vercel.app';
-        const ANIWATCH_API_ALT = 'https://aniwatch-api.onrender.com';
 
-        let activeConsumet = CONSUMET_API;
-        let activeAniwatch = ANIWATCH_API;
+        // 🔥 PROXIES DE CONSUMET QUE FUNCIONAN (actualizados)
+        const CONSUMET_SOURCES = [
+            'https://consumet-api.onrender.com',
+            'https://consumet-api-production-5c0c.up.railway.app',
+            'https://consumet-api.vercel.app',
+            'https://api-consumet.cyclic.app'
+        ];
+
+        // 🔥 PROXIES DE ANIWATCH (alternativa)
+        const ANIWATCH_SOURCES = [
+            'https://aniwatch-api.vercel.app',
+            'https://aniwatch-api.onrender.com'
+        ];
+
+        // API activas (se probarán automáticamente)
+        let activeConsumet = null;
+        let activeAniwatch = null;
 
         let currentPage = 1;
         let currentQuery = '';
@@ -527,7 +538,42 @@
         const closeBtn = document.getElementById('closePlayer');
 
         // ============================================================
-        // 1. ANILIST API - OBTENER ANIMES
+        // 1. PROBAR Y SELECCIONAR LA MEJOR API
+        // ============================================================
+        async function findWorkingConsumet() {
+            for (const api of CONSUMET_SOURCES) {
+                try {
+                    console.log(`🔍 Probando Consumet: ${api}`);
+                    const res = await fetch(`${api}/anime/gogoanime/top-airing`, { signal: AbortSignal.timeout(5000) });
+                    if (res.ok) {
+                        console.log(`✅ Consumet funciona: ${api}`);
+                        return api;
+                    }
+                } catch (e) {
+                    console.warn(`❌ Consumet falló: ${api}`);
+                }
+            }
+            return null;
+        }
+
+        async function findWorkingAniwatch() {
+            for (const api of ANIWATCH_SOURCES) {
+                try {
+                    console.log(`🔍 Probando Aniwatch: ${api}`);
+                    const res = await fetch(`${api}/api/v1/search?query=Naruto`, { signal: AbortSignal.timeout(5000) });
+                    if (res.ok) {
+                        console.log(`✅ Aniwatch funciona: ${api}`);
+                        return api;
+                    }
+                } catch (e) {
+                    console.warn(`❌ Aniwatch falló: ${api}`);
+                }
+            }
+            return null;
+        }
+
+        // ============================================================
+        // 2. ANILIST API - OBTENER ANIMES
         // ============================================================
         async function fetchAnimesFromAniList(page = 1, search = '') {
             try {
@@ -574,27 +620,10 @@
         }
 
         // ============================================================
-        // 2. CONSUMET API
+        // 3. CONSUMET API (con la URL activa)
         // ============================================================
-        async function testConsumetApi() {
-            try {
-                const res = await fetch(`${activeConsumet}/anime/gogoanime/top-airing`, { signal: AbortSignal.timeout(5000) });
-                if (res.ok) return true;
-            } catch (e) {
-                console.warn('Consumet API falló, probando alternativa...');
-                try {
-                    activeConsumet = CONSUMET_API_ALT;
-                    const res = await fetch(`${activeConsumet}/anime/gogoanime/top-airing`, { signal: AbortSignal
-                            .timeout(5000) });
-                    if (res.ok) return true;
-                } catch (e2) {
-                    console.warn('Consumet API alternativa también falló');
-                }
-            }
-            return false;
-        }
-
         async function fetchEpisodesFromConsumet(animeId) {
+            if (!activeConsumet) return null;
             try {
                 const res = await fetch(`${activeConsumet}/anime/gogoanime/episodes/${animeId}`);
                 if (!res.ok) throw new Error('Error en Consumet');
@@ -607,6 +636,7 @@
         }
 
         async function fetchStreamFromConsumet(episodeId) {
+            if (!activeConsumet) return null;
             try {
                 const res = await fetch(`${activeConsumet}/anime/gogoanime/watch/${episodeId}`);
                 if (!res.ok) throw new Error('Error en Consumet');
@@ -619,27 +649,10 @@
         }
 
         // ============================================================
-        // 3. ANIWATCH API
+        // 4. ANIWATCH API (con la URL activa)
         // ============================================================
-        async function testAniwatchApi() {
-            try {
-                const res = await fetch(`${activeAniwatch}/api/v1/search?query=Naruto`, { signal: AbortSignal.timeout(5000) });
-                if (res.ok) return true;
-            } catch (e) {
-                console.warn('Aniwatch API falló, probando alternativa...');
-                try {
-                    activeAniwatch = ANIWATCH_API_ALT;
-                    const res = await fetch(`${activeAniwatch}/api/v1/search?query=Naruto`, { signal: AbortSignal
-                            .timeout(5000) });
-                    if (res.ok) return true;
-                } catch (e2) {
-                    console.warn('Aniwatch API alternativa también falló');
-                }
-            }
-            return false;
-        }
-
         async function fetchEpisodesFromAniwatch(animeId) {
+            if (!activeAniwatch) return null;
             try {
                 const res = await fetch(`${activeAniwatch}/api/v1/anime/${animeId}/episodes`);
                 if (!res.ok) throw new Error('Error en Aniwatch');
@@ -652,6 +665,7 @@
         }
 
         async function fetchStreamFromAniwatch(episodeId) {
+            if (!activeAniwatch) return null;
             try {
                 const res = await fetch(`${activeAniwatch}/api/v1/episode/${episodeId}/sources`);
                 if (!res.ok) throw new Error('Error en Aniwatch');
@@ -734,7 +748,7 @@
         }
 
         // ============================================================
-        // ABRIR ANIME - CON DETECCIÓN DE PELÍCULAS
+        // ABRIR ANIME
         // ============================================================
         async function openAnime(title, id, format) {
             if (!id) {
@@ -750,7 +764,7 @@
             playerSection.classList.add('active');
             playerTitle.textContent = title;
             playerStatus.textContent = 'Buscando episodios...';
-            playerInfo.textContent = '💡 Conectando con Consumet...';
+            playerInfo.textContent = '💡 Conectando...';
             episodeList.innerHTML = '<div class="spinner" style="width:28px;height:28px;margin:16px auto;"></div>';
             videoIframe.style.display = 'none';
             videoPlaceholder.style.display = 'block';
@@ -758,9 +772,7 @@
 
             playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // ============================================================
-            // 🎬 DETECTAR SI ES PELÍCULA
-            // ============================================================
+            // Detectar películas
             const isMovie = format === 'MOVIE';
             const isOVA = format === 'OVA' || format === 'SPECIAL';
 
@@ -784,7 +796,6 @@
                 return;
             }
 
-            // Para OVAs/Especiales, mostrar mensaje especial
             if (isOVA) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
@@ -805,20 +816,18 @@
                 return;
             }
 
-            // ============================================================
-            // SERIE NORMAL - BUSCAR EPISODIOS
-            // ============================================================
+            // ===== SERIE NORMAL =====
 
-            // INTENTAR CON CONSUMET
+            // 1. INTENTAR CON CONSUMET
             let episodes = await fetchEpisodesFromConsumet(id);
 
-            // SI CONSUMET FALLA, USAR ANIWATCH
+            // 2. SI CONSUMET FALLA, USAR ANIWATCH
             if (!episodes || episodes.length === 0) {
                 playerInfo.textContent = '💡 Consumet sin datos, probando Aniwatch...';
                 episodes = await fetchEpisodesFromAniwatch(id);
             }
 
-            // SI AMBAS FALLAN
+            // 3. SI AMBAS FALLAN
             if (!episodes || episodes.length === 0) {
                 episodeList.innerHTML = `
                             <div class="no-episodes">
@@ -968,15 +977,40 @@
         // INICIO
         // ============================================================
 
-        console.log('🔍 Probando APIs...');
-        testConsumetApi().then(ok => {
-            console.log(`✅ Consumet: ${ok ? 'Funciona' : 'No funciona'}`);
-        });
-        testAniwatchApi().then(ok => {
-            console.log(`✅ Aniwatch: ${ok ? 'Funciona' : 'No funciona'}`);
-        });
+        async function init() {
+            console.log('🔍 Iniciando AnimeStream...');
 
-        loadAnimes(1, '', false);
+            // Buscar APIs funcionales
+            activeConsumet = await findWorkingConsumet();
+            activeAniwatch = await findWorkingAniwatch();
+
+            if (activeConsumet) {
+                console.log(`✅ Consumet activo: ${activeConsumet}`);
+            } else {
+                console.warn('⚠️ No se encontró Consumet funcionando');
+            }
+
+            if (activeAniwatch) {
+                console.log(`✅ Aniwatch activo: ${activeAniwatch}`);
+            } else {
+                console.warn('⚠️ No se encontró Aniwatch funcionando');
+            }
+
+            if (!activeConsumet && !activeAniwatch) {
+                alert('⚠️ No se pudo conectar con ninguna API de video. Los episodios no se cargarán.\n\n' +
+                    'Motivo: Los proxies de Consumet y Aniwatch están caídos temporalmente.\n' +
+                    'Solución: Intenta más tarde o usa YouTube para buscar episodios.');
+                // Mostrar mensaje en la página
+                grid.innerHTML =
+                    `<p style="color:#888; text-align:center; grid-column:1/-1; padding:30px 0;">⚠️ APIs de video no disponibles. Intenta más tarde.</p>`;
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+
+            loadAnimes(1, '', false);
+        }
+
+        init();
     </script>
 </body>
 </html>
