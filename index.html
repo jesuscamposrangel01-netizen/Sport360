@@ -4,623 +4,1151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Junta de Campesinos de Parlamenco · Petroglifos</title>
-    <!-- Leaflet para el mapa -->
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet para mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
+        /* ===== RESET Y BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4efe6;
-            color: #2e241e;
-            line-height: 1.6;
+            font-family: 'Lato', sans-serif;
+            background-color: #F5F0E1;
+            color: #3E2723;
+            line-height: 1.8;
         }
 
-        /* HEADER */
+        /* ===== PALETA DE COLORES ===== */
+        :root {
+            --terracota: #A0522D;
+            --terracota-claro: #C47A5A;
+            --verde-oliva: #556B2F;
+            --verde-claro: #7A9B4D;
+            --beige: #F5F0E1;
+            --marron: #3E2723;
+            --marron-claro: #5D4037;
+            --crema: #FAF6EE;
+            --dorado: #C49A6C;
+        }
+
+        /* ===== SCROLL ANIMADO ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER ===== */
         header {
-            background: linear-gradient(145deg, #4d3e32, #2f241b);
-            color: #f0e2d0;
-            padding: 2rem 1rem;
-            text-align: center;
-            border-bottom: 6px solid #b48a6b;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        header h1 {
-            font-size: 2.8rem;
-            letter-spacing: 4px;
-            text-shadow: 3px 3px 0 #1f1611;
-        }
-
-        header p {
-            font-size: 1.3rem;
-            font-style: italic;
-            color: #dac5b0;
-        }
-
-        /* NAV */
-        nav {
-            background-color: #3e3026;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0.8rem 1rem;
-            border-bottom: 3px solid #b48a6b;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav a {
-            color: #f0e2d0;
-            text-decoration: none;
-            padding: 0.5rem 1.8rem;
-            font-weight: bold;
-            border-radius: 30px;
-            transition: 0.3s;
-            background: #5a473a;
-        }
-
-        nav a:hover {
-            background: #b48a6b;
-            color: #1f1611;
-            transform: scale(1.05);
-        }
-
-        /* CONTENEDOR */
-        .container {
-            max-width: 1300px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        /* HERO */
-        .hero {
-            background: #d9cdbc;
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            border-left: 10px solid #7d5f48;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-        }
-
-        .hero h2 {
-            font-size: 2.5rem;
-            color: #2f241b;
-        }
-
-        .hero span {
-            background: #7d5f48;
-            color: #f4efe6;
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            display: inline-block;
-            margin-top: 0.5rem;
-        }
-
-        /* GRID PRINCIPAL */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2.5rem 0;
-        }
-
-        .card {
-            background: white;
-            padding: 1.8rem;
-            border-radius: 24px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            border-bottom: 6px solid #b48a6b;
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-        }
-
-        .card h3 {
-            color: #4d3e32;
-            font-size: 1.8rem;
-            border-left: 6px solid #b48a6b;
-            padding-left: 0.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .card .fecha {
-            display: inline-block;
-            background: #e5d9c8;
-            padding: 0.2rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            margin-top: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* MAPA */
-        .mapa-container {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 24px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            margin: 2.5rem 0;
-            border-bottom: 6px solid #b48a6b;
-        }
-
-        #mapa {
-            height: 400px;
-            border-radius: 16px;
-            z-index: 1;
-        }
-
-        /* GALERÍA */
-        .galeria {
-            margin: 2.5rem 0;
-        }
-
-        .galeria h2 {
-            color: #2f241b;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        .galeria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .galeria-grid img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 4px solid #d9cdbc;
-            background: #d9cdbc;
-        }
-
-        .galeria-grid img:hover {
-            transform: scale(1.03);
-            border-color: #7d5f48;
-        }
-
-        /* Lightbox (ventana modal para imágenes) */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 12px;
-            box-shadow: 0 0 40px rgba(255,255,255,0.2);
-        }
-
-        .lightbox .cerrar {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            color: white;
-            font-size: 3rem;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* TABLERO DE NOTICIAS */
-        .tablero {
-            background: white;
-            padding: 1.8rem;
-            border-radius: 24px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            margin: 2.5rem 0;
-            border-left: 10px solid #7d5f48;
-        }
-
-        .tablero h2 {
-            color: #2f241b;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .noticia {
-            background: #f4efe6;
-            padding: 1rem 1.5rem;
-            border-radius: 16px;
-            margin-bottom: 0.8rem;
-            border-left: 6px solid #b48a6b;
+            background: linear-gradient(145deg, var(--marron), #1a0f0c);
+            color: var(--beige);
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            border-bottom: 4px solid var(--terracota);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
-        .noticia .hora {
-            background: #7d5f48;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--dorado);
+        }
+
+        .logo svg {
+            width: 50px;
+            height: 50px;
+            fill: var(--dorado);
+        }
+
+        .logo span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--beige);
+            font-family: 'Lato', sans-serif;
+            display: block;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        nav a {
+            color: var(--beige);
+            text-decoration: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover {
+            background: var(--terracota);
+            transform: scale(1.05);
+        }
+
+        /* ===== HERO CON VIDEO ===== */
+        .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 20, 15, 0.6);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.7);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-content h1 .destacado {
+            color: var(--dorado);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+            margin-bottom: 2rem;
+        }
+
+        .hero-content .btn {
+            display: inline-block;
+            background: var(--terracota);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 2px solid var(--dorado);
+        }
+
+        .hero-content .btn:hover {
+            background: var(--dorado);
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(196, 154, 108, 0.4);
+        }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* ===== SECCIÓN TÍTULO ===== */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--marron);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--marron-claro);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--terracota);
+            margin: 0.5rem auto 0 auto;
+            border-radius: 4px;
+        }
+
+        /* ===== QUIÉNES SOMOS ===== */
+        .quienes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .quienes-texto h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--terracota);
+            margin-bottom: 1rem;
+        }
+
+        .quienes-texto p {
+            margin-bottom: 1rem;
+            color: var(--marron-claro);
+        }
+
+        .quienes-imagen {
+            background: var(--terracota-claro);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* ===== MISIÓN, VISIÓN, VALORES ===== */
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mvv-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border-bottom: 4px solid var(--terracota);
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        }
+
+        .mvv-card i {
+            font-size: 3rem;
+            color: var(--terracota);
+            margin-bottom: 1rem;
+        }
+
+        .mvv-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--marron);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CONTADOR ===== */
+        .contador {
+            background: linear-gradient(145deg, var(--marron), #1a0f0c);
+            color: var(--beige);
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .contador-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contador-item h3 {
+            font-size: 3.5rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--dorado);
+        }
+
+        .contador-item p {
+            font-size: 1.1rem;
+            color: var(--beige);
+        }
+
+        /* ===== PETROGLIFOS DESTACADOS ===== */
+        .petro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .petro-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+
+        .petro-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        }
+
+        .petro-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: var(--terracota-claro);
+        }
+
+        .petro-card .info {
+            padding: 1.5rem;
+        }
+
+        .petro-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--marron);
+        }
+
+        .petro-card .etiqueta {
+            display: inline-block;
+            background: var(--terracota);
             color: white;
             padding: 0.2rem 1rem;
             border-radius: 30px;
             font-size: 0.8rem;
-            font-weight: bold;
+            font-weight: 700;
+            margin: 0.5rem 0;
         }
 
-        .noticia .texto {
-            flex: 1;
-            margin: 0 1rem;
+        .petro-card p {
+            color: var(--marron-claro);
+            font-size: 0.95rem;
         }
 
-        /* FORMULARIO */
-        .formulario {
+        /* ===== EVENTOS ===== */
+        .eventos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .evento-card {
             background: white;
             padding: 2rem;
-            border-radius: 24px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            margin: 2.5rem 0;
-            border-bottom: 6px solid #b48a6b;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border-left: 6px solid var(--terracota);
+            transition: all 0.3s;
         }
 
-        .formulario input,
-        .formulario textarea,
-        .formulario select {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0 1rem 0;
-            border: 2px solid #d9cdbc;
-            border-radius: 12px;
-            font-family: inherit;
-            background: #faf8f4;
+        .evento-card:hover {
+            transform: translateX(6px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
         }
 
-        .formulario button {
-            background: #4d3e32;
-            color: white;
-            padding: 0.8rem 2.5rem;
-            border: none;
-            border-radius: 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+        .evento-card .fecha {
+            color: var(--terracota);
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
-        .formulario button:hover {
-            background: #b48a6b;
-            transform: scale(1.02);
+        .evento-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--marron);
+            margin: 0.5rem 0;
         }
 
-        /* STREAMING */
-        .streaming {
-            background: #1f1611;
+        .evento-card .btn-event {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--terracota);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ===== INVESTIGACIÓN ===== */
+        .investigacion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .investigacion-card {
+            background: white;
             padding: 2rem;
-            border-radius: 24px;
-            margin: 2.5rem 0;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border-bottom: 4px solid var(--verde-oliva);
+        }
+
+        .investigacion-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--marron);
+        }
+
+        .investigacion-card .autor {
+            color: var(--terracota);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ===== TESTIMONIOS ===== */
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonio-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             text-align: center;
-            border: 4px solid #b48a6b;
+            font-style: italic;
         }
 
-        .streaming h2 {
-            color: #f0e2d0;
-            margin-bottom: 1rem;
+        .testimonio-card i {
+            font-size: 2rem;
+            color: var(--dorado);
+            margin-bottom: 0.5rem;
         }
 
-        .streaming iframe {
-            width: 100%;
-            max-width: 800px;
+        .testimonio-card .nombre {
+            font-weight: 700;
+            color: var(--marron);
+            margin-top: 0.5rem;
+            font-style: normal;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: var(--verde-oliva);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+        }
+
+        .newsletter form {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .newsletter input {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            min-width: 300px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .newsletter button {
+            padding: 0.8rem 2.5rem;
+            background: var(--terracota);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .newsletter button:hover {
+            background: var(--dorado);
+            transform: scale(1.05);
+        }
+
+        /* ===== MAPA ===== */
+        .mapa-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            margin: 2rem 0;
+        }
+
+        #mapa {
             height: 450px;
             border-radius: 16px;
-            border: 3px solid #b48a6b;
+            z-index: 1;
         }
 
-        .streaming p {
-            color: #dac5b0;
-            margin-top: 1rem;
-        }
-
-        /* LISTA PETROGLIFOS */
-        .lista-petro {
-            background: #e5d9c8;
-            padding: 2rem;
-            border-radius: 30px;
-            margin: 2.5rem 0;
-        }
-
-        .lista-petro ul {
-            columns: 2;
-            list-style: none;
-        }
-
-        .lista-petro li {
-            background: #f4efe6;
-            margin: 0.5rem 0;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 500;
-            border-left: 8px solid #7d5f48;
-        }
-
-        /* FOOTER */
+        /* ===== FOOTER ===== */
         footer {
-            background: #2f241b;
-            color: #cbb7a4;
-            text-align: center;
-            padding: 2rem 1rem;
+            background: var(--marron);
+            color: var(--beige);
+            padding: 3rem 2rem 1.5rem 2rem;
             margin-top: 3rem;
-            border-top: 6px solid #b48a6b;
         }
 
-        footer small {
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-grid h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--dorado);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-grid a {
+            color: var(--beige);
+            text-decoration: none;
             display: block;
-            font-size: 0.9rem;
-            margin-top: 0.8rem;
-            color: #8f7a68;
+            margin: 0.3rem 0;
+            transition: color 0.3s;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 700px) {
-            header h1 { font-size: 2rem; }
-            .lista-petro ul { columns: 1; }
-            nav a { padding: 0.4rem 1rem; }
-            #mapa { height: 250px; }
-            .streaming iframe { height: 250px; }
+        .footer-grid a:hover {
+            color: var(--dorado);
+        }
+
+        .footer-grid .social i {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+
+        .footer-grid .social i:hover {
+            color: var(--dorado);
+            transform: scale(1.1);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* ===== BOTÓN VOLVER ARRIBA ===== */
+        .btn-arriba {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--terracota);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            display: none;
+            z-index: 999;
+        }
+
+        .btn-arriba:hover {
+            background: var(--dorado);
+            transform: scale(1.1);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .quienes-grid {
+                grid-template-columns: 1fr;
+            }
+            .quienes-imagen {
+                height: 250px;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .contador-item h3 {
+                font-size: 2.5rem;
+            }
+            .newsletter input {
+                min-width: auto;
+                width: 100%;
+            }
+            nav a {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero {
+                height: 70vh;
+            }
+            .container {
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ===== HEADER ===== -->
     <header>
-        <h1>🌾 JUNTA DE CAMPESINOS DE PARLAMENCO</h1>
-        <p>Patrimonio arqueológico · Petroglifos y memoria ancestral</p>
+        <div class="logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10 L55 40 L70 30 L60 50 L80 65 L55 60 L50 90 L45 60 L20 65 L40 50 L30 30 L45 40 Z"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#C49A6C" stroke-width="3"/>
+                <circle cx="50" cy="30" r="5" fill="#C49A6C"/>
+                <circle cx="35" cy="45" r="5" fill="#C49A6C"/>
+                <circle cx="65" cy="45" r="5" fill="#C49A6C"/>
+                <path d="M40 60 Q50 70 60 60" stroke="#C49A6C" stroke-width="3" fill="none"/>
+            </svg>
+            <div>
+                Parlamenco
+                <span>Junta de Campesinos</span>
+            </div>
+        </div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#quienes">Quiénes</a>
+            <a href="#petroglifos">Petroglifos</a>
+            <a href="#eventos">Eventos</a>
+            <a href="#investigacion">Investigación</a>
+            <a href="#mapa">Mapa</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
     </header>
 
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#mapa">Mapa</a>
-        <a href="#galeria">Galería</a>
-        <a href="#noticias">Noticias</a>
-        <a href="#streaming">En Vivo</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
-
-    <div class="container" id="inicio">
-        <!-- HERO -->
-        <section class="hero">
-            <h2>⛰️ Guardianes de la piedra escrita</h2>
-            <p>Los petroglifos de Parlamenco son más que dibujos: son el <strong>lenguaje de nuestros antepasados</strong>. La junta de campesinos protege y divulga este legado.</p>
-            <span>🔍 Descubre su significado</span>
-        </section>
-
-        <!-- CARDS INFORMATIVAS -->
-        <div class="grid">
-            <article class="card">
-                <h3>🪨 ¿Qué son?</h3>
-                <p>Grabados en roca que representan figuras humanas, animales, espirales y símbolos astronómicos. Tienen más de <strong>2000 años</strong> de antigüedad.</p>
-                <span class="fecha">📅 Época prehispánica</span>
-            </article>
-            <article class="card">
-                <h3>🧭 Ubicación</h3>
-                <p>En los cerros aledaños a la comunidad de Parlamenco, junto a los antiguos caminos de agua y miradores naturales.</p>
-                <span class="fecha">📍 Valle del río Paraná</span>
-            </article>
-            <article class="card">
-                <h3>🌿 Conservación</h3>
-                <p>La junta realiza limpieza anual, señalización y jornadas de sensibilización para evitar vandalismo y erosión.</p>
-                <span class="fecha">🤝 Campesinos custodios</span>
-            </article>
+    <!-- ===== HERO CON VIDEO ===== -->
+    <section class="hero" id="inicio">
+        <video autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-mountain-landscape-with-greenery-40927-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>
+                Guardianes de la<br>
+                <span class="destacado">Piedra Escrita</span>
+            </h1>
+            <p>Petroglifos de Parlamenco · 2000 años de memoria ancestral</p>
+            <a href="#petroglifos" class="btn">Descubre los petroglifos</a>
         </div>
+    </section>
 
-        <!-- MAPA -->
-        <div class="mapa-container" id="mapa">
-            <h3 style="color:#2f241b; margin-bottom:1rem;">🗺️ Ubicación de los petroglifos</h3>
-            <div id="mapa"></div>
-            <p style="margin-top:0.8rem; font-size:0.9rem; color:#5a473a;">📍 Zona arqueológica de Parlamenco · Coordenadas: -14.823, -64.901 (aproximadas)</p>
-        </div>
-
-        <!-- GALERÍA -->
-        <div class="galeria" id="galeria">
-            <h2>🖼️ Galería de petroglifos</h2>
-            <div class="galeria-grid">
-                <!-- Imágenes de ejemplo (puedes reemplazar las URL) -->
-                <img src="https://via.placeholder.com/400x300/7d5f48/fff?text=Petroglifo+1" alt="Petroglifo 1" onclick="abrirLightbox(this)">
-                <img src="https://via.placeholder.com/400x300/5a473a/fff?text=Petroglifo+2" alt="Petroglifo 2" onclick="abrirLightbox(this)">
-                <img src="https://via.placeholder.com/400x300/4d3e32/fff?text=Petroglifo+3" alt="Petroglifo 3" onclick="abrirLightbox(this)">
-                <img src="https://via.placeholder.com/400x300/3e3026/fff?text=Petroglifo+4" alt="Petroglifo 4" onclick="abrirLightbox(this)">
-                <img src="https://via.placeholder.com/400x300/7d5f48/fff?text=Petroglifo+5" alt="Petroglifo 5" onclick="abrirLightbox(this)">
-                <img src="https://via.placeholder.com/400x300/5a473a/fff?text=Petroglifo+6" alt="Petroglifo 6" onclick="abrirLightbox(this)">
+    <!-- ===== QUIÉNES SOMOS ===== -->
+    <section class="container" id="quienes">
+        <h2 class="section-title fade-in">Quiénes Somos</h2>
+        <p class="section-subtitle fade-in">La Junta de Campesinos de Parlamenco protege y divulga el legado arqueológico de la región</p>
+        
+        <div class="quienes-grid">
+            <div class="quienes-texto fade-in">
+                <h3>🌾 Más de 30 años cuidando nuestro patrimonio</h3>
+                <p>Somos una organización comunitaria formada por campesinos, arqueólogos y vecinos de Parlamenco. Desde 1992 trabajamos en la protección, investigación y difusión de los petroglifos ancestrales.</p>
+                <p>Nuestra labor incluye limpieza anual, señalización de senderos, jornadas educativas y acompañamiento a investigadores nacionales e internacionales.</p>
+                <p><strong>Misión:</strong> Conservar el patrimonio rupestre y transmitir su conocimiento a las nuevas generaciones.</p>
+            </div>
+            <div class="quienes-imagen fade-in">
+                <!-- Imagen de fondo -->
             </div>
         </div>
 
-        <!-- LIGHTBOX (ventana para ver imágenes grandes) -->
-        <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
-            <span class="cerrar">&times;</span>
-            <img id="lightbox-img" src="" alt="Ampliar">
-        </div>
-
-        <!-- LISTA DE PETROGLIFOS -->
-        <div class="lista-petro">
-            <h2 style="color:#2f241b; margin-bottom:1rem;">📜 Petroglifos registrados</h2>
-            <ul>
-                <li>🌞 Espiral solar</li>
-                <li>🐆 Felino en acecho</li>
-                <li>🧑‍🌾 Figura agricultora</li>
-                <li>🌀 Laberinto ceremonial</li>
-                <li>🐍 Serpiente de agua</li>
-                <li>⭐ Constelación austral</li>
-                <li>🦙 Camélido sagrado</li>
-                <li>✋ Mano ancestral</li>
-            </ul>
-            <p style="margin-top:1.2rem; font-style:italic; color:#4d3e32;">➕ Se descubren nuevos trazados cada temporada de secano.</p>
-        </div>
-
-        <!-- TABLERO DE NOTICIAS -->
-        <div class="tablero" id="noticias">
-            <h2>📰 Tablero de noticias · Últimos hallazgos</h2>
-            <div id="contenedor-noticias">
-                <!-- Las noticias se cargan con JavaScript -->
+        <!-- Misión, Visión, Valores -->
+        <div class="mvv-grid">
+            <div class="mvv-card fade-in">
+                <i class="fas fa-bullseye"></i>
+                <h4>Misión</h4>
+                <p>Proteger, investigar y difundir los petroglifos de Parlamenco como patrimonio cultural de la humanidad.</p>
+            </div>
+            <div class="mvv-card fade-in">
+                <i class="fas fa-eye"></i>
+                <h4>Visión</h4>
+                <p>Ser referente internacional en conservación de arte rupestre y turismo arqueológico comunitario.</p>
+            </div>
+            <div class="mvv-card fade-in">
+                <i class="fas fa-handshake"></i>
+                <h4>Valores</h4>
+                <p>Respeto por la tierra, solidaridad comunitaria, transparencia y compromiso con la memoria ancestral.</p>
             </div>
         </div>
+    </section>
 
-        <!-- STREAMING -->
-        <div class="streaming" id="streaming">
-            <h2>📡 En Vivo · Streaming desde Parlamenco</h2>
-            <!-- Cambia el src por tu enlace de YouTube/Facebook Live -->
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-            <p>🔴 Transmisiones en vivo durante excavaciones y visitas guiadas</p>
-        </div>
-
-        <!-- FORMULARIO -->
-        <div class="formulario" id="contacto">
-            <h2 style="color:#2f241b;">📩 Contáctanos</h2>
-            <p style="color:#5a473a;">Reporta un hallazgo, apúntate a una visita o colabora con la junta.</p>
-            <form id="formContacto" onsubmit="enviarFormulario(event)">
-                <label>Nombre completo:</label>
-                <input type="text" placeholder="Tu nombre" required>
-
-                <label>Correo electrónico:</label>
-                <input type="email" placeholder="tu@email.com" required>
-
-                <label>Teléfono (opcional):</label>
-                <input type="tel" placeholder="Número de contacto">
-
-                <label>Motivo:</label>
-                <select>
-                    <option>Reportar un petroglifo nuevo</option>
-                    <option>Inscribirme a visita guiada</option>
-                    <option>Quiero colaborar</option>
-                    <option>Otra consulta</option>
-                </select>
-
-                <label>Mensaje:</label>
-                <textarea rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
-
-                <button type="submit">✉️ Enviar mensaje</button>
-            </form>
-            <div id="mensaje-enviado" style="display:none; margin-top:1rem; padding:1rem; background:#d4edda; border-radius:12px; color:#155724;">
-                ✅ ¡Mensaje enviado con éxito! La junta te responderá pronto.
+    <!-- ===== CONTADOR ===== -->
+    <div class="container">
+        <div class="contador fade-in">
+            <div class="contador-grid">
+                <div class="contador-item">
+                    <h3 id="contador-petro">0</h3>
+                    <p>Petroglifos registrados</p>
+                </div>
+                <div class="contador-item">
+                    <h3 id="contador-visitas">0</h3>
+                    <p>Visitantes anuales</p>
+                </div>
+                <div class="contador-item">
+                    <h3 id="contador-anos">0</h3>
+                    <p>Años de historia</p>
+                </div>
+                <div class="contador-item">
+                    <h3 id="contador-custodios">0</h3>
+                    <p>Campesinos custodios</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- ===== PETROGLIFOS DESTACADOS ===== -->
+    <section class="container" id="petroglifos">
+        <h2 class="section-title fade-in">Petroglifos Destacados</h2>
+        <p class="section-subtitle fade-in">Conoce algunos de los grabados más importantes de Parlamenco</p>
+        
+        <div class="petro-grid">
+            <div class="petro-card fade-in">
+                <img src="https://via.placeholder.com/600x400/7d5f48/fff?text=Espiral+Solar" alt="Espiral Solar">
+                <div class="info">
+                    <h4>🌞 Espiral Solar</h4>
+                    <span class="etiqueta">Época prehispánica</span>
+                    <p>Representa el ciclo del sol y las estaciones. Posible calendario agrícola.</p>
+                </div>
+            </div>
+            <div class="petro-card fade-in">
+                <img src="https://via.placeholder.com/600x400/5a473a/fff?text=Felino+Acechando" alt="Felino Acechando">
+                <div class="info">
+                    <h4>🐆 Felino Acechando</h4>
+                    <span class="etiqueta">Cultura Cupisnique</span>
+                    <p>Figura de jaguar o puma, símbolo de poder y conexión con lo sagrado.</p>
+                </div>
+            </div>
+            <div class="petro-card fade-in">
+                <img src="https://via.placeholder.com/600x400/4d3e32/fff?text=Serpiente+de+Agua" alt="Serpiente de Agua">
+                <div class="info">
+                    <h4>🐍 Serpiente de Agua</h4>
+                    <span class="etiqueta">Cultura Recuay</span>
+                    <p>Ofidio asociado al agua y la fertilidad de la tierra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EVENTOS ===== -->
+    <section class="container" id="eventos">
+        <h2 class="section-title fade-in">Próximos Eventos</h2>
+        <p class="section-subtitle fade-in">Participa en nuestras actividades comunitarias</p>
+        
+        <div class="eventos-grid">
+            <div class="evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 22 de agosto 2026 · 9:00 AM</div>
+                <h4>Visita guiada a los petroglifos</h4>
+                <p>Recorrido con arqueólogos locales por los principales sitios rupestres.</p>
+                <a href="#" class="btn-event">Inscribirme →</a>
+            </div>
+            <div class="evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 5 de setiembre 2026 · 3:00 PM</div>
+                <h4>Taller de conservación</h4>
+                <p>Aprende técnicas de limpieza y preservación de piedras grabadas.</p>
+                <a href="#" class="btn-event">Inscribirme →</a>
+            </div>
+            <div class="evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 18 de setiembre 2026 · 10:00 AM</div>
+                <h4>Ceremonia ancestral</h4>
+                <p>Ofrenda y agradecimiento a la tierra con música y danza tradicional.</p>
+                <a href="#" class="btn-event">Inscribirme →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INVESTIGACIÓN ===== -->
+    <section class="container" id="investigacion">
+        <h2 class="section-title fade-in">Investigación Arqueológica</h2>
+        <p class="section-subtitle fade-in">Publicaciones y estudios sobre los petroglifos de Parlamenco</p>
+        
+        <div class="investigacion-grid">
+            <div class="investigacion-card fade-in">
+                <h4>📄 Los petroglifos de Parlamenco: un estudio iconográfico</h4>
+                <p class="autor">Dr. Carlos Mamani · Universidad Nacional de Trujillo</p>
+                <p>Análisis de las representaciones zoomorfas y su relación con la cosmovisión andina.</p>
+            </div>
+            <div class="investigacion-card fade-in">
+                <h4>📄 Cronología del arte rupestre en el valle del Paraná</h4>
+                <p class="autor">Dra. Elena Rojas · Instituto de Arqueología Peruana</p>
+                <p>Dating por termoluminiscencia y análisis de pigmentos en los grabados.</p>
+            </div>
+            <div class="investigacion-card fade-in">
+                <h4>📄 Conservación comunitaria en Parlamenco</h4>
+                <p class="autor">Lic. Juan Quispe · Junta de Campesinos</p>
+                <p>Modelo de gestión participativa para la protección del patrimonio rupestre.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIOS ===== -->
+    <section class="container">
+        <h2 class="section-title fade-in">Testimonios</h2>
+        <p class="section-subtitle fade-in">Lo que dicen quienes nos visitan</p>
+        
+        <div class="testimonios-grid">
+            <div class="testimonio-card fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"Una experiencia transformadora. Los petroglifos de Parlamenco son un tesoro que todos deberían conocer."</p>
+                <div class="nombre">— María Fernández, arqueóloga</div>
+            </div>
+            <div class="testimonio-card fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"La comunidad cuida estos grabados como si fueran sus propios abuelos. Es conmovedor ver su compromiso."</p>
+                <div class="nombre">— Peter Smith, investigador británico</div>
+            </div>
+            <div class="testimonio-card fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"Cada piedra cuenta una historia. Vine por curiosidad y me fui con el alma llena de asombro."</p>
+                <div class="nombre">— Lucía Gómez, visitante</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <div class="container">
+        <div class="newsletter fade-in">
+            <h3>📬 Suscríbete a nuestro boletín</h3>
+            <p>Recibe noticias, eventos e investigaciones sobre los petroglifos de Parlamenco.</p>
+            <form onsubmit="event.preventDefault(); alert('✅ ¡Gracias por suscribirte!');">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit">Suscribirme</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MAPA ===== -->
+    <section class="container" id="mapa">
+        <h2 class="section-title fade-in">🗺️ Mapa y rutas</h2>
+        <p class="section-subtitle fade-in">Cómo llegar a Parlamenco desde Chimbote y ubicación de los petroglifos</p>
+        
+        <div class="mapa-container fade-in">
+            <div id="mapa"></div>
+            <div style="margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+                <span style="background:#A0522D; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.9rem;">
+                    🪨 Petroglifos
+                </span>
+                <span style="background:#556B2F; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.9rem;">
+                    🚗 Ruta desde Chimbote
+                </span>
+                <button onclick="centrarMapa()" style="background:#3E2723; color:white; border:none; padding:0.4rem 1.5rem; border-radius:30px; cursor:pointer; font-weight:bold;">
+                    🎯 Ver rutas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section class="container" id="contacto">
+        <h2 class="section-title fade-in">📩 Contacto</h2>
+        <p class="section-subtitle fade-in">Escrínbenos, te responderemos a la brevedad</p>
+        
+        <div style="background:white; padding:2rem; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+            <form onsubmit="event.preventDefault(); document.getElementById('mensaje-enviado').style.display='block'; this.reset(); setTimeout(()=>document.getElementById('mensaje-enviado').style.display='none',5000);">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="font-weight:700;">Nombre completo</label>
+                        <input type="text" style="width:100%; padding:0.8rem; border:2px solid #ddd; border-radius:12px; margin-top:0.3rem;" required>
+                    </div>
+                    <div>
+                        <label style="font-weight:700;">Correo electrónico</label>
+                        <input type="email" style="width:100%; padding:0.8rem; border:2px solid #ddd; border-radius:12px; margin-top:0.3rem;" required>
+                    </div>
+                </div>
+                <div style="margin-top:1rem;">
+                    <label style="font-weight:700;">Mensaje</label>
+                    <textarea rows="4" style="width:100%; padding:0.8rem; border:2px solid #ddd; border-radius:12px; margin-top:0.3rem;" required></textarea>
+                </div>
+                <button type="submit" style="margin-top:1rem; background:#A0522D; color:white; padding:0.8rem 2.5rem; border:none; border-radius:50px; font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.3s;">
+                    ✉️ Enviar mensaje
+                </button>
+            </form>
+            <div id="mensaje-enviado" style="display:none; margin-top:1rem; padding:1rem; background:#d4edda; border-radius:12px; color:#155724; font-weight:700;">
+                ✅ ¡Mensaje enviado con éxito! La junta te responderá pronto.
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
     <footer>
-        <p>🌱 Junta de Campesinos de Parlamenco · Custodios de la memoria en piedra</p>
-        <small>© 2026 · Hecho con manos de tierra y amor por la arqueología</small>
+        <div class="footer-grid">
+            <div>
+                <h4>🌾 Parlamenco</h4>
+                <p style="color:#ccc; font-size:0.9rem;">Junta de Campesinos<br>Custodios de la memoria en piedra</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#quienes">Quiénes somos</a>
+                <a href="#petroglifos">Petroglifos</a>
+                <a href="#eventos">Eventos</a>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <a href="mailto:petroglifos@parlamenco.org">petroglifos@parlamenco.org</a>
+                <a href="tel:+51987654321">+51 987 654 321</a>
+                <a href="#">Parlamenco, Valle del Paraná</a>
+            </div>
+            <div>
+                <h4>Redes sociales</h4>
+                <div class="social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Junta de Campesinos de Parlamenco · Todos los derechos reservados
+        </div>
     </footer>
 
+    <!-- ===== BOTÓN VOLVER ARRIBA ===== -->
+    <button class="btn-arriba" id="btnArriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===== SCRIPT ===== -->
     <script>
-        // ===================== MAPA =====================
-        const mapa = L.map('mapa').setView([-14.823, -64.901], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(mapa);
-
-        // Marcador en la zona de los petroglifos
-        L.marker([-14.823, -64.901])
-            .addTo(mapa)
-            .bindPopup('<b>Zona de Petroglifos</b><br>Parlamenco, Valle del Paraná')
-            .openPopup();
-
-        // ===================== LIGHTBOX =====================
-        function abrirLightbox(img) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightbox.style.display = 'flex';
-            lightboxImg.src = img.src;
-        }
-
-        function cerrarLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // Cerrar con tecla ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') cerrarLightbox();
+        // ===== ANIMACIÓN AL HACER SCROLL =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const faders = document.querySelectorAll('.fade-in');
+            
+            const aparecer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            faders.forEach(el => aparecer.observe(el));
         });
 
-        // ===================== TABLERO DE NOTICIAS =====================
-        // Lista de noticias (puedes agregar más)
-        const noticias = [
-            { hora: '10:30', texto: '🔍 Descubierto nuevo petroglifo con forma de espiral doble en el cerro norte.' },
-            { hora: '09:15', texto: '🧑‍🌾 Campesinos realizan limpieza de maleza en el sendero de acceso.' },
-            { hora: '08:00', texto: '📢 Próxima visita guiada: 22 de agosto. Inscripciones abiertas.' },
-            { hora: 'Ayer', texto: '🌧️ Las lluvias revelaron nuevas piedras con grabados en la quebrada.' },
-            { hora: 'Ayer', texto: '🏛️ Arqueólogos de la universidad confirman antigüedad de 2,300 años.' },
-        ];
+        // ===== CONTADOR ANIMADO =====
+        function animarContador(id, objetivo) {
+            let actual = 0;
+            const incremento = Math.ceil(objetivo / 50);
+            const elemento = document.getElementById(id);
+            
+            const intervalo = setInterval(() => {
+                actual += incremento;
+                if (actual >= objetivo) {
+                    actual = objetivo;
+                    clearInterval(intervalo);
+                }
+                elemento.textContent = actual;
+            }, 40);
+        }
 
-        function cargarNoticias() {
-            const contenedor = document.getElementById('contenedor-noticias');
-            contenedor.innerHTML = '';
-            noticias.forEach(noticia => {
-                const div = document.createElement('div');
-                div.className = 'noticia';
-                div.innerHTML = `
-                    <span class="hora">${noticia.hora}</span>
-                    <span class="texto">${noticia.texto}</span>
-                `;
-                contenedor.appendChild(div);
+        // Observar el contador para iniciar animación
+        const contadorObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animarContador('contador-petro', 48);
+                    animarContador('contador-visitas', 3200);
+                    animarContador('contador-anos', 2300);
+                    animarContador('contador-custodios', 27);
+                    contadorObserver.disconnect();
+                }
             });
+        }, { threshold: 0.3 });
+
+        contadorObserver.observe(document.querySelector('.contador'));
+
+        // ===== BOTÓN VOLVER ARRIBA =====
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('btnArriba');
+            if (window.scrollY > 400) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // ===== MAPA CON RUTA =====
+        let mapa;
+        
+        function iniciarMapa() {
+            // Coordenadas: Chimbote, Parlamenco (aproximado), Petroglifos
+            const chimbote = [-9.0740, -78.5937];
+            const parlamenco = [-8.7000, -77.8000]; // Aproximado (reemplazar con coordenadas reales)
+            const petroglifos = [-8.7200, -77.8200]; // Aproximado (reemplazar con coordenadas reales)
+            
+            mapa = L.map('mapa').setView([-8.8, -78.0], 7);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(mapa);
+
+            // Marcador Chimbote
+            L.marker(chimbote, {
+                icon: L.divIcon({
+                    className: 'marcador-chimbote',
+                    html: '<div style="background:#2196F3; width:14px; height:14px; border-radius:50%; border:3px solid white; box-shadow:0 0 20px #2196F3;"></div>',
+                    iconSize: [14, 14],
+                    iconAnchor: [7, 7]
+                })
+            }).addTo(mapa)
+              .bindPopup('<b>🏙️ Chimbote</b><br>Punto de partida');
+
+            // Marcador Parlamenco
+            L.marker(parlamenco, {
+                icon: L.divIcon({
+                    className: 'marcador-parlamenco',
+                    html: '<div style="background:#556B2F; width:16px; height:16px; border-radius:50%; border:3px solid white; box-shadow:0 0 20px #556B2F;"></div>',
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
+                })
+            }).addTo(mapa)
+              .bindPopup('<b>🌾 Parlamenco</b><br>Comunidad campesina');
+
+            // Marcador Petroglifos
+            L.marker(petroglifos, {
+                icon: L.divIcon({
+                    className: 'marcador-petro',
+                    html: '<div style="background:#A0522D; width:18px; height:18px; border-radius:50%; border:3px solid white; box-shadow:0 0 30px #A0522D;"></div>',
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
+                })
+            }).addTo(mapa)
+              .bindPopup('<b>🪨 Zona de Petroglifos</b><br>Grabados ancestrales');
+
+            // Línea de ruta Chimbote → Parlamenco
+            const ruta = [
+                chimbote,
+                [-8.9000, -78.2000],
+                [-8.8000, -78.0000],
+                parlamenco
+            ];
+
+            L.polyline(ruta, {
+                color: '#556B2F',
+                weight: 4,
+                opacity: 0.7,
+                dashArray: '8 8'
+            }).addTo(mapa)
+              .bindPopup('🚗 Ruta desde Chimbote<br>~230 km · 5 horas aprox.');
+
+            // Círculo área petroglifos
+            L.circle(petroglifos, {
+                radius: 500,
+                color: '#A0522D',
+                fillColor: '#A0522D',
+                fillOpacity: 0.1,
+                weight: 2
+            }).addTo(mapa);
+
+            // Ajustar zoom para mostrar todo
+            mapa.fitBounds([
+                chimbote,
+                petroglifos
+            ], { padding: [50, 50] });
         }
 
-        cargarNoticias();
-
-        // Simular noticias en vivo (cada 20 segundos aparece una nueva)
-        let noticiaIndex = 0;
-        const noticiasExtra = [
-            { hora: 'Justo ahora', texto: '🆕 Visitantes reportan posible nuevo petroglifo en el sendero este.' },
-            { hora: 'Justo ahora', texto: '📸 Compartimos nuevas fotos en la galería de esta semana.' },
-        ];
-
-        setInterval(() => {
-            if (noticiaIndex < noticiasExtra.length) {
-                const contenedor = document.getElementById('contenedor-noticias');
-                const div = document.createElement('div');
-                div.className = 'noticia';
-                div.style.animation = 'fadeIn 0.5s';
-                div.innerHTML = `
-                    <span class="hora">${noticiasExtra[noticiaIndex].hora}</span>
-                    <span class="texto">${noticiasExtra[noticiaIndex].texto}</span>
-                `;
-                contenedor.prepend(div);
-                noticiaIndex++;
+        function centrarMapa() {
+            if (mapa) {
+                mapa.fitBounds([
+                    [-9.0740, -78.5937],
+                    [-8.7000, -77.8000]
+                ], { padding: [50, 50] });
             }
-        }, 20000);
-
-        // ===================== FORMULARIO =====================
-        function enviarFormulario(e) {
-            e.preventDefault();
-            document.getElementById('mensaje-enviado').style.display = 'block';
-            document.getElementById('formContacto').reset();
-            setTimeout(() => {
-                document.getElementById('mensaje-enviado').style.display = 'none';
-            }, 5000);
         }
 
-        // ===================== ESTILO ANIMACIÓN =====================
-        const styleAnim = document.createElement('style');
-        styleAnim.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-        `;
-        document.head.appendChild(styleAnim);
+        // Iniciar mapa al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(iniciarMapa, 800);
+        });
 
-        console.log('🌾 Junta de Campesinos de Parlamenco · Web cargada con éxito');
+        console.log('🌾 Junta de Campesinos de Parlamenco · Web Profesional cargada');
     </script>
 </body>
 </html>
