@@ -1,1286 +1,626 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>InversiónLiteral · Libros de Finanzas 2026</title>
-    <!-- Google Fonts: Space Grotesk (moderna y geométrica) -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 (gratis) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junta de Campesinos de Parlamenco · Petroglifos</title>
+    <!-- Leaflet para el mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        /* ============================================================
-                   RESET Y VARIABLES (Temática 2026: Data/Fintech)
-                   ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --bg-primary: #070b14;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border-card: rgba(255, 255, 255, 0.06);
-            --text-primary: #eef2f6;
-            --text-secondary: #7a8a9e;
-            --text-muted: #4a5a6e;
-            --neon-green: #00f5a0;
-            --neon-blue: #4d8cf7;
-            --neon-purple: #a855f7;
-            --neon-yellow: #facc15;
-            --glow-green: 0 0 30px rgba(0, 245, 160, 0.25);
-            --glow-blue: 0 0 30px rgba(77, 140, 247, 0.2);
-            --radius: 20px;
-            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font: 'Space Grotesk', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            background-image:
-                radial-gradient(ellipse at 10% 20%, rgba(0, 245, 160, 0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 80%, rgba(77, 140, 247, 0.04) 0%, transparent 50%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4efe6;
+            color: #2e241e;
             line-height: 1.6;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        /* HEADER */
+        header {
+            background: linear-gradient(145deg, #4d3e32, #2f241b);
+            color: #f0e2d0;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 6px solid #b48a6b;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
+        header h1 {
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            text-shadow: 3px 3px 0 #1f1611;
         }
 
-        /* ============================================================
-                   NAVBAR (Sticky con vidrio)
-                   ============================================================ */
-        .navbar {
-            padding: 16px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(16px);
-            background: rgba(7, 11, 20, 0.75);
+        header p {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #dac5b0;
+        }
+
+        /* NAV */
+        nav {
+            background-color: #3e3026;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+            border-bottom: 3px solid #b48a6b;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            transition: background var(--transition);
+            z-index: 100;
         }
 
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 26px;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            color: var(--neon-green);
-            text-shadow: var(--glow-green);
-        }
-
-        .logo span {
-            color: var(--neon-yellow);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 14px;
-            letter-spacing: 0.3px;
-            transition: color var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .nav-links a:hover {
-            color: var(--neon-green);
-        }
-
-        .nav-links .legal-link {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .nav-links .legal-link:hover {
-            color: var(--neon-blue);
-        }
-
-        /* ============================================================
-                   HERO
-                   ============================================================ */
-        .hero {
-            padding: 60px 0 40px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--neon-green), var(--neon-blue), transparent);
-            opacity: 0.3;
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            font-weight: 700;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            margin-bottom: 12px;
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-secondary);
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-
-        .hero .badge {
-            display: inline-block;
-            background: rgba(0, 245, 160, 0.1);
-            border: 1px solid rgba(0, 245, 160, 0.2);
-            border-radius: 50px;
-            padding: 4px 16px;
-            font-size: 12px;
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* ============================================================
-                   BUSCADOR
-                   ============================================================ */
-        .search-box {
-            display: flex;
-            max-width: 640px;
-            margin: 0 auto 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            overflow: hidden;
-            transition: border var(--transition), box-shadow var(--transition);
-        }
-
-        .search-box:focus-within {
-            border-color: var(--neon-green);
-            box-shadow: var(--glow-green);
-        }
-
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 16px 24px;
-            color: var(--text-primary);
-            font-size: 16px;
-            font-family: inherit;
-            outline: none;
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-box button {
-            background: var(--neon-green);
-            border: none;
-            padding: 0 32px;
-            color: #070b14;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background var(--transition), transform 0.2s;
-            font-family: inherit;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .search-box button:hover {
-            background: #00d68a;
-            transform: scale(1.02);
-        }
-
-        .search-hint {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
-            opacity: 0.7;
-        }
-
-        .search-hint i {
-            color: var(--neon-blue);
-        }
-
-        /* ============================================================
-                   RESULTADOS
-                   ============================================================ */
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 48px 0 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .results-header h2 {
-            font-weight: 600;
-            font-size: 20px;
-            letter-spacing: -0.3px;
-        }
-
-        .results-header h2 i {
-            color: var(--neon-yellow);
-            margin-right: 10px;
-        }
-
-        .results-header .count {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        #loading {
-            text-align: center;
-            padding: 60px 0;
-            color: var(--text-secondary);
-            font-size: 18px;
-        }
-
-        #loading i {
-            color: var(--neon-green);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .grid-books {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 24px;
-            margin-bottom: 60px;
-        }
-
-        /* ============================================================
-                   TARJETA DE LIBRO (Glassmorphism + hover)
-                   ============================================================ */
-        .book-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius);
-            padding: 20px;
-            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .book-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 245, 160, 0.02), transparent 70%);
-            opacity: 0;
-            transition: opacity var(--transition);
-            pointer-events: none;
-        }
-
-        .book-card:hover::before {
-            opacity: 1;
-        }
-
-        .book-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-            border-color: rgba(0, 245, 160, 0.2);
-        }
-
-        .book-cover {
-            width: 100%;
-            aspect-ratio: 2/3;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .book-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition);
-        }
-
-        .book-card:hover .book-cover img {
-            transform: scale(1.02);
-        }
-
-        .book-cover i {
-            font-size: 48px;
-            color: var(--text-muted);
-        }
-
-        .book-card h3 {
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 1.3;
-            margin-bottom: 4px;
-        }
-
-        .book-card .author {
-            color: var(--neon-blue);
-            font-size: 14px;
-            font-weight: 400;
-            margin-bottom: 6px;
-        }
-
-        .book-card .price-tag {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--neon-yellow);
-            margin: 8px 0;
-        }
-
-        .book-card .price-tag .no-price {
-            color: var(--text-muted);
-            font-weight: 400;
-            font-size: 14px;
-        }
-
-        .book-card .description {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.5;
-            flex: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .book-card .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .btn-group a {
-            padding: 8px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
+        nav a {
+            color: #f0e2d0;
             text-decoration: none;
-            transition: all var(--transition);
-            font-family: inherit;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1 1 auto;
-            justify-content: center;
-            border: 1px solid transparent;
-        }
-
-        .btn-amazon {
-            background: #1a2c3e;
-            color: white;
-            border-color: #ff9900;
-        }
-
-        .btn-amazon:hover {
-            background: #ff9900;
-            color: #070b14;
-        }
-
-        .btn-google {
-            background: transparent;
-            color: white;
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-google:hover {
-            background: white;
-            color: #070b14;
-        }
-
-        .btn-preview {
-            background: transparent;
-            color: var(--neon-green);
-            border-color: var(--neon-green);
-        }
-
-        .btn-preview:hover {
-            background: var(--neon-green);
-            color: #070b14;
-        }
-
-        .btn-gutenberg {
-            background: transparent;
-            color: var(--neon-purple);
-            border-color: var(--neon-purple);
-        }
-
-        .btn-gutenberg:hover {
-            background: var(--neon-purple);
-            color: #070b14;
-        }
-
-        /* ============================================================
-                   SECCIÓN DE CLÁSICOS GRATUITOS (Fijos)
-                   ============================================================ */
-        .classics-section {
-            margin: 60px 0 40px;
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .classics-section h2 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .classics-section h2 i {
-            color: var(--neon-purple);
-        }
-
-        .classics-section .sub {
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .classics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .classic-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius);
-            padding: 18px;
-            text-align: center;
-            transition: transform var(--transition), border-color var(--transition);
-        }
-
-        .classic-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--neon-purple);
-        }
-
-        .classic-card h4 {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .classic-card .author {
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
-        .classic-card .btn-group {
-            margin-top: 12px;
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .classic-card .btn-group a {
-            font-size: 12px;
-            padding: 4px 12px;
+            padding: 0.5rem 1.8rem;
+            font-weight: bold;
             border-radius: 30px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary);
-            transition: all var(--transition);
+            transition: 0.3s;
+            background: #5a473a;
         }
 
-        .classic-card .btn-group a:hover {
-            background: var(--neon-purple);
-            color: #070b14;
-            border-color: var(--neon-purple);
+        nav a:hover {
+            background: #b48a6b;
+            color: #1f1611;
+            transform: scale(1.05);
         }
 
-        /* ============================================================
-                   FOOTER (con avisos legales)
-                   ============================================================ */
-        .footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 40px 0 24px;
-            margin-top: 20px;
-            background: rgba(7, 11, 20, 0.6);
+        /* CONTENEDOR */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
         }
 
-        .footer .container {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-        }
-
-        .footer h4 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        .footer p,
-        .footer li {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .footer ul {
-            list-style: none;
-        }
-
-        .footer ul li a {
-            color: var(--text-secondary);
-            transition: color var(--transition);
-            cursor: pointer;
-        }
-
-        .footer ul li a:hover {
-            color: var(--neon-green);
-        }
-
-        .footer .legal-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 4px;
-            padding: 2px 10px;
-            font-size: 11px;
-            color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            margin-top: 8px;
-        }
-
-        .footer .copy {
-            grid-column: 1 / -1;
+        /* HERO */
+        .hero {
+            background: #d9cdbc;
+            padding: 2rem;
+            border-radius: 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            padding-top: 20px;
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            border-left: 10px solid #7d5f48;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
         }
 
-        .footer .copy i {
-            color: var(--neon-green);
+        .hero h2 {
+            font-size: 2.5rem;
+            color: #2f241b;
         }
 
-        /* ============================================================
-                   MODAL LEGAL (Política de Privacidad, Cookies, Afiliados)
-                   ============================================================ */
-        .modal-overlay {
+        .hero span {
+            background: #7d5f48;
+            color: #f4efe6;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* GRID PRINCIPAL */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .card {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            border-bottom: 6px solid #b48a6b;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card h3 {
+            color: #4d3e32;
+            font-size: 1.8rem;
+            border-left: 6px solid #b48a6b;
+            padding-left: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card .fecha {
+            display: inline-block;
+            background: #e5d9c8;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* MAPA */
+        .mapa-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            margin: 2.5rem 0;
+            border-bottom: 6px solid #b48a6b;
+        }
+
+        #mapa {
+            height: 400px;
+            border-radius: 16px;
+            z-index: 1;
+        }
+
+        /* GALERÍA */
+        .galeria {
+            margin: 2.5rem 0;
+        }
+
+        .galeria h2 {
+            color: #2f241b;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .galeria-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 4px solid #d9cdbc;
+            background: #d9cdbc;
+        }
+
+        .galeria-grid img:hover {
+            transform: scale(1.03);
+            border-color: #7d5f48;
+        }
+
+        /* Lightbox (ventana modal para imágenes) */
+        .lightbox {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
             z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
         }
 
-        .modal-overlay.active {
-            display: flex;
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(255,255,255,0.2);
         }
 
-        .modal {
-            background: #101827;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: var(--radius);
-            max-width: 720px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 32px 40px;
-            position: relative;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
-        }
-
-        .modal::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .modal::-webkit-scrollbar-thumb {
-            background: var(--neon-green);
-            border-radius: 10px;
-        }
-
-        .modal-close {
-            position: sticky;
-            top: 0;
-            float: right;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 28px;
-            cursor: pointer;
-            transition: color var(--transition);
-            padding: 0 8px;
-        }
-
-        .modal-close:hover {
+        .lightbox .cerrar {
+            position: absolute;
+            top: 30px;
+            right: 40px;
             color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        .modal h2 {
-            font-size: 28px;
-            margin-bottom: 16px;
-            font-weight: 600;
+        /* TABLERO DE NOTICIAS */
+        .tablero {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            margin: 2.5rem 0;
+            border-left: 10px solid #7d5f48;
         }
 
-        .modal h2 i {
-            color: var(--neon-blue);
-            margin-right: 12px;
+        .tablero h2 {
+            color: #2f241b;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .modal h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 20px 0 8px;
-            color: var(--neon-yellow);
-        }
-
-        .modal p,
-        .modal li {
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.7;
-        }
-
-        .modal ul {
-            padding-left: 20px;
-            margin: 8px 0;
-        }
-
-        .modal ul li {
-            margin-bottom: 4px;
-        }
-
-        .modal .highlight-box {
-            background: rgba(0, 245, 160, 0.05);
-            border-left: 3px solid var(--neon-green);
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin: 12px 0;
-        }
-
-        /* ============================================================
-                   RESPONSIVE
-                   ============================================================ */
-        @media (max-width: 992px) {
-            .footer .container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 34px;
-            }
-            .hero p {
-                font-size: 16px;
-            }
-            .navbar .container {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .nav-links {
-                gap: 16px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .search-box {
-                flex-direction: column;
-                border-radius: 20px;
-                background: rgba(255, 255, 255, 0.02);
-            }
-            .search-box input {
-                padding: 14px 20px;
-                text-align: center;
-            }
-            .search-box button {
-                padding: 14px;
-                justify-content: center;
-                border-radius: 0 0 20px 20px;
-            }
-            .grid-books {
-                grid-template-columns: 1fr 1fr;
-            }
-            .classics-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .footer .container {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .modal {
-                padding: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .grid-books,
-            .classics-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 28px;
-            }
-        }
-
-        /* ============================================================
-                   UTILITIES
-                   ============================================================ */
-        .text-muted {
-            color: var(--text-muted);
-        }
-        .mt-1 {
-            margin-top: 8px;
-        }
-        .mb-1 {
-            margin-bottom: 8px;
-        }
-        .flex-center {
+        .noticia {
+            background: #f4efe6;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 0.8rem;
+            border-left: 6px solid #b48a6b;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            flex-wrap: wrap;
         }
-        .gap-2 {
-            gap: 8px;
+
+        .noticia .hora {
+            background: #7d5f48;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .noticia .texto {
+            flex: 1;
+            margin: 0 1rem;
+        }
+
+        /* FORMULARIO */
+        .formulario {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            margin: 2.5rem 0;
+            border-bottom: 6px solid #b48a6b;
+        }
+
+        .formulario input,
+        .formulario textarea,
+        .formulario select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0 1rem 0;
+            border: 2px solid #d9cdbc;
+            border-radius: 12px;
+            font-family: inherit;
+            background: #faf8f4;
+        }
+
+        .formulario button {
+            background: #4d3e32;
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border: none;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .formulario button:hover {
+            background: #b48a6b;
+            transform: scale(1.02);
+        }
+
+        /* STREAMING */
+        .streaming {
+            background: #1f1611;
+            padding: 2rem;
+            border-radius: 24px;
+            margin: 2.5rem 0;
+            text-align: center;
+            border: 4px solid #b48a6b;
+        }
+
+        .streaming h2 {
+            color: #f0e2d0;
+            margin-bottom: 1rem;
+        }
+
+        .streaming iframe {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 16px;
+            border: 3px solid #b48a6b;
+        }
+
+        .streaming p {
+            color: #dac5b0;
+            margin-top: 1rem;
+        }
+
+        /* LISTA PETROGLIFOS */
+        .lista-petro {
+            background: #e5d9c8;
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 2.5rem 0;
+        }
+
+        .lista-petro ul {
+            columns: 2;
+            list-style: none;
+        }
+
+        .lista-petro li {
+            background: #f4efe6;
+            margin: 0.5rem 0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            border-left: 8px solid #7d5f48;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #2f241b;
+            color: #cbb7a4;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            border-top: 6px solid #b48a6b;
+        }
+
+        footer small {
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            color: #8f7a68;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+            header h1 { font-size: 2rem; }
+            .lista-petro ul { columns: 1; }
+            nav a { padding: 0.4rem 1rem; }
+            #mapa { height: 250px; }
+            .streaming iframe { height: 250px; }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>🌾 JUNTA DE CAMPESINOS DE PARLAMENCO</h1>
+        <p>Patrimonio arqueológico · Petroglifos y memoria ancestral</p>
+    </header>
 
-    <!-- ============================================================
-    NAVBAR
-    ============================================================ -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-chart-line"></i>
-                Inversión<span>Literal</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="#classics"><i class="fas fa-book-open"></i> Clásicos</a></li>
-                <li><a href="#" id="openLegalModal" class="legal-link"><i class="fas fa-gavel"></i> Legal</a></li>
-            </ul>
-        </div>
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#mapa">Mapa</a>
+        <a href="#galeria">Galería</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#streaming">En Vivo</a>
+        <a href="#contacto">Contacto</a>
     </nav>
 
-    <!-- ============================================================
-    HERO
-    ============================================================ -->
-    <section class="hero">
-        <div class="container">
-            <div class="badge"><i class="fas fa-rocket"></i> 2026 · Data & Finanzas</div>
-            <h1>Libros que <span class="highlight">mueven el mercado</span></h1>
-            <p>Buscá entre miles de títulos de finanzas e inversión. Compará precios, leé clásicos gratis y ganá comisiones con tus recomendaciones.</p>
+    <div class="container" id="inicio">
+        <!-- HERO -->
+        <section class="hero">
+            <h2>⛰️ Guardianes de la piedra escrita</h2>
+            <p>Los petroglifos de Parlamenco son más que dibujos: son el <strong>lenguaje de nuestros antepasados</strong>. La junta de campesinos protege y divulga este legado.</p>
+            <span>🔍 Descubre su significado</span>
+        </section>
 
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder='Ej: "El inversor inteligente" o "Benjamin Graham"' />
-                <button id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
-            </div>
-            <div class="search-hint">
-                <i class="fas fa-database"></i> Datos de Google Books · Precios en tiempo real · Clásicos de Gutenberg
-            </div>
+        <!-- CARDS INFORMATIVAS -->
+        <div class="grid">
+            <article class="card">
+                <h3>🪨 ¿Qué son?</h3>
+                <p>Grabados en roca que representan figuras humanas, animales, espirales y símbolos astronómicos. Tienen más de <strong>2000 años</strong> de antigüedad.</p>
+                <span class="fecha">📅 Época prehispánica</span>
+            </article>
+            <article class="card">
+                <h3>🧭 Ubicación</h3>
+                <p>En los cerros aledaños a la comunidad de Parlamenco, junto a los antiguos caminos de agua y miradores naturales.</p>
+                <span class="fecha">📍 Valle del río Paraná</span>
+            </article>
+            <article class="card">
+                <h3>🌿 Conservación</h3>
+                <p>La junta realiza limpieza anual, señalización y jornadas de sensibilización para evitar vandalismo y erosión.</p>
+                <span class="fecha">🤝 Campesinos custodios</span>
+            </article>
         </div>
-    </section>
 
-    <!-- ============================================================
-    RESULTADOS
-    ============================================================ -->
-    <div class="container">
-        <div class="results-header">
-            <h2><i class="fas fa-dollar-sign"></i> Resultados con precios</h2>
-            <span class="count" id="resultCount">0 libros</span>
+        <!-- MAPA -->
+        <div class="mapa-container" id="mapa">
+            <h3 style="color:#2f241b; margin-bottom:1rem;">🗺️ Ubicación de los petroglifos</h3>
+            <div id="mapa"></div>
+            <p style="margin-top:0.8rem; font-size:0.9rem; color:#5a473a;">📍 Zona arqueológica de Parlamenco · Coordenadas: -14.823, -64.901 (aproximadas)</p>
         </div>
-        <div id="loading" style="display:none;">
-            <i class="fas fa-spinner"></i> Cargando ofertas...
+
+        <!-- GALERÍA -->
+        <div class="galeria" id="galeria">
+            <h2>🖼️ Galería de petroglifos</h2>
+            <div class="galeria-grid">
+                <!-- Imágenes de ejemplo (puedes reemplazar las URL) -->
+                <img src="https://via.placeholder.com/400x300/7d5f48/fff?text=Petroglifo+1" alt="Petroglifo 1" onclick="abrirLightbox(this)">
+                <img src="https://via.placeholder.com/400x300/5a473a/fff?text=Petroglifo+2" alt="Petroglifo 2" onclick="abrirLightbox(this)">
+                <img src="https://via.placeholder.com/400x300/4d3e32/fff?text=Petroglifo+3" alt="Petroglifo 3" onclick="abrirLightbox(this)">
+                <img src="https://via.placeholder.com/400x300/3e3026/fff?text=Petroglifo+4" alt="Petroglifo 4" onclick="abrirLightbox(this)">
+                <img src="https://via.placeholder.com/400x300/7d5f48/fff?text=Petroglifo+5" alt="Petroglifo 5" onclick="abrirLightbox(this)">
+                <img src="https://via.placeholder.com/400x300/5a473a/fff?text=Petroglifo+6" alt="Petroglifo 6" onclick="abrirLightbox(this)">
+            </div>
         </div>
-        <div class="grid-books" id="booksGrid">
-            <!-- Inyectado por JavaScript -->
+
+        <!-- LIGHTBOX (ventana para ver imágenes grandes) -->
+        <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+            <span class="cerrar">&times;</span>
+            <img id="lightbox-img" src="" alt="Ampliar">
+        </div>
+
+        <!-- LISTA DE PETROGLIFOS -->
+        <div class="lista-petro">
+            <h2 style="color:#2f241b; margin-bottom:1rem;">📜 Petroglifos registrados</h2>
+            <ul>
+                <li>🌞 Espiral solar</li>
+                <li>🐆 Felino en acecho</li>
+                <li>🧑‍🌾 Figura agricultora</li>
+                <li>🌀 Laberinto ceremonial</li>
+                <li>🐍 Serpiente de agua</li>
+                <li>⭐ Constelación austral</li>
+                <li>🦙 Camélido sagrado</li>
+                <li>✋ Mano ancestral</li>
+            </ul>
+            <p style="margin-top:1.2rem; font-style:italic; color:#4d3e32;">➕ Se descubren nuevos trazados cada temporada de secano.</p>
+        </div>
+
+        <!-- TABLERO DE NOTICIAS -->
+        <div class="tablero" id="noticias">
+            <h2>📰 Tablero de noticias · Últimos hallazgos</h2>
+            <div id="contenedor-noticias">
+                <!-- Las noticias se cargan con JavaScript -->
+            </div>
+        </div>
+
+        <!-- STREAMING -->
+        <div class="streaming" id="streaming">
+            <h2>📡 En Vivo · Streaming desde Parlamenco</h2>
+            <!-- Cambia el src por tu enlace de YouTube/Facebook Live -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <p>🔴 Transmisiones en vivo durante excavaciones y visitas guiadas</p>
+        </div>
+
+        <!-- FORMULARIO -->
+        <div class="formulario" id="contacto">
+            <h2 style="color:#2f241b;">📩 Contáctanos</h2>
+            <p style="color:#5a473a;">Reporta un hallazgo, apúntate a una visita o colabora con la junta.</p>
+            <form id="formContacto" onsubmit="enviarFormulario(event)">
+                <label>Nombre completo:</label>
+                <input type="text" placeholder="Tu nombre" required>
+
+                <label>Correo electrónico:</label>
+                <input type="email" placeholder="tu@email.com" required>
+
+                <label>Teléfono (opcional):</label>
+                <input type="tel" placeholder="Número de contacto">
+
+                <label>Motivo:</label>
+                <select>
+                    <option>Reportar un petroglifo nuevo</option>
+                    <option>Inscribirme a visita guiada</option>
+                    <option>Quiero colaborar</option>
+                    <option>Otra consulta</option>
+                </select>
+
+                <label>Mensaje:</label>
+                <textarea rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+                <button type="submit">✉️ Enviar mensaje</button>
+            </form>
+            <div id="mensaje-enviado" style="display:none; margin-top:1rem; padding:1rem; background:#d4edda; border-radius:12px; color:#155724;">
+                ✅ ¡Mensaje enviado con éxito! La junta te responderá pronto.
+            </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    SECCIÓN DE CLÁSICOS GRATUITOS (FIJOS)
-    ============================================================ -->
-    <section class="classics-section" id="classics">
-        <div class="container">
-            <h2><i class="fas fa-scroll"></i> Clásicos gratuitos (dominio público)</h2>
-            <p class="sub">Obras fundamentales de la economía y las finanzas, disponibles para leer al instante gracias a Project Gutenberg.</p>
-            <div class="classics-grid">
-                <!-- Tarjeta 1 -->
-                <div class="classic-card">
-                    <h4>La riqueza de las naciones</h4>
-                    <div class="author">Adam Smith (1776)</div>
-                    <div class="btn-group">
-                        <a href="https://www.gutenberg.org/cache/epub/3300/pg3300.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
-                        <a href="https://www.gutenberg.org/ebooks/3300" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
-                    </div>
-                </div>
-                <!-- Tarjeta 2 -->
-                <div class="classic-card">
-                    <h4>El manifiesto comunista</h4>
-                    <div class="author">Marx &amp; Engels (1848)</div>
-                    <div class="btn-group">
-                        <a href="https://www.gutenberg.org/cache/epub/61/pg61.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
-                        <a href="https://www.gutenberg.org/ebooks/61" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
-                    </div>
-                </div>
-                <!-- Tarjeta 3 -->
-                <div class="classic-card">
-                    <h4>La teoría de los sentimientos morales</h4>
-                    <div class="author">Adam Smith (1759)</div>
-                    <div class="btn-group">
-                        <a href="https://www.gutenberg.org/cache/epub/6737/pg6737.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
-                        <a href="https://www.gutenberg.org/ebooks/6737" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
-                    </div>
-                </div>
-                <!-- Tarjeta 4 -->
-                <div class="classic-card">
-                    <h4>El arte de la guerra</h4>
-                    <div class="author">Sun Tzu (s. V a.C.)</div>
-                    <div class="btn-group">
-                        <a href="https://www.gutenberg.org/cache/epub/132/pg132.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
-                        <a href="https://www.gutenberg.org/ebooks/132" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
-                    </div>
-                </div>
-                <!-- Tarjeta 5 -->
-                <div class="classic-card">
-                    <h4>Principios de economía política</h4>
-                    <div class="author">John Stuart Mill (1848)</div>
-                    <div class="btn-group">
-                        <a href="https://www.gutenberg.org/cache/epub/30107/pg30107.txt" target="_blank"><i class="fas fa-file-alt"></i> TXT</a>
-                        <a href="https://www.gutenberg.org/ebooks/30107" target="_blank"><i class="fas fa-external-link-alt"></i> Web</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    FOOTER (con avisos legales y enlace al modal)
-    ============================================================ -->
-    <footer class="footer">
-        <div class="container">
-            <div>
-                <h4><i class="fas fa-chart-line" style="color:var(--neon-green);"></i> InversiónLiteral</h4>
-                <p>Tu brújula en el mundo de los libros de finanzas. Reseñas, precios y clásicos gratuitos.</p>
-                <div class="legal-badge">
-                    <i class="fas fa-shield-alt"></i> Enlaces de afiliado · Política de privacidad
-                </div>
-            </div>
-            <div>
-                <h4>Enlaces</h4>
-                <ul>
-                    <li><a href="#" id="openLegalModal2">Aviso legal</a></li>
-                    <li><a href="#" id="openLegalModal3">Política de cookies</a></li>
-                    <li><a href="#">Contacto</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Monetización</h4>
-                <p style="font-size:14px;">
-                    <i class="fab fa-amazon" style="color:#ff9900;"></i> Amazon Associates<br />
-                    <i class="fab fa-google-play" style="color:#8ab4f8;"></i> Google Books<br />
-                    <i class="fas fa-book-open" style="color:var(--neon-purple);"></i> Project Gutenberg
-                </p>
-                <p style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-                    Como asociado de Amazon, gano comisiones por las compras realizadas a través de estos enlaces.
-                </p>
-            </div>
-            <div class="copy">
-                &copy; 2026 InversiónLiteral · Hecho con <i class="fas fa-heart" style="color:var(--neon-green);"></i> y datos abiertos.
-            </div>
-        </div>
+    <footer>
+        <p>🌱 Junta de Campesinos de Parlamenco · Custodios de la memoria en piedra</p>
+        <small>© 2026 · Hecho con manos de tierra y amor por la arqueología</small>
     </footer>
 
-    <!-- ============================================================
-    MODAL LEGAL (Política de Privacidad, Cookies y Afiliados)
-    ============================================================ -->
-    <div class="modal-overlay" id="legalModal">
-        <div class="modal">
-            <button class="modal-close" id="closeLegalModal">&times;</button>
-            <h2><i class="fas fa-gavel"></i> Aviso legal</h2>
-            <p>Última actualización: 1 de julio de 2026</p>
-
-            <h3><i class="fas fa-user-shield"></i> Política de privacidad</h3>
-            <p>En <strong>InversiónLiteral</strong> respetamos tu privacidad. Esta página no recopila ni almacena datos personales de los usuarios. No utilizamos cookies propias de seguimiento, aunque terceros como Google Books o Amazon pueden establecer cookies para sus servicios.</p>
-            <p>No compartimos, vendemos ni alquilamos información de nuestros visitantes.</p>
-
-            <h3><i class="fas fa-cookie-bite"></i> Política de cookies</h3>
-            <p>Esta web utiliza cookies técnicas propias para el correcto funcionamiento del buscador y la visualización de contenido. No utilizamos cookies publicitarias ni de perfilado sin tu consentimiento explícito.</p>
-            <p>Los servicios de terceros (Google Books, Amazon, Project Gutenberg) pueden establecer cookies adicionales. Te recomendamos revisar sus políticas de privacidad.</p>
-
-            <h3><i class="fas fa-tag"></i> Enlaces de afiliado</h3>
-            <p>Algunos de los enlaces que aparecen en esta página son enlaces de afiliado de <strong>Amazon Associates</strong>. Esto significa que, si haces clic en ellos y realizas una compra, <strong>InversiónLiteral</strong> recibirá una pequeña comisión sin costo adicional para ti.</p>
-            <div class="highlight-box">
-                <i class="fas fa-info-circle" style="color:var(--neon-green);"></i>
-                <strong>Transparencia:</strong> Todos los libros recomendados son seleccionados de forma objetiva. Las opiniones son siempre independientes.
-            </div>
-            <p>Además, mostramos precios y enlaces de compra a través de la <strong>API de Google Books</strong>, que también puede generar comisiones para nosotros.</p>
-
-            <h3><i class="fas fa-book"></i> Contenido de dominio público</h3>
-            <p>Los clásicos ofrecidos en la sección "Clásicos gratuitos" son de dominio público y se proporcionan a través de <strong>Project Gutenberg</strong> bajo licencia libre. Puedes leerlos, descargarlos y compartirlos legalmente.</p>
-
-            <p style="margin-top:24px; font-size:13px; color:var(--text-muted);">
-                <i class="fas fa-check-circle" style="color:var(--neon-green);"></i> Esta página cumple con las normativas de transparencia de afiliados y protección de datos (RGPD).
-            </p>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    JAVASCRIPT (Toda la lógica de búsqueda, APIs y modal)
-    ============================================================ -->
     <script>
-        (function() {
-            'use strict';
+        // ===================== MAPA =====================
+        const mapa = L.map('mapa').setView([-14.823, -64.901], 13);
 
-            // ============================================================
-            //  CONFIGURACIÓN (¡CAMBIÁ AQUÍ TUS DATOS!)
-            // ============================================================
-            const API_KEY = 'TU_API_KEY_DE_GOOGLE_BOOKS'; // Ej: 'AIzaSyD...'
-            const AMAZON_TAG = 'TU_TAG_AMAZON-20'; // Ej: 'milibro-20'
-            // ============================================================
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(mapa);
 
-            // Elementos del DOM
-            const searchInput = document.getElementById('searchInput');
-            const searchBtn = document.getElementById('searchBtn');
-            const booksGrid = document.getElementById('booksGrid');
-            const loading = document.getElementById('loading');
-            const resultCount = document.getElementById('resultCount');
+        // Marcador en la zona de los petroglifos
+        L.marker([-14.823, -64.901])
+            .addTo(mapa)
+            .bindPopup('<b>Zona de Petroglifos</b><br>Parlamenco, Valle del Paraná')
+            .openPopup();
 
-            // Modal legal
-            const modal = document.getElementById('legalModal');
-            const openBtns = document.querySelectorAll('#openLegalModal, #openLegalModal2, #openLegalModal3');
-            const closeBtn = document.getElementById('closeLegalModal');
+        // ===================== LIGHTBOX =====================
+        function abrirLightbox(img) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightbox.style.display = 'flex';
+            lightboxImg.src = img.src;
+        }
 
-            // ============================================================
-            //  FUNCIONES AUXILIARES
-            // ============================================================
-            function getIsbn(industryIds) {
-                if (!industryIds) return null;
-                const isbn13 = industryIds.find(id => id.type === 'ISBN_13');
-                if (isbn13) return isbn13.identifier;
-                const isbn10 = industryIds.find(id => id.type === 'ISBN_10');
-                return isbn10 ? isbn10.identifier : null;
-            }
+        function cerrarLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
 
-            // ============================================================
-            //  BÚSQUEDA EN PROJECT GUTENBERG (API pública)
-            // ============================================================
-            async function searchGutenberg(query) {
-                try {
-                    // Limpiamos la query para mejorar la búsqueda
-                    const cleanQuery = query.split(':')[0].trim();
-                    const url =
-                        `https://www.gutenberg.org/ebooks/search/?query=${encodeURIComponent(cleanQuery)}&format=json`;
-                    const response = await fetch(url);
-                    if (!response.ok) return null;
-                    const data = await response.json();
-                    if (data.count === 0 || !data.results || data.results.length === 0) {
-                        return null;
-                    }
-                    const book = data.results[0];
-                    const formats = book.formats || {};
-                    // Prioridad: TXT plano > EPUB > HTML
-                    let readLink = null;
-                    let readType = null;
-                    if (formats['text/plain; charset=utf-8']) {
-                        readLink = formats['text/plain; charset=utf-8'];
-                        readType = 'TXT';
-                    } else if (formats['application/epub+zip']) {
-                        readLink = formats['application/epub+zip'];
-                        readType = 'EPUB';
-                    } else if (formats['text/html']) {
-                        readLink = formats['text/html'];
-                        readType = 'HTML';
-                    }
-                    if (!readLink) return null;
-                    return {
-                        id: book.id,
-                        title: book.title,
-                        link: readLink,
-                        type: readType,
-                        author: book.authors && book.authors.length > 0 ? book.authors[0].name : 'Autor clásico'
-                    };
-                } catch (error) {
-                    console.warn('Gutenberg API error (normal si no encuentra el libro):', error);
-                    return null;
-                }
-            }
+        // Cerrar con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') cerrarLightbox();
+        });
 
-            // ============================================================
-            //  BÚSQUEDA PRINCIPAL (Google Books + Gutenberg)
-            // ============================================================
-            async function searchBooks(query) {
-                if (!query.trim()) {
-                    booksGrid.innerHTML =
-                        `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:var(--text-secondary);">Escribí un libro para ver precios y ofertas.</p>`;
-                    resultCount.textContent = '0 libros';
-                    return;
-                }
+        // ===================== TABLERO DE NOTICIAS =====================
+        // Lista de noticias (puedes agregar más)
+        const noticias = [
+            { hora: '10:30', texto: '🔍 Descubierto nuevo petroglifo con forma de espiral doble en el cerro norte.' },
+            { hora: '09:15', texto: '🧑‍🌾 Campesinos realizan limpieza de maleza en el sendero de acceso.' },
+            { hora: '08:00', texto: '📢 Próxima visita guiada: 22 de agosto. Inscripciones abiertas.' },
+            { hora: 'Ayer', texto: '🌧️ Las lluvias revelaron nuevas piedras con grabados en la quebrada.' },
+            { hora: 'Ayer', texto: '🏛️ Arqueólogos de la universidad confirman antigüedad de 2,300 años.' },
+        ];
 
-                loading.style.display = 'block';
-                booksGrid.innerHTML = '';
-
-                try {
-                    // 1. Llamada a Google Books API
-                    const url =
-                        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=12&orderBy=relevance&key=${API_KEY}`;
-                    const response = await fetch(url);
-                    const data = await response.json();
-
-                    loading.style.display = 'none';
-
-                    if (data.error) {
-                        console.error('Google Books API error:', data.error);
-                        booksGrid.innerHTML =
-                            `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#ff6b6b;">
-                                <i class="fas fa-triangle-exclamation"></i> Error de API: ${data.error.message || 'Revisá tu clave de Google Books.'}<br>
-                                <span style="font-size:13px; color:var(--text-secondary);">Asegurate de habilitar Books API en Google Cloud.</span>
-                            </p>`;
-                        resultCount.textContent = 'Error';
-                        return;
-                    }
-
-                    const items = data.items || [];
-                    const total = data.totalItems || 0;
-                    resultCount.textContent = `${total} resultados`;
-
-                    if (items.length === 0) {
-                        booksGrid.innerHTML =
-                            `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:var(--text-secondary);">No se encontraron libros para "<strong>${query}</strong>".</p>`;
-                        return;
-                    }
-
-                    // 2. Procesar cada libro y buscar en Gutenberg (paralelo)
-                    const cards = [];
-                    for (const book of items) {
-                        const info = book.volumeInfo || {};
-                        const sale = book.saleInfo || {};
-                        const access = book.accessInfo || {};
-
-                        const title = info.title || 'Sin título';
-                        const authors = info.authors ? info.authors.join(', ') : 'Autor desconocido';
-                        const description = info.description ? info.description.replace(/<[^>]+>/g, '').slice(0,
-                            150) + '…' : 'Sin descripción.';
-                        const thumbnail = info.imageLinks ? info.imageLinks.thumbnail : null;
-
-                        // Precio y enlace Google Play
-                        let priceText = 'No disponible';
-                        let googleBuyLink = null;
-                        if (sale.listPrice) {
-                            priceText = `${sale.listPrice.amount} ${sale.listPrice.currencyCode}`;
-                            googleBuyLink = sale.buyLink || null;
-                        }
-
-                        // ISBN para Amazon
-                        const isbn = getIsbn(info.industryIdentifiers);
-                        let amazonLink = '#';
-                        if (isbn) {
-                            amazonLink = `https://www.amazon.com/dp/${isbn}/?tag=${AMAZON_TAG}`;
-                        }
-
-                        // Vista previa de Google Books
-                        let previewLink = null;
-                        if (access.viewability === 'PARTIAL' || access.viewability === 'ALL_PAGES') {
-                            previewLink = info.previewLink || null;
-                        }
-
-                        // ----- INTEGRACIÓN CON GUTENBERG (solo para clásicos) -----
-                        let gutenbergData = null;
-                        // Palabras clave que sugieren dominio público
-                        const classicKeywords = ['economy', 'wealth', 'capital', 'smith', 'marx', 'mill', 'ricardo',
-                            'investor', 'graham', 'principle', 'political', 'wealth of nations'
-                        ];
-                        const titleLower = (info.title || '').toLowerCase();
-                        const authorLower = (info.authors ? info.authors.join(' ').toLowerCase() : '');
-                        const isClassic = classicKeywords.some(k => titleLower.includes(k) || authorLower.includes(
-                        k));
-
-                        if (isClassic) {
-                            gutenbergData = await searchGutenberg(info.title || 'economy');
-                        }
-
-                        // Construir la tarjeta
-                        let buttonsHtml = '';
-
-                        // Botón Amazon
-                        if (amazonLink !== '#') {
-                            buttonsHtml +=
-                                `<a href="${amazonLink}" target="_blank" class="btn-amazon"><i class="fab fa-amazon"></i> Amazon</a>`;
-                        }
-
-                        // Botón Google Play
-                        if (googleBuyLink) {
-                            buttonsHtml +=
-                                `<a href="${googleBuyLink}" target="_blank" class="btn-google"><i class="fab fa-google-play"></i> Comprar</a>`;
-                        }
-
-                        // Botón vista previa Google
-                        if (previewLink) {
-                            buttonsHtml +=
-                                `<a href="${previewLink}" target="_blank" class="btn-preview"><i class="fas fa-eye"></i> Vista previa</a>`;
-                        }
-
-                        // Botón Gutenberg (lectura gratis)
-                        if (gutenbergData) {
-                            buttonsHtml +=
-                                `<a href="${gutenbergData.link}" target="_blank" class="btn-gutenberg"><i class="fas fa-book-open"></i> Leer gratis (${gutenbergData.type})</a>`;
-                        }
-
-                        const cardHtml = `
-                            <div class="book-card">
-                                <div class="book-cover">
-                                    ${thumbnail ? `<img src="${thumbnail}" alt="${title}" loading="lazy" />` : `<i class="fas fa-book"></i>`}
-                                </div>
-                                <h3>${title}</h3>
-                                <div class="author"><i class="fas fa-user-pen"></i> ${authors}</div>
-                                <div class="price-tag">
-                                    ${priceText !== 'No disponible' ? `<i class="fas fa-tag"></i> ${priceText}` : `<span class="no-price">${priceText}</span>`}
-                                </div>
-                                <div class="description">${description}</div>
-                                <div class="btn-group">
-                                    ${buttonsHtml}
-                                </div>
-                            </div>
-                        `;
-                        cards.push(cardHtml);
-                    }
-
-                    booksGrid.innerHTML = cards.join('');
-
-                } catch (error) {
-                    loading.style.display = 'none';
-                    booksGrid.innerHTML =
-                        `<p style="grid-column:1/-1; text-align:center; padding:40px 0; color:#ff6b6b;">
-                            <i class="fas fa-triangle-exclamation"></i> Error de red: ${error.message}
-                        </p>`;
-                    console.error(error);
-                }
-            }
-
-            // ============================================================
-            //  EVENTOS DE BÚSQUEDA
-            // ============================================================
-            searchBtn.addEventListener('click', () => searchBooks(searchInput.value));
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') searchBooks(searchInput.value);
+        function cargarNoticias() {
+            const contenedor = document.getElementById('contenedor-noticias');
+            contenedor.innerHTML = '';
+            noticias.forEach(noticia => {
+                const div = document.createElement('div');
+                div.className = 'noticia';
+                div.innerHTML = `
+                    <span class="hora">${noticia.hora}</span>
+                    <span class="texto">${noticia.texto}</span>
+                `;
+                contenedor.appendChild(div);
             });
+        }
 
-            // ============================================================
-            //  MODAL LEGAL
-            // ============================================================
-            function openModal() {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+        cargarNoticias();
+
+        // Simular noticias en vivo (cada 20 segundos aparece una nueva)
+        let noticiaIndex = 0;
+        const noticiasExtra = [
+            { hora: 'Justo ahora', texto: '🆕 Visitantes reportan posible nuevo petroglifo en el sendero este.' },
+            { hora: 'Justo ahora', texto: '📸 Compartimos nuevas fotos en la galería de esta semana.' },
+        ];
+
+        setInterval(() => {
+            if (noticiaIndex < noticiasExtra.length) {
+                const contenedor = document.getElementById('contenedor-noticias');
+                const div = document.createElement('div');
+                div.className = 'noticia';
+                div.style.animation = 'fadeIn 0.5s';
+                div.innerHTML = `
+                    <span class="hora">${noticiasExtra[noticiaIndex].hora}</span>
+                    <span class="texto">${noticiasExtra[noticiaIndex].texto}</span>
+                `;
+                contenedor.prepend(div);
+                noticiaIndex++;
             }
+        }, 20000);
 
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
+        // ===================== FORMULARIO =====================
+        function enviarFormulario(e) {
+            e.preventDefault();
+            document.getElementById('mensaje-enviado').style.display = 'block';
+            document.getElementById('formContacto').reset();
+            setTimeout(() => {
+                document.getElementById('mensaje-enviado').style.display = 'none';
+            }, 5000);
+        }
+
+        // ===================== ESTILO ANIMACIÓN =====================
+        const styleAnim = document.createElement('style');
+        styleAnim.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
             }
+        `;
+        document.head.appendChild(styleAnim);
 
-            openBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openModal();
-                });
-            });
-
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-            });
-
-            // ============================================================
-            //  CARGA INICIAL
-            // ============================================================
-            window.addEventListener('DOMContentLoaded', () => {
-                searchBooks('finanzas personales inversiones');
-            });
-
-        })();
+        console.log('🌾 Junta de Campesinos de Parlamenco · Web cargada con éxito');
     </script>
-
 </body>
 </html>
