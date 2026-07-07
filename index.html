@@ -393,7 +393,7 @@
                     </div>
                     <div class="info">
                         <h3>Restauración de murales en Monte Zarumo</h3>
-                        <p>El presidente de la Comunidad Campesina Lacramarca, Carlos Budinich, junto al equipo de pintores y el artista visual Maucayan, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco [citation:6][citation:3].</p>
+                        <p>El presidente de la Comunidad Campesina Lacramarca, Carlos Budinich, junto al equipo de pintores y el artista visual Maucayan, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco .</p>
                         <span style="color:var(--verde); font-weight:700; font-size:0.9rem;">Leer más →</span>
                     </div>
                 </div>
@@ -531,12 +531,22 @@
                 </div>
             </div>
 
-            <!-- ===== NUEVO: MONTE ZARUMO Y MURALES ===== -->
+            <!-- ===== NUEVO: MONTE ZARUMO Y MURALES CON FOTO ===== -->
             <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--verde);">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
-                <p>El <strong>presidente de la Comunidad Campesina Lacramarca, Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>, en Lacramarca Alta, Chimbote, Áncash [citation:6][citation:3].</p>
-                <p style="margin-top:0.5rem;">Monte Zarumo es un sector ubicado en la Comunidad Campesina Lacramarca, donde se desarrollan proyectos de conservación de ecosistemas y reforestación con algarrobos, en alianza con Sedachimbote y el Gobierno Regional de Áncash [citation:4][citation:8].</p>
-                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El presidente <strong>Carlos Budinich Salas</strong> también es conocido por su trabajo en el ámbito agrícola, con estudios en la Universidad San Pedro sobre el rendimiento de cultivos en Lacramarca Alta [citation:14].</p>
+                
+                <!-- IMAGEN DE LA COMUNIDAD -->
+                <div style="margin:1rem 0; text-align:center;">
+                    <img src="IMG-20260706-WA0042.jpg" alt="Restauración de murales en Monte Zarumo - Comunidad Campesina Lacramarca" 
+                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.3rem;">
+                        📸 Presidente Carlos Budinich y equipo de pintores con el artista visual Maucayan en la restauración de murales informativos
+                    </p>
+                </div>
+                
+                <p>El <strong>presidente de la Comunidad Campesina Lacramarca, Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>, en Lacramarca Alta, Chimbote, Áncash .</p>
+                <p style="margin-top:0.5rem;">Monte Zarumo es un sector ubicado en la Comunidad Campesina Lacramarca, donde se desarrollan proyectos de conservación de ecosistemas y reforestación con algarrobos, en alianza con Sedachimbote y el Gobierno Regional de Áncash .</p>
+                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El presidente <strong>Carlos Budinich Salas</strong> también es conocido por su trabajo en el ámbito agrícola, con estudios en la Universidad San Pedro sobre el rendimiento de cultivos en Lacramarca Alta .</p>
             </div>
 
             <div class="badge-info fade-in" style="margin-top:1.5rem; border-left-color:var(--dorado);">
@@ -806,7 +816,7 @@
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
                     <h4>Restauración de murales</h4>
                     <p><strong>📅 En curso · Monte Zarumo</strong></p>
-                    <p>El presidente Carlos Budinich, el equipo de pintores y el artista visual Maucayan restauran los murales informativos de Monte Zarumo y el Complejo Arqueológico Palamenco [citation:6][citation:3].</p>
+                    <p>El presidente Carlos Budinich, el equipo de pintores y el artista visual Maucayan restauran los murales informativos de Monte Zarumo y el Complejo Arqueológico Palamenco .</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
@@ -903,18 +913,15 @@
     <script>
         // ===== CAMBIAR ENTRE SECCIONES =====
         function mostrarSeccion(nombre) {
-            // Ocultar todas las secciones
             document.querySelectorAll('.seccion').forEach(el => {
                 el.classList.remove('activa');
             });
 
-            // Mostrar la sección seleccionada
             const seccion = document.getElementById('seccion-' + nombre);
             if (seccion) {
                 seccion.classList.add('activa');
             }
 
-            // Actualizar clases activas en el menú
             document.querySelectorAll('nav a').forEach(el => {
                 el.className = '';
             });
@@ -944,7 +951,6 @@
                 });
             }, 200);
 
-            // Scroll corregido con offset para header sticky
             setTimeout(() => {
                 const rect = seccion.getBoundingClientRect();
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
