@@ -53,6 +53,7 @@
             font-weight: 900;
             color: var(--dorado);
             text-decoration: none;
+            cursor: pointer;
         }
         .logo svg {
             width: 45px;
@@ -322,7 +323,7 @@
             .section-title { font-size: 2.2rem; }
             .grid-2 { grid-template-columns: 1fr; }
             .quienes-imagen { height: 250px; }
-            nav a { padding: 0.2rem 0.7rem; font-size: 0.7rem; }
+            nav a { padding: 0.2rem 0.7rem; font-size: 0.65rem; }
             .logo { font-size: 1.2rem; }
             .logo svg { width: 35px; height: 35px; }
             .container { padding: 2rem 1rem; }
@@ -385,7 +386,6 @@
             <p class="section-subtitle fade-in">Las últimas novedades sobre nuestros tres patrimonios</p>
 
             <div class="grid-3">
-                <!-- Noticia 1: Lacramarca -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('lacramarca')">
                     <div class="imagen lacramarca">
                         🌾
@@ -393,12 +393,11 @@
                     </div>
                     <div class="info">
                         <h3>Más de 5,000 agricultores</h3>
-                        <p>La comunidad campesina del valle de Lacramarca continúa creciendo con nuevos proyectos de riego, electrificación y vías que transforman la región.</p>
+                        <p>La comunidad campesina del valle de Lacramarca continúa creciendo con nuevos proyectos de riego, electrificación y el megaproyecto Chinecas.</p>
                         <span style="color:var(--verde); font-weight:700; font-size:0.9rem;">Leer más →</span>
                     </div>
                 </div>
 
-                <!-- Noticia 2: Palamenco -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('palamenco')">
                     <div class="imagen palamenco">
                         🪨
@@ -411,7 +410,6 @@
                     </div>
                 </div>
 
-                <!-- Noticia 3: Pueblo Viejo -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('puebloviejo')">
                     <div class="imagen puebloviejo">
                         🏛️
@@ -425,10 +423,9 @@
                 </div>
             </div>
 
-            <!-- Estadísticas rápidas -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:2rem; text-align:center; padding:2rem 0; margin-top:2rem;">
                 <div><span style="font-size:2.5rem; font-weight:900; color:#556B2F;">5,000+</span><br><span style="color:var(--marron-claro);">Agricultores</span></div>
-                <div><span style="font-size:2.5rem; font-weight:900; color:#A0522D;">48+</span><br><span style="color:var(--marron-claro);">Petroglifos</span></div>
+                <div><span style="font-size:2.5rem; font-weight:900; color:#A0522D;">300+</span><br><span style="color:var(--marron-claro);">Rocas grabadas</span></div>
                 <div><span style="font-size:2.5rem; font-weight:900; color:#2C6E8F;">5,000</span><br><span style="color:var(--marron-claro);">Años Pueblo Viejo</span></div>
                 <div><span style="font-size:2.5rem; font-weight:900; color:#C49A6C;">3,000</span><br><span style="color:var(--marron-claro);">Años Palamenco</span></div>
             </div>
@@ -446,60 +443,130 @@
 
             <div class="grid-2">
                 <div class="fade-in">
-                    <h3 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:2rem;">El corazón agrícola de Áncash</h3>
-                    <p>El valle de <strong>Lacramarca</strong> es una de las zonas agrícolas más importantes de la región Áncash. Más de <strong>5,000 agricultores</strong> dependen de sus tierras fértiles para su sustento.</p>
-                    <p>La comunidad está organizada para gestionar proyectos de infraestructura que benefician a todos los campesinos del valle.</p>
-                    <p><strong>Principales cultivos:</strong> Caña de azúcar, maíz, frutales y hortalizas.</p>
+                    <h3 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:2rem;">Historia del valle de Lacramarca</h3>
+                    <p><strong>Lacramarca</strong> es un valle ubicado en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra y desemboca en la Bahía Ferrol .</p>
+                    
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
+                        <p style="font-size:0.95rem;"><strong>🏛️ Origen ancestral:</strong> El valle de Lacramarca fue habitado por culturas preincaicas como los <strong>Moche, Wari, Inca y Recuay</strong> mucho antes de la llegada de los españoles. Una prueba de ello es la <strong>Huaca San Pedro</strong>, construida por la cultura Moche entre los <strong>siglos II y VIII d.C.</strong>, desde donde se gobernaba políticamente el valle .</p>
+                    </div>
+
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--dorado);">
+                        <p style="font-size:0.95rem;"><strong>📅 Fundación de Chimbote:</strong> El desarrollo moderno del valle está ligado a la ciudad de Chimbote, cuyo distrito fue creado el <strong>6 de diciembre de 1906</strong>. Sin embargo, el poblamiento del valle se remonta a más de <strong>1,800 años atrás</strong> .</p>
+                    </div>
+
+                    <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash .</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🌾 5,000+ agricultores</span>
                 </div>
             </div>
 
-            <div class="grid-4" style="margin-top:2rem;">
+            <h3 style="font-family:'Playfair Display',serif; color:var(--verde); text-align:center; margin:3rem 0 1.5rem 0;">📜 Línea de tiempo del valle</h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; margin-bottom:2rem;">
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid #6B4C7A;">
+                    <span style="font-size:2rem;">🏛️</span>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Siglos II-VIII d.C.</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cultura Moche construye la Huaca San Pedro, gobernando el valle de Lacramarca</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--terracota);">
+                    <span style="font-size:2rem;">🗡️</span>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Época preincaica</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Culturas Wari, Inca y Recuay habitan el valle de Lacramarca</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--dorado);">
+                    <span style="font-size:2rem;">📅</span>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">6 de diciembre 1906</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Creación del distrito de Chimbote, impulsando el desarrollo del valle</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--verde);">
+                    <span style="font-size:2rem;">🌾</span>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Actualidad</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">5,000+ agricultores · Proyecto Chinecas · Desarrollo sostenible</p>
+                </div>
+            </div>
+
+            <div class="grid-4" style="margin-top:1rem;">
                 <div class="card fade-in">
                     <i class="fas fa-tractor"></i>
                     <h4>Agricultura</h4>
                     <span class="dato verde">5,000+</span>
-                    <p>Agricultores beneficiados</p>
+                    <p>Agricultores beneficiados con canales de riego</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-water"></i>
-                    <h4>Riego</h4>
-                    <span class="dato verde">132 ha</span>
-                    <p>Hectáreas con Canal Alto</p>
+                    <h4>Cuenca</h4>
+                    <span class="dato verde">963 km²</span>
+                    <p>Área total de la cuenca del río Lacramarca</p>
                 </div>
                 <div class="card fade-in">
-                    <i class="fas fa-bolt"></i>
-                    <h4>Electrificación</h4>
-                    <span class="dato verde">1,000+</span>
-                    <p>Familias beneficiadas</p>
+                    <i class="fas fa-route"></i>
+                    <h4>Río</h4>
+                    <span class="dato verde">76 km</span>
+                    <p>Longitud del cauce principal</p>
                 </div>
                 <div class="card fade-in">
-                    <i class="fas fa-road"></i>
-                    <h4>Vías</h4>
-                    <span class="dato verde">14 km</span>
-                    <p>Asfaltado realizado</p>
+                    <i class="fas fa-seedling"></i>
+                    <h4>Cultivos</h4>
+                    <span class="dato verde">4+</span>
+                    <p>Alfalfa, maíz, papa, trigo, cebada</p>
                 </div>
             </div>
 
             <h3 style="font-family:'Playfair Display',serif; color:var(--verde); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
             <div class="grid-3">
                 <div class="card fade-in">
-                    <h4>🌊 Defensas ribereñas</h4>
-                    <span class="estado progreso">🔄 En ejecución</span>
-                    <p>Inversión de S/ 657 millones para proteger a 35,000 personas. Avance: 57%.</p>
+                    <h4>🌊 Canal Puente Roto</h4>
+                    <span class="estado activo">✅ 89% de avance</span>
+                    <p>Garantiza agua segura para más de <strong>1,300 agricultores</strong> del valle .</p>
                 </div>
                 <div class="card fade-in">
-                    <h4>🌾 Canal Puente Roto</h4>
-                    <span class="estado activo">✅ En ejecución</span>
-                    <p>89% de avance. Agua segura para más de 1,300 agricultores.</p>
-                </div>
-                <div class="card fade-in">
-                    <h4>⚡ Electrificación rural</h4>
+                    <h4>💧 Canal Ramal 5</h4>
                     <span class="estado culminado">✔️ Culminado</span>
-                    <p>Servicio eléctrico para Túpac Amaru, Carrizales, Lacramarca Baja y más.</p>
+                    <p>Inversión de <strong>S/ 1.8 millones</strong> para 1.5 km de canal de concreto en Lacramarca Baja .</p>
                 </div>
+                <div class="card fade-in">
+                    <h4>🏗️ Obras hidráulicas</h4>
+                    <span class="estado progreso">🔄 En ejecución</span>
+                    <p>4 obras por <strong>S/ 9.18 millones</strong> para beneficiar a más de 5,000 agricultores .</p>
+                </div>
+            </div>
+
+            <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--verde);">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🌍 Proyecto Chinecas · El futuro de Lacramarca</h4>
+                <p>El <strong>Nuevo Proyecto Chinecas</strong> es la inversión más importante para el valle de Lacramarca y toda la región Áncash:</p>
+                <ul style="margin:1rem 0 0 1.5rem; color:var(--marron-claro);">
+                    <li>🏗️ <strong>Presa La Huaca</strong>: Beneficiará a <strong>44,000 hectáreas</strong> en Santa-Lacramarca </li>
+                    <li>💰 Inversión en infraestructura: <strong>US$ 3,400 millones</strong> </li>
+                    <li>🌾 Producción anual: <strong>US$ 2,300 millones</strong> en productos agrícolas </li>
+                    <li>👨‍🌾 Empleos directos: <strong>160,000+</strong> puestos de trabajo </li>
+                </ul>
+                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El proyecto irrigará 121,000 hectáreas en los valles de Santa-Lacramarca, Nepeña, Casma y Huarmey .</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-map-pin" style="color:var(--verde); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Coordenadas</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">8° 53' 20" S, 78° 15' 52" O </p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-mountain" style="color:var(--verde); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Origen del río</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cordillera Negra · 4,500 m s.n.m. </p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-tree" style="color:var(--verde); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Humedal</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Pantanos de Villa María · Desembocadura en la Bahía Ferrol </p>
+                </div>
+            </div>
+
+            <div style="background:var(--crema); padding:2rem; border-radius:24px; margin-top:2rem; text-align:center; border:2px dashed var(--verde);">
+                <i class="fas fa-quote-left" style="font-size:2rem; color:var(--verde); opacity:0.5;"></i>
+                <p style="font-size:1.1rem; font-style:italic; color:var(--marron-claro); max-width:700px; margin:0 auto;">
+                    "El valle de Lacramarca es nuestra vida. Aquí han sembrado nuestros abuelos y aquí seguirán sembrando nuestros hijos. El agua es el tesoro que nos une como comunidad."
+                </p>
+                <p style="font-weight:700; color:var(--verde); margin-top:0.5rem;">— Campesino de Lacramarca Alta</p>
             </div>
         </div>
     </section>
@@ -516,9 +583,28 @@
             <div class="grid-2">
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); font-size:2rem;">Guardianes de la piedra escrita</h3>
-                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta.</p>
-                    <p>Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>.</p>
-                    <p>Las figuras representan: Serpientes, camélidos, águilas, loros, lagartijas, oso de anteojos, sacerdote chavinense, Sol, Luna, constelaciones, hombres y divinidades.</p>
+                    <p><strong>Palamenco</strong> (también conocido como Parlamenco) se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta .</p>
+                    <p>Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>, siendo la <strong>zona con petroglifos más extensa de la región Áncash</strong> .</p>
+                    
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
+                        <p style="font-size:0.95rem;"><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde <strong>los sacerdotes servían de vínculo entre los hombres y sus dioses</strong>. Era un centro ceremonial de gran importancia para las culturas preincaicas .</p>
+                    </div>
+
+                    <p style="margin-top:1rem;"><strong>Figuras representadas en las rocas:</strong></p>
+                    <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro); columns:2;">
+                        <li>🐍 Serpientes</li>
+                        <li>🦙 Camélidos</li>
+                        <li>🦅 Águilas</li>
+                        <li>🦜 Loros</li>
+                        <li>🦎 Lagartijas</li>
+                        <li>🐻 Oso de anteojos (desaparecido)</li>
+                        <li>🧑‍🏫 Sacerdote chavinense</li>
+                        <li>🌞 Sol y Luna</li>
+                        <li>⭐ Constelaciones</li>
+                        <li>👤 Hombres y divinidades</li>
+                        <li>🌿 Flora y fauna</li>
+                        <li>🌊 Fenómeno de El Niño</li>
+                    </ul>
                     <p style="margin-top:1rem;">También se descubrió un <strong>ceramio retrato de un dignatario</strong> similar al "Señor de Sipán".</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
@@ -527,15 +613,69 @@
             </div>
 
             <div class="grid-4" style="margin-top:2rem;">
-                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><p>Antigüedad confirmada</p></div>
-                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 hectáreas</h4><p>Extensión del paisaje</p></div>
-                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><p>Con figuras grabadas</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><p>Distancia desde Chimbote</p></div>
+                <div class="card fade-in">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h4>3,000+ años</h4>
+                    <p>Antigüedad confirmada de los petroglifos</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-vector-square"></i>
+                    <h4>36 hectáreas</h4>
+                    <p>Extensión del paisaje arqueológico</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-mountain"></i>
+                    <h4>300 rocas</h4>
+                    <p>Con figuras grabadas de flora, fauna y divinidades</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-route"></i>
+                    <h4>45 km</h4>
+                    <p>Distancia desde Chimbote</p>
+                </div>
             </div>
 
-            <div class="badge-info fade-in">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--terracota);">📌 Proyectos en Palamenco</h4>
-                <p>Se vienen realizando trabajos de <strong>puesta en valor</strong> que incluyen limpieza, empedrado, señalización y paneles informativos. Además, se ha ejecutado la construcción de un <strong>dique</strong> para prevenir desbordes del río Lacramarca.</p>
+            <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
+            <div class="grid-3">
+                <div class="card fade-in">
+                    <h4>📋 Saneamiento físico legal</h4>
+                    <span class="estado activo">✅ En gestión</span>
+                    <p>Iniciativa de la Municipalidad Provincial del Santa, Municipalidad de Nuevo Chimbote y la Dirección Desconcentrada de Cultura (DDC) .</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>🏗️ Puesta en valor</h4>
+                    <span class="estado progreso">🔄 En ejecución</span>
+                    <p>Limpieza, señalización, delimitación de senderos y colocación de paneles informativos .</p>
+                </div>
+                <div class="card fade-in">
+                    <h4>🗺️ Circuito turístico</h4>
+                    <span class="estado progreso">🔄 En diseño</span>
+                    <p>Integrar Palamenco con Chimbote, Nuevo Chimbote y el valle Lacramarca .</p>
+                </div>
+            </div>
+
+            <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--terracota);">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--terracota);">📌 Trabajo de campo</h4>
+                <p>El equipo del Departamento de Turismo de la Municipalidad Provincial del Santa, la comuna de Nuevo Chimbote, el responsable de la DDC <strong>Juan López Marchena</strong> y representantes de la Asociación de Agencias de Viajes Subregión Pacífico-Áncash realizaron un <strong>trabajo de campo en Palamenco</strong> para iniciar las gestiones de puesta en valor .</p>
+                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El inventario iconográfico permitirá conocer mejor las representaciones grabadas en las rocas .</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-map-pin" style="color:var(--terracota); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Ubicación</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">45 km al este de Chimbote</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-calendar" style="color:var(--terracota); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Antigüedad</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Más de 3,000 años</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-flag" style="color:var(--terracota); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Importancia</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Zona con petroglifos más extensa de Áncash</p>
+                </div>
             </div>
         </div>
     </section>
@@ -552,9 +692,21 @@
             <div class="grid-2">
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--azul); font-size:2rem;">Un descubrimiento monumental para Áncash</h3>
-                    <p><strong>Pueblo Viejo</strong> es un sitio arqueológico descubierto en la cuenca del río Lacramarca, a solo <strong>2 horas de viaje desde Chimbote</strong>. Con una extensión aproximada de <strong>5 hectáreas</strong>, guarda similitudes con la ciudad sagrada de Caral y Bandurria.</p>
-                    <p>La arqueóloga <strong>Ruth Shady</strong>, directora del Proyecto Caral-Supe, confirmó que este vestigio tiene una antigüedad de al menos <strong>5,000 años</strong>.</p>
-                    <p>El sitio presenta: <strong>Pirámide de 15 metros</strong>, <strong>plaza cuadrangular</strong> y <strong>anfiteatro circular hundido</strong>.</p>
+                    <p><strong>Pueblo Viejo</strong> es un sitio arqueológico descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos y Turísticos de la Municipalidad Provincial del Santa, con el asesoramiento del arqueólogo <strong>Régulo Franco Jordán</strong> de la Fundación Wiese .</p>
+                    <p>Se encuentra en la cuenca del río Lacramarca, a solo <strong>2 horas de viaje desde Chimbote</strong> . Con una extensión aproximada de <strong>5 hectáreas</strong>, guarda similitudes con la ciudad sagrada de Caral y Bandurria .</p>
+                    
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--azul);">
+                        <p style="font-size:0.95rem;"><strong>👩‍🔬 Confirmación de Ruth Shady:</strong> La arqueóloga <strong>Ruth Shady</strong>, directora del Proyecto Especial Arqueológico Caral-Supe, confirmó que este vestigio tiene una antigüedad de al menos <strong>5,000 años</strong> y que la civilización Caral tiene relación hasta la provincia del Santa .</p>
+                    </div>
+
+                    <p>El sitio presenta una impresionante infraestructura de piedra que incluye :</p>
+                    <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
+                        <li>🏛️ Una <strong>construcción piramidal de 15 metros de altura</strong></li>
+                        <li>📐 Una <strong>plaza cuadrangular</strong></li>
+                        <li>🔄 Un <strong>anfiteatro circular hundido</strong> frente a la plaza</li>
+                    </ul>
+
+                    <p style="margin-top:1rem;">El arqueólogo <strong>Régulo Franco</strong> calificó el hallazgo como <em>"impresionante"</em> y señaló que Pueblo Viejo podría convertirse en un <strong>destino arqueológico de importancia</strong> para la provincia, con potencial para adherirse a la <strong>Ruta Moche</strong> .</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🏛️ 5,000 años de historia</span>
@@ -562,16 +714,72 @@
             </div>
 
             <div class="grid-4" style="margin-top:2rem;">
-                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><p>Antigüedad confirmada</p></div>
-                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 hectáreas</h4><p>Extensión del sitio</p></div>
-                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>Pirámide 15 m</h4><p>Con plaza y anfiteatro</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>Ruta Moche</h4><p>Potencial para integrarse</p></div>
+                <div class="card fade-in">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h4>5,000 años</h4>
+                    <p>Antigüedad confirmada por Ruth Shady</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-vector-square"></i>
+                    <h4>5 hectáreas</h4>
+                    <p>Extensión del sitio arqueológico</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-mountain"></i>
+                    <h4>Pirámide 15 m</h4>
+                    <p>Con plaza y anfiteatro circular</p>
+                </div>
+                <div class="card fade-in">
+                    <i class="fas fa-route"></i>
+                    <h4>2 horas</h4>
+                    <p>Tiempo de viaje desde Chimbote</p>
+                </div>
             </div>
 
-            <div class="badge-info fade-in">
+            <h3 style="font-family:'Playfair Display',serif; color:var(--azul); text-align:center; margin:3rem 0 1.5rem 0;">👩‍🔬 Equipo descubridor</h3>
+            <div class="grid-3">
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-user-graduate" style="color:var(--azul); font-size:3rem;"></i>
+                    <h4>Ruth Shady</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Directora de Caral-Supe</p>
+                    <p style="font-size:0.85rem;">Confirmó la antigüedad de 5,000 años y la relación de Caral con la provincia del Santa</p>
+                </div>
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-user-graduate" style="color:var(--azul); font-size:3rem;"></i>
+                    <h4>Régulo Franco Jordán</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Fundación Wiese</p>
+                    <p style="font-size:0.85rem;">Asesoró el proyecto "Identidad Chimbote" y calificó el hallazgo como "impresionante"</p>
+                </div>
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-user-tie" style="color:var(--azul); font-size:3rem;"></i>
+                    <h4>Alberto Jorge Estrada</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Coordinador de Proyectos Arqueológicos</p>
+                    <p style="font-size:0.85rem;">Lideró el equipo municipal que descubrió Pueblo Viejo</p>
+                </div>
+            </div>
+
+            <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--azul);">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">🏺 Hallazgos adicionales</h4>
-                <p>El sitio fue descubierto en <strong>noviembre de 2010</strong> y se busca gestionar su puesta en valor ante el <strong>Ministerio de Cultura</strong>.</p>
-                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 Pueblo Viejo podría convertirse en un destino turístico de importancia para la provincia de Chimbote.</p>
+                <p>En el marco del proyecto <strong>Identidad Chimbote</strong>, también se descubrió un <strong>ceramio retrato de un dignatario</strong> de la cultura Chimbote ancestral tardía en <strong>Palamenco</strong>, similar al <strong>"Señor de Sipán"</strong> .</p>
+                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 El sitio fue descubierto en <strong>noviembre de 2010</strong> y se busca gestionar su puesta en valor ante el <strong>Ministerio de Cultura</strong> .</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-map-pin" style="color:var(--azul); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Ubicación</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cuenca del río Lacramarca · Distrito de Chimbote</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-clock" style="color:var(--azul); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Tiempo de viaje</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">2 horas desde Chimbote</p>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
+                    <i class="fas fa-flag" style="color:var(--azul); font-size:1.5rem;"></i>
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Altitud</h4>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">325 m s.n.m.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -703,7 +911,6 @@
                 el.className = '';
             });
 
-            // Buscar el enlace correspondiente y agregar clase activa
             const enlaces = document.querySelectorAll('nav a');
             const mapa = {
                 'noticias': 0,
@@ -722,7 +929,6 @@
                 }
             }
 
-            // Animar elementos fade-in
             setTimeout(() => {
                 const faders = seccion.querySelectorAll('.fade-in');
                 faders.forEach(el => {
@@ -730,13 +936,10 @@
                 });
             }, 200);
 
-            // Scroll al inicio del contenido
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ===== ANIMACIÓN FADE-IN AL CARGAR =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Iniciar con Noticias visible
             mostrarSeccion('noticias');
         });
     </script>
