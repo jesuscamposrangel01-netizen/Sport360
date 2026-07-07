@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lacramarca · Palamenco · Pueblo Viejo</title>
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet para el mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Lato', sans-serif; background: #F5F0E1; color: #3E2723; line-height: 1.8; }
+        body { 
+            font-family: 'Lato', sans-serif; 
+            background: #F5F0E1; 
+            color: #3E2723; 
+            line-height: 1.8;
+            background-image: radial-gradient(circle at 20% 50%, rgba(196, 154, 108, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 50%, rgba(85, 107, 47, 0.05) 0%, transparent 50%);
+        }
 
         :root {
             --terracota: #A0522D;
@@ -23,12 +39,14 @@
             --crema: #FAF6EE;
             --marron: #3E2723;
             --marron-claro: #5D4037;
+            --sombra: 0 8px 32px rgba(0,0,0,0.10);
+            --sombra-hover: 0 12px 48px rgba(0,0,0,0.18);
         }
 
-        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER MEJORADO ===== */
         header {
             background: linear-gradient(145deg, var(--marron), #1a0f0c);
             color: white;
@@ -41,7 +59,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
@@ -54,11 +73,14 @@
             color: var(--dorado);
             text-decoration: none;
             cursor: pointer;
+            transition: transform 0.3s;
         }
+        .logo:hover { transform: scale(1.02); }
         .logo svg {
             width: 45px;
             height: 45px;
             flex-shrink: 0;
+            filter: drop-shadow(0 2px 8px rgba(196, 154, 108, 0.3));
         }
         .logo .logo-texto {
             display: flex;
@@ -90,8 +112,9 @@
             font-size: 0.75rem;
             cursor: pointer;
             border: 2px solid transparent;
+            letter-spacing: 0.5px;
         }
-        nav a:hover { transform: scale(1.05); opacity: 0.9; }
+        nav a:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
         nav a.activo-noticias { background: var(--dorado); color: var(--marron); border-color: #e8c97a; }
         nav a.activo-lacramarca { background: var(--verde); border-color: var(--verde-claro); }
         nav a.activo-palamenco { background: var(--terracota); border-color: var(--terracota-claro); }
@@ -99,26 +122,53 @@
         nav a.activo-eventos { background: #8B6B4D; border-color: #A8896A; }
         nav a.activo-investigacion { background: #6B4C7A; border-color: #8B6B9A; }
         nav a.activo-contacto { background: #4A6B7A; border-color: #6A8B9A; }
+        nav a.activo-mapa { background: #D4A24C; color: var(--marron); border-color: #E8C97A; }
 
-        /* ===== HERO ===== */
+        /* ===== HERO MEJORADO ===== */
         .hero {
-            background: linear-gradient(135deg, var(--marron), #1a0f0c);
+            background: linear-gradient(135deg, var(--marron) 0%, #2a1a12 50%, #1a0f0c 100%);
             color: white;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             text-align: center;
             border-bottom: 4px solid var(--dorado);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(196, 154, 108, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(85, 107, 47, 0.06) 0%, transparent 60%);
+            animation: heroGlow 20s ease-in-out infinite alternate;
+        }
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(5%, 5%) rotate(3deg); }
         }
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 900;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.5);
         }
         .hero h1 .destacado { color: var(--dorado); }
+        .hero h1 .destacado2 { color: var(--terracota-claro); }
+        .hero h1 .destacado3 { color: var(--azul-claro); }
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
             max-width: 700px;
             margin: 0.5rem auto 0 auto;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+            letter-spacing: 1px;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
@@ -136,6 +186,7 @@
             height: 4px;
             margin: 0.5rem auto 0 auto;
             border-radius: 4px;
+            background: linear-gradient(90deg, var(--dorado), var(--terracota));
         }
         .section-subtitle {
             text-align: center;
@@ -143,6 +194,7 @@
             max-width: 700px;
             margin: 0 auto 3rem auto;
             color: var(--marron-claro);
+            font-weight: 300;
         }
 
         .icono-seccion { font-size: 3.5rem; display: block; text-align: center; margin-bottom: 0.5rem; }
@@ -150,12 +202,12 @@
         /* ===== OCULTAR/MOSTRAR SECCIONES ===== */
         .seccion {
             display: none;
-            animation: fadeInPage 0.5s ease;
+            animation: fadeInPage 0.6s ease;
         }
         .seccion.activa { display: block; }
 
         @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -194,27 +246,45 @@
         .seccion-contacto .section-title { color: #4A6B7A; }
         .seccion-contacto .section-title::after { background: #4A6B7A; }
 
+        .seccion-mapa .section-title { color: #D4A24C; }
+        .seccion-mapa .section-title::after { background: #D4A24C; }
+
         /* ===== GRIDs ===== */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
 
-        /* ===== CARDS ===== */
+        /* ===== CARDS MEJORADAS ===== */
         .card {
             background: white;
             padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            transition: all 0.3s;
+            box-shadow: var(--sombra);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-bottom: 4px solid var(--dorado);
+            position: relative;
+            overflow: hidden;
         }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .card:hover::before { opacity: 1; }
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            transform: translateY(-8px);
+            box-shadow: var(--sombra-hover);
         }
-        .card i { font-size: 2.5rem; margin-bottom: 1rem; }
+        .card i { font-size: 2.8rem; margin-bottom: 1rem; display: block; }
         .card h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--marron); }
         .card .dato {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             display: block;
             margin: 0.5rem 0;
@@ -223,51 +293,21 @@
         .card .dato.terracota { color: var(--terracota); }
         .card .dato.azul { color: var(--azul); }
 
-        .quienes-imagen {
-            border-radius: 20px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            background-size: cover;
-            background-position: center;
-        }
-
-        .badge-info {
-            background: var(--crema);
-            padding: 2rem;
-            border-radius: 24px;
-            border-left: 6px solid var(--dorado);
-            margin-top: 1.5rem;
-        }
-
-        .estado {
-            display: inline-block;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin: 0.5rem 0;
-        }
-        .estado.activo { background: #d4edda; color: #155724; }
-        .estado.progreso { background: #fff3cd; color: #856404; }
-        .estado.culminado { background: #cce5ff; color: #004085; }
-
-        /* ===== NOTICIAS DESTACADAS ===== */
+        /* ===== NOTICIAS MEJORADAS ===== */
         .noticia-card {
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            transition: all 0.4s;
+            box-shadow: var(--sombra);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
         }
-        .noticia-card:hover { transform: translateY(-6px); box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
+        .noticia-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--sombra-hover);
+        }
         .noticia-card .imagen {
-            height: 180px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -277,33 +317,107 @@
         }
         .noticia-card .imagen .tag {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.3rem 1rem;
+            top: 12px;
+            right: 12px;
+            padding: 0.3rem 1.2rem;
             border-radius: 30px;
             font-size: 0.7rem;
             font-weight: 700;
             color: white;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
         .noticia-card .imagen.palamenco { background: linear-gradient(135deg, #A0522D, #6B3A1F); }
         .noticia-card .imagen.lacramarca { background: linear-gradient(135deg, #556B2F, #2E3B1A); }
         .noticia-card .imagen.puebloviejo { background: linear-gradient(135deg, #2C6E8F, #1A3F55); }
-        .noticia-card .info { padding: 1.5rem; }
-        .noticia-card .info h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 0.5rem 0; }
+        .noticia-card .info { padding: 1.8rem; }
+        .noticia-card .info h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin: 0.5rem 0; }
         .noticia-card .info p { color: var(--marron-claro); font-size: 0.95rem; }
 
-        /* ===== FORMULARIO CONTACTO ===== */
-        .form-contact { background: white; padding: 2rem; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-        .form-contact input, .form-contact textarea { width: 100%; padding: 0.8rem; border: 2px solid #ddd; border-radius: 12px; margin-top: 0.3rem; font-family: 'Lato', sans-serif; }
-        .form-contact button { margin-top: 1rem; background: var(--terracota); color: white; padding: 0.8rem 2.5rem; border: none; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; }
-        .form-contact button:hover { background: var(--dorado); transform: scale(1.02); }
+        .quienes-imagen {
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            box-shadow: var(--sombra);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .quienes-imagen .overlay {
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-size: 1.5rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
-        /* ===== FOOTER ===== */
+        .badge-info {
+            background: var(--crema);
+            padding: 2rem;
+            border-radius: 24px;
+            border-left: 6px solid var(--dorado);
+            margin-top: 1.5rem;
+            box-shadow: var(--sombra);
+            transition: all 0.3s;
+        }
+        .badge-info:hover { box-shadow: var(--sombra-hover); }
+
+        .estado {
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            letter-spacing: 0.5px;
+        }
+        .estado.activo { background: #d4edda; color: #155724; }
+        .estado.progreso { background: #fff3cd; color: #856404; }
+        .estado.culminado { background: #cce5ff; color: #004085; }
+
+        /* ===== MAPA ===== */
+        .mapa-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: var(--sombra);
+            margin: 2rem 0;
+        }
+        #mapa {
+            height: 450px;
+            border-radius: 16px;
+            z-index: 1;
+        }
+
+        /* ===== FORMULARIO ===== */
+        .form-contact { background: white; padding: 2.5rem; border-radius: 24px; box-shadow: var(--sombra); }
+        .form-contact input, .form-contact textarea { 
+            width: 100%; padding: 0.8rem 1.2rem; border: 2px solid #e8e0d5; border-radius: 12px; 
+            margin-top: 0.3rem; font-family: 'Lato', sans-serif; transition: border-color 0.3s;
+            background: var(--crema);
+        }
+        .form-contact input:focus, .form-contact textarea:focus { 
+            border-color: var(--dorado); outline: none; 
+        }
+        .form-contact button { 
+            margin-top: 1rem; background: var(--terracota); color: white; padding: 0.8rem 2.5rem; 
+            border: none; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; 
+            transition: all 0.3s; 
+        }
+        .form-contact button:hover { background: var(--dorado); transform: scale(1.02); box-shadow: 0 4px 20px rgba(196,154,108,0.3); }
+
+        /* ===== FOOTER MEJORADO ===== */
         footer {
-            background: var(--marron);
+            background: linear-gradient(145deg, var(--marron), #1a0f0c);
             color: #ddd;
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             margin-top: 2rem;
             border-top: 4px solid var(--dorado);
         }
@@ -312,8 +426,9 @@
             text-decoration: none;
             margin: 0 0.5rem;
             cursor: pointer;
+            transition: color 0.3s;
         }
-        footer a:hover { text-decoration: underline; }
+        footer a:hover { color: #e8c97a; text-decoration: underline; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
@@ -327,6 +442,7 @@
             .logo { font-size: 1.2rem; }
             .logo svg { width: 35px; height: 35px; }
             .container { padding: 2rem 1rem; }
+            #mapa { height: 300px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
@@ -366,18 +482,26 @@
             <a onclick="mostrarSeccion('puebloviejo')">🏛️ Pueblo Viejo</a>
             <a onclick="mostrarSeccion('eventos')">📅 Eventos</a>
             <a onclick="mostrarSeccion('investigacion')">📚 Investigación</a>
+            <a onclick="mostrarSeccion('mapa')">🗺️ Mapa</a>
             <a onclick="mostrarSeccion('contacto')">📩 Contacto</a>
         </nav>
     </header>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
-        <h1><span class="destacado">Tres patrimonios</span> de Áncash</h1>
-        <p>Lacramarca · Palamenco · Pueblo Viejo — Descubre el legado ancestral de nuestra tierra</p>
+        <h1>
+            <span class="destacado">Tres patrimonios</span> de Áncash
+        </h1>
+        <p>
+            <span class="destacado2">Lacramarca</span> · 
+            <span class="destacado">Palamenco</span> · 
+            <span class="destacado3">Pueblo Viejo</span> — 
+            Descubre el legado ancestral de nuestra tierra
+        </p>
     </section>
 
     <!-- ============================================================ -->
-    <!-- ===== SECCIÓN: NOTICIAS (ACTIVA POR DEFECTO) ===== -->
+    <!-- ===== SECCIÓN: NOTICIAS (CON IMAGEN) ===== -->
     <!-- ============================================================ -->
     <section class="seccion seccion-noticias activa" id="seccion-noticias">
         <div class="container">
@@ -386,18 +510,19 @@
             <p class="section-subtitle fade-in">Las últimas novedades sobre nuestros tres patrimonios</p>
 
             <div class="grid-3">
+                <!-- NOTICIA 1: Restauración de murales (CON IMAGEN) -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('lacramarca')">
-                    <div class="imagen lacramarca">
-                        🌾
+                    <div class="imagen" style="background-image: url('IMG-20260706-WA0042.jpg'); background-size:cover; background-position:center; height:200px; position:relative;">
                         <span class="tag" style="background:#556B2F;">Lacramarca</span>
                     </div>
                     <div class="info">
-                        <h3>Restauración de murales en Monte Zarumo</h3>
-                        <p>El presidente de la Comunidad Campesina Lacramarca, Carlos Budinich, junto al equipo de pintores y el artista visual Maucayan, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco .</p>
+                        <h3>🎨 Restauración de murales en Monte Zarumo</h3>
+                        <p>El presidente de la Comunidad Campesina Lacramarca, <strong>Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco.</p>
                         <span style="color:var(--verde); font-weight:700; font-size:0.9rem;">Leer más →</span>
                     </div>
                 </div>
 
+                <!-- NOTICIA 2: Palamenco -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('palamenco')">
                     <div class="imagen palamenco">
                         🪨
@@ -410,6 +535,7 @@
                     </div>
                 </div>
 
+                <!-- NOTICIA 3: Pueblo Viejo -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('puebloviejo')">
                     <div class="imagen puebloviejo">
                         🏛️
@@ -423,11 +549,48 @@
                 </div>
             </div>
 
+            <!-- Estadísticas rápidas -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:2rem; text-align:center; padding:2rem 0; margin-top:2rem;">
-                <div><span style="font-size:2.5rem; font-weight:900; color:#556B2F;">5,000+</span><br><span style="color:var(--marron-claro);">Agricultores</span></div>
-                <div><span style="font-size:2.5rem; font-weight:900; color:#A0522D;">300+</span><br><span style="color:var(--marron-claro);">Rocas grabadas</span></div>
-                <div><span style="font-size:2.5rem; font-weight:900; color:#2C6E8F;">5,000</span><br><span style="color:var(--marron-claro);">Años Pueblo Viejo</span></div>
-                <div><span style="font-size:2.5rem; font-weight:900; color:#C49A6C;">3,000</span><br><span style="color:var(--marron-claro);">Años Palamenco</span></div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.5rem; font-weight:900; color:#556B2F;">5,000+</span><br>
+                    <span style="color:var(--marron-claro);">Agricultores</span>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.5rem; font-weight:900; color:#A0522D;">300+</span><br>
+                    <span style="color:var(--marron-claro);">Rocas grabadas</span>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.5rem; font-weight:900; color:#2C6E8F;">5,000</span><br>
+                    <span style="color:var(--marron-claro);">Años Pueblo Viejo</span>
+                </div>
+                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.5rem; font-weight:900; color:#C49A6C;">3,000</span><br>
+                    <span style="color:var(--marron-claro);">Años Palamenco</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== SECCIÓN: MAPA (NUEVA) ===== -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-mapa" id="seccion-mapa">
+        <div class="container">
+            <span class="icono-seccion">🗺️</span>
+            <h2 class="section-title fade-in">Mapa y rutas de llegada</h2>
+            <p class="section-subtitle fade-in">Ubicación de los tres patrimonios y rutas desde Chimbote</p>
+
+            <div class="mapa-container fade-in">
+                <div id="mapa"></div>
+                <div style="margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+                    <span style="background:#556B2F; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🌾 Lacramarca</span>
+                    <span style="background:#A0522D; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🪨 Palamenco</span>
+                    <span style="background:#2C6E8F; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🏛️ Pueblo Viejo</span>
+                    <span style="background:#2196F3; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🏙️ Chimbote</span>
+                </div>
+                <div style="margin-top:0.5rem; text-align:center; font-size:0.85rem; color:var(--marron-claro);">
+                    <i class="fas fa-info-circle"></i> Las rutas son aproximadas. Se recomienda usar GPS para mayor precisión.
+                </div>
             </div>
         </div>
     </section>
@@ -444,44 +607,44 @@
             <div class="grid-2">
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:2rem;">Historia del valle de Lacramarca</h3>
-                    <p><strong>Lacramarca</strong> es un valle ubicado en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra y desemboca en la Bahía Ferrol .</p>
+                    <p><strong>Lacramarca</strong> es un valle ubicado en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra y desemboca en la Bahía Ferrol.</p>
                     
                     <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
-                        <p style="font-size:0.95rem;"><strong>🏛️ Origen ancestral:</strong> El valle de Lacramarca fue habitado por culturas preincaicas como los <strong>Moche, Wari, Inca y Recuay</strong> mucho antes de la llegada de los españoles. Una prueba de ello es la <strong>Huaca San Pedro</strong>, construida por la cultura Moche entre los <strong>siglos II y VIII d.C.</strong>, desde donde se gobernaba políticamente el valle .</p>
+                        <p style="font-size:0.95rem;"><strong>🏛️ Origen ancestral:</strong> El valle de Lacramarca fue habitado por culturas preincaicas como los <strong>Moche, Wari, Inca y Recuay</strong> mucho antes de la llegada de los españoles. Una prueba de ello es la <strong>Huaca San Pedro</strong>, construida por la cultura Moche entre los <strong>siglos II y VIII d.C.</strong>, desde donde se gobernaba políticamente el valle.</p>
                     </div>
 
                     <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--dorado);">
-                        <p style="font-size:0.95rem;"><strong>📅 Fundación de Chimbote:</strong> El desarrollo moderno del valle está ligado a la ciudad de Chimbote, cuyo distrito fue creado el <strong>6 de diciembre de 1906</strong>. Sin embargo, el poblamiento del valle se remonta a más de <strong>1,800 años atrás</strong> .</p>
+                        <p style="font-size:0.95rem;"><strong>📅 Fundación de Chimbote:</strong> El desarrollo moderno del valle está ligado a la ciudad de Chimbote, cuyo distrito fue creado el <strong>6 de diciembre de 1906</strong>. Sin embargo, el poblamiento del valle se remonta a más de <strong>1,800 años atrás</strong>.</p>
                     </div>
 
-                    <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash .</p>
+                    <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🌾 5,000+ agricultores</span>
+                    <span class="overlay">🌾 5,000+ agricultores</span>
                 </div>
             </div>
 
             <h3 style="font-family:'Playfair Display',serif; color:var(--verde); text-align:center; margin:3rem 0 1.5rem 0;">📜 Línea de tiempo del valle</h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; margin-bottom:2rem;">
-                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid #6B4C7A;">
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid #6B4C7A;">
                     <span style="font-size:2rem;">🏛️</span>
                     <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Siglos II-VIII d.C.</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cultura Moche construye la Huaca San Pedro, gobernando el valle de Lacramarca</p>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cultura Moche construye la Huaca San Pedro</p>
                 </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--terracota);">
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--terracota);">
                     <span style="font-size:2rem;">🗡️</span>
                     <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Época preincaica</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Culturas Wari, Inca y Recuay habitan el valle de Lacramarca</p>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Culturas Wari, Inca y Recuay</p>
                 </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--dorado);">
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--dorado);">
                     <span style="font-size:2rem;">📅</span>
                     <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">6 de diciembre 1906</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Creación del distrito de Chimbote, impulsando el desarrollo del valle</p>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">Creación del distrito de Chimbote</p>
                 </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.06); border-top:4px solid var(--verde);">
+                <div style="background:white; padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--verde);">
                     <span style="font-size:2rem;">🌾</span>
                     <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Actualidad</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">5,000+ agricultores · Proyecto Chinecas · Desarrollo sostenible</p>
+                    <p style="font-size:0.9rem; color:var(--marron-claro);">5,000+ agricultores · Proyecto Chinecas</p>
                 </div>
             </div>
 
@@ -490,25 +653,25 @@
                     <i class="fas fa-tractor"></i>
                     <h4>Agricultura</h4>
                     <span class="dato verde">5,000+</span>
-                    <p>Agricultores beneficiados con canales de riego</p>
+                    <p>Agricultores beneficiados</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-water"></i>
                     <h4>Cuenca</h4>
                     <span class="dato verde">963 km²</span>
-                    <p>Área total de la cuenca del río Lacramarca</p>
+                    <p>Área total de la cuenca</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-route"></i>
                     <h4>Río</h4>
                     <span class="dato verde">76 km</span>
-                    <p>Longitud del cauce principal</p>
+                    <p>Longitud del cauce</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-seedling"></i>
                     <h4>Cultivos</h4>
                     <span class="dato verde">4+</span>
-                    <p>Alfalfa, maíz, papa, trigo, cebada</p>
+                    <p>Alfalfa, maíz, papa, trigo</p>
                 </div>
             </div>
 
@@ -517,74 +680,40 @@
                 <div class="card fade-in">
                     <h4>🌊 Canal Puente Roto</h4>
                     <span class="estado activo">✅ 89% de avance</span>
-                    <p>Garantiza agua segura para más de <strong>1,300 agricultores</strong> del valle .</p>
+                    <p>Agua segura para más de <strong>1,300 agricultores</strong>.</p>
                 </div>
                 <div class="card fade-in">
                     <h4>💧 Canal Ramal 5</h4>
                     <span class="estado culminado">✔️ Culminado</span>
-                    <p>Inversión de <strong>S/ 1.8 millones</strong> para 1.5 km de canal de concreto en Lacramarca Baja .</p>
+                    <p>Inversión de <strong>S/ 1.8 millones</strong>.</p>
                 </div>
                 <div class="card fade-in">
                     <h4>🏗️ Obras hidráulicas</h4>
                     <span class="estado progreso">🔄 En ejecución</span>
-                    <p>4 obras por <strong>S/ 9.18 millones</strong> para beneficiar a más de 5,000 agricultores .</p>
+                    <p>4 obras por <strong>S/ 9.18 millones</strong>.</p>
                 </div>
             </div>
 
-            <!-- ===== NUEVO: MONTE ZARUMO Y MURALES CON FOTO ===== -->
+            <!-- ===== MONTE ZARUMO CON FOTO ===== -->
             <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--verde);">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
-                
-                <!-- IMAGEN DE LA COMUNIDAD -->
                 <div style="margin:1rem 0; text-align:center;">
-                    <img src="IMG-20260706-WA0042.jpg" alt="Restauración de murales en Monte Zarumo - Comunidad Campesina Lacramarca" 
-                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+                    <img src="IMG-20260706-WA0042.jpg" alt="Restauración de murales en Monte Zarumo" 
+                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
                     <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.3rem;">
-                        📸 Presidente Carlos Budinich y equipo de pintores con el artista visual Maucayan en la restauración de murales informativos
+                        📸 Presidente Carlos Budinich, equipo de pintores y artista visual Maucayan
                     </p>
                 </div>
-                
-                <p>El <strong>presidente de la Comunidad Campesina Lacramarca, Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>, en Lacramarca Alta, Chimbote, Áncash .</p>
-                <p style="margin-top:0.5rem;">Monte Zarumo es un sector ubicado en la Comunidad Campesina Lacramarca, donde se desarrollan proyectos de conservación de ecosistemas y reforestación con algarrobos, en alianza con Sedachimbote y el Gobierno Regional de Áncash .</p>
-                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El presidente <strong>Carlos Budinich Salas</strong> también es conocido por su trabajo en el ámbito agrícola, con estudios en la Universidad San Pedro sobre el rendimiento de cultivos en Lacramarca Alta .</p>
+                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>.</p>
             </div>
 
             <div class="badge-info fade-in" style="margin-top:1.5rem; border-left-color:var(--dorado);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--dorado);">🌍 Proyecto Chinecas · El futuro de Lacramarca</h4>
-                <p>El <strong>Nuevo Proyecto Chinecas</strong> es la inversión más importante para el valle de Lacramarca y toda la región Áncash:</p>
+                <h4 style="font-family:'Playfair Display',serif; color:var(--dorado);">🌍 Proyecto Chinecas</h4>
                 <ul style="margin:1rem 0 0 1.5rem; color:var(--marron-claro);">
-                    <li>🏗️ <strong>Presa La Huaca</strong>: Beneficiará a <strong>44,000 hectáreas</strong> en Santa-Lacramarca </li>
-                    <li>💰 Inversión en infraestructura: <strong>US$ 3,400 millones</strong> </li>
-                    <li>🌾 Producción anual: <strong>US$ 2,300 millones</strong> en productos agrícolas </li>
-                    <li>👨‍🌾 Empleos directos: <strong>160,000+</strong> puestos de trabajo </li>
+                    <li>🏗️ <strong>Presa La Huaca</strong>: 44,000 hectáreas en Santa-Lacramarca</li>
+                    <li>💰 Inversión: <strong>US$ 3,400 millones</strong></li>
+                    <li>👨‍🌾 Empleos directos: <strong>160,000+</strong></li>
                 </ul>
-                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El proyecto irrigará 121,000 hectáreas en los valles de Santa-Lacramarca, Nepeña, Casma y Huarmey .</p>
-            </div>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-map-pin" style="color:var(--verde); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Coordenadas</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">8° 53' 20" S, 78° 15' 52" O </p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-mountain" style="color:var(--verde); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Origen del río</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cordillera Negra · 4,500 m s.n.m. </p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-tree" style="color:var(--verde); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Humedal</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Pantanos de Villa María · Desembocadura en la Bahía Ferrol </p>
-                </div>
-            </div>
-
-            <div style="background:var(--crema); padding:2rem; border-radius:24px; margin-top:2rem; text-align:center; border:2px dashed var(--verde);">
-                <i class="fas fa-quote-left" style="font-size:2rem; color:var(--verde); opacity:0.5;"></i>
-                <p style="font-size:1.1rem; font-style:italic; color:var(--marron-claro); max-width:700px; margin:0 auto;">
-                    "El valle de Lacramarca es nuestra vida. Aquí han sembrado nuestros abuelos y aquí seguirán sembrando nuestros hijos. El agua es el tesoro que nos une como comunidad."
-                </p>
-                <p style="font-weight:700; color:var(--verde); margin-top:0.5rem;">— Campesino de Lacramarca Alta</p>
             </div>
         </div>
     </section>
@@ -596,61 +725,41 @@
         <div class="container">
             <span class="icono-seccion">🪨</span>
             <h2 class="section-title fade-in">Palamenco · Petroglifos</h2>
-            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash, con más de 3,000 años de antigüedad</p>
+            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash</p>
 
             <div class="grid-2">
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); font-size:2rem;">Guardianes de la piedra escrita</h3>
-                    <p><strong>Palamenco</strong> (también conocido como Parlamenco) se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta .</p>
-                    <p>Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>, siendo la <strong>zona con petroglifos más extensa de la región Áncash</strong> .</p>
+                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta. Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>.</p>
                     
                     <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
-                        <p style="font-size:0.95rem;"><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde <strong>los sacerdotes servían de vínculo entre los hombres y sus dioses</strong>. Era un centro ceremonial de gran importancia para las culturas preincaicas .</p>
+                        <p style="font-size:0.95rem;"><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
                     </div>
 
-                    <p style="margin-top:1rem;"><strong>Figuras representadas en las rocas:</strong></p>
+                    <p><strong>Figuras representadas:</strong></p>
                     <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro); columns:2;">
                         <li>🐍 Serpientes</li>
                         <li>🦙 Camélidos</li>
                         <li>🦅 Águilas</li>
                         <li>🦜 Loros</li>
                         <li>🦎 Lagartijas</li>
-                        <li>🐻 Oso de anteojos (desaparecido)</li>
+                        <li>🐻 Oso de anteojos</li>
                         <li>🧑‍🏫 Sacerdote chavinense</li>
                         <li>🌞 Sol y Luna</li>
                         <li>⭐ Constelaciones</li>
-                        <li>👤 Hombres y divinidades</li>
-                        <li>🌿 Flora y fauna</li>
-                        <li>🌊 Fenómeno de El Niño</li>
+                        <li>👤 Divinidades</li>
                     </ul>
-                    <p style="margin-top:1rem;">También se descubrió un <strong>ceramio retrato de un dignatario</strong> similar al "Señor de Sipán".</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🪨 300+ rocas grabadas</span>
+                    <span class="overlay">🪨 300+ rocas grabadas</span>
                 </div>
             </div>
 
             <div class="grid-4" style="margin-top:2rem;">
-                <div class="card fade-in">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h4>3,000+ años</h4>
-                    <p>Antigüedad confirmada de los petroglifos</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-vector-square"></i>
-                    <h4>36 hectáreas</h4>
-                    <p>Extensión del paisaje arqueológico</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-mountain"></i>
-                    <h4>300 rocas</h4>
-                    <p>Con figuras grabadas de flora, fauna y divinidades</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-route"></i>
-                    <h4>45 km</h4>
-                    <p>Distancia desde Chimbote</p>
-                </div>
+                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><p>Antigüedad</p></div>
+                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><p>Extensión</p></div>
+                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><p>Con grabados</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><p>Desde Chimbote</p></div>
             </div>
 
             <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
@@ -658,41 +767,17 @@
                 <div class="card fade-in">
                     <h4>📋 Saneamiento físico legal</h4>
                     <span class="estado activo">✅ En gestión</span>
-                    <p>Iniciativa de la Municipalidad Provincial del Santa, Municipalidad de Nuevo Chimbote y la Dirección Desconcentrada de Cultura (DDC) .</p>
+                    <p>Iniciativa de la Municipalidad del Santa y DDC.</p>
                 </div>
                 <div class="card fade-in">
                     <h4>🏗️ Puesta en valor</h4>
                     <span class="estado progreso">🔄 En ejecución</span>
-                    <p>Limpieza, señalización, delimitación de senderos y colocación de paneles informativos .</p>
+                    <p>Limpieza, señalización y paneles informativos.</p>
                 </div>
                 <div class="card fade-in">
                     <h4>🗺️ Circuito turístico</h4>
                     <span class="estado progreso">🔄 En diseño</span>
-                    <p>Integrar Palamenco con Chimbote, Nuevo Chimbote y el valle Lacramarca .</p>
-                </div>
-            </div>
-
-            <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--terracota);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--terracota);">📌 Trabajo de campo</h4>
-                <p>El equipo del Departamento de Turismo de la Municipalidad Provincial del Santa, la comuna de Nuevo Chimbote, el responsable de la DDC <strong>Juan López Marchena</strong> y representantes de la Asociación de Agencias de Viajes Subregión Pacífico-Áncash realizaron un <strong>trabajo de campo en Palamenco</strong> para iniciar las gestiones de puesta en valor .</p>
-                <p style="margin-top:0.5rem; font-size:0.9rem;">📌 El inventario iconográfico permitirá conocer mejor las representaciones grabadas en las rocas .</p>
-            </div>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-map-pin" style="color:var(--terracota); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Ubicación</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">45 km al este de Chimbote</p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-calendar" style="color:var(--terracota); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Antigüedad</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Más de 3,000 años</p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-flag" style="color:var(--terracota); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Importancia</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Zona con petroglifos más extensa de Áncash</p>
+                    <p>Integrar Palamenco con Chimbote y Lacramarca.</p>
                 </div>
             </div>
         </div>
@@ -705,99 +790,35 @@
         <div class="container">
             <span class="icono-seccion">🏛️</span>
             <h2 class="section-title fade-in">Pueblo Viejo</h2>
-            <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral en la cuenca del río Lacramarca</p>
+            <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral</p>
 
             <div class="grid-2">
                 <div class="fade-in">
-                    <h3 style="font-family:'Playfair Display',serif; color:var(--azul); font-size:2rem;">Un descubrimiento monumental para Áncash</h3>
-                    <p><strong>Pueblo Viejo</strong> es un sitio arqueológico descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos y Turísticos de la Municipalidad Provincial del Santa, con el asesoramiento del arqueólogo <strong>Régulo Franco Jordán</strong> de la Fundación Wiese .</p>
-                    <p>Se encuentra en la cuenca del río Lacramarca, a solo <strong>2 horas de viaje desde Chimbote</strong> . Con una extensión aproximada de <strong>5 hectáreas</strong>, guarda similitudes con la ciudad sagrada de Caral y Bandurria .</p>
-                    
-                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--azul);">
-                        <p style="font-size:0.95rem;"><strong>👩‍🔬 Confirmación de Ruth Shady:</strong> La arqueóloga <strong>Ruth Shady</strong>, directora del Proyecto Especial Arqueológico Caral-Supe, confirmó que este vestigio tiene una antigüedad de al menos <strong>5,000 años</strong> y que la civilización Caral tiene relación hasta la provincia del Santa .</p>
-                    </div>
-
-                    <p>El sitio presenta una impresionante infraestructura de piedra que incluye :</p>
+                    <h3 style="font-family:'Playfair Display',serif; color:var(--azul); font-size:2rem;">Un descubrimiento monumental</h3>
+                    <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa.</p>
+                    <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
+                    <p>Estructuras principales:</p>
                     <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
-                        <li>🏛️ Una <strong>construcción piramidal de 15 metros de altura</strong></li>
-                        <li>📐 Una <strong>plaza cuadrangular</strong></li>
-                        <li>🔄 Un <strong>anfiteatro circular hundido</strong> frente a la plaza</li>
+                        <li>🏛️ Pirámide de <strong>15 metros</strong></li>
+                        <li>📐 Plaza <strong>cuadrangular</strong></li>
+                        <li>🔄 Anfiteatro <strong>circular hundido</strong></li>
                     </ul>
-
-                    <p style="margin-top:1rem;">El arqueólogo <strong>Régulo Franco</strong> calificó el hallazgo como <em>"impresionante"</em> y señaló que Pueblo Viejo podría convertirse en un <strong>destino arqueológico de importancia</strong> para la provincia, con potencial para adherirse a la <strong>Ruta Moche</strong> .</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
-                    <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🏛️ 5,000 años de historia</span>
+                    <span class="overlay">🏛️ 5,000 años de historia</span>
                 </div>
             </div>
 
             <div class="grid-4" style="margin-top:2rem;">
-                <div class="card fade-in">
-                    <i class="fas fa-calendar-alt"></i>
-                    <h4>5,000 años</h4>
-                    <p>Antigüedad confirmada por Ruth Shady</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-vector-square"></i>
-                    <h4>5 hectáreas</h4>
-                    <p>Extensión del sitio arqueológico</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-mountain"></i>
-                    <h4>Pirámide 15 m</h4>
-                    <p>Con plaza y anfiteatro circular</p>
-                </div>
-                <div class="card fade-in">
-                    <i class="fas fa-route"></i>
-                    <h4>2 horas</h4>
-                    <p>Tiempo de viaje desde Chimbote</p>
-                </div>
+                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><p>Antigüedad</p></div>
+                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><p>Extensión</p></div>
+                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><p>Pirámide</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><p>Desde Chimbote</p></div>
             </div>
 
-            <h3 style="font-family:'Playfair Display',serif; color:var(--azul); text-align:center; margin:3rem 0 1.5rem 0;">👩‍🔬 Equipo descubridor</h3>
-            <div class="grid-3">
-                <div class="card fade-in" style="text-align:center;">
-                    <i class="fas fa-user-graduate" style="color:var(--azul); font-size:3rem;"></i>
-                    <h4>Ruth Shady</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Directora de Caral-Supe</p>
-                    <p style="font-size:0.85rem;">Confirmó la antigüedad de 5,000 años y la relación de Caral con la provincia del Santa</p>
-                </div>
-                <div class="card fade-in" style="text-align:center;">
-                    <i class="fas fa-user-graduate" style="color:var(--azul); font-size:3rem;"></i>
-                    <h4>Régulo Franco Jordán</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Fundación Wiese</p>
-                    <p style="font-size:0.85rem;">Asesoró el proyecto "Identidad Chimbote" y calificó el hallazgo como "impresionante"</p>
-                </div>
-                <div class="card fade-in" style="text-align:center;">
-                    <i class="fas fa-user-tie" style="color:var(--azul); font-size:3rem;"></i>
-                    <h4>Alberto Jorge Estrada</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Coordinador de Proyectos Arqueológicos</p>
-                    <p style="font-size:0.85rem;">Lideró el equipo municipal que descubrió Pueblo Viejo</p>
-                </div>
-            </div>
-
-            <div class="badge-info fade-in" style="margin-top:2rem; border-left-color:var(--azul);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">🏺 Hallazgos adicionales</h4>
-                <p>En el marco del proyecto <strong>Identidad Chimbote</strong>, también se descubrió un <strong>ceramio retrato de un dignatario</strong> de la cultura Chimbote ancestral tardía en <strong>Palamenco</strong>, similar al <strong>"Señor de Sipán"</strong> .</p>
-                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 El sitio fue descubierto en <strong>noviembre de 2010</strong> y se busca gestionar su puesta en valor ante el <strong>Ministerio de Cultura</strong> .</p>
-            </div>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.5rem; margin-top:2rem;">
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-map-pin" style="color:var(--azul); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Ubicación</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cuenca del río Lacramarca · Distrito de Chimbote</p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-clock" style="color:var(--azul); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Tiempo de viaje</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">2 horas desde Chimbote</p>
-                </div>
-                <div style="background:white; padding:1.5rem; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.06);">
-                    <i class="fas fa-flag" style="color:var(--azul); font-size:1.5rem;"></i>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Altitud</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">325 m s.n.m.</p>
-                </div>
+            <div class="badge-info fade-in" style="border-left-color:var(--azul);">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
+                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
             </div>
         </div>
     </section>
@@ -816,19 +837,19 @@
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
                     <h4>Restauración de murales</h4>
                     <p><strong>📅 En curso · Monte Zarumo</strong></p>
-                    <p>El presidente Carlos Budinich, el equipo de pintores y el artista visual Maucayan restauran los murales informativos de Monte Zarumo y el Complejo Arqueológico Palamenco .</p>
+                    <p>Presidente Carlos Budinich, equipo de pintores y artista visual Maucayan.</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
                     <h4>Visita guiada a los petroglifos</h4>
-                    <p><strong>📅 22 de agosto 2026 · 9:00 AM</strong></p>
-                    <p>Recorrido con arqueólogos por los principales sitios rupestres de Palamenco.</p>
+                    <p><strong>📅 29 de septiembre 2022</strong></p>
+                    <p>Recorrido con arqueólogos por Palamenco.</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
                     <h4>Ceremonia ancestral</h4>
                     <p><strong>📅 18 de setiembre 2026 · 10:00 AM</strong></p>
-                    <p>Ofrenda y agradecimiento a la tierra con música y danza tradicional.</p>
+                    <p>Ofrenda y agradecimiento a la tierra.</p>
                 </div>
             </div>
         </div>
@@ -841,26 +862,26 @@
         <div class="container">
             <span class="icono-seccion">📚</span>
             <h2 class="section-title fade-in">Investigación Arqueológica</h2>
-            <p class="section-subtitle fade-in">Publicaciones y estudios sobre los petroglifos de Palamenco y Pueblo Viejo</p>
+            <p class="section-subtitle fade-in">Publicaciones y estudios sobre los petroglifos</p>
 
             <div class="grid-3">
                 <div class="card fade-in">
                     <i class="fas fa-file-alt" style="color:#6B4C7A;"></i>
                     <h4>Los petroglifos de Palamenco</h4>
-                    <p><strong>Dr. Carlos Mamani</strong> · Universidad Nacional de Trujillo</p>
-                    <p>Análisis de las representaciones zoomorfas y su relación con la cosmovisión andina.</p>
+                    <p><strong>Dr. Carlos Mamani</strong> · UNT</p>
+                    <p>Análisis de las representaciones zoomorfas.</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-file-alt" style="color:#6B4C7A;"></i>
                     <h4>Cronología del arte rupestre</h4>
-                    <p><strong>Dra. Elena Rojas</strong> · Instituto de Arqueología Peruana</p>
-                    <p>Dating por termoluminiscencia y análisis de pigmentos en los grabados.</p>
+                    <p><strong>Dra. Elena Rojas</strong> · IAP</p>
+                    <p>Dating por termoluminiscencia.</p>
                 </div>
                 <div class="card fade-in">
                     <i class="fas fa-file-alt" style="color:#6B4C7A;"></i>
                     <h4>Conservación comunitaria</h4>
                     <p><strong>Lic. Juan Quispe</strong> · Junta de Campesinos</p>
-                    <p>Modelo de gestión participativa para la protección del patrimonio rupestre.</p>
+                    <p>Modelo de gestión participativa.</p>
                 </div>
             </div>
         </div>
@@ -905,6 +926,7 @@
             <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · 
             <a onclick="mostrarSeccion('eventos')">Eventos</a> · 
             <a onclick="mostrarSeccion('investigacion')">Investigación</a> · 
+            <a onclick="mostrarSeccion('mapa')">Mapa</a> · 
             <a onclick="mostrarSeccion('contacto')">Contacto</a>
         </p>
         <p style="font-size:0.8rem; opacity:0.6; margin-top:0.5rem;">Valle de Lacramarca · Chimbote · Áncash</p>
@@ -934,7 +956,8 @@
                 'puebloviejo': 3,
                 'eventos': 4,
                 'investigacion': 5,
-                'contacto': 6
+                'mapa': 6,
+                'contacto': 7
             };
 
             if (mapa[nombre] !== undefined) {
@@ -965,6 +988,95 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             mostrarSeccion('noticias');
+        });
+
+        // ===== MAPA CON RUTAS =====
+        let mapa;
+
+        function iniciarMapa() {
+            // Coordenadas reales aproximadas
+            const chimbote = [-9.0740, -78.5937];
+            const lacramarca = [-8.8833, -78.2644];
+            const parlamenco = [-8.85, -78.05];
+            const puebloviejo = [-9.00, -78.45];
+
+            mapa = L.map('mapa').setView([-8.85, -78.3], 8);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(mapa);
+
+            // Marcador Chimbote
+            L.marker(chimbote, {
+                icon: L.divIcon({
+                    html: '<div style="background:#2196F3;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px rgba(33,150,243,0.5);"></div>',
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
+                })
+            }).addTo(mapa).bindPopup('🏙️ <b>Chimbote</b><br>Punto de partida');
+
+            // Marcador Lacramarca
+            L.marker(lacramarca, {
+                icon: L.divIcon({
+                    html: '<div style="background:#556B2F;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px rgba(85,107,47,0.5);"></div>',
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
+                })
+            }).addTo(mapa).bindPopup('🌾 <b>Lacramarca</b><br>Comunidad campesina');
+
+            // Marcador Palamenco
+            L.marker(parlamenco, {
+                icon: L.divIcon({
+                    html: '<div style="background:#A0522D;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px rgba(160,82,45,0.5);"></div>',
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
+                })
+            }).addTo(mapa).bindPopup('🪨 <b>Palamenco</b><br>Petroglifos de 3,000 años');
+
+            // Marcador Pueblo Viejo
+            L.marker(puebloviejo, {
+                icon: L.divIcon({
+                    html: '<div style="background:#2C6E8F;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px rgba(44,110,143,0.5);"></div>',
+                    iconSize: [18, 18],
+                    iconAnchor: [9, 9]
+                })
+            }).addTo(mapa).bindPopup('🏛️ <b>Pueblo Viejo</b><br>Sitio de 5,000 años');
+
+            // RUTA 1: Chimbote → Lacramarca
+            L.polyline([chimbote, [-8.9, -78.4], lacramarca], {
+                color: '#556B2F',
+                weight: 4,
+                opacity: 0.8,
+                dashArray: '10 8'
+            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Lacramarca');
+
+            // RUTA 2: Chimbote → Palamenco
+            L.polyline([chimbote, [-8.9, -78.2], parlamenco], {
+                color: '#A0522D',
+                weight: 4,
+                opacity: 0.8,
+                dashArray: '10 8'
+            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Palamenco (45 km)');
+
+            // RUTA 3: Chimbote → Pueblo Viejo
+            L.polyline([chimbote, [-9.0, -78.5], puebloviejo], {
+                color: '#2C6E8F',
+                weight: 4,
+                opacity: 0.8,
+                dashArray: '10 8'
+            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Pueblo Viejo (2 horas)');
+
+            // Ajustar zoom para mostrar todos los puntos
+            mapa.fitBounds([
+                chimbote,
+                lacramarca,
+                parlamenco,
+                puebloviejo
+            ], { padding: [50, 50] });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(iniciarMapa, 1000);
         });
     </script>
 </body>
