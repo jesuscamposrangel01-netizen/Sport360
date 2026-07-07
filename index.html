@@ -30,6 +30,8 @@
             --marron-claro: #5D4037;
             --dorado: #C49A6C;
             --crema: #FAF6EE;
+            --azul: #2C6E8F;
+            --azul-claro: #4A90B5;
         }
 
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -56,11 +58,12 @@
         nav { display: flex; flex-wrap: wrap; gap: 0.3rem; }
         nav a { color: var(--beige); text-decoration: none; padding: 0.4rem 1rem; border-radius: 30px; font-weight: 700; transition: all 0.3s; font-size: 0.8rem; }
         nav a:hover { background: var(--terracota); transform: scale(1.05); }
+        nav a.activo { background: var(--terracota); }
 
         /* HERO */
         .hero {
             position: relative;
-            height: 85vh;
+            height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,9 +86,34 @@
         .hero-stats .label { font-size: 0.85rem; opacity: 0.9; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--marron); text-align: center; margin-bottom: 0.5rem; }
-        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--terracota); margin: 0.5rem auto 0 auto; border-radius: 4px; }
-        .section-subtitle { text-align: center; color: var(--marron-claro); font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; text-align: center; margin-bottom: 0.5rem; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; margin: 0.5rem auto 0 auto; border-radius: 4px; }
+        .section-subtitle { text-align: center; font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; }
+
+        /* ===== COLORES POR SECCIÓN ===== */
+        /* Palamenco: Terracota */
+        .seccion-palamenco .section-title { color: var(--terracota); }
+        .seccion-palamenco .section-title::after { background: var(--terracota); }
+        .seccion-palamenco .section-subtitle { color: var(--marron-claro); }
+        .seccion-palamenco .card { border-bottom: 4px solid var(--terracota); }
+        .seccion-palamenco .card i { color: var(--terracota); }
+        .seccion-palamenco .etiqueta { background: var(--terracota); }
+
+        /* Lacramarca: Verde Oliva */
+        .seccion-lacramarca .section-title { color: var(--verde-oliva); }
+        .seccion-lacramarca .section-title::after { background: var(--verde-oliva); }
+        .seccion-lacramarca .section-subtitle { color: var(--marron-claro); }
+        .seccion-lacramarca .card { border-bottom: 4px solid var(--verde-oliva); }
+        .seccion-lacramarca .card i { color: var(--verde-oliva); }
+        .seccion-lacramarca .etiqueta { background: var(--verde-oliva); }
+
+        /* Pueblo Viejo: Dorado/Azul */
+        .seccion-puebloviejo .section-title { color: var(--azul); }
+        .seccion-puebloviejo .section-title::after { background: var(--azul); }
+        .seccion-puebloviejo .section-subtitle { color: var(--marron-claro); }
+        .seccion-puebloviejo .card { border-bottom: 4px solid var(--azul); }
+        .seccion-puebloviejo .card i { color: var(--azul); }
+        .seccion-puebloviejo .etiqueta { background: var(--azul); }
 
         /* GRIDs */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
@@ -95,17 +123,16 @@
         /* CARDS */
         .card { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: all 0.3s; }
         .card:hover { transform: translateY(-6px); box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
-        .card i { font-size: 2.5rem; color: var(--terracota); margin-bottom: 1rem; }
+        .card i { font-size: 2.5rem; margin-bottom: 1rem; }
         .card h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--marron); }
-        .card .dato { font-size: 2rem; font-weight: 900; color: var(--terracota); display: block; margin: 0.5rem 0; }
-
-        .card-border { border-bottom: 4px solid var(--terracota); }
-        .card-border-verde { border-bottom: 4px solid var(--verde-oliva); }
-        .card-border-dorado { border-bottom: 4px solid var(--dorado); }
+        .card .dato { font-size: 2rem; font-weight: 900; display: block; margin: 0.5rem 0; }
+        .card .dato.terracota { color: var(--terracota); }
+        .card .dato.verde { color: var(--verde-oliva); }
+        .card .dato.azul { color: var(--azul); }
 
         .card-imagen { height: 220px; border-radius: 16px 16px 0 0; object-fit: cover; width: 100%; background: var(--terracota-claro); }
         .card .info { padding: 1.5rem; }
-        .card .etiqueta { display: inline-block; background: var(--terracota); color: white; padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; margin: 0.5rem 0; }
+        .card .etiqueta { display: inline-block; color: white; padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; margin: 0.5rem 0; }
 
         .evento-card { border-left: 6px solid var(--terracota); }
         .evento-card .fecha { color: var(--terracota); font-weight: 700; font-size: 0.9rem; }
@@ -119,7 +146,19 @@
         .estado.progreso { background: #fff3cd; color: #856404; }
         .estado.culminado { background: #cce5ff; color: #004085; }
 
-        .quienes-imagen { background: var(--terracota-claro); border-radius: 20px; height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; box-shadow: 0 8px 30px rgba(0,0,0,0.1); background-size: cover; background-position: center; }
+        .quienes-imagen { border-radius: 20px; height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; box-shadow: 0 8px 30px rgba(0,0,0,0.1); background-size: cover; background-position: center; }
+
+        .badge-info { background: var(--beige); padding: 2rem; border-radius: 24px; border-left: 6px solid var(--dorado); }
+
+        /* SEPARADOR DE SECCIONES */
+        .separador {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--terracota), var(--verde-oliva), var(--azul));
+            margin: 0 auto;
+            border-radius: 4px;
+            opacity: 0.3;
+        }
 
         /* MAPA */
         .mapa-container { background: white; padding: 1.5rem; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin: 2rem 0; }
@@ -152,7 +191,7 @@
         .btn-arriba { position: fixed; bottom: 30px; right: 30px; background: var(--terracota); color: white; width: 50px; height: 50px; border-radius: 50%; border: none; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: all 0.3s; display: none; z-index: 999; }
         .btn-arriba:hover { background: var(--dorado); transform: scale(1.1); }
 
-        .badge-info { background: var(--beige); padding: 2rem; border-radius: 24px; border-left: 6px solid var(--dorado); }
+        .icono-seccion { font-size: 3rem; display: block; text-align: center; margin-bottom: 0.5rem; }
 
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 1rem; text-align: center; }
@@ -178,7 +217,7 @@
         </div>
         <nav>
             <a href="#inicio">Inicio</a>
-            <a href="#parlamenco">Parlamenco</a>
+            <a href="#palamenco">Palamenco</a>
             <a href="#lacramarca">Lacramarca</a>
             <a href="#puebloviejo">Pueblo Viejo</a>
             <a href="#eventos">Eventos</a>
@@ -198,7 +237,7 @@
                 <span style="font-size:2.5rem;">y <span class="destacado">Pueblo Viejo</span></span>
             </h1>
             <p>Tres patrimonios de Áncash: Petroglifos milenarios · Comunidad campesina · Sitio arqueológico de 5,000 años</p>
-            <a href="#parlamenco" class="btn">Explora el legado ancestral</a>
+            <a href="#palamenco" class="btn">Explora el legado ancestral</a>
             <div class="hero-stats">
                 <div><span class="num">48+</span><span class="label">Petroglifos</span></div>
                 <div><span class="num">5,000</span><span class="label">Años Pueblo Viejo</span></div>
@@ -208,15 +247,18 @@
         </div>
     </section>
 
-    <!-- ===== 1. PARLAMENCO (PALAMENCO) ===== -->
-    <section class="container" id="parlamenco">
-        <h2 class="section-title fade-in">🪨 Palamenco · Petroglifos</h2>
+    <!-- ============================================================ -->
+    <!-- ===== SECCIÓN 1: PALAMENCO ===== -->
+    <!-- ============================================================ -->
+    <section class="container seccion-palamenco" id="palamenco">
+        <span class="icono-seccion">🪨</span>
+        <h2 class="section-title fade-in">Palamenco · Petroglifos</h2>
         <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash, con más de 3,000 años de antigüedad</p>
         
         <div class="grid-2">
             <div class="fade-in">
                 <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); font-size:2rem;">Guardianes de la piedra escrita</h3>
-                <p><strong>Palamenco</strong> (también conocido como Parlamenco) se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta . Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong> .</p>
+                <p><strong>Palamenco</strong> (también conocido como Parlamenco) se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta. Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>.</p>
                 <p>Las figuras representan:</p>
                 <ul style="margin:1rem 0 0 1.5rem; color:var(--marron-claro); columns:2;">
                     <li>🐍 Serpientes</li>
@@ -231,7 +273,7 @@
                     <li>👤 Hombres y divinidades</li>
                     <li>🌿 Flora y fauna</li>
                 </ul>
-                <p style="margin-top:1rem;">También se descubrió un <strong>ceramio retrato de un dignatario</strong> similar al "Señor de Sipán" .</p>
+                <p style="margin-top:1rem;">También se descubrió un <strong>ceramio retrato de un dignatario</strong> similar al "Señor de Sipán".</p>
             </div>
             <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                 <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🪨 300+ rocas grabadas</span>
@@ -239,118 +281,222 @@
         </div>
 
         <div class="grid-4" style="margin-top:2rem;">
-            <div class="card card-border fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><p>Antigüedad confirmada de los petroglifos</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-vector-square"></i><h4>36 hectáreas</h4><p>Extensión del paisaje arqueológico</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><p>Con figuras de flora, fauna y divinidades</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-route"></i><h4>45 km</h4><p>Distancia desde Chimbote</p></div>
+            <div class="card fade-in">
+                <i class="fas fa-calendar-alt"></i>
+                <h4>3,000+ años</h4>
+                <p>Antigüedad confirmada de los petroglifos</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-vector-square"></i>
+                <h4>36 hectáreas</h4>
+                <p>Extensión del paisaje arqueológico</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-mountain"></i>
+                <h4>300 rocas</h4>
+                <p>Con figuras de flora, fauna y divinidades</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-route"></i>
+                <h4>45 km</h4>
+                <p>Distancia desde Chimbote</p>
+            </div>
         </div>
 
         <div class="badge-info fade-in" style="margin-top:1.5rem;">
             <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">📌 Proyectos en Palamenco</h4>
-            <p>Se vienen realizando trabajos de <strong>puesta en valor</strong> que incluyen limpieza, empedrado, señalización y paneles informativos . Además, se ha ejecutado la construcción de un <strong>dique</strong> para prevenir desbordes del río Lacramarca en la zona .</p>
+            <p>Se vienen realizando trabajos de <strong>puesta en valor</strong> que incluyen limpieza, empedrado, señalización y paneles informativos. Además, se ha ejecutado la construcción de un <strong>dique</strong> para prevenir desbordes del río Lacramarca en la zona.</p>
         </div>
     </section>
 
-    <!-- ===== 2. LACRAMARCA ===== -->
-    <section class="container" id="lacramarca" style="background:var(--crema); border-radius:30px; margin:0 auto 4rem auto; padding:4rem 2rem;">
-        <h2 class="section-title fade-in">🌾 Comunidad de Lacramarca</h2>
+    <!-- ===== SEPARADOR ===== -->
+    <div class="container"><div class="separador"></div></div>
+
+    <!-- ============================================================ -->
+    <!-- ===== SECCIÓN 2: LACRAMARCA ===== -->
+    <!-- ============================================================ -->
+    <section class="container seccion-lacramarca" id="lacramarca">
+        <span class="icono-seccion">🌾</span>
+        <h2 class="section-title fade-in">Comunidad de Lacramarca</h2>
         <p class="section-subtitle fade-in">Más de 5,000 agricultores que trabajan por el desarrollo del valle</p>
         
-        <div class="grid-4">
-            <div class="card card-border-verde fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato">5,000+</span><p>Agricultores beneficiados con canales de riego en Lacramarca Alta y Baja</p></div>
-            <div class="card card-border-verde fade-in"><i class="fas fa-water"></i><h4>Riego</h4><span class="dato">132 ha</span><p>Hectáreas de cultivo aseguradas con el Canal Alto (S/ 2 millones)</p></div>
-            <div class="card card-border-verde fade-in"><i class="fas fa-bolt"></i><h4>Electrificación</h4><span class="dato">1,000+</span><p>Familias de Lacramarca Baja con nuevo servicio eléctrico (S/ 10 millones)</p></div>
-            <div class="card card-border-verde fade-in"><i class="fas fa-road"></i><h4>Vías</h4><span class="dato">14 km</span><p>Asfaltado de Cambio Puente, 14 Incas y Cascajal (S/ 25.6 millones)</p></div>
+        <div class="grid-2">
+            <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); order:1;">
+                <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🌾 5,000+ agricultores</span>
+            </div>
+            <div class="fade-in" style="order:2;">
+                <h3 style="font-family:'Playfair Display',serif; color:var(--verde-oliva); font-size:2rem;">El corazón agrícola de Áncash</h3>
+                <p>El valle de <strong>Lacramarca</strong> es una de las zonas agrícolas más importantes de la región Áncash. Más de <strong>5,000 agricultores</strong> dependen de sus tierras fértiles para su sustento.</p>
+                <p>La comunidad está organizada para gestionar proyectos de infraestructura que benefician a todos los campesinos del valle.</p>
+                <p><strong>Principales cultivos:</strong> Caña de azúcar, maíz, frutales y hortalizas.</p>
+            </div>
         </div>
 
-        <h3 style="font-family:'Playfair Display',serif; color:var(--marron); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
+        <div class="grid-4" style="margin-top:2rem;">
+            <div class="card fade-in">
+                <i class="fas fa-tractor"></i>
+                <h4>Agricultura</h4>
+                <span class="dato verde">5,000+</span>
+                <p>Agricultores beneficiados con canales de riego</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-water"></i>
+                <h4>Riego</h4>
+                <span class="dato verde">132 ha</span>
+                <p>Hectáreas con Canal Alto (S/ 2 millones)</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-bolt"></i>
+                <h4>Electrificación</h4>
+                <span class="dato verde">1,000+</span>
+                <p>Familias con nuevo servicio eléctrico</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-road"></i>
+                <h4>Vías</h4>
+                <span class="dato verde">14 km</span>
+                <p>Asfaltado (S/ 25.6 millones)</p>
+            </div>
+        </div>
+
+        <h3 style="font-family:'Playfair Display',serif; color:var(--verde-oliva); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
         <div class="grid-3">
-            <div class="card card-border-dorado fade-in">
+            <div class="card fade-in">
                 <h4>🌊 Defensas ribereñas</h4>
                 <span class="estado progreso">🔄 En ejecución</span>
-                <p>Inversión de S/ 657 millones para proteger a 35,000 personas de 58 comunidades. Avance: 57%.</p>
+                <p>Inversión de S/ 657 millones para proteger a 35,000 personas. Avance: 57%.</p>
             </div>
-            <div class="card card-border-dorado fade-in">
+            <div class="card fade-in">
                 <h4>🌾 Canal Puente Roto</h4>
                 <span class="estado activo">✅ En ejecución</span>
-                <p>89% de avance. Garantiza agua segura para más de 1,300 agricultores del valle.</p>
+                <p>89% de avance. Agua segura para más de 1,300 agricultores.</p>
             </div>
-            <div class="card card-border-dorado fade-in">
+            <div class="card fade-in">
                 <h4>⚡ Electrificación rural</h4>
                 <span class="estado culminado">✔️ Culminado</span>
-                <p>Servicio eléctrico para Túpac Amaru, Carrizales, Lacramarca Baja, Las Lomas y La Mora.</p>
+                <p>Servicio eléctrico para Túpac Amaru, Carrizales, Lacramarca Baja y más.</p>
             </div>
         </div>
     </section>
 
-    <!-- ===== 3. PUEBLO VIEJO ===== -->
-    <section class="container" id="puebloviejo">
-        <h2 class="section-title fade-in">🏛️ Pueblo Viejo</h2>
+    <!-- ===== SEPARADOR ===== -->
+    <div class="container"><div class="separador"></div></div>
+
+    <!-- ============================================================ -->
+    <!-- ===== SECCIÓN 3: PUEBLO VIEJO ===== -->
+    <!-- ============================================================ -->
+    <section class="container seccion-puebloviejo" id="puebloviejo">
+        <span class="icono-seccion">🏛️</span>
+        <h2 class="section-title fade-in">Pueblo Viejo</h2>
         <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral en la cuenca del río Lacramarca</p>
         
         <div class="grid-2">
-            <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); order:1;">
-                <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🏛️ 5,000 años de historia</span>
-            </div>
-            <div class="fade-in" style="order:2;">
-                <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); font-size:2rem;">Un descubrimiento monumental para Áncash</h3>
-                <p><strong>Pueblo Viejo</strong> es un sitio arqueológico descubierto en la cuenca del río Lacramarca, a solo <strong>2 horas de viaje desde Chimbote</strong> . Con una extensión aproximada de <strong>5 hectáreas</strong>, guarda similitudes con la ciudad sagrada de Caral y Bandurria .</p>
-                <p>La arqueóloga <strong>Ruth Shady</strong>, directora del Proyecto Especial Arqueológico Caral-Supe, confirmó que este vestigio tiene una antigüedad de al menos <strong>5,000 años</strong> y que la civilización Caral tiene relación hasta la provincia del Santa .</p>
+            <div class="fade-in">
+                <h3 style="font-family:'Playfair Display',serif; color:var(--azul); font-size:2rem;">Un descubrimiento monumental para Áncash</h3>
+                <p><strong>Pueblo Viejo</strong> es un sitio arqueológico descubierto en la cuenca del río Lacramarca, a solo <strong>2 horas de viaje desde Chimbote</strong>. Con una extensión aproximada de <strong>5 hectáreas</strong>, guarda similitudes con la ciudad sagrada de Caral y Bandurria.</p>
+                <p>La arqueóloga <strong>Ruth Shady</strong>, directora del Proyecto Especial Arqueológico Caral-Supe, confirmó que este vestigio tiene una antigüedad de al menos <strong>5,000 años</strong> y que la civilización Caral tiene relación hasta la provincia del Santa.</p>
                 <p>El sitio presenta una impresionante infraestructura de piedra que incluye:</p>
                 <ul style="margin:1rem 0 0 1.5rem; color:var(--marron-claro);">
                     <li>🏛️ Una <strong>construcción piramidal de 15 metros de altura</strong></li>
                     <li>📐 Una <strong>plaza cuadrangular</strong></li>
                     <li>🔄 Un <strong>anfiteatro circular hundido</strong></li>
                 </ul>
+                <p style="margin-top:1rem;">El arqueólogo <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como <em>"impresionante"</em> y señaló que Pueblo Viejo podría convertirse en un destino turístico de importancia para la provincia, con potencial para adherirse a la <strong>Ruta Moche</strong>.</p>
+            </div>
+            <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                <span style="background:rgba(0,0,0,0.6); padding:1rem 2rem; border-radius:16px; font-size:1.5rem;">🏛️ 5,000 años de historia</span>
             </div>
         </div>
 
         <div class="grid-4" style="margin-top:2rem;">
-            <div class="card card-border fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><p>Antigüedad confirmada por Ruth Shady, similar a Caral</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-vector-square"></i><h4>5 hectáreas</h4><p>Extensión del sitio arqueológico</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-mountain"></i><h4>Pirámide 15 m</h4><p>Con plaza y anfiteatro circular hundido</p></div>
-            <div class="card card-border fade-in"><i class="fas fa-route"></i><h4>Ruta Moche</h4><p>Potencial para integrarse a la ruta turística</p></div>
+            <div class="card fade-in">
+                <i class="fas fa-calendar-alt"></i>
+                <h4>5,000 años</h4>
+                <p>Antigüedad confirmada por Ruth Shady</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-vector-square"></i>
+                <h4>5 hectáreas</h4>
+                <p>Extensión del sitio arqueológico</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-mountain"></i>
+                <h4>Pirámide 15 m</h4>
+                <p>Con plaza y anfiteatro circular</p>
+            </div>
+            <div class="card fade-in">
+                <i class="fas fa-route"></i>
+                <h4>Ruta Moche</h4>
+                <p>Potencial para integrarse</p>
+            </div>
         </div>
 
-        <div class="badge-info fade-in" style="margin-top:1.5rem;">
-            <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🏺 Hallazgos adicionales</h4>
-            <p>El arqueólogo <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como <em>"impresionante"</em> y señaló que Pueblo Viejo podría convertirse en un destino turístico de importancia para la provincia, con potencial para adherirse a la <strong>Ruta Moche</strong> .</p>
-            <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 El sitio fue descubierto en noviembre de 2010 y se busca gestionar su puesta en valor ante el Ministerio de Cultura .</p>
+        <div class="badge-info fade-in" style="margin-top:1.5rem; border-left-color:var(--azul);">
+            <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">🏺 Hallazgos adicionales</h4>
+            <p>El sitio fue descubierto en <strong>noviembre de 2010</strong> y se busca gestionar su puesta en valor ante el <strong>Ministerio de Cultura</strong>.</p>
+            <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 Pueblo Viejo podría convertirse en un destino turístico de importancia para la provincia de Chimbote.</p>
         </div>
     </section>
 
+    <!-- ===== SEPARADOR ===== -->
+    <div class="container"><div class="separador"></div></div>
+
     <!-- ===== EVENTOS ===== -->
     <section class="container" id="eventos">
-        <h2 class="section-title fade-in">📅 Próximos Eventos</h2>
-        <p class="section-subtitle fade-in">Participa en nuestras actividades comunitarias</p>
+        <h2 class="section-title fade-in" style="color:var(--marron);">📅 Próximos Eventos</h2>
+        <p class="section-subtitle fade-in" style="color:var(--marron-claro);">Participa en nuestras actividades comunitarias</p>
         <div class="grid-3">
-            <div class="card evento-card fade-in"><div class="fecha"><i class="far fa-calendar-alt"></i> 22 de agosto 2026 · 9:00 AM</div><h4>Visita guiada a los petroglifos</h4><p>Recorrido con arqueólogos por los principales sitios rupestres de Palamenco.</p></div>
-            <div class="card evento-card fade-in"><div class="fecha"><i class="far fa-calendar-alt"></i> 5 de setiembre 2026 · 3:00 PM</div><h4>Taller de conservación</h4><p>Aprende técnicas de limpieza y preservación de piedras grabadas.</p></div>
-            <div class="card evento-card fade-in"><div class="fecha"><i class="far fa-calendar-alt"></i> 18 de setiembre 2026 · 10:00 AM</div><h4>Ceremonia ancestral</h4><p>Ofrenda y agradecimiento a la tierra con música y danza tradicional.</p></div>
+            <div class="card evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 22 de agosto 2026 · 9:00 AM</div>
+                <h4>Visita guiada a los petroglifos</h4>
+                <p>Recorrido con arqueólogos por los principales sitios rupestres de Palamenco.</p>
+            </div>
+            <div class="card evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 5 de setiembre 2026 · 3:00 PM</div>
+                <h4>Taller de conservación</h4>
+                <p>Aprende técnicas de limpieza y preservación de piedras grabadas.</p>
+            </div>
+            <div class="card evento-card fade-in">
+                <div class="fecha"><i class="far fa-calendar-alt"></i> 18 de setiembre 2026 · 10:00 AM</div>
+                <h4>Ceremonia ancestral</h4>
+                <p>Ofrenda y agradecimiento a la tierra con música y danza tradicional.</p>
+            </div>
         </div>
     </section>
 
     <!-- ===== TESTIMONIOS ===== -->
     <section class="container">
-        <h2 class="section-title fade-in">⭐ Testimonios</h2>
-        <p class="section-subtitle fade-in">Lo que dicen quienes nos visitan</p>
+        <h2 class="section-title fade-in" style="color:var(--marron);">⭐ Testimonios</h2>
+        <p class="section-subtitle fade-in" style="color:var(--marron-claro);">Lo que dicen quienes nos visitan</p>
         <div class="grid-3">
-            <div class="card testimonio fade-in"><i class="fas fa-quote-left"></i><p>"Palamenco es un tesoro arqueológico que todos los peruanos deberían conocer. Las figuras en piedra cuentan historias de hace 3,000 años."</p><div class="nombre">— Dr. Carlos Mamani, arqueólogo</div></div>
-            <div class="card testimonio fade-in"><i class="fas fa-quote-left"></i><p>"Pueblo Viejo es impresionante. Es la primera evidencia de una civilización tan antigua como Caral en la costa de Áncash."</p><div class="nombre">— Dra. Ruth Shady, directora de Caral-Supe</div></div>
-            <div class="card testimonio fade-in"><i class="fas fa-quote-left"></i><p>"La comunidad de Lacramarca cuida estos patrimonios como si fueran sus propios abuelos. Es conmovedor ver su compromiso."</p><div class="nombre">— Peter Smith, investigador británico</div></div>
+            <div class="card testimonio fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"Palamenco es un tesoro arqueológico que todos los peruanos deberían conocer. Las figuras en piedra cuentan historias de hace 3,000 años."</p>
+                <div class="nombre">— Dr. Carlos Mamani, arqueólogo</div>
+            </div>
+            <div class="card testimonio fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"Pueblo Viejo es impresionante. Es la primera evidencia de una civilización tan antigua como Caral en la costa de Áncash."</p>
+                <div class="nombre">— Dra. Ruth Shady, directora de Caral-Supe</div>
+            </div>
+            <div class="card testimonio fade-in">
+                <i class="fas fa-quote-left"></i>
+                <p>"La comunidad de Lacramarca cuida estos patrimonios como si fueran sus propios abuelos. Es conmovedor ver su compromiso."</p>
+                <div class="nombre">— Peter Smith, investigador británico</div>
+            </div>
         </div>
     </section>
 
     <!-- ===== MAPA ===== -->
     <section class="container" id="mapa">
-        <h2 class="section-title fade-in">🗺️ Mapa · Palamenco · Lacramarca · Pueblo Viejo</h2>
-        <p class="section-subtitle fade-in">Ubicación de los tres patrimonios y ruta desde Chimbote</p>
+        <h2 class="section-title fade-in" style="color:var(--marron);">🗺️ Mapa · Palamenco · Lacramarca · Pueblo Viejo</h2>
+        <p class="section-subtitle fade-in" style="color:var(--marron-claro);">Ubicación de los tres patrimonios y ruta desde Chimbote</p>
         <div class="mapa-container fade-in">
             <div id="mapa"></div>
             <div style="margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
                 <span style="background:#A0522D; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🪨 Palamenco</span>
                 <span style="background:#556B2F; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🌾 Lacramarca</span>
-                <span style="background:#C49A6C; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🏛️ Pueblo Viejo</span>
+                <span style="background:#2C6E8F; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🏛️ Pueblo Viejo</span>
                 <span style="background:#2196F3; color:white; padding:0.3rem 1.2rem; border-radius:30px; font-size:0.85rem;">🏙️ Chimbote</span>
             </div>
         </div>
@@ -370,8 +516,8 @@
 
     <!-- ===== CONTACTO ===== -->
     <section class="container" id="contacto">
-        <h2 class="section-title fade-in">📩 Contacto</h2>
-        <p class="section-subtitle fade-in">Escríbenos, te responderemos a la brevedad</p>
+        <h2 class="section-title fade-in" style="color:var(--marron);">📩 Contacto</h2>
+        <p class="section-subtitle fade-in" style="color:var(--marron-claro);">Escríbenos, te responderemos a la brevedad</p>
         <div class="form-contact fade-in">
             <form onsubmit="event.preventDefault(); document.getElementById('mensaje-enviado').style.display='block'; this.reset(); setTimeout(()=>document.getElementById('mensaje-enviado').style.display='none',5000);">
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
@@ -388,10 +534,32 @@
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-grid">
-            <div><h4>🌾 Palamenco · Lacramarca · Pueblo Viejo</h4><p style="color:#ccc; font-size:0.9rem;">Junta de Campesinos<br>Valle de Lacramarca · Chimbote · Áncash</p></div>
-            <div><h4>Enlaces</h4><a href="#inicio">Inicio</a><a href="#parlamenco">Palamenco</a><a href="#lacramarca">Lacramarca</a><a href="#puebloviejo">Pueblo Viejo</a><a href="#eventos">Eventos</a></div>
-            <div><h4>Contacto</h4><a href="mailto:petroglifos@parlamenco.org">petroglifos@parlamenco.org</a><a href="tel:+51987654321">+51 987 654 321</a></div>
-            <div><h4>Redes</h4><div class="social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div>
+            <div>
+                <h4>🌾 Palamenco · Lacramarca · Pueblo Viejo</h4>
+                <p style="color:#ccc; font-size:0.9rem;">Junta de Campesinos<br>Valle de Lacramarca · Chimbote · Áncash</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <a href="#inicio">Inicio</a>
+                <a href="#palamenco">Palamenco</a>
+                <a href="#lacramarca">Lacramarca</a>
+                <a href="#puebloviejo">Pueblo Viejo</a>
+                <a href="#eventos">Eventos</a>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <a href="mailto:petroglifos@parlamenco.org">petroglifos@parlamenco.org</a>
+                <a href="tel:+51987654321">+51 987 654 321</a>
+            </div>
+            <div>
+                <h4>Redes</h4>
+                <div class="social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
         </div>
         <div class="footer-bottom">© 2026 Junta de Campesinos de Palamenco · Lacramarca · Pueblo Viejo · Todos los derechos reservados</div>
     </footer>
@@ -438,15 +606,15 @@
                 .addTo(mapa).bindPopup('🌾 <b>Lacramarca</b><br>Comunidad campesina');
 
             // Marcador Pueblo Viejo
-            L.marker(puebloviejo, { icon: L.divIcon({ html: '<div style="background:#C49A6C;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px #C49A6C;"></div>', iconSize: [18,18], iconAnchor: [9,9] }) })
+            L.marker(puebloviejo, { icon: L.divIcon({ html: '<div style="background:#2C6E8F;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 30px #2C6E8F;"></div>', iconSize: [18,18], iconAnchor: [9,9] }) })
                 .addTo(mapa).bindPopup('🏛️ <b>Pueblo Viejo</b><br>Sitio arqueológico · 5,000 años');
 
             // Ruta Chimbote → Palamenco
-            L.polyline([chimbote, [-8.9, -78.2], parlamenco], { color: '#556B2F', weight: 4, dashArray: '8 8' })
+            L.polyline([chimbote, [-8.9, -78.2], parlamenco], { color: '#A0522D', weight: 4, dashArray: '8 8' })
                 .addTo(mapa).bindPopup('🚗 Ruta Chimbote → Palamenco');
 
             // Ruta Chimbote → Pueblo Viejo
-            L.polyline([chimbote, [-9.0, -78.5], puebloviejo], { color: '#C49A6C', weight: 4, dashArray: '8 8' })
+            L.polyline([chimbote, [-9.0, -78.5], puebloviejo], { color: '#2C6E8F', weight: 4, dashArray: '8 8' })
                 .addTo(mapa).bindPopup('🚗 Ruta Chimbote → Pueblo Viejo (2 horas)');
 
             mapa.fitBounds([chimbote, parlamenco, puebloviejo], { padding: [50, 50] });
