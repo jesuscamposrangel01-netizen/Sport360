@@ -6,18 +6,12 @@
     <title>Lacramarca · Palamenco · Pueblo Viejo</title>
     <meta name="description" content="Tres patrimonios de Áncash: Comunidad Campesina de Lacramarca, Petroglifos de Palamenco y Sitio Arqueológico Pueblo Viejo.">
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet para el mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        /* ===== RESET Y BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { 
@@ -30,7 +24,6 @@
                 radial-gradient(ellipse at 90% 80%, rgba(85, 107, 47, 0.05) 0%, transparent 50%);
         }
 
-        /* ===== VARIABLES ===== */
         :root {
             --terracota: #A0522D;
             --terracota-light: #C47A5A;
@@ -52,7 +45,6 @@
             --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* ===== ANIMACIONES ===== */
         .fade-in { 
             opacity: 0; 
             transform: translateY(50px); 
@@ -63,35 +55,10 @@
             transform: translateY(0); 
         }
 
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        /* ===== SCROLLBAR PERSONALIZADA ===== */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--beige); }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(180deg, var(--terracota), var(--dorado));
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover { background: var(--terracota); }
-
-        /* ===== HEADER GLASSMORPHISM ===== */
+        /* ===== HEADER ===== */
         header {
             background: rgba(44, 24, 16, 0.92);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             color: white;
             padding: 0.6rem 2rem;
             display: flex;
@@ -103,7 +70,6 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 40px rgba(0,0,0,0.3);
-            transition: var(--transition);
         }
 
         .logo {
@@ -116,15 +82,9 @@
             color: var(--dorado);
             text-decoration: none;
             cursor: pointer;
-            transition: var(--transition);
         }
         .logo:hover { transform: scale(1.02); }
-        .logo svg {
-            width: 45px;
-            height: 45px;
-            flex-shrink: 0;
-            filter: drop-shadow(0 2px 12px rgba(196, 154, 108, 0.3));
-        }
+        .logo svg { width: 45px; height: 45px; flex-shrink: 0; }
         .logo .logo-texto { display: flex; flex-direction: column; line-height: 1.2; }
         .logo .logo-texto small { 
             font-size: 0.7rem; 
@@ -153,39 +113,19 @@
             cursor: pointer;
             border: 2px solid transparent;
             letter-spacing: 0.5px;
-            position: relative;
         }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--dorado);
-            transition: var(--transition);
-            border-radius: 4px;
-        }
-        nav a:hover::after { width: 60%; }
-        nav a:hover { 
-            color: white; 
-            transform: translateY(-2px); 
-        }
-        nav a.activo-noticias { 
-            background: var(--dorado); 
-            color: var(--marron); 
-            border-color: var(--dorado-light);
-        }
+        nav a:hover { color: white; transform: translateY(-2px); }
+        nav a.activo-noticias { background: var(--dorado); color: var(--marron); border-color: var(--dorado-light); }
         nav a.activo-lacramarca { background: var(--verde); border-color: var(--verde-light); }
         nav a.activo-palamenco { background: var(--terracota); border-color: var(--terracota-light); }
         nav a.activo-puebloviejo { background: var(--azul); border-color: var(--azul-light); }
         nav a.activo-eventos { background: #8B6B4D; border-color: #A8896A; }
         nav a.activo-investigacion { background: #6B4C7A; border-color: #8B6B9A; }
         nav a.activo-mapa { background: #D4A24C; color: var(--marron); border-color: #E8C97A; }
+        nav a.activo-streaming { background: #E63946; color: white; border-color: #FF6B6B; }
         nav a.activo-contacto { background: #4A6B7A; border-color: #6A8B9A; }
 
-        /* ===== HERO PREMIUM ===== */
+        /* ===== HERO ===== */
         .hero {
             background: linear-gradient(135deg, #1a0f0c 0%, #2C1810 40%, #3D2318 100%);
             color: white;
@@ -194,22 +134,6 @@
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid rgba(196, 154, 108, 0.2);
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(196, 154, 108, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(74, 122, 46, 0.05) 0%, transparent 50%);
-            animation: heroGlow 25s ease-in-out infinite alternate;
-        }
-        @keyframes heroGlow {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(5%, 5%) rotate(5deg) scale(1.1); }
         }
         .hero h1 {
             font-family: 'Playfair Display', serif;
@@ -257,15 +181,8 @@
             font-size: 0.85rem;
             color: rgba(255,255,255,0.6);
             letter-spacing: 1px;
-            transition: var(--transition);
-        }
-        .hero .decoracion span:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            transform: translateY(-2px);
         }
 
-        /* ===== CONTENEDOR ===== */
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
         .section-title {
@@ -273,7 +190,6 @@
             font-size: 3rem;
             text-align: center;
             margin-bottom: 0.5rem;
-            position: relative;
         }
         .section-title::after {
             content: '';
@@ -299,10 +215,8 @@
             display: block; 
             text-align: center; 
             margin-bottom: 0.5rem;
-            animation: float 3s ease-in-out infinite;
         }
 
-        /* ===== OCULTAR/MOSTRAR SECCIONES ===== */
         .seccion { display: none; animation: fadeInPage 0.6s ease; }
         .seccion.activa { display: block; }
 
@@ -333,6 +247,9 @@
         .seccion-mapa .section-title { color: #D4A24C; }
         .seccion-mapa .section-title::after { background: #D4A24C; }
 
+        .seccion-streaming .section-title { color: #E63946; }
+        .seccion-streaming .section-title::after { background: #E63946; }
+
         .seccion-eventos .section-title { color: #8B6B4D; }
         .seccion-eventos .section-title::after { background: #8B6B4D; }
         .seccion-eventos .card { border-bottom: 4px solid #8B6B4D; }
@@ -351,57 +268,28 @@
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
 
-        /* ===== CARDS PREMIUM ===== */
+        /* ===== CARDS ===== */
         .card {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             padding: 2rem;
             border-radius: 24px;
             box-shadow: var(--sombra);
             transition: var(--transition);
             border-bottom: 4px solid var(--dorado);
-            position: relative;
-            overflow: hidden;
         }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        .card:hover::before { opacity: 1; }
         .card:hover {
             transform: translateY(-10px);
             box-shadow: var(--sombra-hover);
         }
         .card i { font-size: 2.8rem; margin-bottom: 1rem; display: block; }
         .card h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--marron); }
-        .card .dato {
-            font-size: 2.4rem;
-            font-weight: 900;
-            display: block;
-            margin: 0.5rem 0;
-            background: linear-gradient(135deg, var(--terracota), var(--dorado));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card .dato.verde { background: linear-gradient(135deg, var(--verde), var(--verde-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .card .dato.terracota { background: linear-gradient(135deg, var(--terracota), var(--terracota-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .card .dato.azul { background: linear-gradient(135deg, var(--azul), var(--azul-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        /* ===== NOTICIAS PREMIUM ===== */
+        /* ===== NOTICIAS ===== */
         .noticia-card {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             border-radius: 24px;
             overflow: hidden;
@@ -426,7 +314,6 @@
             line-height: 1.6;
         }
 
-        /* ===== IMAGENES ===== */
         .quienes-imagen {
             border-radius: 24px;
             height: 400px;
@@ -440,13 +327,10 @@
             background-position: center;
             position: relative;
             overflow: hidden;
-            transition: var(--transition);
         }
-        .quienes-imagen:hover { transform: scale(1.01); }
         .quienes-imagen .overlay {
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             padding: 1.2rem 2.5rem;
             border-radius: 16px;
             font-size: 1.5rem;
@@ -457,16 +341,13 @@
         .badge-info {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             padding: 2rem;
             border-radius: 24px;
             border-left: 6px solid var(--dorado);
             margin-top: 1.5rem;
             box-shadow: var(--sombra);
-            transition: var(--transition);
         }
-        .badge-info:hover { box-shadow: var(--sombra-hover); }
 
         .estado {
             display: inline-block;
@@ -481,11 +362,10 @@
         .estado.progreso { background: #fff3cd; color: #856404; }
         .estado.culminado { background: #cce5ff; color: #004085; }
 
-        /* ===== MAPA PREMIUM ===== */
+        /* ===== MAPA ===== */
         .mapa-container {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             padding: 1.5rem;
             border-radius: 24px;
@@ -499,11 +379,148 @@
             border: 2px solid rgba(255,255,255,0.1);
         }
 
-        /* ===== FORMULARIO PREMIUM ===== */
+        /* ===== STREAMING ===== */
+        .streaming-container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            padding: 1.5rem;
+            border-radius: 24px;
+            box-shadow: var(--sombra);
+            margin: 2rem 0;
+        }
+        .streaming-container iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 16px;
+            border: none;
+        }
+        .streaming-container .streaming-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
+        }
+        .streaming-container .streaming-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--marron-claro);
+        }
+        .streaming-container .streaming-info .online {
+            color: #E63946;
+            font-weight: 700;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ===== REDES SOCIALES ===== */
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        .social-grid a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--sombra);
+        }
+        .social-grid a:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: var(--sombra-hover);
+        }
+        .social-grid .facebook { background: #1877F2; }
+        .social-grid .instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .social-grid .youtube { background: #FF0000; }
+        .social-grid .whatsapp { background: #25D366; }
+
+        /* ===== COOKIES BANNER ===== */
+        .cookies-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            z-index: 9999;
+            border-top: 2px solid rgba(196, 154, 108, 0.3);
+            transform: translateY(0);
+            transition: transform 0.6s ease;
+        }
+        .cookies-banner.hidden {
+            transform: translateY(100%);
+        }
+        .cookies-banner p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0;
+        }
+        .cookies-banner p a {
+            color: var(--dorado);
+            text-decoration: underline;
+        }
+        .cookies-banner .cookies-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .cookies-banner .btn-cookie {
+            padding: 0.5rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cookies-banner .btn-cookie.aceptar {
+            background: var(--dorado);
+            color: var(--marron);
+        }
+        .cookies-banner .btn-cookie.aceptar:hover {
+            background: var(--dorado-light);
+            transform: scale(1.05);
+        }
+        .cookies-banner .btn-cookie.rechazar {
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .cookies-banner .btn-cookie.rechazar:hover {
+            border-color: rgba(255,255,255,0.5);
+            color: white;
+        }
+
+        /* ===== FORMULARIO ===== */
         .form-contact { 
             background: var(--glass);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
             padding: 2.5rem; 
             border-radius: 24px; 
@@ -519,7 +536,6 @@
             transition: var(--transition);
             background: rgba(255,255,255,0.5);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
         }
         .form-contact input:focus, .form-contact textarea:focus { 
             border-color: var(--dorado); 
@@ -544,7 +560,7 @@
             box-shadow: 0 8px 30px rgba(160, 82, 45, 0.4);
         }
 
-        /* ===== FOOTER PREMIUM ===== */
+        /* ===== FOOTER ===== */
         footer {
             background: linear-gradient(145deg, var(--marron), #1a0f0c);
             color: rgba(255,255,255,0.7);
@@ -560,7 +576,7 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        footer a:hover { color: var(--dorado-light); text-decoration: none; }
+        footer a:hover { color: var(--dorado-light); }
         footer .footer-divider {
             width: 60px;
             height: 2px;
@@ -570,10 +586,6 @@
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 992px) {
-            .hero h1 { font-size: 3.2rem; }
-        }
-
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 0.5rem; text-align: center; padding: 0.5rem 1rem; }
             .hero h1 { font-size: 2.5rem; }
@@ -586,9 +598,10 @@
             .logo svg { width: 35px; height: 35px; }
             .container { padding: 2rem 1rem; }
             #mapa { height: 300px; }
-            .hero .decoracion span { font-size: 0.7rem; padding: 0.3rem 1rem; }
+            .streaming-container iframe { height: 250px; }
+            .cookies-banner { flex-direction: column; text-align: center; padding: 1rem; }
+            .social-grid a { width: 50px; height: 50px; font-size: 1.5rem; }
         }
-
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 1rem; }
@@ -630,6 +643,7 @@
             <a onclick="mostrarSeccion('puebloviejo')">🏛️ Pueblo Viejo</a>
             <a onclick="mostrarSeccion('eventos')">📅 Eventos</a>
             <a onclick="mostrarSeccion('investigacion')">📚 Investigación</a>
+            <a onclick="mostrarSeccion('streaming')">📡 En Vivo</a>
             <a onclick="mostrarSeccion('mapa')">🗺️ Mapa</a>
             <a onclick="mostrarSeccion('contacto')">📩 Contacto</a>
         </nav>
@@ -652,6 +666,7 @@
             <span>🌾 5,000+ Agricultores</span>
             <span>🪨 300+ Petroglifos</span>
             <span>🏛️ 5,000 años de historia</span>
+            <span>📡 En Vivo</span>
         </div>
     </section>
 
@@ -665,41 +680,41 @@
             <p class="section-subtitle fade-in">Las últimas novedades sobre nuestros tres patrimonios</p>
 
             <div class="grid-3">
-                <!-- NOTICIA 1: Restauración de murales (CON IMAGEN DE IMGUR) -->
+                <!-- Noticia 1 -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('lacramarca')">
                     <div style="height:220px; background-image: url('https://i.imgur.com/iFAP1Fr.jpg'); background-size:cover; background-position:center; position:relative; border-radius:24px 24px 0 0;">
-                        <span style="position:absolute; top:12px; right:12px; background:rgba(74, 122, 46, 0.9); backdrop-filter:blur(6px); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase; letter-spacing:0.5px; border:1px solid rgba(255,255,255,0.1);">Lacramarca</span>
+                        <span style="position:absolute; top:12px; right:12px; background:rgba(74, 122, 46, 0.9); backdrop-filter:blur(6px); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase;">Lacramarca</span>
                     </div>
                     <div class="info">
                         <h3>🎨 Restauración de murales en Monte Zarumo</h3>
                         <p>El presidente de la Comunidad Campesina Lacramarca, <strong>Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco.</p>
-                        <span style="color:var(--verde); font-weight:700; font-size:0.9rem; cursor:pointer; display:inline-block; margin-top:0.5rem;">Leer más →</span>
+                        <span style="color:var(--verde); font-weight:700; font-size:0.9rem; cursor:pointer;">Leer más →</span>
                     </div>
                 </div>
 
-                <!-- NOTICIA 2: Palamenco -->
+                <!-- Noticia 2 -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('palamenco')">
                     <div style="height:220px; background:linear-gradient(135deg, #A0522D, #6B3A1F); display:flex; align-items:center; justify-content:center; font-size:4rem; color:white; position:relative; border-radius:24px 24px 0 0;">
                         🪨
-                        <span style="position:absolute; top:12px; right:12px; background:rgba(160, 82, 45, 0.9); backdrop-filter:blur(6px); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase; letter-spacing:0.5px; border:1px solid rgba(255,255,255,0.1);">Palamenco</span>
+                        <span style="position:absolute; top:12px; right:12px; background:rgba(160, 82, 45, 0.9); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase;">Palamenco</span>
                     </div>
                     <div class="info">
                         <h3>Petroglifos de 3,000 años</h3>
                         <p>El complejo de petroglifos más extenso de Áncash con más de 300 rocas grabadas. Figuras de serpientes, camélidos y divinidades ancestrales.</p>
-                        <span style="color:var(--terracota); font-weight:700; font-size:0.9rem; cursor:pointer; display:inline-block; margin-top:0.5rem;">Leer más →</span>
+                        <span style="color:var(--terracota); font-weight:700; font-size:0.9rem; cursor:pointer;">Leer más →</span>
                     </div>
                 </div>
 
-                <!-- NOTICIA 3: Pueblo Viejo -->
+                <!-- Noticia 3 -->
                 <div class="noticia-card fade-in" onclick="mostrarSeccion('puebloviejo')">
                     <div style="height:220px; background:linear-gradient(135deg, #2C6E8F, #1A3F55); display:flex; align-items:center; justify-content:center; font-size:4rem; color:white; position:relative; border-radius:24px 24px 0 0;">
                         🏛️
-                        <span style="position:absolute; top:12px; right:12px; background:rgba(44, 110, 143, 0.9); backdrop-filter:blur(6px); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase; letter-spacing:0.5px; border:1px solid rgba(255,255,255,0.1);">Pueblo Viejo</span>
+                        <span style="position:absolute; top:12px; right:12px; background:rgba(44, 110, 143, 0.9); padding:0.3rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; color:white; text-transform:uppercase;">Pueblo Viejo</span>
                     </div>
                     <div class="info">
                         <h3>Sitio arqueológico de 5,000 años</h3>
                         <p>Similar a Caral, con pirámide de 15 metros, plaza cuadrangular y anfiteatro circular hundido. Confirmado por la arqueóloga Ruth Shady.</p>
-                        <span style="color:var(--azul); font-weight:700; font-size:0.9rem; cursor:pointer; display:inline-block; margin-top:0.5rem;">Leer más →</span>
+                        <span style="color:var(--azul); font-weight:700; font-size:0.9rem; cursor:pointer;">Leer más →</span>
                     </div>
                 </div>
             </div>
@@ -707,20 +722,66 @@
             <!-- Estadísticas -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:2rem; text-align:center; padding:2rem 0; margin-top:2rem;">
                 <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
-                    <span style="font-size:2.8rem; font-weight:900; background:linear-gradient(135deg, var(--verde), var(--verde-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5,000+</span><br>
+                    <span style="font-size:2.8rem; font-weight:900; color:var(--verde);">5,000+</span><br>
                     <span style="color:var(--marron-claro);">Agricultores</span>
                 </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
-                    <span style="font-size:2.8rem; font-weight:900; background:linear-gradient(135deg, var(--terracota), var(--terracota-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">300+</span><br>
+                <div style="background:var(--glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.8rem; font-weight:900; color:var(--terracota);">300+</span><br>
                     <span style="color:var(--marron-claro);">Rocas grabadas</span>
                 </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
-                    <span style="font-size:2.8rem; font-weight:900; background:linear-gradient(135deg, var(--azul), var(--azul-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5,000</span><br>
+                <div style="background:var(--glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.8rem; font-weight:900; color:var(--azul);">5,000</span><br>
                     <span style="color:var(--marron-claro);">Años Pueblo Viejo</span>
                 </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
-                    <span style="font-size:2.8rem; font-weight:900; background:linear-gradient(135deg, var(--dorado), var(--dorado-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">3,000</span><br>
+                <div style="background:var(--glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
+                    <span style="font-size:2.8rem; font-weight:900; color:var(--dorado);">3,000</span><br>
                     <span style="color:var(--marron-claro);">Años Palamenco</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ===== SECCIÓN: STREAMING ===== -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-streaming" id="seccion-streaming">
+        <div class="container">
+            <span class="icono-seccion">📡</span>
+            <h2 class="section-title fade-in">En Vivo · Streaming</h2>
+            <p class="section-subtitle fade-in">Mira nuestras transmisiones en vivo desde Palamenco y Lacramarca</p>
+
+            <div class="streaming-container fade-in">
+                <!-- Cambia el src por el enlace de tu transmisión en vivo -->
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <div class="streaming-info">
+                    <span><span class="online">●</span> <strong>EN VIVO</strong></span>
+                    <span>📅 Próxima transmisión: <strong>22 de agosto 2026</strong></span>
+                    <span>📍 Desde: <strong>Complejo Arqueológico Palamenco</strong></span>
+                </div>
+                <div style="text-align:center; margin-top:1rem; font-size:0.9rem; color:var(--marron-claro);">
+                    <i class="fas fa-info-circle"></i> Conéctate con nosotros en vivo durante las visitas guiadas y ceremonias ancestrales.
+                </div>
+            </div>
+
+            <!-- Horarios de transmisión -->
+            <div class="grid-3" style="margin-top:2rem;">
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-calendar-day" style="color:#E63946;"></i>
+                    <h4>Próxima transmisión</h4>
+                    <p><strong>22 de agosto 2026 · 9:00 AM</strong></p>
+                    <p>Visita guiada a los petroglifos de Palamenco</p>
+                </div>
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-calendar-day" style="color:#E63946;"></i>
+                    <h4>Ceremonia ancestral</h4>
+                    <p><strong>18 de setiembre 2026 · 10:00 AM</strong></p>
+                    <p>Ofrenda y agradecimiento a la tierra</p>
+                </div>
+                <div class="card fade-in" style="text-align:center;">
+                    <i class="fas fa-calendar-day" style="color:#E63946;"></i>
+                    <h4>Taller de conservación</h4>
+                    <p><strong>5 de setiembre 2026 · 3:00 PM</strong></p>
+                    <p>Técnicas de limpieza y preservación</p>
                 </div>
             </div>
         </div>
@@ -737,13 +798,10 @@
             <div class="mapa-container fade-in">
                 <div id="mapa"></div>
                 <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center;">
-                    <span style="background:linear-gradient(135deg, var(--verde), var(--verde-light)); color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; font-weight:600; box-shadow:0 2px 12px rgba(74,122,46,0.3);">🌾 Lacramarca</span>
-                    <span style="background:linear-gradient(135deg, var(--terracota), var(--terracota-light)); color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; font-weight:600; box-shadow:0 2px 12px rgba(160,82,45,0.3);">🪨 Palamenco</span>
-                    <span style="background:linear-gradient(135deg, var(--azul), var(--azul-light)); color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; font-weight:600; box-shadow:0 2px 12px rgba(26,90,122,0.3);">🏛️ Pueblo Viejo</span>
-                    <span style="background:linear-gradient(135deg, #2196F3, #64B5F6); color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; font-weight:600; box-shadow:0 2px 12px rgba(33,150,243,0.3);">🏙️ Chimbote</span>
-                </div>
-                <div style="margin-top:0.8rem; text-align:center; font-size:0.85rem; color:var(--marron-claro); opacity:0.7;">
-                    <i class="fas fa-info-circle"></i> Las rutas son aproximadas. Se recomienda usar GPS.
+                    <span style="background:#4A7A2E; color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem;">🌾 Lacramarca</span>
+                    <span style="background:#A0522D; color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem;">🪨 Palamenco</span>
+                    <span style="background:#1A5A7A; color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem;">🏛️ Pueblo Viejo</span>
+                    <span style="background:#2196F3; color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem;">🏙️ Chimbote</span>
                 </div>
             </div>
         </div>
@@ -762,11 +820,8 @@
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:2rem;">Historia del valle de Lacramarca</h3>
                     <p><strong>Lacramarca</strong> es un valle en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra.</p>
-                    <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
-                        <p style="font-size:0.95rem;"><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
-                    </div>
-                    <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--dorado);">
-                        <p style="font-size:0.95rem;"><strong>📅 Fundación de Chimbote:</strong> 6 de diciembre de 1906. El poblamiento del valle se remonta a más de 1,800 años atrás.</p>
+                    <div style="background:var(--glass); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
+                        <p><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
                     </div>
                     <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
                 </div>
@@ -775,12 +830,12 @@
                 </div>
             </div>
 
-            <!-- MONTE ZARUMO CON IMAGEN DE IMGUR -->
+            <!-- Imagen de la comunidad -->
             <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
                 <div style="margin:1rem 0; text-align:center;">
                     <img src="https://i.imgur.com/iFAP1Fr.jpg" alt="Restauración de murales en Monte Zarumo" 
-                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra); border:2px solid rgba(255,255,255,0.1);">
+                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
                     <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">
                         📸 Presidente Carlos Budinich, equipo de pintores y artista visual Maucayan
                     </p>
@@ -788,51 +843,11 @@
                 <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>.</p>
             </div>
 
-            <h3 style="font-family:'Playfair Display',serif; color:var(--verde); text-align:center; margin:3rem 0 1.5rem 0;">📜 Línea de tiempo del valle</h3>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem; margin-bottom:2rem;">
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid #6B4C7A;">
-                    <span style="font-size:2.5rem;">🏛️</span>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Siglos II-VIII d.C.</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Cultura Moche construye la Huaca San Pedro</p>
-                </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--terracota);">
-                    <span style="font-size:2.5rem;">🗡️</span>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Época preincaica</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Culturas Wari, Inca y Recuay</p>
-                </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--dorado);">
-                    <span style="font-size:2.5rem;">📅</span>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">6 de diciembre 1906</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">Creación del distrito de Chimbote</p>
-                </div>
-                <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; text-align:center; box-shadow:var(--sombra); border-top:4px solid var(--verde);">
-                    <span style="font-size:2.5rem;">🌾</span>
-                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">Actualidad</h4>
-                    <p style="font-size:0.9rem; color:var(--marron-claro);">5,000+ agricultores · Proyecto Chinecas</p>
-                </div>
-            </div>
-
-            <div class="grid-4" style="margin-top:1rem;">
-                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
-                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
-                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
-            </div>
-
-            <h3 style="font-family:'Playfair Display',serif; color:var(--verde); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
-            <div class="grid-3">
-                <div class="card fade-in"><h4>🌊 Canal Puente Roto</h4><span class="estado activo">✅ 89% de avance</span><p>Agua segura para más de <strong>1,300 agricultores</strong>.</p></div>
-                <div class="card fade-in"><h4>💧 Canal Ramal 5</h4><span class="estado culminado">✔️ Culminado</span><p>Inversión de <strong>S/ 1.8 millones</strong>.</p></div>
-                <div class="card fade-in"><h4>🏗️ Obras hidráulicas</h4><span class="estado progreso">🔄 En ejecución</span><p>4 obras por <strong>S/ 9.18 millones</strong>.</p></div>
-            </div>
-
-            <div class="badge-info fade-in" style="border-left-color:var(--dorado);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--dorado);">🌍 Proyecto Chinecas</h4>
-                <ul style="margin:1rem 0 0 1.5rem; color:var(--marron-claro);">
-                    <li>🏗️ <strong>Presa La Huaca</strong>: 44,000 hectáreas en Santa-Lacramarca</li>
-                    <li>💰 Inversión: <strong>US$ 3,400 millones</strong></li>
-                    <li>👨‍🌾 Empleos directos: <strong>160,000+</strong></li>
-                </ul>
+            <div class="grid-4" style="margin-top:2rem;">
+                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span style="font-size:2rem; font-weight:900; color:var(--verde); display:block;">5,000+</span><p>Agricultores</p></div>
+                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span style="font-size:2rem; font-weight:900; color:var(--verde); display:block;">963 km²</span><p>Área total</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span style="font-size:2rem; font-weight:900; color:var(--verde); display:block;">76 km</span><p>Longitud</p></div>
+                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span style="font-size:2rem; font-weight:900; color:var(--verde); display:block;">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
             </div>
         </div>
     </section>
@@ -849,23 +864,11 @@
             <div class="grid-2">
                 <div class="fade-in">
                     <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); font-size:2rem;">Guardianes de la piedra escrita</h3>
-                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta. Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>.</p>
-                    <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
-                        <p style="font-size:0.95rem;"><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
+                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, con <strong>36 hectáreas</strong> y más de <strong>300 rocas grabadas</strong>.</p>
+                    <div style="background:var(--glass); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
+                        <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
                     </div>
-                    <p><strong>Figuras representadas:</strong></p>
-                    <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro); columns:2;">
-                        <li>🐍 Serpientes</li>
-                        <li>🦙 Camélidos</li>
-                        <li>🦅 Águilas</li>
-                        <li>🦜 Loros</li>
-                        <li>🦎 Lagartijas</li>
-                        <li>🐻 Oso de anteojos</li>
-                        <li>🧑‍🏫 Sacerdote chavinense</li>
-                        <li>🌞 Sol y Luna</li>
-                        <li>⭐ Constelaciones</li>
-                        <li>👤 Divinidades</li>
-                    </ul>
+                    <p><strong>Figuras representadas:</strong> Serpientes, camélidos, águilas, loros, lagartijas, oso de anteojos, sacerdote chavinense, Sol, Luna, constelaciones y divinidades.</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <span class="overlay">🪨 300+ rocas grabadas</span>
@@ -877,13 +880,6 @@
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><p>Extensión</p></div>
                 <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><p>Con grabados</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><p>Desde Chimbote</p></div>
-            </div>
-
-            <h3 style="font-family:'Playfair Display',serif; color:var(--terracota); text-align:center; margin:3rem 0 1.5rem 0;">Proyectos en marcha</h3>
-            <div class="grid-3">
-                <div class="card fade-in"><h4>📋 Saneamiento físico legal</h4><span class="estado activo">✅ En gestión</span><p>Iniciativa de la Municipalidad del Santa y DDC.</p></div>
-                <div class="card fade-in"><h4>🏗️ Puesta en valor</h4><span class="estado progreso">🔄 En ejecución</span><p>Limpieza, señalización y paneles informativos.</p></div>
-                <div class="card fade-in"><h4>🗺️ Circuito turístico</h4><span class="estado progreso">🔄 En diseño</span><p>Integrar Palamenco con Chimbote y Lacramarca.</p></div>
             </div>
         </div>
     </section>
@@ -902,12 +898,7 @@
                     <h3 style="font-family:'Playfair Display',serif; color:var(--azul); font-size:2rem;">Un descubrimiento monumental</h3>
                     <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa.</p>
                     <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
-                    <p>Estructuras principales:</p>
-                    <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
-                        <li>🏛️ Pirámide de <strong>15 metros</strong></li>
-                        <li>📐 Plaza <strong>cuadrangular</strong></li>
-                        <li>🔄 Anfiteatro <strong>circular hundido</strong></li>
-                    </ul>
+                    <p>Estructuras: Pirámide de <strong>15 metros</strong>, plaza cuadrangular y anfiteatro circular hundido.</p>
                 </div>
                 <div class="quienes-imagen fade-in" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
                     <span class="overlay">🏛️ 5,000 años de historia</span>
@@ -919,11 +910,6 @@
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><p>Extensión</p></div>
                 <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><p>Pirámide</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><p>Desde Chimbote</p></div>
-            </div>
-
-            <div class="badge-info fade-in" style="border-left-color:var(--azul);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
-                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
             </div>
         </div>
     </section>
@@ -947,7 +933,7 @@
                 <div class="card fade-in">
                     <i class="fas fa-calendar-check" style="color:#8B6B4D;"></i>
                     <h4>Visita guiada a los petroglifos</h4>
-                    <p><strong>📅 29 de septiembre 2022</strong></p>
+                    <p><strong>📅 22 de agosto 2026 · 9:00 AM</strong></p>
                     <p>Recorrido con arqueólogos por Palamenco.</p>
                 </div>
                 <div class="card fade-in">
@@ -1013,6 +999,19 @@
                 <div id="mensaje-enviado" style="display:none; margin-top:1rem; padding:1rem; background:#d4edda; border-radius:12px; color:#155724; font-weight:700;">✅ ¡Mensaje enviado con éxito!</div>
             </div>
 
+            <!-- REDES SOCIALES -->
+            <div style="margin-top:2rem; text-align:center;">
+                <h3 style="font-family:'Playfair Display',serif; color:var(--marron); font-size:1.8rem; margin-bottom:1rem;">📱 Síguenos en redes</h3>
+                <div class="social-grid">
+                    <a href="https://facebook.com/parlamenco" target="_blank" class="facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/parlamenco" target="_blank" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/parlamenco" target="_blank" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://wa.me/51987654321" target="_blank" class="whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p style="font-size:0.9rem; color:var(--marron-claro); margin-top:0.5rem;">¡Conéctate con nosotros y sé parte de nuestra comunidad!</p>
+            </div>
+
+            <!-- Contacto adicional -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:2rem; margin-top:2rem; text-align:center;">
                 <div style="background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--border-glass); padding:1.5rem; border-radius:20px; box-shadow:var(--sombra);">
                     <i class="fas fa-envelope" style="font-size:2.5rem; color:var(--azul);"></i><br><strong>Email</strong><br>petroglifos@parlamenco.org
@@ -1042,43 +1041,62 @@
             <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · 
             <a onclick="mostrarSeccion('eventos')">Eventos</a> · 
             <a onclick="mostrarSeccion('investigacion')">Investigación</a> · 
+            <a onclick="mostrarSeccion('streaming')">📡 En Vivo</a> · 
             <a onclick="mostrarSeccion('mapa')">Mapa</a> · 
             <a onclick="mostrarSeccion('contacto')">Contacto</a>
         </p>
+        <div class="footer-divider"></div>
+        <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:1rem 0;">
+            <a href="https://facebook.com/parlamenco" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://instagram.com/parlamenco" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://youtube.com/parlamenco" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://wa.me/51987654321" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
         <p style="font-size:0.85rem; opacity:0.5; margin-top:1rem;">© 2026 · Valle de Lacramarca · Chimbote · Áncash</p>
     </footer>
 
     <!-- ============================================================ -->
-    <!-- ===== SCRIPT ===== -->
+    <!-- ===== COOKIES BANNER ===== -->
+    <!-- ============================================================ -->
+    <div class="cookies-banner" id="cookiesBanner">
+        <p>
+            🍪 Este sitio utiliza cookies para mejorar tu experiencia. 
+            Al continuar navegando, aceptas nuestro uso de cookies. 
+            <a href="#" onclick="alert('Política de cookies: Usamos cookies para recordar tus preferencias y analizar el tráfico.')">Más información</a>
+        </p>
+        <div class="cookies-buttons">
+            <button class="btn-cookie aceptar" onclick="aceptarCookies()">Aceptar cookies</button>
+            <button class="btn-cookie rechazar" onclick="rechazarCookies()">Rechazar</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== SCRIPTS ===== -->
     <!-- ============================================================ -->
     <script>
+        // ============================================================
         // ===== CAMBIAR ENTRE SECCIONES =====
+        // ============================================================
         function mostrarSeccion(nombre) {
-            // Ocultar todas
             document.querySelectorAll('.seccion').forEach(el => el.classList.remove('activa'));
-            
-            // Mostrar la seleccionada
             const seccion = document.getElementById('seccion-' + nombre);
             if (seccion) seccion.classList.add('activa');
 
-            // Actualizar menú
             document.querySelectorAll('nav a').forEach(el => el.className = '');
             const enlaces = document.querySelectorAll('nav a');
             const mapa = {
                 'noticias': 0, 'lacramarca': 1, 'palamenco': 2, 'puebloviejo': 3,
-                'eventos': 4, 'investigacion': 5, 'mapa': 6, 'contacto': 7
+                'eventos': 4, 'investigacion': 5, 'streaming': 6, 'mapa': 7, 'contacto': 8
             };
             if (mapa[nombre] !== undefined) {
                 const idx = mapa[nombre];
                 if (enlaces[idx]) enlaces[idx].classList.add('activo-' + nombre);
             }
 
-            // Animación fade-in
             setTimeout(() => {
                 seccion.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
             }, 200);
 
-            // Scroll suave
             setTimeout(() => {
                 const rect = seccion.getBoundingClientRect();
                 const targetPosition = rect.top + window.pageYOffset - 80;
@@ -1086,17 +1104,37 @@
             }, 100);
         }
 
-        // Iniciar con Noticias
         document.addEventListener('DOMContentLoaded', function() { 
             mostrarSeccion('noticias'); 
         });
 
         // ============================================================
-        // ===== MAPA INTERACTIVO =====
+        // ===== COOKIES =====
+        // ============================================================
+        function aceptarCookies() {
+            document.getElementById('cookiesBanner').classList.add('hidden');
+            localStorage.setItem('cookiesAceptadas', 'true');
+        }
+
+        function rechazarCookies() {
+            document.getElementById('cookiesBanner').classList.add('hidden');
+            localStorage.setItem('cookiesAceptadas', 'false');
+        }
+
+        // Verificar si ya aceptó cookies
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookiesAceptadas = localStorage.getItem('cookiesAceptadas');
+            if (cookiesAceptadas === 'true' || cookiesAceptadas === 'false') {
+                document.getElementById('cookiesBanner').classList.add('hidden');
+            }
+        });
+
+        // ============================================================
+        // ===== MAPA =====
         // ============================================================
         let mapa;
+
         function iniciarMapa() {
-            // Coordenadas reales aproximadas
             const chimbote = [-9.0740, -78.5937];
             const lacramarca = [-8.8833, -78.2644];
             const parlamenco = [-8.85, -78.05];
@@ -1108,58 +1146,26 @@
                 maxZoom: 19
             }).addTo(mapa);
 
-            // Función para crear iconos personalizados
-            const crearIcono = (color, glow, emoji) => L.divIcon({
-                html: `<div style="background:${color};width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:3px solid white;box-shadow:0 0 30px ${glow};transform:scale(1);transition:transform 0.3s;">${emoji}</div>`,
+            const crearIcono = (color, emoji) => L.divIcon({
+                html: `<div style="background:${color};width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:3px solid white;box-shadow:0 0 20px rgba(0,0,0,0.2);">${emoji}</div>`,
                 iconSize: [40, 40],
                 iconAnchor: [20, 20]
             });
 
-            // Marcadores con emojis
-            L.marker(chimbote, { icon: crearIcono('#2196F3', 'rgba(33,150,243,0.5)', '🏙️') })
-                .addTo(mapa)
-                .bindPopup('<b>🏙️ Chimbote</b><br>Punto de partida');
+            L.marker(chimbote, { icon: crearIcono('#2196F3', '🏙️') }).addTo(mapa).bindPopup('<b>🏙️ Chimbote</b><br>Punto de partida');
+            L.marker(lacramarca, { icon: crearIcono('#4A7A2E', '🌾') }).addTo(mapa).bindPopup('<b>🌾 Lacramarca</b><br>Comunidad campesina');
+            L.marker(parlamenco, { icon: crearIcono('#A0522D', '🪨') }).addTo(mapa).bindPopup('<b>🪨 Palamenco</b><br>Petroglifos de 3,000 años');
+            L.marker(puebloviejo, { icon: crearIcono('#1A5A7A', '🏛️') }).addTo(mapa).bindPopup('<b>🏛️ Pueblo Viejo</b><br>Sitio de 5,000 años');
 
-            L.marker(lacramarca, { icon: crearIcono('#556B2F', 'rgba(85,107,47,0.5)', '🌾') })
-                .addTo(mapa)
-                .bindPopup('<b>🌾 Lacramarca</b><br>Comunidad campesina');
+            L.polyline([chimbote, [-8.9, -78.4], lacramarca], { color: '#4A7A2E', weight: 4, dashArray: '10 8' }).addTo(mapa);
+            L.polyline([chimbote, [-8.9, -78.2], parlamenco], { color: '#A0522D', weight: 4, dashArray: '10 8' }).addTo(mapa);
+            L.polyline([chimbote, [-9.0, -78.5], puebloviejo], { color: '#1A5A7A', weight: 4, dashArray: '10 8' }).addTo(mapa);
 
-            L.marker(parlamenco, { icon: crearIcono('#A0522D', 'rgba(160,82,45,0.5)', '🪨') })
-                .addTo(mapa)
-                .bindPopup('<b>🪨 Palamenco</b><br>Petroglifos de 3,000 años');
-
-            L.marker(puebloviejo, { icon: crearIcono('#2C6E8F', 'rgba(44,110,143,0.5)', '🏛️') })
-                .addTo(mapa)
-                .bindPopup('<b>🏛️ Pueblo Viejo</b><br>Sitio de 5,000 años');
-
-            // Rutas
-            L.polyline([chimbote, [-8.9, -78.4], lacramarca], {
-                color: '#556B2F',
-                weight: 4,
-                opacity: 0.8,
-                dashArray: '10 8'
-            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Lacramarca');
-
-            L.polyline([chimbote, [-8.9, -78.2], parlamenco], {
-                color: '#A0522D',
-                weight: 4,
-                opacity: 0.8,
-                dashArray: '10 8'
-            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Palamenco (45 km)');
-
-            L.polyline([chimbote, [-9.0, -78.5], puebloviejo], {
-                color: '#2C6E8F',
-                weight: 4,
-                opacity: 0.8,
-                dashArray: '10 8'
-            }).addTo(mapa).bindPopup('🚗 Ruta Chimbote → Pueblo Viejo (2 horas)');
-
-            // Ajustar zoom
             mapa.fitBounds([chimbote, lacramarca, parlamenco, puebloviejo], { padding: [50, 50] });
         }
 
         document.addEventListener('DOMContentLoaded', function() { 
-            setTimeout(iniciarMapa, 1000); 
+            setTimeout(iniciarMapa, 1200); 
         });
     </script>
 </body>
