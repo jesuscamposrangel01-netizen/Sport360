@@ -79,10 +79,6 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6; }
         }
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--beige); }
@@ -368,11 +364,19 @@
             animation: float 3s ease-in-out infinite;
         }
 
+        /* ============================================================
+               SECCIONES (TODAS OCULTAS POR DEFECTO, SOLO INICIO VISIBLE)
+            ============================================================ */
         .seccion {
             display: none;
             animation: fadeInPage 0.6s ease;
         }
         .seccion.activa { display: block; }
+        
+        /* La sección de inicio siempre visible al cargar */
+        #seccion-inicio {
+            display: block !important;
+        }
 
         @keyframes fadeInPage {
             from { opacity: 0; transform: translateY(30px); }
@@ -1006,9 +1010,9 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: INICIO (CONTENIDO COMPLETO) -->
+    <!-- SECCIÓN: INICIO (CONTENIDO COMPLETO - SIEMPRE VISIBLE) -->
     <!-- ============================================================ -->
-    <section class="seccion seccion-inicio activa" id="seccion-inicio" style="display: block !important;">
+    <section class="seccion seccion-inicio activa" id="seccion-inicio">
         <div class="container">
 
             <!-- ============================================================ -->
@@ -1621,13 +1625,10 @@
                 item.onclick = () => abrirLightbox(index);
                 grid.appendChild(item);
             });
-
-            // Iniciar la sección de inicio después de generar la galería
-            mostrarSeccion('inicio');
         });
 
         // ============================================================
-        // CAMBIAR ENTRE SECCIONES
+        // CAMBIAR ENTRE SECCIONES (MEJORADO)
         // ============================================================
         function mostrarSeccion(nombre) {
             // Ocultar todas las secciones
@@ -1656,7 +1657,7 @@
                 if (enlaces[idx]) enlaces[idx].classList.add('activo-' + nombre);
             }
 
-            // Si es inicio, hacer scroll al hero
+            // Si es inicio, hacer scroll al hero (no al contenido)
             if (nombre === 'inicio') {
                 document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
                 return;
@@ -1725,6 +1726,7 @@
             if (cookiesAceptadas === 'true' || cookiesAceptadas === 'false') {
                 document.getElementById('cookiesBanner').classList.add('hidden');
             }
+            // No llamamos a mostrarSeccion('inicio') porque ya está visible por defecto
         });
 
         // ============================================================
