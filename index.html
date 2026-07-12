@@ -123,11 +123,11 @@
         nav a:hover { color: white; transform: translateY(-2px); }
         
         nav a.activo-inicio { background: var(--dorado); color: var(--marron); border-color: var(--dorado-light); }
+        nav a.activo-palamenco { background: var(--terracota); color: white; border-color: var(--terracota-light); }
+        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: var(--verde-light); }
+        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: var(--azul-light); }
         nav a.activo-videos { background: #E63946; color: white; border-color: #FF6B6B; }
         nav a.activo-galeria { background: var(--terracota); color: white; border-color: var(--terracota-light); }
-        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: var(--verde-light); }
-        nav a.activo-palamenco { background: var(--terracota); color: white; border-color: var(--terracota-light); }
-        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: var(--azul-light); }
         nav a.activo-eventos { background: #8B6B4D; color: white; border-color: #A8896A; }
         nav a.activo-investigacion { background: #6B4C7A; color: white; border-color: #8B6B9A; }
         nav a.activo-mapa { background: #D4A24C; color: var(--marron); border-color: #E8C97A; }
@@ -297,7 +297,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== VIDEOS ===== */
         .videos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -346,7 +345,6 @@
             font-size: 0.95rem;
         }
 
-        /* ===== GALERÍA ===== */
         .galeria-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -754,7 +752,6 @@
             border-radius: 4px;
         }
 
-        /* ===== ESTADÍSTICAS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -866,11 +863,11 @@
         </a>
         <nav>
             <a class="activo-inicio" onclick="mostrarSeccion('inicio')">🏠 Inicio</a>
+            <a onclick="mostrarSeccion('palamenco')">🪨 Palamenco</a>
+            <a onclick="mostrarSeccion('lacramarca')">🌾 Lacramarca</a>
+            <a onclick="mostrarSeccion('puebloviejo')">🏛️ Pueblo Viejo</a>
             <a onclick="mostrarSeccion('videos')">🎬 Videos</a>
             <a onclick="mostrarSeccion('galeria')">🖼️ Galería</a>
-            <a onclick="mostrarSeccion('lacramarca')">🌾 Lacramarca</a>
-            <a onclick="mostrarSeccion('palamenco')">🪨 Palamenco</a>
-            <a onclick="mostrarSeccion('puebloviejo')">🏛️ Pueblo Viejo</a>
             <a onclick="mostrarSeccion('eventos')">📅 Eventos</a>
             <a onclick="mostrarSeccion('investigacion')">📚 Investigación</a>
             <a onclick="mostrarSeccion('mapa')">🗺️ Mapa</a>
@@ -906,7 +903,7 @@
         <div class="container">
 
             <!-- ============================================================ -->
-            <!-- 1. NOTICIA DESTACADA -->
+            <!-- 1. NOTICIA DESTACADA (CON FOTO DE LA COMUNIDAD) -->
             <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
@@ -916,7 +913,7 @@
                 
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:300px;">
-                        <div style="background-image:url('https://i.imgur.com/U5PkrUq.jpeg'); background-size:cover; background-position:center; min-height:250px;"></div>
+                        <div style="background-image:url('1000018308.jpg'); background-size:cover; background-position:center; min-height:250px;"></div>
                         <div style="padding:2rem; display:flex; flex-direction:column; justify-content:center;">
                             <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.5rem; width:fit-content;">🌾 Lacramarca</span>
                             <h3 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--marron); margin:0.5rem 0;">Restauración de murales en Monte Zarumo</h3>
@@ -1076,6 +1073,129 @@
     </section>
 
     <!-- ============================================================ -->
+    <!-- SECCIÓN: PALAMENCO -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-palamenco" id="seccion-palamenco">
+        <div class="container">
+            <span class="icono-seccion">🪨</span>
+            <h2 class="section-title fade-in"><span class="highlight">Palamenco</span> · Petroglifos</h2>
+            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash</p>
+            
+            <div class="info-grid">
+                <div class="texto fade-in">
+                    <h3 class="terracota">Guardianes de la piedra escrita</h3>
+                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, con <strong>36 hectáreas</strong> y más de <strong>300 rocas grabadas</strong>.</p>
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
+                        <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
+                    </div>
+                    <p><strong>Figuras representadas:</strong></p>
+                    <ul>
+                        <li>🐍 Serpientes</li>
+                        <li>🦙 Camélidos</li>
+                        <li>🦅 Águilas</li>
+                        <li>🦜 Loros</li>
+                        <li>🦎 Lagartijas</li>
+                        <li>🐻 Oso de anteojos</li>
+                        <li>🧑‍🏫 Sacerdote chavinense</li>
+                        <li>🌞 Sol y Luna</li>
+                        <li>⭐ Constelaciones</li>
+                        <li>👤 Divinidades</li>
+                    </ul>
+                </div>
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/NwZPp2V.jpeg');"></div>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><span class="dato terracota">3,000</span><p>Antigüedad</p></div>
+                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><span class="dato terracota">36</span><p>Extensión</p></div>
+                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><span class="dato terracota">300+</span><p>Con grabados</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><span class="dato terracota">45</span><p>Desde Chimbote</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECCIÓN: LACRAMARCA -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-lacramarca" id="seccion-lacramarca">
+        <div class="container">
+            <span class="icono-seccion">🌾</span>
+            <h2 class="section-title fade-in">Comunidad Campesina de <span class="highlight">Lacramarca</span></h2>
+            <p class="section-subtitle fade-in">Más de 5,000 agricultores que trabajan por el desarrollo del valle</p>
+            
+            <div class="info-grid">
+                <div class="texto fade-in">
+                    <h3 class="verde">El corazón agrícola de Áncash</h3>
+                    <p><strong>Lacramarca</strong> es un valle en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra.</p>
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
+                        <p><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
+                    </div>
+                    <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
+                </div>
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/J3bHcL3.jpeg');"></div>
+            </div>
+            
+            <!-- RESTAURACIÓN DE MURALES CON LA FOTO DE LA COMUNIDAD -->
+            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
+                <div style="margin:1rem 0; text-align:center;">
+                    <img src="1000018308.jpg" alt="Comunidad Campesina de Lacramarca - Monte Zarumo" 
+                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
+                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">
+                        📸 Comunidad Campesina de Lacramarca · Sector Monte Zarumo
+                    </p>
+                </div>
+                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>.</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
+                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
+                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECCIÓN: PUEBLO VIEJO -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-puebloviejo" id="seccion-puebloviejo">
+        <div class="container">
+            <span class="icono-seccion">🏛️</span>
+            <h2 class="section-title fade-in"><span class="highlight">Pueblo Viejo</span></h2>
+            <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral</p>
+            
+            <div class="info-grid">
+                <div class="texto fade-in">
+                    <h3 class="azul">Un descubrimiento monumental</h3>
+                    <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa.</p>
+                    <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
+                    <p><strong>Estructuras principales:</strong></p>
+                    <ul>
+                        <li>🏛️ Pirámide de <strong>15 metros</strong></li>
+                        <li>📐 Plaza <strong>cuadrangular</strong></li>
+                        <li>🔄 Anfiteatro <strong>circular hundido</strong></li>
+                    </ul>
+                </div>
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/Lm3ThCj.jpeg');"></div>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><span class="dato azul">5,000</span><p>Antigüedad</p></div>
+                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><span class="dato azul">5</span><p>Extensión</p></div>
+                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><span class="dato azul">15</span><p>Pirámide</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><span class="dato azul">2</span><p>Desde Chimbote</p></div>
+            </div>
+            
+            <div class="badge-info fade-in" style="border-left-color:var(--azul);">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
+                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
     <!-- SECCIÓN: VIDEOS -->
     <!-- ============================================================ -->
     <section class="seccion seccion-videos" id="seccion-videos">
@@ -1138,128 +1258,6 @@
             
             <div class="galeria-grid" id="galeriaGrid">
                 <!-- Generado con JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SECCIÓN: LACRAMARCA -->
-    <!-- ============================================================ -->
-    <section class="seccion seccion-lacramarca" id="seccion-lacramarca">
-        <div class="container">
-            <span class="icono-seccion">🌾</span>
-            <h2 class="section-title fade-in">Comunidad Campesina de <span class="highlight">Lacramarca</span></h2>
-            <p class="section-subtitle fade-in">Más de 5,000 agricultores que trabajan por el desarrollo del valle</p>
-            
-            <div class="info-grid">
-                <div class="texto fade-in">
-                    <h3 class="verde">El corazón agrícola de Áncash</h3>
-                    <p><strong>Lacramarca</strong> es un valle en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra.</p>
-                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
-                        <p><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
-                    </div>
-                    <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
-                </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/J3bHcL3.jpeg');"></div>
-            </div>
-            
-            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
-                <div style="margin:1rem 0; text-align:center;">
-                    <img src="https://i.imgur.com/U5PkrUq.jpeg" alt="Restauración de murales en Monte Zarumo" 
-                         style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
-                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">
-                        📸 Presidente Carlos Budinich, equipo de pintores y artista visual Maucayan
-                    </p>
-                </div>
-                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>.</p>
-            </div>
-            
-            <div class="card-grid">
-                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
-                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
-                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SECCIÓN: PALAMENCO -->
-    <!-- ============================================================ -->
-    <section class="seccion seccion-palamenco" id="seccion-palamenco">
-        <div class="container">
-            <span class="icono-seccion">🪨</span>
-            <h2 class="section-title fade-in"><span class="highlight">Palamenco</span> · Petroglifos</h2>
-            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash</p>
-            
-            <div class="info-grid">
-                <div class="texto fade-in">
-                    <h3 class="terracota">Guardianes de la piedra escrita</h3>
-                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, con <strong>36 hectáreas</strong> y más de <strong>300 rocas grabadas</strong>.</p>
-                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
-                        <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
-                    </div>
-                    <p><strong>Figuras representadas:</strong></p>
-                    <ul>
-                        <li>🐍 Serpientes</li>
-                        <li>🦙 Camélidos</li>
-                        <li>🦅 Águilas</li>
-                        <li>🦜 Loros</li>
-                        <li>🦎 Lagartijas</li>
-                        <li>🐻 Oso de anteojos</li>
-                        <li>🧑‍🏫 Sacerdote chavinense</li>
-                        <li>🌞 Sol y Luna</li>
-                        <li>⭐ Constelaciones</li>
-                        <li>👤 Divinidades</li>
-                    </ul>
-                </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/NwZPp2V.jpeg');"></div>
-            </div>
-            
-            <div class="card-grid">
-                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><span class="dato terracota">3,000</span><p>Antigüedad</p></div>
-                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><span class="dato terracota">36</span><p>Extensión</p></div>
-                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><span class="dato terracota">300+</span><p>Con grabados</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><span class="dato terracota">45</span><p>Desde Chimbote</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================ -->
-    <!-- SECCIÓN: PUEBLO VIEJO -->
-    <!-- ============================================================ -->
-    <section class="seccion seccion-puebloviejo" id="seccion-puebloviejo">
-        <div class="container">
-            <span class="icono-seccion">🏛️</span>
-            <h2 class="section-title fade-in"><span class="highlight">Pueblo Viejo</span></h2>
-            <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral</p>
-            
-            <div class="info-grid">
-                <div class="texto fade-in">
-                    <h3 class="azul">Un descubrimiento monumental</h3>
-                    <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa.</p>
-                    <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
-                    <p><strong>Estructuras principales:</strong></p>
-                    <ul>
-                        <li>🏛️ Pirámide de <strong>15 metros</strong></li>
-                        <li>📐 Plaza <strong>cuadrangular</strong></li>
-                        <li>🔄 Anfiteatro <strong>circular hundido</strong></li>
-                    </ul>
-                </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/Lm3ThCj.jpeg');"></div>
-            </div>
-            
-            <div class="card-grid">
-                <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><span class="dato azul">5,000</span><p>Antigüedad</p></div>
-                <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><span class="dato azul">5</span><p>Extensión</p></div>
-                <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><span class="dato azul">15</span><p>Pirámide</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><span class="dato azul">2</span><p>Desde Chimbote</p></div>
-            </div>
-            
-            <div class="badge-info fade-in" style="border-left-color:var(--azul);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
-                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
             </div>
         </div>
     </section>
@@ -1431,11 +1429,11 @@
         <div class="footer-divider"></div>
         <p>
             <a onclick="mostrarSeccion('inicio')">Inicio</a> · 
+            <a onclick="mostrarSeccion('palamenco')">Palamenco</a> · 
+            <a onclick="mostrarSeccion('lacramarca')">Lacramarca</a> · 
+            <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · 
             <a onclick="mostrarSeccion('videos')">Videos</a> · 
             <a onclick="mostrarSeccion('galeria')">Galería</a> · 
-            <a onclick="mostrarSeccion('lacramarca')">Lacramarca</a> · 
-            <a onclick="mostrarSeccion('palamenco')">Palamenco</a> · 
-            <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · 
             <a onclick="mostrarSeccion('eventos')">Eventos</a> · 
             <a onclick="mostrarSeccion('investigacion')">Investigación</a> · 
             <a onclick="mostrarSeccion('mapa')">Mapa</a> · 
@@ -1527,8 +1525,8 @@
             document.querySelectorAll('nav a').forEach(el => el.className = '');
             const enlaces = document.querySelectorAll('nav a');
             const mapa = {
-                'inicio': 0, 'videos': 1, 'galeria': 2, 'lacramarca': 3,
-                'palamenco': 4, 'puebloviejo': 5, 'eventos': 6,
+                'inicio': 0, 'palamenco': 1, 'lacramarca': 2, 'puebloviejo': 3,
+                'videos': 4, 'galeria': 5, 'eventos': 6,
                 'investigacion': 7, 'mapa': 8, 'contacto': 9
             };
             if (mapa[nombre] !== undefined) {
