@@ -896,7 +896,7 @@
     <!-- HERO -->
     <!-- ============================================================ -->
     <section class="hero" id="hero">
-        <video autoplay muted loop playsinline>
+        <video autoplay muted loop playsinline preload="none" poster="https://i.imgur.com/NwZPp2V.jpeg">
             <source src="https://i.imgur.com/zogKRcO.mp4" type="video/mp4">
         </video>
         <div class="hero-content">
@@ -914,12 +914,14 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: INICIO (NUEVO DISEÑO) -->
+    <!-- SECCIÓN: INICIO (CONTENIDO MEZCLADO DE LOS 3) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-inicio activa" id="seccion-inicio">
         <div class="container">
 
-            <!-- 1. BIENVENIDA -->
+            <!-- ============================================================ -->
+            <!-- BIENVENIDA -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="text-align:center; margin-bottom:3rem;">
                 <span style="font-size:3rem;">🪨</span>
                 <h2 style="font-family:'Playfair Display',serif; font-size:2.8rem; color:var(--marron); margin:0.5rem 0;">
@@ -935,19 +937,48 @@
                 </div>
             </div>
 
-            <!-- 2. NOTICIA DESTACADA -->
+            <!-- ============================================================ -->
+            <!-- NOTICIA BREVE: NUEVA JUNTA DIRECTIVA (INICIO CON IMÁGENES) -->
+            <!-- ============================================================ -->
+            <div class="fade-in" style="margin-bottom:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.8rem;">
+                    <span style="background:#4A7A2E; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">✅ Oficial</span>
+                    <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.7;">📅 25 de mayo 2026</span>
+                </div>
+                
+                <div style="background:white; border-radius:20px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; max-height:150px; overflow:hidden;">
+                        <div style="background-image:url('https://i.imgur.com/LI6deCz.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
+                        <div style="background-image:url('https://i.imgur.com/OqCn0fV.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
+                        <div style="background-image:url('https://i.imgur.com/Xiq5wpA.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
+                    </div>
+                    
+                    <div style="padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                        <div>
+                            <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--marron); margin:0;">🏛️ Nueva junta directiva de Lacramarca inscrita en SUNARP</h4>
+                            <p style="font-size:0.85rem; color:var(--marron-claro); margin:0.2rem 0 0 0;">Presidente: <strong>Carlos Budinich</strong> · Período 2026-2027</p>
+                        </div>
+                        <a onclick="mostrarSeccion('lacramarca')" style="background:var(--verde); color:white; padding:0.3rem 1.2rem; border-radius:50px; font-size:0.75rem; font-weight:700; cursor:pointer; border:none; transition:var(--transition); white-space:nowrap;">Ver más →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                     <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🔥 Destacado</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📅 Julio 2026</span>
                 </div>
+                
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:300px;">
-                        <div style="background-image:url('1000018308.jpg'); background-size:cover; background-position:center; min-height:250px;"></div>
+                        <div style="background-image:url('https://i.imgur.com/n9nHRUg.jpeg'); background-size:cover; background-position:center; min-height:250px;"></div>
                         <div style="padding:2rem; display:flex; flex-direction:column; justify-content:center;">
                             <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.5rem; width:fit-content;">🌾 Lacramarca</span>
                             <h3 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--marron); margin:0.5rem 0;">Restauración de murales en Monte Zarumo</h3>
-                            <p style="color:var(--marron-claro); font-size:0.95rem;">El presidente <strong>Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en Monte Zarumo y el Complejo Arqueológico Palamenco.</p>
+                            <p style="color:var(--marron-claro); font-size:0.95rem;">El presidente <strong>Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en Monte Zarumo.</p>
                             <div style="margin-top:1rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
                                 <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-user"></i> Carlos Budinich</span>
                                 <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-map-marker-alt"></i> Monte Zarumo</span>
@@ -961,12 +992,15 @@
                 </div>
             </div>
 
-            <!-- 3. VIDEO DESTACADO -->
+            <!-- ============================================================ -->
+            <!-- VIDEO DESTACADO -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                     <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🎬 Video</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📹 Recorrido por Palamenco</span>
                 </div>
+                
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
                     <video controls style="width:100%; display:block; background:#1a0f0c; max-height:500px;">
                         <source src="https://i.imgur.com/zogKRcO.mp4" type="video/mp4">
@@ -982,7 +1016,9 @@
                 </div>
             </div>
 
-            <!-- 4. GALERÍA RÁPIDA -->
+            <!-- ============================================================ -->
+            <!-- GALERÍA RÁPIDA -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                     <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🖼️ Galería</span>
@@ -1003,7 +1039,9 @@
                 </div>
             </div>
 
-            <!-- 5. NOTICIAS SECUNDARIAS -->
+            <!-- ============================================================ -->
+            <!-- NOTICIAS SECUNDARIAS (MEZCLA DE LOS 3) -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
                     <span style="background:var(--dorado); color:var(--marron); padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📰 Noticias</span>
@@ -1031,7 +1069,9 @@
                 </div>
             </div>
 
-            <!-- 6. ESTADÍSTICAS -->
+            <!-- ============================================================ -->
+            <!-- ESTADÍSTICAS -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
                     <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📊 Datos</span>
@@ -1045,7 +1085,9 @@
                 </div>
             </div>
 
-            <!-- 7. LLAMADA A LA ACCIÓN -->
+            <!-- ============================================================ -->
+            <!-- LLAMADA A LA ACCIÓN -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="text-align:center; background:linear-gradient(135deg, var(--marron), #1a0f0c); padding:3rem 2rem; border-radius:24px; color:white; border:2px solid rgba(196,154,108,0.2);">
                 <h3 style="font-family:'Playfair Display',serif; font-size:2rem;">¿Listo para explorar?</h3>
                 <p style="opacity:0.8; max-width:600px; margin:0.5rem auto 1.5rem auto;">Sumérgete en la historia y la cultura de Palamenco, Lacramarca y Pueblo Viejo</p>
@@ -1060,13 +1102,14 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: PALAMENCO -->
+    <!-- SECCIÓN: PALAMENCO (SOLO CONTENIDO DE PALAMENCO) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-palamenco" id="seccion-palamenco">
         <div class="container">
             <span class="icono-seccion">🪨</span>
             <h2 class="section-title fade-in"><span class="highlight">Palamenco</span> · Petroglifos</h2>
             <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash</p>
+            
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="terracota">Guardianes de la piedra escrita</h3>
@@ -1074,10 +1117,23 @@
                     <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
                         <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
                     </div>
-                    <p><strong>Figuras representadas:</strong> Serpientes, camélidos, águilas, loros, lagartijas, oso de anteojos, sacerdote chavinense, Sol, Luna, constelaciones y divinidades.</p>
+                    <p><strong>Figuras representadas:</strong></p>
+                    <ul>
+                        <li>🐍 Serpientes</li>
+                        <li>🦙 Camélidos</li>
+                        <li>🦅 Águilas</li>
+                        <li>🦜 Loros</li>
+                        <li>🦎 Lagartijas</li>
+                        <li>🐻 Oso de anteojos</li>
+                        <li>🧑‍🏫 Sacerdote chavinense</li>
+                        <li>🌞 Sol y Luna</li>
+                        <li>⭐ Constelaciones</li>
+                        <li>👤 Divinidades</li>
+                    </ul>
                 </div>
                 <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/NwZPp2V.jpeg');"></div>
             </div>
+            
             <div class="card-grid">
                 <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><span class="dato terracota">3,000</span><p>Antigüedad</p></div>
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><span class="dato terracota">36</span><p>Extensión</p></div>
@@ -1088,13 +1144,14 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: LACRAMARCA -->
+    <!-- SECCIÓN: LACRAMARCA (SOLO CONTENIDO DE LACRAMARCA) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-lacramarca" id="seccion-lacramarca">
         <div class="container">
             <span class="icono-seccion">🌾</span>
             <h2 class="section-title fade-in">Comunidad Campesina de <span class="highlight">Lacramarca</span></h2>
             <p class="section-subtitle fade-in">Más de 5,000 agricultores que trabajan por el desarrollo del valle</p>
+            
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="verde">El corazón agrícola de Áncash</h3>
@@ -1106,32 +1163,82 @@
                 </div>
                 <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/J3bHcL3.jpeg');"></div>
             </div>
-            <!-- Restauración de murales -->
+            
+            <!-- Restauración de murales (sin mencionar Palamenco) -->
             <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
                 <div style="margin:1rem 0; text-align:center;">
-                    <img src="1000018308.jpg" alt="Comunidad Campesina de Lacramarca - Monte Zarumo" style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
-                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Comunidad Campesina de Lacramarca · Sector Monte Zarumo</p>
+                    <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
+                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Restauración de murales en Monte Zarumo</p>
                 </div>
-                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong> y el <strong>Complejo Arqueológico Palamenco</strong>.</p>
+                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong>.</p>
             </div>
+            
             <div class="card-grid">
                 <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
                 <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
                 <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
             </div>
+
+            <!-- NUEVA JUNTA DIRECTIVA (detallada con imágenes) -->
+            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
+                <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+                    <span style="background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📌 Oficial</span>
+                    <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">✅ Inscrito en SUNARP · 25 de mayo 2026</span>
+                </div>
+                
+                <!-- Galería de 3 imágenes -->
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; margin:1rem 0; border-radius:16px; overflow:hidden;">
+                    <img src="https://i.imgur.com/LI6deCz.jpeg" alt="Elecciones comunales Lacramarca 1" style="width:100%; height:180px; object-fit:cover;">
+                    <img src="https://i.imgur.com/OqCn0fV.jpeg" alt="Elecciones comunales Lacramarca 2" style="width:100%; height:180px; object-fit:cover;">
+                    <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales Lacramarca 3" style="width:100%; height:180px; object-fit:cover;">
+                </div>
+                
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
+                
+                <p>El Comité Electoral de la Comunidad Campesina de Lacramarca informa que la nueva junta directiva para el período <strong>2026-2027</strong> ha sido inscrita satisfactoriamente ante <strong>SUNARP</strong> (Título Nº 2026-00563665), quedando formalmente constituida y facultada para ejercer sus funciones desde el <strong>25 de mayo de 2026</strong>.</p>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--crema); padding:1.2rem; border-radius:16px;">
+                    <div><p style="margin:0; font-weight:700; color:var(--marron);">👤 Presidente</p><p style="margin:0; color:var(--marron-claro);">Carlos Alberto Budinich Salas</p></div>
+                    <div><p style="margin:0; font-weight:700; color:var(--marron);">👤 Vicepresidente</p><p style="margin:0; color:var(--marron-claro);">Jhosten Edwin Salas Cevero</p></div>
+                </div>
+                
+                <p style="font-weight:600; color:var(--marron); margin:0.5rem 0 0.2rem 0;">📋 Directivos:</p>
+                <ul style="margin:0 0 1rem 1.5rem; color:var(--marron-claro); columns:2; font-size:0.95rem;">
+                    <li>Teofilo Cano Alva</li>
+                    <li>Juan Jose Gonzales Celaes</li>
+                    <li>Carlos Alberto Paucar Acosta</li>
+                    <li>Yuri Rodriguez Zegarra</li>
+                    <li>Maria del Pilar Venegas Sifuentes</li>
+                </ul>
+                
+                <div style="display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.85rem; color:var(--marron-claro); background:white; padding:0.8rem 1.2rem; border-radius:12px; border:1px solid var(--border-glass);">
+                    <span><i class="fas fa-file-alt"></i> Título Nº 2026-00563665</span>
+                    <span><i class="fas fa-check-circle" style="color:var(--verde);"></i> Estado: <strong>INSCRITO</strong></span>
+                    <span><i class="fas fa-calendar-alt"></i> 25 de mayo 2026</span>
+                    <span><i class="fas fa-building"></i> Oficina Registral Chimbote</span>
+                </div>
+                
+                <div style="margin-top:1rem; padding:1rem; background:#e8f5e9; border-radius:12px; border-left:4px solid #2e7d32;">
+                    <p style="font-size:0.9rem; color:var(--marron-claro); margin:0;">
+                        <strong>📢 Comunicado oficial:</strong> El Comité Electoral agradece a todos los comuneros que participaron en la Asamblea Aclaratoria. La ceremonia de juramentación se realizará próximamente en el local comunal.
+                    </p>
+                </div>
+            </div>
+
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: PUEBLO VIEJO -->
+    <!-- SECCIÓN: PUEBLO VIEJO (SOLO CONTENIDO DE PUEBLO VIEJO) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-puebloviejo" id="seccion-puebloviejo">
         <div class="container">
             <span class="icono-seccion">🏛️</span>
             <h2 class="section-title fade-in"><span class="highlight">Pueblo Viejo</span></h2>
             <p class="section-subtitle fade-in">El sitio arqueológico de 5,000 años similar a Caral</p>
+            
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="azul">Un descubrimiento monumental</h3>
@@ -1139,14 +1246,16 @@
                     <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
                     <p><strong>Estructuras principales:</strong> Pirámide de 15 metros, plaza cuadrangular y anfiteatro circular hundido.</p>
                 </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/Lm3ThCj.jpeg');"></div>
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/W786HaT.jpeg');"></div>
             </div>
+            
             <div class="card-grid">
                 <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>5,000 años</h4><span class="dato azul">5,000</span><p>Antigüedad</p></div>
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><span class="dato azul">5</span><p>Extensión</p></div>
                 <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><span class="dato azul">15</span><p>Pirámide</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><span class="dato azul">2</span><p>Desde Chimbote</p></div>
             </div>
+            
             <div class="badge-info fade-in" style="border-left-color:var(--azul);">
                 <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
                 <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
