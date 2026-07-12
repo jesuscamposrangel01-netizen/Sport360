@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palamenco · Patrimonio Arqueológico de Áncash</title>
+    <title>Palamenco · Petroglifos de Áncash</title>
     <meta name="description" content="Descubre Palamenco, el complejo de petroglifos más extenso de Áncash. 3,000 años de historia, 300 rocas grabadas y un legado ancestral único.">
     
     <!-- Google Fonts -->
@@ -47,9 +47,7 @@
             --blanco: #FFFFFF;
             --sombra: 0 8px 40px rgba(44, 24, 16, 0.08);
             --sombra-hover: 0 16px 60px rgba(44, 24, 16, 0.16);
-            --sombra-fuerte: 0 20px 60px rgba(44, 24, 16, 0.2);
             --glass: rgba(255, 255, 255, 0.7);
-            --glass-dark: rgba(44, 24, 16, 0.85);
             --border-glass: rgba(255, 255, 255, 0.3);
             --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --radius: 24px;
@@ -69,17 +67,13 @@
             from { opacity: 0; transform: translateY(60px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
 
         /* ============================================================
-               SCROLLBAR PERSONALIZADA
+               SCROLLBAR
             ============================================================ */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--beige); }
@@ -87,7 +81,6 @@
             background: linear-gradient(180deg, var(--terracota), var(--dorado));
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover { background: var(--terracota); }
 
         /* ============================================================
                HEADER PREMIUM
@@ -95,7 +88,6 @@
         header {
             background: rgba(44, 24, 16, 0.92);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             color: white;
             padding: 0.6rem 2rem;
             display: flex;
@@ -107,7 +99,6 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 40px rgba(0,0,0,0.3);
-            transition: var(--transition);
         }
 
         .logo {
@@ -368,7 +359,7 @@
         }
 
         /* ============================================================
-               VIDEOS DESTACADOS
+               VIDEOS
             ============================================================ */
         .videos-grid {
             display: grid;
@@ -386,37 +377,12 @@
             transform: translateY(-10px);
             box-shadow: var(--sombra-hover);
         }
-        .video-card .video-wrapper {
-            position: relative;
-            background: #1a0f0c;
-        }
         .video-card .video-wrapper video {
             width: 100%;
             height: 250px;
             object-fit: cover;
             display: block;
-        }
-        .video-card .video-wrapper .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background: rgba(160, 82, 45, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            transition: var(--transition);
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-        }
-        .video-card .video-wrapper .play-icon:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: var(--dorado);
+            background: #1a0f0c;
         }
         .video-card .info {
             padding: 1.8rem;
@@ -489,11 +455,6 @@
         }
         .galeria-grid .galeria-item:hover .overlay-hover {
             opacity: 1;
-        }
-        .galeria-grid .galeria-item .overlay-hover span {
-            font-size: 0.8rem;
-            font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         /* ============================================================
@@ -783,7 +744,6 @@
         .social-grid .instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
         .social-grid .youtube { background: #FF0000; }
         .social-grid .whatsapp { background: #25D366; }
-        .social-grid .tiktok { background: #000000; }
 
         /* ============================================================
                COOKIES BANNER
@@ -890,7 +850,6 @@
             .hero { height: 80vh; min-height: 500px; }
             .hero-content h1 { font-size: 2.8rem; }
             .hero-content p { font-size: 1.1rem; }
-            .hero-content .btn { padding: 0.8rem 2rem; font-size: 0.9rem; }
             .section-title { font-size: 2.2rem; }
             .container { padding: 3rem 1rem; }
             .info-grid { grid-template-columns: 1fr; }
@@ -914,14 +873,11 @@
         @media (max-width: 480px) {
             .hero { height: 70vh; }
             .hero-content h1 { font-size: 2.2rem; }
-            .hero-content .badge { font-size: 0.6rem; padding: 0.3rem 1rem; }
             nav a { padding: 0.2rem 0.5rem; font-size: 0.55rem; }
             .section-title { font-size: 1.8rem; }
             .galeria-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
             .card-grid { grid-template-columns: 1fr; }
             .form-contact { padding: 1.5rem; }
-            .logo { font-size: 1rem; }
-            .logo svg { width: 30px; height: 30px; }
             .container { padding: 2rem 0.8rem; }
         }
     </style>
@@ -1048,7 +1004,7 @@
         <div class="container">
             <span class="icono-seccion">🖼️</span>
             <h2 class="section-title fade-in">Galería de <span class="highlight">Palamenco</span></h2>
-            <p class="section-subtitle fade-in">37 imágenes que capturan la esencia de nuestro patrimonio</p>
+            <p class="section-subtitle fade-in">36 imágenes que capturan la esencia de nuestro patrimonio</p>
             
             <div class="galeria-grid" id="galeriaGrid">
                 <!-- Las imágenes se generan con JavaScript -->
@@ -1128,7 +1084,7 @@
                         <li>👤 Divinidades</li>
                     </ul>
                 </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/WW67dk9.jpeg');"></div>
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/NwZPp2V.jpeg');"></div>
             </div>
             
             <div class="card-grid">
@@ -1287,11 +1243,10 @@
             <div style="margin-top:2rem; text-align:center;">
                 <h3 style="font-family:'Playfair Display',serif; color:var(--marron); font-size:1.8rem; margin-bottom:1rem;">📱 Síguenos en redes</h3>
                 <div class="social-grid">
-                    <a href="https://facebook.com/parlamenco" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/comunidad.lacramarcaalta" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://instagram.com/parlamenco" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://youtube.com/parlamenco" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
                     <a href="https://wa.me/51987654321" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://tiktok.com/@parlamenco" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
                 </div>
                 <p style="font-size:0.9rem; color:var(--marron-claro); margin-top:0.5rem;">¡Conéctate con nosotros y sé parte de nuestra comunidad!</p>
             </div>
@@ -1318,7 +1273,7 @@
         <span class="nav anterior" onclick="event.stopPropagation(); cambiarImagen(-1)">&#10094;</span>
         <img id="lightboxImg" src="" alt="Ampliar">
         <span class="nav siguiente" onclick="event.stopPropagation(); cambiarImagen(1)">&#10095;</span>
-        <span class="contador" id="contadorLightbox">1 / 37</span>
+        <span class="contador" id="contadorLightbox">1 / 36</span>
     </div>
 
     <!-- ============================================================ -->
@@ -1358,7 +1313,7 @@
         </p>
         <div class="footer-divider"></div>
         <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:1rem 0;">
-            <a href="https://facebook.com/parlamenco" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://www.facebook.com/comunidad.lacramarcaalta" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
             <a href="https://instagram.com/parlamenco" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
             <a href="https://youtube.com/parlamenco" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
             <a href="https://wa.me/51987654321" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -1371,7 +1326,7 @@
     <!-- ============================================================ -->
     <script>
         // ============================================================
-        // LISTA DE IMÁGENES
+        // LISTA DE IMÁGENES (36 fotos - eliminada la #6)
         // ============================================================
         const imagenesGaleria = [
             'https://i.imgur.com/NwZPp2V.jpeg',
@@ -1379,7 +1334,7 @@
             'https://i.imgur.com/eRWDtZG.jpeg',
             'https://i.imgur.com/J3bHcL3.jpeg',
             'https://i.imgur.com/U5PkrUq.jpeg',
-            'https://i.imgur.com/WW67dk9.jpeg',
+            // Imagen 6 ELIMINADA
             'https://i.imgur.com/Lm3ThCj.jpeg',
             'https://i.imgur.com/J7k8ih0.jpeg',
             'https://i.imgur.com/pnrl9SD.jpeg',
@@ -1452,7 +1407,6 @@
                 if (enlaces[idx]) enlaces[idx].classList.add('activo-' + nombre);
             }
 
-            // Si es inicio, hacer scroll al hero
             if (nombre === 'inicio') {
                 document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
                 return;
@@ -1519,7 +1473,6 @@
             if (cookiesAceptadas === 'true' || cookiesAceptadas === 'false') {
                 document.getElementById('cookiesBanner').classList.add('hidden');
             }
-            // Iniciar con Inicio
             mostrarSeccion('inicio');
         });
 
@@ -1565,22 +1518,19 @@
             L.polyline([chimbote, [-8.9, -78.4], lacramarca], {
                 color: '#4A7A2E',
                 weight: 4,
-                dashArray: '10 8',
-                opacity: 0.8
+                dashArray: '10 8'
             }).addTo(mapa);
 
             L.polyline([chimbote, [-8.9, -78.2], parlamenco], {
                 color: '#A0522D',
                 weight: 4,
-                dashArray: '10 8',
-                opacity: 0.8
+                dashArray: '10 8'
             }).addTo(mapa);
 
             L.polyline([chimbote, [-9.0, -78.5], puebloviejo], {
                 color: '#1A5A7A',
                 weight: 4,
-                dashArray: '10 8',
-                opacity: 0.8
+                dashArray: '10 8'
             }).addTo(mapa);
 
             mapa.fitBounds([chimbote, lacramarca, parlamenco, puebloviejo], { padding: [50, 50] });
