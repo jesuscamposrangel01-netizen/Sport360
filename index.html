@@ -938,7 +938,7 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- NOTICIA BREVE: NUEVA JUNTA DIRECTIVA (INICIO CON IMÁGENES) -->
+            <!-- NOTICIA BREVE: NUEVA JUNTA DIRECTIVA (INICIO CON IMÁGENES COMPLETAS) -->
             <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.8rem;">
@@ -947,10 +947,17 @@
                 </div>
                 
                 <div style="background:white; border-radius:20px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
-                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; max-height:150px; overflow:hidden;">
-                        <div style="background-image:url('https://i.imgur.com/LI6deCz.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
-                        <div style="background-image:url('https://i.imgur.com/OqCn0fV.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
-                        <div style="background-image:url('https://i.imgur.com/Xiq5wpA.jpeg'); background-size:cover; background-position:center; min-height:150px;"></div>
+                    <!-- Carrusel de 3 imágenes (ahora con <img>) -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; max-height:180px; overflow:hidden;">
+                        <div style="overflow:hidden; min-height:180px;">
+                            <img src="https://i.imgur.com/LI6deCz.jpeg" alt="Elecciones comunales 1" style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
+                        <div style="overflow:hidden; min-height:180px;">
+                            <img src="https://i.imgur.com/OqCn0fV.jpeg" alt="Elecciones comunales 2" style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
+                        <div style="overflow:hidden; min-height:180px;">
+                            <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales 3" style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
                     </div>
                     
                     <div style="padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
@@ -964,7 +971,7 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES -->
+            <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES (CORREGIDA) -->
             <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
@@ -974,13 +981,18 @@
                 
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:300px;">
-                        <div style="background-image:url('https://i.imgur.com/n9nHRUg.jpeg'); background-size:cover; background-position:center; min-height:250px;"></div>
+                        <!-- IMAGEN COMPLETA (AHORA CON <img>) -->
+                        <div style="overflow:hidden; min-height:250px;">
+                            <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
                         <div style="padding:2rem; display:flex; flex-direction:column; justify-content:center;">
                             <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.5rem; width:fit-content;">🌾 Lacramarca</span>
                             <h3 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--marron); margin:0.5rem 0;">Restauración de murales en Monte Zarumo</h3>
-                            <p style="color:var(--marron-claro); font-size:0.95rem;">El presidente <strong>Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en Monte Zarumo.</p>
+                            <p style="color:var(--marron-claro); font-size:0.95rem;">
+                                El <strong>presidente Carlos Budinich</strong>, junto a la <strong>nueva junta directiva de la Comunidad Campesina de Lacramarca</strong> (período 2026-2027), iniciaron la restauración de los murales informativos en Monte Zarumo. Esta obra forma parte de las acciones de puesta en valor del patrimonio cultural de la comunidad.
+                            </p>
                             <div style="margin-top:1rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
-                                <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-user"></i> Carlos Budinich</span>
+                                <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-user"></i> Carlos Budinich (Presidente)</span>
                                 <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-map-marker-alt"></i> Monte Zarumo</span>
                                 <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-calendar-alt"></i> En curso</span>
                             </div>
@@ -1144,7 +1156,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: LACRAMARCA (SOLO CONTENIDO DE LACRAMARCA) -->
+    <!-- SECCIÓN: LACRAMARCA (CON IMAGEN DE PUEBLO VIEJO Y NOTICIAS SEGUIDAS) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-lacramarca" id="seccion-lacramarca">
         <div class="container">
@@ -1152,6 +1164,7 @@
             <h2 class="section-title fade-in">Comunidad Campesina de <span class="highlight">Lacramarca</span></h2>
             <p class="section-subtitle fade-in">Más de 5,000 agricultores que trabajan por el desarrollo del valle</p>
             
+            <!-- Info-grid con la nueva imagen (la de Pueblo Viejo) -->
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="verde">El corazón agrícola de Áncash</h3>
@@ -1161,38 +1174,40 @@
                     </div>
                     <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
                 </div>
-                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/J3bHcL3.jpeg');"></div>
-            </div>
-            
-            <!-- Restauración de murales (sin mencionar Palamenco) -->
-            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
-                <div style="margin:1rem 0; text-align:center;">
-                    <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra);">
-                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Restauración de murales en Monte Zarumo</p>
-                </div>
-                <p>El <strong>presidente Carlos Budinich</strong>, junto al equipo de pintores y el <strong>artista visual Maucayan</strong>, iniciaron la restauración de los murales informativos en <strong>Monte Zarumo</strong>.</p>
-            </div>
-            
-            <div class="card-grid">
-                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
-                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
-                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
+                <!-- NUEVA IMAGEN: la misma que usa Pueblo Viejo -->
+                <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/W786HaT.jpeg');"></div>
             </div>
 
-            <!-- NUEVA JUNTA DIRECTIVA (detallada con imágenes) -->
+            <!-- NOTICIA 1: RESTAURACIÓN DE MURALES -->
             <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
+                <div style="margin:1rem 0; text-align:center; overflow:hidden; border-radius:16px;">
+                    <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; max-width:600px; border-radius:16px; box-shadow:var(--sombra); object-fit:cover;">
+                    <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Restauración de murales en Monte Zarumo</p>
+                </div>
+                <p>
+                    El <strong>presidente Carlos Budinich</strong> y la <strong>nueva junta directiva de la Comunidad Campesina de Lacramarca</strong> (período 2026-2027) vienen liderando la restauración de los murales informativos en Monte Zarumo. Esta iniciativa, que cuenta con el apoyo de artistas locales, busca fortalecer la identidad cultural y el turismo en la zona.
+                </p>
+            </div>
+
+            <!-- NOTICIA 2: NUEVA JUNTA DIRECTIVA (INMEDIATAMENTE DEBAJO) -->
+            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:1.5rem;">
                 <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:0.5rem;">
                     <span style="background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📌 Oficial</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">✅ Inscrito en SUNARP · 25 de mayo 2026</span>
                 </div>
                 
-                <!-- Galería de 3 imágenes -->
+                <!-- Galería de 3 imágenes de las elecciones -->
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; margin:1rem 0; border-radius:16px; overflow:hidden;">
-                    <img src="https://i.imgur.com/LI6deCz.jpeg" alt="Elecciones comunales Lacramarca 1" style="width:100%; height:180px; object-fit:cover;">
-                    <img src="https://i.imgur.com/OqCn0fV.jpeg" alt="Elecciones comunales Lacramarca 2" style="width:100%; height:180px; object-fit:cover;">
-                    <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales Lacramarca 3" style="width:100%; height:180px; object-fit:cover;">
+                    <div style="overflow:hidden; border-radius:8px;">
+                        <img src="https://i.imgur.com/LI6deCz.jpeg" alt="Elecciones comunales Lacramarca 1" style="width:100%; height:200px; object-fit:cover; display:block;">
+                    </div>
+                    <div style="overflow:hidden; border-radius:8px;">
+                        <img src="https://i.imgur.com/OqCn0fV.jpeg" alt="Elecciones comunales Lacramarca 2" style="width:100%; height:200px; object-fit:cover; display:block;">
+                    </div>
+                    <div style="overflow:hidden; border-radius:8px;">
+                        <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales Lacramarca 3" style="width:100%; height:200px; object-fit:cover; display:block;">
+                    </div>
                 </div>
                 
                 <h4 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
@@ -1200,8 +1215,14 @@
                 <p>El Comité Electoral de la Comunidad Campesina de Lacramarca informa que la nueva junta directiva para el período <strong>2026-2027</strong> ha sido inscrita satisfactoriamente ante <strong>SUNARP</strong> (Título Nº 2026-00563665), quedando formalmente constituida y facultada para ejercer sus funciones desde el <strong>25 de mayo de 2026</strong>.</p>
                 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--crema); padding:1.2rem; border-radius:16px;">
-                    <div><p style="margin:0; font-weight:700; color:var(--marron);">👤 Presidente</p><p style="margin:0; color:var(--marron-claro);">Carlos Alberto Budinich Salas</p></div>
-                    <div><p style="margin:0; font-weight:700; color:var(--marron);">👤 Vicepresidente</p><p style="margin:0; color:var(--marron-claro);">Jhosten Edwin Salas Cevero</p></div>
+                    <div>
+                        <p style="margin:0; font-weight:700; color:var(--marron);">👤 Presidente</p>
+                        <p style="margin:0; color:var(--marron-claro);">Carlos Alberto Budinich Salas</p>
+                    </div>
+                    <div>
+                        <p style="margin:0; font-weight:700; color:var(--marron);">👤 Vicepresidente</p>
+                        <p style="margin:0; color:var(--marron-claro);">Jhosten Edwin Salas Cevero</p>
+                    </div>
                 </div>
                 
                 <p style="font-weight:600; color:var(--marron); margin:0.5rem 0 0.2rem 0;">📋 Directivos:</p>
@@ -1225,6 +1246,14 @@
                         <strong>📢 Comunicado oficial:</strong> El Comité Electoral agradece a todos los comuneros que participaron en la Asamblea Aclaratoria. La ceremonia de juramentación se realizará próximamente en el local comunal.
                     </p>
                 </div>
+            </div>
+
+            <!-- CARDS DE AGRICULTURA (movidas después de ambas noticias) -->
+            <div class="card-grid">
+                <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
+                <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
+                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
             </div>
 
         </div>
