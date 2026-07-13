@@ -17,8 +17,6 @@
             padding: 12px;
             min-height: 100vh;
         }
-
-        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -62,8 +60,6 @@
         .search-box input::placeholder {
             color: #666;
         }
-
-        /* TABS */
         .tabs {
             display: flex;
             gap: 15px;
@@ -99,8 +95,6 @@
             background: #e50914;
             border-radius: 4px;
         }
-
-        /* FILTROS */
         .filter-row {
             display: flex;
             gap: 8px;
@@ -129,12 +123,6 @@
             color: #fff;
             background: #e50914;
         }
-        .filter-btn:hover {
-            color: #fff;
-            background: #1a1a1a;
-        }
-
-        /* GRID RECOMENDADOS */
         .section-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -175,8 +163,6 @@
             color: #888;
             font-size: 0.7rem;
         }
-
-        /* LISTA TENDENCIAS */
         .trending-list {
             display: flex;
             flex-direction: column;
@@ -227,8 +213,6 @@
         }
         .trend-info .meta .date { color: #666; }
         .trend-info .meta .genre { color: #e50914; }
-
-        /* REPRODUCTOR */
         .reproductor {
             display: none;
             margin-top: 20px;
@@ -301,8 +285,6 @@
             color: #888;
             font-size: 0.8rem;
         }
-
-        /* SELECTOR DE FUENTE */
         .source-selector {
             background: #1a1a1a;
             color: #fff;
@@ -312,6 +294,28 @@
             font-size: 0.7rem;
             cursor: pointer;
             margin-left: 6px;
+        }
+        .btn-cargar {
+            background: #e50914;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 15px auto 0;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            transition: 0.3s;
+        }
+        .btn-cargar:active {
+            transform: scale(0.96);
+        }
+        .btn-cargar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         @media (max-width: 480px) {
@@ -343,7 +347,6 @@
         </div>
     </div>
 
-    <!-- TABS -->
     <div class="tabs" id="tabsContainer">
         <button class="tab active" data-tab="all">Todo</button>
         <button class="tab" data-tab="movie">Películas</button>
@@ -351,7 +354,6 @@
         <button class="tab" data-tab="anime">Anime</button>
     </div>
 
-    <!-- FILTROS -->
     <div class="filter-row">
         <span class="filter-label">Género</span>
         <button class="filter-btn active" data-genre="all">Recomendados</button>
@@ -370,14 +372,14 @@
         <button class="filter-btn" data-year="2024">2024</button>
     </div>
 
-    <!-- CONTENIDO -->
     <div class="section-title">📌 Recomendados</div>
     <div class="grid-recom" id="gridRecom"></div>
+    <button class="btn-cargar" id="cargarMasRecom">Cargar más</button>
 
     <div class="section-title" style="margin-top:20px;">🔥 Tendencias</div>
     <div class="trending-list" id="trendingList"></div>
+    <button class="btn-cargar" id="cargarMasTrend">Cargar más tendencias</button>
 
-    <!-- REPRODUCTOR -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <div class="left">
@@ -409,7 +411,7 @@
 
     <script>
         // ============================================================
-        //  TU CLAVE DE TMDb (colócala aquí)
+        //  TU CLAVE DE TMDb (en español)
         // ============================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
@@ -427,41 +429,65 @@
         let allMovies = [];
         let allTrending = [];
         let currentYear = 'all';
+        let currentPageRecom = 1;
+        let currentPageTrend = 1;
+        const MAX_PAGES = 5;
 
         // ============================================================
-        //  API
+        //  API CORREGIDA: SIEMPRE en español y sin romper la URL
         // ============================================================
-        async function fetchApi(endpoint) {
-            const url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
+        async function fetchApi(endpoint, extraParams = '') {
+            // Construimos la URL base con el idioma español
+            let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
+            // Si hay parámetros extra (como la página), los añadimos con "&"
+            if (extraParams) {
+                url += `&${extraParams}`;
+            }
             const res = await fetch(url);
             if (!res.ok) throw new Error(`Error ${res.status}`);
             return res.json();
         }
 
-        // Cargar películas populares (para recomendados)
-        async function loadPopular() {
+        // ============================================================
+        //  CARGAR PELÍCULAS (con página)
+        // ============================================================
+        async function loadPopular(page = 1) {
             try {
-                const data = await fetchApi('movie/popular');
-                allMovies = data.results || [];
+                // Pasamos el parámetro "page" como extraParams
+                const data = await fetchApi('movie/popular', `page=${page}`);
+                const newMovies = data.results || [];
+                if (page === 1) {
+                    allMovies = newMovies;
+                } else {
+                    allMovies = allMovies.concat(newMovies);
+                }
                 renderGrid(allMovies);
+                return newMovies.length > 0;
             } catch (e) {
                 gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
+                return false;
             }
         }
 
-        // Cargar tendencias
-        async function loadTrending() {
+        async function loadTrending(page = 1) {
             try {
-                const data = await fetchApi('trending/movie/week');
-                allTrending = data.results || [];
+                const data = await fetchApi('trending/movie/week', `page=${page}`);
+                const newTrend = data.results || [];
+                if (page === 1) {
+                    allTrending = newTrend;
+                } else {
+                    allTrending = allTrending.concat(newTrend);
+                }
                 renderTrending(allTrending);
+                return newTrend.length > 0;
             } catch (e) {
                 trendingList.innerHTML = `<p style="color:#e50914;">Error al cargar tendencias</p>`;
+                return false;
             }
         }
 
         // ============================================================
-        //  RENDER
+        //  RENDERIZAR (ahora con títulos en español)
         // ============================================================
         function renderGrid(lista) {
             let filtered = lista;
@@ -471,9 +497,8 @@
                     return date.startsWith(currentYear);
                 });
             }
-            const show = filtered.slice(0, 8);
 
-            gridRecom.innerHTML = show.map(item => `
+            gridRecom.innerHTML = filtered.map(item => `
                 <div class="card-rec" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}">
                     <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title}" loading="lazy">
                     <div class="info">
@@ -494,8 +519,7 @@
         }
 
         function renderTrending(lista) {
-            const top10 = lista.slice(0, 10);
-            trendingList.innerHTML = top10.map((item, index) => {
+            trendingList.innerHTML = lista.map((item, index) => {
                 const rank = index + 1;
                 let rankClass = 'trend-rank';
                 if (rank === 1) rankClass += ' top1';
@@ -532,7 +556,41 @@
         }
 
         // ============================================================
-        //  REPRODUCTOR (con selector de fuente)
+        //  CARGAR MÁS
+        // ============================================================
+        async function cargarMasRecom() {
+            if (currentPageRecom >= MAX_PAGES) {
+                document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasRecom').disabled = true;
+                return;
+            }
+            currentPageRecom++;
+            const hayMas = await loadPopular(currentPageRecom);
+            if (!hayMas) {
+                document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasRecom').disabled = true;
+            }
+        }
+
+        async function cargarMasTrend() {
+            if (currentPageTrend >= MAX_PAGES) {
+                document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasTrend').disabled = true;
+                return;
+            }
+            currentPageTrend++;
+            const hayMas = await loadTrending(currentPageTrend);
+            if (!hayMas) {
+                document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasTrend').disabled = true;
+            }
+        }
+
+        document.getElementById('cargarMasRecom').addEventListener('click', cargarMasRecom);
+        document.getElementById('cargarMasTrend').addEventListener('click', cargarMasTrend);
+
+        // ============================================================
+        //  REPRODUCTOR
         // ============================================================
         function abrirReproductor(id, titulo, sinopsis, type = 'movie') {
             const domain = sourceSelector.value;
@@ -549,23 +607,24 @@
             iframe.src = '';
         });
 
-        // Cambiar fuente y recargar automáticamente
         sourceSelector.addEventListener('change', () => {
             const currentSrc = iframe.src;
             if (currentSrc) {
-                const url = new URL(currentSrc);
-                const pathParts = url.pathname.split('/');
-                const type = pathParts[1] || 'movie';
-                const id = pathParts[2];
-                if (id) {
-                    const newSrc = `https://${sourceSelector.value}/embed/${type}/${id}`;
-                    iframe.src = newSrc;
-                }
+                try {
+                    const url = new URL(currentSrc);
+                    const pathParts = url.pathname.split('/');
+                    const type = pathParts[1] || 'movie';
+                    const id = pathParts[2];
+                    if (id) {
+                        const newSrc = `https://${sourceSelector.value}/embed/${type}/${id}`;
+                        iframe.src = newSrc;
+                    }
+                } catch (e) { /* ignore */ }
             }
         });
 
         // ============================================================
-        //  BUSCADOR
+        //  BUSCADOR Y FILTROS
         // ============================================================
         buscador.addEventListener('input', (e) => {
             const texto = e.target.value.toLowerCase().trim();
@@ -586,9 +645,6 @@
             renderTrending(filtradasTrend);
         });
 
-        // ============================================================
-        //  FILTROS
-        // ============================================================
         document.querySelectorAll('.filter-btn[data-year]').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn[data-year]').forEach(b => b.classList.remove('active'));
@@ -598,30 +654,11 @@
             });
         });
 
-        // Filtros de género (solo UI)
-        document.querySelectorAll('.filter-btn[data-genre]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn[data-genre]').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                // En una versión completa, filtraríamos por género aquí
-            });
-        });
-
-        // Tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                // Cambiar categoría (solo UI)
-            });
-        });
-
         // ============================================================
         //  INICIO
         // ============================================================
-        loadPopular();
-        loadTrending();
+        loadPopular(1);
+        loadTrending(1);
     </script>
-
 </body>
 </html>
