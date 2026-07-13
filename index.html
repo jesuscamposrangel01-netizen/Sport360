@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Cine · Catálogo</title>
+    <title>CineTrend · Tendencias</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         body {
-            background: #0d0d0d;
+            background: #0a0a0a;
             color: #fff;
-            padding: 20px;
+            padding: 20px 30px;
         }
+
+        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -26,68 +28,252 @@
         }
         .logo {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
             background: linear-gradient(135deg, #e50914, #b20710);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
-        .buscar {
-            padding: 10px 16px;
-            border-radius: 30px;
-            border: 1px solid #333;
-            background: #1a1a1a;
-            color: #fff;
+        .logo span {
+            background: none;
+            -webkit-text-fill-color: #fff;
+            font-weight: 300;
             font-size: 1rem;
-            width: 280px;
-            max-width: 100%;
+            margin-left: 8px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 5px 20px;
+            border: 1px solid #2a2a2a;
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 0.95rem;
+            width: 220px;
             outline: none;
+        }
+        .search-box input::placeholder {
+            color: #666;
+        }
+        .search-box span {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        /* PESTAÑAS PRINCIPALES */
+        .tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: 0.3s;
+            position: relative;
+        }
+        .tab:hover {
+            color: #fff;
+        }
+        .tab.active {
+            color: #fff;
+        }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #e50914;
+            border-radius: 4px;
+        }
+
+        /* FILAS DE FILTROS */
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .filter-label {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 5px;
+        }
+        .filter-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 20px;
             transition: 0.3s;
         }
-        .buscar:focus {
-            border-color: #e50914;
-            background: #222;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 24px;
-        }
-        .card {
+        .filter-btn:hover {
+            color: #fff;
             background: #1a1a1a;
+        }
+        .filter-btn.active {
+            color: #fff;
+            background: #e50914;
+        }
+
+        /* CONTENEDOR PRINCIPAL: Grid + Lista */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        /* SECCIÓN RECOMENDADOS (GRID) */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .badge {
+            font-size: 0.7rem;
+            background: #e50914;
+            padding: 2px 10px;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .grid-recom {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        .card-rec {
+            background: #141414;
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.25s, box-shadow 0.25s;
+            border: 1px solid #1a1a1a;
         }
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4);
+        .card-rec:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+            border-color: #e50914;
         }
-        .card img {
+        .card-rec img {
             width: 100%;
-            display: block;
             aspect-ratio: 2/3;
             object-fit: cover;
+            display: block;
         }
-        .card .info {
-            padding: 12px 14px;
+        .card-rec .info {
+            padding: 10px 12px;
         }
-        .card .titulo {
-            font-weight: 600;
-            font-size: 1rem;
+        .card-rec .info h4 {
+            font-size: 0.9rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .card .calificacion {
-            color: #f5c518;
-            font-size: 0.85rem;
+        .card-rec .info p {
+            color: #888;
+            font-size: 0.75rem;
             margin-top: 4px;
         }
+
+        /* LISTA DE TENDENCIAS */
+        .trending-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .trend-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #111;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid #1a1a1a;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .trend-item:hover {
+            background: #1a1a1a;
+            border-color: #333;
+            transform: translateX(4px);
+        }
+        .trend-rank {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #333;
+            min-width: 45px;
+            text-align: center;
+        }
+        .trend-rank.top1 {
+            color: #f5c518;
+        }
+        .trend-rank.top2 {
+            color: #ccc;
+        }
+        .trend-rank.top3 {
+            color: #cd7f32;
+        }
+        .trend-info {
+            flex: 1;
+        }
+        .trend-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .trend-info .meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .trend-info .meta .date {
+            color: #666;
+        }
+        .trend-info .meta .country {
+            background: #1a1a1a;
+            padding: 0 10px;
+            border-radius: 30px;
+            color: #aaa;
+        }
+        .trend-info .meta .genre {
+            color: #e50914;
+        }
+
+        /* REPRODUCTOR (MODAL MEJORADO) */
         .reproductor {
             display: none;
-            margin-top: 30px;
-            background: #000;
+            margin-top: 40px;
+            background: #0d0d0d;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid #2a2a2a;
@@ -95,49 +281,133 @@
         .reproductor.active {
             display: block;
         }
-        .reproductor iframe {
-            width: 100%;
-            height: 60vh;
-            min-height: 360px;
-            border: none;
-        }
-        .reproductor .info-peli {
-            padding: 18px 22px;
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
             background: #111;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid #1a1a1a;
         }
-        .reproductor .info-peli h2 {
-            margin-bottom: 6px;
-        }
-        .reproductor .info-peli p {
-            color: #aaa;
-            font-size: 0.95rem;
-            max-width: 800px;
-        }
-        .back-top {
+        .player-header .left {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding: 10px 15px;
+            gap: 12px;
         }
-        .back-top button {
+        .btn-volver {
             background: none;
             border: none;
             color: #e50914;
             font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
+        }
+        .player-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .player-controls button {
+            background: #1a1a1a;
+            border: none;
+            color: #ccc;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .player-controls button:hover {
+            background: #333;
+            color: #fff;
+        }
+        .player-controls .highlight {
+            background: #e50914;
+            color: #fff;
+        }
+        .player-controls .highlight:hover {
+            background: #b20710;
+        }
+
+        .player-video {
+            width: 100%;
+            height: 55vh;
+            min-height: 300px;
+            background: #000;
+        }
+        .player-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .player-footer {
+            padding: 16px 22px;
+            background: #111;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .player-footer .info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .player-footer .info p {
+            color: #888;
+            font-size: 0.9rem;
+            max-width: 600px;
+        }
+        .player-footer .episode-list {
+            background: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #aaa;
+            border: 1px solid #2a2a2a;
+            cursor: pointer;
+        }
+        .player-footer .episode-list:hover {
+            border-color: #e50914;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .grid-recom {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .grid-recom {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tabs {
+                gap: 15px;
+            }
+            .search-box input {
+                width: 140px;
+            }
         }
         @media (max-width: 500px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 14px;
+            .grid-recom {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
-            .logo {
-                font-size: 1.5rem;
-            }
-            .buscar {
-                width: 100%;
+            .player-controls button {
+                padding: 2px 10px;
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -145,97 +415,250 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 Mi Cine</div>
-        <input class="buscar" id="buscador" type="text" placeholder="Buscar película...">
+        <div class="logo">🎬 CineTrend <span>| Tendencias</span></div>
+        <div class="search-box">
+            <input id="buscador" type="text" placeholder="Buscar...">
+            <span>🔍</span>
+        </div>
     </div>
 
-    <div id="catalogo" class="grid"></div>
+    <!-- PESTAÑAS -->
+    <div class="tabs" id="tabsContainer">
+        <button class="tab active" data-tab="all">Todo</button>
+        <button class="tab" data-tab="movie">Películas</button>
+        <button class="tab" data-tab="tv">Series</button>
+        <button class="tab" data-tab="anime">Anime</button>
+        <button class="tab" data-tab="shorts">Shorts</button>
+    </div>
 
-    <div id="reproductor" class="reproductor">
-        <div class="back-top">
-            <button id="btnCerrarReproductor">← Volver</button>
-            <span style="color:#888; font-size:0.9rem;">Reproduciendo desde fuente externa</span>
+    <!-- FILTROS -->
+    <div class="filter-row" id="genreRow">
+        <span class="filter-label">Género</span>
+        <button class="filter-btn active" data-genre="all">Recomendados</button>
+        <button class="filter-btn" data-genre="10751">Niños</button>
+        <button class="filter-btn" data-genre="28">Acción</button>
+        <button class="filter-btn" data-genre="18">Drama</button>
+        <button class="filter-btn" data-genre="35">Comedia</button>
+        <button class="filter-btn" data-genre="16">Animación</button>
+    </div>
+
+    <div class="filter-row">
+        <span class="filter-label">País</span>
+        <button class="filter-btn active" data-country="all">Todo</button>
+        <button class="filter-btn" data-country="US">EE.UU.</button>
+        <button class="filter-btn" data-country="JP">Japón</button>
+        <button class="filter-btn" data-country="GB">Reino Unido</button>
+        <button class="filter-btn" data-country="PH">Filipinas</button>
+    </div>
+
+    <div class="filter-row">
+        <span class="filter-label">Año</span>
+        <button class="filter-btn active" data-year="all">Todo</button>
+        <button class="filter-btn" data-year="2026">2026</button>
+        <button class="filter-btn" data-year="2025">2025</button>
+        <button class="filter-btn" data-year="2024">2024</button>
+        <button class="filter-btn" data-year="2023">2023</button>
+        <button class="filter-btn" data-year="2022">2022</button>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="content-wrapper" id="mainContent">
+        <!-- COLUMNA IZQUIERDA: Recomendados (Grid) -->
+        <div>
+            <div class="section-title">
+                📌 Recomendados <span class="badge">Popular</span>
+            </div>
+            <div class="grid-recom" id="gridRecom"></div>
         </div>
-        <iframe id="iframeVideo" src="" allowfullscreen allow="encrypted-media; fullscreen"></iframe>
-        <div class="info-peli">
-            <h2 id="peliTitulo"></h2>
-            <p id="peliSinopsis"></p>
+
+        <!-- COLUMNA DERECHA: Tendencias (Lista numerada) -->
+        <div>
+            <div class="section-title">
+                🔥 Tendencias
+            </div>
+            <div class="trending-list" id="trendingList"></div>
+        </div>
+    </div>
+
+    <!-- REPRODUCTOR MEJORADO (Estilo Screenshot 1) -->
+    <div id="reproductor" class="reproductor">
+        <div class="player-header">
+            <div class="left">
+                <button class="btn-volver" id="btnCerrarReproductor">← Volver</button>
+                <span style="color:#888; font-size:0.8rem;">|</span>
+                <span style="color:#e50914; font-weight:600;">Nube: Más fluida</span>
+            </div>
+            <div class="player-controls">
+                <button class="highlight">Descargar</button>
+                <button>Doblaje Español</button>
+                <button>Subtítulo</button>
+                <button class="highlight">HD</button>
+            </div>
+        </div>
+        <div class="player-video">
+            <iframe id="iframeVideo" src="" allowfullscreen allow="encrypted-media; fullscreen"></iframe>
+        </div>
+        <div class="player-footer">
+            <div class="info">
+                <h3 id="peliTitulo">Título de la película</h3>
+                <p id="peliSinopsis">Sinopsis aquí...</p>
+            </div>
+            <div class="episode-list">
+                📋 Lista de reproducción (1 Episodio)
+            </div>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        //  CLAVE API (YA COLOCADA)
-        // ============================================================
-        const API_KEY_V3 = 'bda7a5fa2507ebcef3fcebd2287d72c9'; // <--- TU CLAVE AQUÍ
-        // ============================================================
+        // ================================================================
+        //  CONFIGURACIÓN
+        // ================================================================
+        const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
+        const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
 
-        const catalogo = document.getElementById('catalogo');
-        const buscador = document.getElementById('buscador');
+        // Estado
+        let currentTab = 'all';
+        let currentGenre = 'all';
+        let currentCountry = 'all';
+        let currentYear = 'all';
+        let currentData = [];
+        let allTrending = [];
+
+        // DOM
+        const gridRecom = document.getElementById('gridRecom');
+        const trendingList = document.getElementById('trendingList');
         const reproductor = document.getElementById('reproductor');
         const iframe = document.getElementById('iframeVideo');
         const peliTitulo = document.getElementById('peliTitulo');
         const peliSinopsis = document.getElementById('peliSinopsis');
+        const buscador = document.getElementById('buscador');
 
-        let peliculas = [];
+        // ================================================================
+        //  FUNCIONES API
+        // ================================================================
+        async function fetchApi(endpoint) {
+            const url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Error ${res.status}`);
+            return res.json();
+        }
 
-        async function cargarPeliculas() {
+        // Obtener populares (para el grid izquierdo)
+        async function loadPopular() {
             try {
-                const url = `https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1&api_key=${API_KEY_V3}`;
-                const res = await fetch(url);
-                
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    throw new Error(`Error ${res.status}: ${errorText}`);
-                }
-                const data = await res.json();
-                peliculas = data.results || [];
-                renderizar(peliculas);
+                const data = await fetchApi('movie/popular');
+                currentData = data.results || [];
+                renderGrid(currentData);
             } catch (e) {
-                catalogo.innerHTML = `
-                    <div style="color:#e50914; font-size:1.2rem; grid-column: 1/-1; text-align:center; padding:40px;">
-                        ❌ Error: ${e.message}<br>
-                        <span style="color:#888; font-size:0.9rem;">
-                            Revisa tu conexión o la clave de API.
-                        </span>
-                    </div>`;
-                console.error(e);
+                gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
             }
         }
 
-        function renderizar(lista) {
+        // Obtener tendencias (para la lista derecha)
+        async function loadTrending() {
+            try {
+                const data = await fetchApi('trending/movie/week');
+                allTrending = data.results || [];
+                renderTrending(allTrending);
+            } catch (e) {
+                trendingList.innerHTML = `<p style="color:#e50914;">Error al cargar tendencias</p>`;
+            }
+        }
+
+        // ================================================================
+        //  RENDERIZAR GRID (Recomendados)
+        // ================================================================
+        function renderGrid(lista) {
             if (!lista.length) {
-                catalogo.innerHTML = `<p style="color:#aaa; grid-column:1/-1; text-align:center;">No se encontraron películas.</p>`;
+                gridRecom.innerHTML = `<p style="color:#888;">Sin resultados</p>`;
                 return;
             }
-            catalogo.innerHTML = lista.map(p => `
-                <div class="card" data-id="${p.id}" data-titulo="${p.title}" data-sinopsis="${p.overview || 'Sin sinopsis disponible.'}">
-                    <img src="https://image.tmdb.org/t/p/w300${p.poster_path}" alt="${p.title}" loading="lazy">
+            // Filtrar por año si está seleccionado
+            let filtered = lista;
+            if (currentYear !== 'all') {
+                filtered = filtered.filter(item => {
+                    const date = item.release_date || item.first_air_date || '';
+                    return date.startsWith(currentYear);
+                });
+            }
+            // Si hay menos de 3, mostrar los que haya
+            const show = filtered.slice(0, 6);
+
+            gridRecom.innerHTML = show.map(item => `
+                <div class="card-rec" data-id="${item.id}" data-titulo="${item.title || item.name}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-media="movie">
+                    <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title || item.name}" loading="lazy">
                     <div class="info">
-                        <div class="titulo">${p.title}</div>
-                        <div class="calificacion">⭐ ${p.vote_average?.toFixed(1) || 'N/A'}</div>
+                        <h4>${item.title || item.name}</h4>
+                        <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'}</p>
                     </div>
                 </div>
             `).join('');
 
-            document.querySelectorAll('.card').forEach(card => {
+            // Evento de clic para reproducir
+            document.querySelectorAll('.card-rec').forEach(card => {
                 card.addEventListener('click', () => {
                     const id = card.dataset.id;
                     const titulo = card.dataset.titulo;
                     const sinopsis = card.dataset.sinopsis;
-                    abrirReproductor(id, titulo, sinopsis);
+                    abrirReproductor(id, titulo, sinopsis, 'movie');
                 });
             });
         }
 
-        buscador.addEventListener('input', (e) => {
-            const texto = e.target.value.toLowerCase().trim();
-            const filtradas = peliculas.filter(p => p.title.toLowerCase().includes(texto));
-            renderizar(filtradas);
-        });
+        // ================================================================
+        //  RENDERIZAR LISTA DE TENDENCIAS (Numerada)
+        // ================================================================
+        function renderTrending(lista) {
+            if (!lista.length) {
+                trendingList.innerHTML = `<p style="color:#888;">Sin tendencias</p>`;
+                return;
+            }
+            const top10 = lista.slice(0, 10);
+            trendingList.innerHTML = top10.map((item, index) => {
+                const rank = index + 1;
+                let rankClass = 'trend-rank';
+                if (rank === 1) rankClass += ' top1';
+                else if (rank === 2) rankClass += ' top2';
+                else if (rank === 3) rankClass += ' top3';
 
-        function abrirReproductor(id, titulo, sinopsis) {
-            const videoSrc = `https://vidsrc.xyz/embed/movie/${id}`;
+                const date = item.release_date || item.first_air_date || '2026-TBC';
+                const genreIds = item.genre_ids || [];
+                // Sacar un género de ejemplo (no tenemos los nombres, los ponemos genéricos)
+                const genreMap = { 28: 'Acción', 12: 'Aventura', 16: 'Animación', 35: 'Comedia', 18: 'Drama', 10751: 'Niños', 14: 'Fantasía' };
+                const genreName = genreMap[genreIds[0]] || 'Anime';
+
+                return `
+                    <div class="trend-item" data-id="${item.id}" data-titulo="${item.title || item.name}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-media="movie">
+                        <div class="${rankClass}">${rank}</div>
+                        <div class="trend-info">
+                            <h4>${item.title || item.name}</h4>
+                            <div class="meta">
+                                <span class="date">${date}</span>
+                                <span class="country">🇯🇵 JP</span>
+                                <span class="genre">${genreName}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Evento de clic en tendencia para reproducir
+            document.querySelectorAll('.trend-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const id = item.dataset.id;
+                    const titulo = item.dataset.titulo;
+                    const sinopsis = item.dataset.sinopsis;
+                    abrirReproductor(id, titulo, sinopsis, 'movie');
+                });
+            });
+        }
+
+        // ================================================================
+        //  REPRODUCTOR (con Selector de fuente)
+        // ================================================================
+        function abrirReproductor(id, titulo, sinopsis, media = 'movie') {
+            // Usamos una fuente estable (vidsrc.xyz)
+            const videoSrc = `https://vidsrc.xyz/embed/${media}/${id}`;
             iframe.src = videoSrc;
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis;
@@ -248,7 +671,78 @@
             iframe.src = '';
         });
 
-        cargarPeliculas();
+        // ================================================================
+        //  FILTROS Y TABS
+        // ================================================================
+        // Pestañas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentTab = tab.dataset.tab;
+                // Por ahora, recargamos populares (en versión completa filtraríamos por tipo)
+                loadPopular();
+                loadTrending();
+            });
+        });
+
+        // Filtros de género
+        document.querySelectorAll('#genreRow .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#genreRow .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentGenre = btn.dataset.genre;
+                loadPopular();
+            });
+        });
+
+        // Filtros de país (solo UI, en TMDb se filtra por región con 'region' en discover)
+        document.querySelectorAll('.filter-row:nth-child(3) .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-row:nth-child(3) .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCountry = btn.dataset.country;
+                // Podríamos recargar con región, pero lo dejamos visual por ahora
+                loadPopular();
+            });
+        });
+
+        // Filtros de año
+        document.querySelectorAll('.filter-row:nth-child(4) .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-row:nth-child(4) .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentYear = btn.dataset.year;
+                loadPopular();
+            });
+        });
+
+        // Buscador
+        buscador.addEventListener('input', (e) => {
+            const texto = e.target.value.toLowerCase().trim();
+            if (!texto) {
+                renderGrid(currentData);
+                renderTrending(allTrending);
+                return;
+            }
+            const filtradas = currentData.filter(item => {
+                const title = (item.title || item.name || '').toLowerCase();
+                return title.includes(texto);
+            });
+            renderGrid(filtradas);
+            // También filtrar tendencias
+            const filtradasTrend = allTrending.filter(item => {
+                const title = (item.title || item.name || '').toLowerCase();
+                return title.includes(texto);
+            });
+            renderTrending(filtradasTrend);
+        });
+
+        // ================================================================
+        //  INICIO
+        // ================================================================
+        loadPopular();
+        loadTrending();
     </script>
 
 </body>
