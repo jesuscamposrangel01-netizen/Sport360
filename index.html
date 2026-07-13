@@ -14,25 +14,26 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Lato', sans-serif; background: #F5F0E1; color: #2C1810; line-height: 1.8; overflow-x: hidden; }
+        body { font-family: 'Lato', sans-serif; background: #FFF8F0; color: #2C1810; line-height: 1.8; overflow-x: hidden; }
 
         :root {
-            --terracota: #A0522D;
-            --terracota-light: #C47A5A;
-            --verde: #4A7A2E;
-            --verde-light: #6A9A4E;
-            --azul: #1A5A7A;
-            --azul-light: #3A7A9A;
-            --dorado: #C49A6C;
-            --dorado-light: #E8C97A;
+            --naranja: #F49B36;
+            --naranja-claro: #FFB74D;
+            --naranja-oscuro: #E67E22;
+            --verde: #2ECC71;
+            --verde-oscuro: #27AE60;
+            --azul: #3498DB;
+            --azul-oscuro: #2980B9;
+            --morado: #9B59B6;
+            --amarillo: #F1C40F;
+            --dorado: #F39C12;
             --marron: #2C1810;
             --marron-claro: #5D4037;
-            --beige: #F5F0E1;
-            --crema: #FAF6EE;
+            --beige: #FFF8F0;
             --blanco: #FFFFFF;
-            --sombra: 0 8px 40px rgba(44, 24, 16, 0.08);
-            --sombra-hover: 0 16px 60px rgba(44, 24, 16, 0.16);
-            --glass: rgba(255, 255, 255, 0.7);
+            --sombra: 0 8px 30px rgba(0,0,0,0.08);
+            --sombra-hover: 0 16px 50px rgba(0,0,0,0.15);
+            --glass: rgba(255, 255, 255, 0.8);
             --border-glass: rgba(255, 255, 255, 0.3);
             --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --radius: 24px;
@@ -56,7 +57,7 @@
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--beige); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--terracota), var(--dorado)); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--naranja), var(--dorado)); border-radius: 10px; }
 
         header {
             background: rgba(44, 24, 16, 0.92);
@@ -67,7 +68,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border-bottom: 2px solid rgba(196, 154, 108, 0.2);
+            border-bottom: 2px solid rgba(244, 155, 54, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -81,16 +82,16 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
             font-weight: 900;
-            color: var(--dorado);
+            color: var(--naranja);
             text-decoration: none;
             cursor: pointer;
             transition: var(--transition);
         }
         .logo:hover { transform: scale(1.02); }
-        .logo svg { width: 45px; height: 45px; flex-shrink: 0; filter: drop-shadow(0 2px 12px rgba(196, 154, 108, 0.3)); }
+        .logo svg { width: 45px; height: 45px; flex-shrink: 0; filter: drop-shadow(0 2px 12px rgba(244, 155, 54, 0.3)); }
         .logo .logo-texto { display: flex; flex-direction: column; line-height: 1.2; }
         .logo .logo-texto small { font-size: 0.7rem; font-weight: 400; color: rgba(255,255,255,0.7); font-family: 'Lato', sans-serif; letter-spacing: 1px; }
-        .logo .logo-texto .sub { font-size: 0.6rem; color: var(--dorado); font-weight: 300; letter-spacing: 3px; text-transform: uppercase; }
+        .logo .logo-texto .sub { font-size: 0.6rem; color: var(--naranja); font-weight: 300; letter-spacing: 3px; text-transform: uppercase; }
 
         nav { display: flex; flex-wrap: wrap; gap: 0.2rem; align-items: center; }
         nav a {
@@ -114,22 +115,24 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: var(--dorado);
+            background: var(--naranja);
             transition: var(--transition);
             border-radius: 4px;
         }
         nav a:hover::after { width: 60%; }
         nav a:hover { color: white; transform: translateY(-2px); }
         
-        nav a.activo-inicio { background: var(--dorado); color: var(--marron); border-color: var(--dorado-light); }
-        nav a.activo-palamenco { background: var(--terracota); color: white; border-color: var(--terracota-light); }
-        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: var(--verde-light); }
-        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: var(--azul-light); }
+        nav a.activo-inicio { background: var(--naranja); color: white; border-color: var(--naranja-claro); }
+        nav a.activo-palamenco { background: var(--naranja-oscuro); color: white; border-color: var(--naranja-claro); }
+        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: #82E0AA; }
+        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: #85C1E9; }
         nav a.activo-videos { background: #E63946; color: white; border-color: #FF6B6B; }
-        nav a.activo-galeria { background: var(--terracota); color: white; border-color: var(--terracota-light); }
+        nav a.activo-galeria { background: var(--morado); color: white; border-color: #BB8FCE; }
         nav a.activo-eventos { background: #8B6B4D; color: white; border-color: #A8896A; }
         nav a.activo-investigacion { background: #6B4C7A; color: white; border-color: #8B6B9A; }
-        nav a.activo-mapa { background: #D4A24C; color: var(--marron); border-color: #E8C97A; }
+        nav a.activo-noticias { background: var(--amarillo); color: var(--marron); border-color: #F9E79F; }
+        nav a.activo-mapa { background: var(--azul); color: white; border-color: #85C1E9; }
+        nav a.activo-turismo { background: var(--dorado); color: white; border-color: #F9E79F; }
         nav a.activo-contacto { background: #4A6B7A; color: white; border-color: #6A8B9A; }
 
         .hero {
@@ -159,7 +162,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, rgba(44, 24, 16, 0.3) 0%, rgba(44, 24, 16, 0.7) 100%);
+            background: linear-gradient(135deg, rgba(244, 155, 54, 0.7), rgba(231, 76, 60, 0.5));
             z-index: 1;
         }
         .hero::after {
@@ -169,8 +172,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(196, 154, 108, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 50%, rgba(160, 82, 45, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(244, 155, 54, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(231, 76, 60, 0.2) 0%, transparent 50%);
             z-index: 1;
             animation: pulse 8s ease-in-out infinite;
         }
@@ -183,14 +186,14 @@
         }
         .hero-content .badge {
             display: inline-block;
-            background: rgba(196, 154, 108, 0.2);
+            background: rgba(255,255,255,0.15);
             backdrop-filter: blur(10px);
             padding: 0.4rem 1.5rem;
             border-radius: 50px;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 1px solid rgba(196, 154, 108, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             margin-bottom: 1.5rem;
         }
         .hero-content h1 {
@@ -202,10 +205,7 @@
             margin-bottom: 1rem;
         }
         .hero-content h1 .destacado {
-            background: linear-gradient(135deg, var(--dorado), var(--dorado-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--amarillo);
         }
         .hero-content p {
             font-size: 1.4rem;
@@ -234,14 +234,13 @@
             border: none;
         }
         .hero-content .btn-primary {
-            background: var(--terracota);
+            background: linear-gradient(135deg, var(--naranja), var(--dorado));
             color: white;
-            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.3);
+            box-shadow: 0 4px 30px rgba(244, 155, 54, 0.3);
         }
         .hero-content .btn-primary:hover {
-            background: var(--dorado);
             transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(196, 154, 108, 0.4);
+            box-shadow: 0 8px 40px rgba(244, 155, 54, 0.5);
         }
         .hero-content .btn-secondary {
             background: transparent;
@@ -265,7 +264,7 @@
             color: var(--marron);
         }
         .section-title .highlight {
-            background: linear-gradient(135deg, var(--terracota), var(--dorado));
+            background: linear-gradient(135deg, var(--naranja), var(--dorado));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -277,7 +276,7 @@
             height: 4px;
             margin: 0.5rem auto 0 auto;
             border-radius: 4px;
-            background: linear-gradient(90deg, var(--dorado), var(--terracota));
+            background: linear-gradient(90deg, var(--naranja), var(--dorado));
         }
         .section-subtitle {
             text-align: center;
@@ -337,7 +336,7 @@
         }
         .video-card .info .tag {
             display: inline-block;
-            background: #E63946;
+            background: var(--naranja);
             color: white;
             padding: 0.2rem 1rem;
             border-radius: 50px;
@@ -434,7 +433,7 @@
             transition: var(--transition);
             z-index: 10000;
         }
-        .lightbox .cerrar:hover { transform: rotate(90deg); color: var(--dorado); }
+        .lightbox .cerrar:hover { transform: rotate(90deg); color: var(--naranja); }
         .lightbox .nav {
             position: absolute;
             top: 50%;
@@ -480,9 +479,9 @@
             font-size: 2rem;
             margin-bottom: 1rem;
         }
-        .info-grid .texto h3.terracota { color: var(--terracota); }
-        .info-grid .texto h3.verde { color: var(--verde); }
-        .info-grid .texto h3.azul { color: var(--azul); }
+        .info-grid .texto h3.terracota { color: var(--naranja-oscuro); }
+        .info-grid .texto h3.verde { color: var(--verde-oscuro); }
+        .info-grid .texto h3.azul { color: var(--azul-oscuro); }
         .info-grid .texto p {
             color: var(--marron-claro);
             margin-bottom: 1rem;
@@ -508,7 +507,7 @@
             border: 1px solid var(--border-glass);
             padding: 2rem;
             border-radius: var(--radius);
-            border-left: 6px solid var(--dorado);
+            border-left: 6px solid var(--naranja);
             margin-top: 1.5rem;
             box-shadow: var(--sombra);
             transition: var(--transition);
@@ -540,6 +539,10 @@
             margin-bottom: 1rem;
             display: block;
         }
+        .card i.fa-tractor { color: var(--verde-oscuro); }
+        .card i.fa-water { color: var(--azul); }
+        .card i.fa-route { color: var(--naranja); }
+        .card i.fa-seedling { color: var(--verde); }
         .card h4 {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
@@ -551,9 +554,9 @@
             display: block;
             margin: 0.5rem 0;
         }
-        .card .dato.terracota { color: var(--terracota); }
-        .card .dato.verde { color: var(--verde); }
-        .card .dato.azul { color: var(--azul); }
+        .card .dato.terracota { color: var(--naranja-oscuro); }
+        .card .dato.verde { color: var(--verde-oscuro); }
+        .card .dato.azul { color: var(--azul-oscuro); }
         .card .dato.dorado { color: var(--dorado); }
 
         .estado {
@@ -606,9 +609,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         .mapa-leyenda .punto.chimbote { background: #2196F3; }
-        .mapa-leyenda .punto.lacramarca { background: #4A7A2E; }
-        .mapa-leyenda .punto.palamenco { background: #A0522D; }
-        .mapa-leyenda .punto.puebloviejo { background: #1A5A7A; }
+        .mapa-leyenda .punto.lacramarca { background: var(--verde-oscuro); }
+        .mapa-leyenda .punto.palamenco { background: var(--naranja-oscuro); }
+        .mapa-leyenda .punto.puebloviejo { background: var(--azul-oscuro); }
 
         .form-contact {
             background: var(--blanco);
@@ -624,16 +627,16 @@
             margin-top: 0.3rem;
             font-family: 'Lato', sans-serif;
             transition: var(--transition);
-            background: var(--crema);
+            background: var(--beige);
         }
         .form-contact input:focus, .form-contact textarea:focus {
-            border-color: var(--dorado);
+            border-color: var(--naranja);
             outline: none;
-            box-shadow: 0 0 0 4px rgba(196, 154, 108, 0.15);
+            box-shadow: 0 0 0 4px rgba(244, 155, 54, 0.15);
         }
         .form-contact button {
             margin-top: 1rem;
-            background: var(--terracota);
+            background: linear-gradient(135deg, var(--naranja), var(--dorado));
             color: white;
             padding: 0.8rem 2.5rem;
             border: none;
@@ -644,9 +647,8 @@
             transition: var(--transition);
         }
         .form-contact button:hover {
-            background: var(--dorado);
             transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(196, 154, 108, 0.3);
+            box-shadow: 0 4px 20px rgba(244, 155, 54, 0.3);
         }
 
         .social-grid {
@@ -693,7 +695,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             z-index: 9999;
-            border-top: 2px solid rgba(196, 154, 108, 0.3);
+            border-top: 2px solid rgba(244, 155, 54, 0.3);
             transform: translateY(0);
             transition: transform 0.6s ease;
         }
@@ -705,7 +707,7 @@
             margin: 0;
         }
         .cookies-banner p a {
-            color: var(--dorado);
+            color: var(--naranja);
             text-decoration: underline;
         }
         .cookies-banner .cookies-buttons {
@@ -723,11 +725,11 @@
             transition: var(--transition);
         }
         .cookies-banner .btn-cookie.aceptar {
-            background: var(--dorado);
-            color: var(--marron);
+            background: var(--naranja);
+            color: white;
         }
         .cookies-banner .btn-cookie.aceptar:hover {
-            background: var(--dorado-light);
+            background: var(--dorado);
             transform: scale(1.05);
         }
         .cookies-banner .btn-cookie.rechazar {
@@ -746,20 +748,20 @@
             text-align: center;
             padding: 3rem 2rem;
             margin-top: 2rem;
-            border-top: 2px solid rgba(196, 154, 108, 0.2);
+            border-top: 2px solid rgba(244, 155, 54, 0.2);
         }
         footer a {
-            color: var(--dorado);
+            color: var(--naranja);
             text-decoration: none;
             margin: 0 0.5rem;
             cursor: pointer;
             transition: var(--transition);
         }
-        footer a:hover { color: var(--dorado-light); }
+        footer a:hover { color: var(--naranja-claro); }
         footer .footer-divider {
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
+            background: linear-gradient(90deg, transparent, var(--naranja), transparent);
             margin: 1rem auto;
             border-radius: 4px;
         }
@@ -791,14 +793,68 @@
             display: block;
             line-height: 1.2;
         }
-        .stat-item .number.terracota { color: var(--terracota); }
-        .stat-item .number.verde { color: var(--verde); }
-        .stat-item .number.azul { color: var(--azul); }
+        .stat-item .number.terracota { color: var(--naranja-oscuro); }
+        .stat-item .number.verde { color: var(--verde-oscuro); }
+        .stat-item .number.azul { color: var(--azul-oscuro); }
         .stat-item .number.dorado { color: var(--dorado); }
         .stat-item .label {
             font-size: 1rem;
             color: var(--marron-claro);
             font-weight: 400;
+        }
+
+        .videos-inicio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        /* ===== NOTICIAS ===== */
+        .noticia-card {
+            background: var(--blanco);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--sombra);
+            border-left: 6px solid var(--naranja);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .noticia-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sombra-hover);
+        }
+        .noticia-card .tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+        .noticia-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            color: var(--marron);
+        }
+        .noticia-card p {
+            color: var(--marron-claro);
+            font-size: 0.9rem;
+        }
+        .noticia-card .fecha {
+            font-size: 0.75rem;
+            color: var(--marron-claro);
+            opacity: 0.6;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        .noticia-card .leer-mas {
+            font-weight: 700;
+            display: block;
+            margin-top: 0.5rem;
         }
 
         @media (max-width: 1024px) {
@@ -820,6 +876,7 @@
             .logo svg { width: 35px; height: 35px; }
             .videos-grid { grid-template-columns: 1fr; }
             .video-card .video-wrapper video { height: 200px; }
+            .videos-inicio-grid { grid-template-columns: 1fr; }
             .galeria-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
             #mapa { height: 300px; }
             .cookies-banner { flex-direction: column; text-align: center; padding: 1rem; }
@@ -856,16 +913,16 @@
     <header>
         <a class="logo" onclick="mostrarSeccion('inicio')">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#C49A6C" stroke-width="3" opacity="0.3"/>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#F49B36" stroke-width="3" opacity="0.3"/>
                 <path d="M10 70 L30 30 L50 55 L65 25 L90 70 Z" fill="#556B2F" opacity="0.8"/>
                 <path d="M10 70 L90 70 L90 90 L10 90 Z" fill="#3E2723" opacity="0.5"/>
-                <circle cx="65" cy="30" r="10" fill="#C49A6C" opacity="0.6"/>
-                <circle cx="65" cy="30" r="6" fill="#F5F0E1"/>
-                <path d="M30 50 Q35 40 40 50 Q45 60 50 50 Q55 40 60 50 Q65 60 70 50" stroke="#A0522D" stroke-width="3" fill="none"/>
-                <line x1="20" y1="75" x2="80" y2="75" stroke="#C49A6C" stroke-width="2" opacity="0.4"/>
-                <line x1="25" y1="82" x2="75" y2="82" stroke="#C49A6C" stroke-width="2" opacity="0.3"/>
-                <circle cx="20" cy="55" r="3" fill="#A0522D" opacity="0.5"/>
-                <circle cx="80" cy="60" r="3" fill="#2C6E8F" opacity="0.5"/>
+                <circle cx="65" cy="30" r="10" fill="#F49B36" opacity="0.6"/>
+                <circle cx="65" cy="30" r="6" fill="#FFF8F0"/>
+                <path d="M30 50 Q35 40 40 50 Q45 60 50 50 Q55 40 60 50 Q65 60 70 50" stroke="#E67E22" stroke-width="3" fill="none"/>
+                <line x1="20" y1="75" x2="80" y2="75" stroke="#F49B36" stroke-width="2" opacity="0.4"/>
+                <line x1="25" y1="82" x2="75" y2="82" stroke="#F49B36" stroke-width="2" opacity="0.3"/>
+                <circle cx="20" cy="55" r="3" fill="#E67E22" opacity="0.5"/>
+                <circle cx="80" cy="60" r="3" fill="#3498DB" opacity="0.5"/>
             </svg>
             <div class="logo-texto">
                 <span>Parlamenco</span>
@@ -882,7 +939,9 @@
             <a onclick="mostrarSeccion('galeria')">🖼️ Galería</a>
             <a onclick="mostrarSeccion('eventos')">📅 Eventos</a>
             <a onclick="mostrarSeccion('investigacion')">📚 Investigación</a>
+            <a onclick="mostrarSeccion('noticias')">📰 Noticias</a>
             <a onclick="mostrarSeccion('mapa')">🗺️ Mapa</a>
+            <a onclick="mostrarSeccion('turismo')">🧳 Turismo</a>
             <a onclick="mostrarSeccion('contacto')">📩 Contacto</a>
         </nav>
     </header>
@@ -909,7 +968,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: INICIO -->
+    <!-- SECCIÓN: INICIO (CONTENIDO COMPLETO) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-inicio activa" id="seccion-inicio">
         <div class="container">
@@ -924,16 +983,17 @@
                     Descubre el legado de nuestros antepasados a través de los petroglifos, la comunidad campesina y la historia viva de Lacramarca.
                 </p>
                 <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin-top:1rem;">
-                    <span style="background:var(--glass); padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; border:1px solid var(--border-glass);">📍 45 km de Chimbote</span>
+                    <span style="background:var(--glass); padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; border:1px solid var(--border-glass);">📍 35 km de Chimbote</span>
                     <span style="background:var(--glass); padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; border:1px solid var(--border-glass);">⏳ 3,000+ años</span>
                     <span style="background:var(--glass); padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; border:1px solid var(--border-glass);">🪨 300+ rocas grabadas</span>
+                    <span style="background:var(--glass); padding:0.3rem 1.2rem; border-radius:50px; font-size:0.85rem; border:1px solid var(--border-glass);">🌾 5,000+ agricultores</span>
                 </div>
             </div>
 
             <!-- NOTICIA BREVE: NUEVA JUNTA DIRECTIVA -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.8rem;">
-                    <span style="background:#4A7A2E; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">✅ Oficial</span>
+                    <span style="background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">✅ Oficial</span>
                     <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.7;">📅 25 de mayo 2026</span>
                 </div>
                 
@@ -954,9 +1014,7 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES (VERTICAL) -->
-            <!-- ============================================================ -->
+            <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                     <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🔥 Destacado</span>
@@ -964,98 +1022,164 @@
                 </div>
                 
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
-                    <!-- IMAGEN COMPLETA ARRIBA (100% ancho) -->
                     <div style="width:100%; background:#f0ebe0; padding:1rem; display:flex; align-items:center; justify-content:center;">
                         <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" 
                              style="width:100%; max-width:100%; height:auto; max-height:500px; object-fit:contain; border-radius:16px; display:block;">
                     </div>
                     
-                    <!-- TEXTO COMPLETO ABAJO -->
                     <div style="padding:2rem; display:flex; flex-direction:column; justify-content:center;">
                         <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.5rem; width:fit-content;">🌾 Lacramarca</span>
                         <h3 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--marron); margin:0.5rem 0;">Restauración de murales en Monte Zarumo</h3>
                         <p style="color:var(--marron-claro); font-size:0.95rem;">
-                            El <strong>presidente Carlos Budinich</strong>, junto a la <strong>nueva junta directiva de la Comunidad Campesina de Lacramarca</strong> (período 2026-2027), iniciaron la restauración de los murales informativos en Monte Zarumo. Esta obra forma parte de las acciones de puesta en marcha de la construcción de un nuevo centro cultural.
+                            El <strong>presidente Carlos Budinich</strong>, junto a la <strong>nueva junta directiva de la Comunidad Campesina de Lacramarca</strong> (período 2026-2027), iniciaron la restauración de los murales informativos en Monte Zarumo. Esta obra forma parte de las acciones de puesta en valor del patrimonio cultural de la comunidad.
                         </p>
                         <div style="margin-top:1rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
                             <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-user"></i> Carlos Budinich (Presidente)</span>
                             <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-map-marker-alt"></i> Monte Zarumo</span>
                             <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-calendar-alt"></i> En curso</span>
                         </div>
-                        <a onclick="mostrarSeccion('lacramarca')" style="margin-top:1rem; color:var(--terracota); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
+                        <a onclick="mostrarSeccion('lacramarca')" style="margin-top:1rem; color:var(--naranja); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
                             Leer más <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- VIDEO DESTACADO -->
+            <!-- ============================================================ -->
+            <!-- LOS 3 VIDEOS COMPLETOS EN EL INICIO -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                    <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🎬 Video</span>
-                    <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📹 Recorrido por Palamenco</span>
+                    <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🎬 Videos</span>
+                    <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📹 Descubre Palamenco</span>
                 </div>
                 
-                <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
-                    <video controls style="width:100%; display:block; background:#1a0f0c; max-height:500px;">
-                        <source src="https://i.imgur.com/zogKRcO.mp4" type="video/mp4">
-                        Tu navegador no soporta el video.
-                    </video>
-                    <div style="padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-                        <div>
-                            <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🪨 Recorrido por Palamenco</h4>
-                            <p style="color:var(--marron-claro); font-size:0.9rem; margin:0;">Explora los petroglifos más extensos de Áncash</p>
+                <div class="videos-inicio-grid">
+                    <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
+                        <video controls style="width:100%; display:block; background:#1a0f0c; max-height:250px;">
+                            <source src="https://i.imgur.com/zogKRcO.mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                        <div style="padding:1rem;">
+                            <span style="display:inline-block; background:var(--naranja); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase;">🌟 Destacado</span>
+                            <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--marron); margin:0.3rem 0;">Recorrido por Palamenco</h4>
+                            <p style="color:var(--marron-claro); font-size:0.85rem;">Explora los petroglifos más extensos de Áncash</p>
                         </div>
-                        <a onclick="mostrarSeccion('videos')" style="background:var(--terracota); color:white; padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; font-size:0.85rem; cursor:pointer; border:none; transition:var(--transition);">Ver más videos →</a>
                     </div>
+                    
+                    <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
+                        <video controls style="width:100%; display:block; background:#1a0f0c; max-height:250px;">
+                            <source src="https://i.imgur.com/WBWv0iM.mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                        <div style="padding:1rem;">
+                            <span style="display:inline-block; background:var(--azul); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase;">🏛️ Arqueología</span>
+                            <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--marron); margin:0.3rem 0;">Pueblo Viejo · 5,000 años</h4>
+                            <p style="color:var(--marron-claro); font-size:0.85rem;">Descubre el sitio arqueológico similar a Caral</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
+                        <video controls style="width:100%; display:block; background:#1a0f0c; max-height:250px;">
+                            <source src="https://i.imgur.com/xiCOrcP.mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                        <div style="padding:1rem;">
+                            <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase;">🌾 Comunidad</span>
+                            <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--marron); margin:0.3rem 0;">Lacramarca · Tierra de agricultores</h4>
+                            <p style="color:var(--marron-claro); font-size:0.85rem;">Conoce a los más de 5,000 agricultores del valle</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:1rem;">
+                    <a onclick="mostrarSeccion('videos')" style="color:var(--naranja); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
+                        Ver todos los videos <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- GALERÍA RÁPIDA -->
+            <!-- ============================================================ -->
+            <!-- GALERÍA RÁPIDA CON 12 IMÁGENES -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                    <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🖼️ Galería</span>
-                    <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📸 Imágenes de Palamenco</span>
+                    <span style="background:var(--morado); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🖼️ Galería</span>
+                    <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📸 12 imágenes destacadas</span>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:var(--glass); backdrop-filter:blur(10px); padding:1.5rem; border-radius:24px; border:1px solid var(--border-glass); box-shadow:var(--sombra);">
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(0)"><img src="https://i.imgur.com/NwZPp2V.jpeg" alt="Palamenco 1" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(1)"><img src="https://i.imgur.com/Owj4HQi.jpeg" alt="Palamenco 2" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(2)"><img src="https://i.imgur.com/eRWDtZG.jpeg" alt="Palamenco 3" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(3)"><img src="https://i.imgur.com/J3bHcL3.jpeg" alt="Palamenco 4" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(4)"><img src="https://i.imgur.com/U5PkrUq.jpeg" alt="Palamenco 5" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
-                    <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(5)"><img src="https://i.imgur.com/Lm3ThCj.jpeg" alt="Palamenco 6" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:1rem; background:var(--glass); backdrop-filter:blur(10px); padding:1.5rem; border-radius:24px; border:1px solid var(--border-glass); box-shadow:var(--sombra);">
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(0)"><img src="https://i.imgur.com/NwZPp2V.jpeg" alt="Palamenco 1" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(1)"><img src="https://i.imgur.com/Owj4HQi.jpeg" alt="Palamenco 2" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(2)"><img src="https://i.imgur.com/eRWDtZG.jpeg" alt="Palamenco 3" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(3)"><img src="https://i.imgur.com/J3bHcL3.jpeg" alt="Palamenco 4" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(4)"><img src="https://i.imgur.com/U5PkrUq.jpeg" alt="Palamenco 5" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(5)"><img src="https://i.imgur.com/Lm3ThCj.jpeg" alt="Palamenco 6" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(6)"><img src="https://i.imgur.com/J7k8ih0.jpeg" alt="Palamenco 7" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(7)"><img src="https://i.imgur.com/pnrl9SD.jpeg" alt="Palamenco 8" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(8)"><img src="https://i.imgur.com/kRZVzZ3.jpeg" alt="Palamenco 9" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(9)"><img src="https://i.imgur.com/eAA3Hmh.jpeg" alt="Palamenco 10" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(10)"><img src="https://i.imgur.com/xfM0MLe.jpeg" alt="Palamenco 11" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
+                    <div style="border-radius:12px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(11)"><img src="https://i.imgur.com/ifeDyHu.jpeg" alt="Palamenco 12" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
                 </div>
                 <div style="text-align:center; margin-top:1rem;">
-                    <a onclick="mostrarSeccion('galeria')" style="color:var(--terracota); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
+                    <a onclick="mostrarSeccion('galeria')" style="color:var(--morado); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
                         Ver galería completa (36 fotos) <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
-            <!-- NOTICIAS SECUNDARIAS -->
+            <!-- NOTICIAS EN EL INICIO (6 NOTICIAS) -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-                    <span style="background:var(--dorado); color:var(--marron); padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📰 Noticias</span>
+                    <span style="background:var(--dorado); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📰 Noticias</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">Últimas actualizaciones</span>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+                    <!-- Noticia 1 -->
                     <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('palamenco')">
-                        <span style="display:inline-block; background:var(--terracota); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🪨 Palamenco</span>
-                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Nuevos petroglifos descubiertos</h4>
-                        <p style="color:var(--marron-claro); font-size:0.9rem;">Se han encontrado nuevas rocas grabadas en la zona norte del complejo arqueológico.</p>
-                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 10 de julio 2026</span>
+                        <span style="display:inline-block; background:var(--naranja-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🪨 Palamenco</span>
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">🔮 Palamenco: un oráculo ancestral</h4>
+                        <p style="color:var(--marron-claro); font-size:0.9rem;">El sitio arqueológico funcionaba como un oráculo para la meditación, oración y observación astronómica.</p>
+                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 3 de julio 2026</span>
                     </div>
-                    <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('puebloviejo')">
-                        <span style="display:inline-block; background:var(--azul); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Pueblo Viejo</span>
-                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Investigaciones en Pueblo Viejo</h4>
-                        <p style="color:var(--marron-claro); font-size:0.9rem;">Arqueólogos de la UNT iniciaron nuevos estudios en el sitio de 5,000 años.</p>
-                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 5 de julio 2026</span>
+                    
+                    <!-- Noticia 2 -->
+                    <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('palamenco')">
+                        <span style="display:inline-block; background:var(--naranja-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🏗️ Palamenco</span>
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Proyectos de puesta en valor avanzan</h4>
+                        <p style="color:var(--marron-claro); font-size:0.9rem;">Autoridades trabajan en saneamiento físico legal, mejora de vías y señalización del sitio arqueológico.</p>
+                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 8 de julio 2026</span>
                     </div>
+
+                    <!-- Noticia 3 -->
                     <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('lacramarca')">
-                        <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🌾 Lacramarca</span>
+                        <span style="display:inline-block; background:var(--verde-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🌾 Lacramarca</span>
                         <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Nuevo canal de riego</h4>
                         <p style="color:var(--marron-claro); font-size:0.9rem;">Se inauguró el nuevo canal que beneficiará a más de 1,300 agricultores del valle.</p>
                         <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 1 de julio 2026</span>
+                    </div>
+
+                    <!-- Noticia 4 -->
+                    <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('lacramarca')">
+                        <span style="display:inline-block; background:var(--morado); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🫐 Lacramarca</span>
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Arándanos: 5,000 kg/ha</h4>
+                        <p style="color:var(--marron-claro); font-size:0.9rem;">Productores de la Cooperativa Apaes incrementaron la producción con un proyecto de innovación.</p>
+                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 15 de julio 2026</span>
+                    </div>
+
+                    <!-- Noticia 5 -->
+                    <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('lacramarca')">
+                        <span style="display:inline-block; background:var(--verde-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🥑 Lacramarca</span>
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Cultivo de palta en expansión</h4>
+                        <p style="color:var(--marron-claro); font-size:0.9rem;">Agricultores del valle apuestan por la palta de exportación con 350 hectáreas ya sembradas.</p>
+                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 12 de julio 2026</span>
+                    </div>
+
+                    <!-- Noticia 6 -->
+                    <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('puebloviejo')">
+                        <span style="display:inline-block; background:var(--azul-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Pueblo Viejo</span>
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Investigaciones en Pueblo Viejo</h4>
+                        <p style="color:var(--marron-claro); font-size:0.9rem;">Arqueólogos de la UNT iniciaron nuevos estudios en el sitio de 5,000 años.</p>
+                        <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 5 de julio 2026</span>
                     </div>
                 </div>
             </div>
@@ -1063,7 +1187,7 @@
             <!-- ESTADÍSTICAS -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-                    <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📊 Datos</span>
+                    <span style="background:var(--naranja-oscuro); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📊 Datos</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">Números que hablan</span>
                 </div>
                 <div class="stats-grid">
@@ -1071,16 +1195,17 @@
                     <div class="stat-item"><span class="number terracota">3,000</span><span class="label">Años de antigüedad</span></div>
                     <div class="stat-item"><span class="number verde">5,000+</span><span class="label">Agricultores</span></div>
                     <div class="stat-item"><span class="number azul">5,000</span><span class="label">Años de Pueblo Viejo</span></div>
+                    <div class="stat-item"><span class="number dorado">16,000</span><span class="label">Hectáreas cultivables</span></div>
                 </div>
             </div>
 
             <!-- LLAMADA A LA ACCIÓN -->
-            <div class="fade-in" style="text-align:center; background:linear-gradient(135deg, var(--marron), #1a0f0c); padding:3rem 2rem; border-radius:24px; color:white; border:2px solid rgba(196,154,108,0.2);">
+            <div class="fade-in" style="text-align:center; background:linear-gradient(135deg, var(--naranja), var(--dorado)); padding:3rem 2rem; border-radius:24px; color:white; border:2px solid rgba(255,255,255,0.1);">
                 <h3 style="font-family:'Playfair Display',serif; font-size:2rem;">¿Listo para explorar?</h3>
-                <p style="opacity:0.8; max-width:600px; margin:0.5rem auto 1.5rem auto;">Sumérgete en la historia y la cultura de Palamenco, Lacramarca y Pueblo Viejo</p>
+                <p style="opacity:0.9; max-width:600px; margin:0.5rem auto 1.5rem auto;">Sumérgete en la historia y la cultura de Palamenco, Lacramarca y Pueblo Viejo</p>
                 <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-                    <a onclick="mostrarSeccion('videos')" style="background:var(--terracota); color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🎬 Ver Videos</a>
-                    <a onclick="mostrarSeccion('galeria')" style="background:var(--dorado); color:var(--marron); padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🖼️ Ver Galería</a>
+                    <a onclick="mostrarSeccion('videos')" style="background:white; color:var(--marron); padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🎬 Ver Videos</a>
+                    <a onclick="mostrarSeccion('galeria')" style="background:rgba(255,255,255,0.2); color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:2px solid rgba(255,255,255,0.2); transition:var(--transition);">🖼️ Ver Galería</a>
                     <a onclick="mostrarSeccion('palamenco')" style="background:transparent; color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:2px solid rgba(255,255,255,0.2); transition:var(--transition);">🪨 Conocer más</a>
                 </div>
             </div>
@@ -1089,37 +1214,89 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: PALAMENCO -->
+    <!-- SECCIÓN: PALAMENCO (CON TODA LA INFORMACIÓN INVESTIGADA) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-palamenco" id="seccion-palamenco">
         <div class="container">
             <span class="icono-seccion">🪨</span>
             <h2 class="section-title fade-in"><span class="highlight">Palamenco</span> · Petroglifos</h2>
-            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash</p>
+            <p class="section-subtitle fade-in">El complejo de petroglifos más extenso de la región Áncash · 3,000 años de historia</p>
             
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="terracota">Guardianes de la piedra escrita</h3>
-                    <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, con <strong>36 hectáreas</strong> y más de <strong>300 rocas grabadas</strong>.</p>
-                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
-                        <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
+                    <p><strong>Palamenco</strong> (también conocido como Parlamenco) se ubica a <strong>35 km al noreste de la Plaza de Armas de Chimbote</strong>, a 6 km antes del Centro Poblado de Lacramarca Alta.</p>
+                    <p>Es un paisaje arqueológico de <strong>36 hectáreas</strong> con más de <strong>300 rocas grabadas</strong>, siendo la <strong>zona con petroglifos más extensa de la región Áncash</strong>.</p>
+                    <div style="background:var(--beige); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--naranja);">
+                        <p><strong>🔮 Significado espiritual:</strong> Palamenco no solo era un centro ceremonial, sino que funcionaba como un <strong>oráculo</strong> para los antiguos hombres andinos. Los sacerdotes elegían este lugar estratégico para la <strong>meditación, la oración y la observación astronómica</strong>.</p>
                     </div>
-                    <p><strong>Figuras representadas:</strong> Serpientes, camélidos, águilas, loros, lagartijas, oso de anteojos, sacerdote chavinense, Sol, Luna, constelaciones y divinidades.</p>
+                    <p><strong>Figuras representadas en las rocas:</strong></p>
+                    <ul>
+                        <li>🐍 Serpientes</li>
+                        <li>🦙 Camélidos</li>
+                        <li>🦅 Águilas</li>
+                        <li>🦜 Loros</li>
+                        <li>🦎 Lagartijas</li>
+                        <li>🐻 Oso de anteojos (desaparecido de la zona)</li>
+                        <li>🧑‍🏫 Sacerdote chavinense</li>
+                        <li>🌞 Sol y Luna</li>
+                        <li>⭐ Constelaciones</li>
+                        <li>👤 Hombres y divinidades</li>
+                        <li>🌿 Flora y fauna</li>
+                        <li>🌊 Fenómeno de El Niño</li>
+                    </ul>
                 </div>
                 <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/NwZPp2V.jpeg');"></div>
             </div>
+
+            <!-- ============================================================ -->
+            <!-- INFORMACIÓN ADICIONAL DE PALAMENCO -->
+            <!-- ============================================================ -->
             
+            <!-- 1. EL "HOMBRE DISPARANDO" -->
+            <div class="badge-info fade-in" style="border-left-color:var(--morado); margin-top:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--morado);">🏹 El "Hombre Disparando" · Un petroglifo único en Latinoamérica</h4>
+                <p>Palamenco alberga un petroglifo <strong>único en Latinoamérica</strong>: la figura del <strong>"Hombre Disparando"</strong> ("Shooting Male"). Este grabado es especial porque no se encuentra en ningún otro sitio de arte rupestre en el Desierto Andino. El investigador <strong>Maarten van Hoek</strong> ha dedicado un estudio completo a esta figura, comparándola con ejemplos similares alrededor del mundo.</p>
+            </div>
+
+            <!-- 2. CERAMIO RETRATO -->
+            <div class="badge-info fade-in" style="border-left-color:var(--dorado); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--dorado);">🏺 Ceramio retrato de un dignatario</h4>
+                <p>En el marco del proyecto <strong>Identidad Chimbote</strong>, se descubrió un <strong>ceramio retrato de un dignatario</strong> de la cultura Chimbote ancestral tardía en Palamenco, similar al <strong>"Señor de Sipán"</strong>.</p>
+            </div>
+
+            <!-- 3. UBICACIÓN EXACTA -->
+            <div class="badge-info fade-in" style="border-left-color:var(--azul); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul-oscuro);">📍 Ubicación exacta</h4>
+                <p>Palamenco se encuentra a <strong>35 km al noreste de la Plaza de Armas de Chimbote</strong>. El sitio se extiende en una franja de <strong>750 metros</strong> de longitud, con una altitud que va desde los <strong>650 a 659 m s.n.m.</strong></p>
+                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 El complejo de petroglifos se encuentra al norte del río Lacramarca, a unos <strong>760 a 1120 metros</strong> de distancia.</p>
+            </div>
+
+            <!-- 4. PROYECTOS DE PUESTA EN VALOR -->
+            <div class="badge-info fade-in" style="border-left-color:var(--naranja); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--naranja-oscuro);">🏗️ Proyectos de puesta en valor</h4>
+                <p>Actualmente, las autoridades están trabajando en la conservación y promoción de Palamenco:</p>
+                <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
+                    <li><strong>Saneamiento físico legal</strong> del área arqueológica</li>
+                    <li><strong>Mejoramiento de vías de acceso</strong> para facilitar la visita</li>
+                    <li><strong>Limpieza, señalización y empedrado</strong> del sitio</li>
+                    <li><strong>Colocación de paneles informativos</strong> sobre las rocas grabadas</li>
+                    <li><strong>Inventario de la iconografía</strong> de todas las piedras</li>
+                </ul>
+                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 Se busca integrar Palamenco en un <strong>circuito turístico</strong> que conecte Chimbote, Nuevo Chimbote y el valle Lacramarca.</p>
+            </div>
+
             <div class="card-grid">
                 <div class="card fade-in"><i class="fas fa-calendar-alt"></i><h4>3,000+ años</h4><span class="dato terracota">3,000</span><p>Antigüedad</p></div>
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>36 ha</h4><span class="dato terracota">36</span><p>Extensión</p></div>
                 <div class="card fade-in"><i class="fas fa-mountain"></i><h4>300 rocas</h4><span class="dato terracota">300+</span><p>Con grabados</p></div>
-                <div class="card fade-in"><i class="fas fa-route"></i><h4>45 km</h4><span class="dato terracota">45</span><p>Desde Chimbote</p></div>
+                <div class="card fade-in"><i class="fas fa-route"></i><h4>35 km</h4><span class="dato terracota">35</span><p>Desde Chimbote</p></div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: LACRAMARCA -->
+    <!-- SECCIÓN: LACRAMARCA (CON TODA LA INFORMACIÓN INVESTIGADA) -->
     <!-- ============================================================ -->
     <section class="seccion seccion-lacramarca" id="seccion-lacramarca">
         <div class="container">
@@ -1131,17 +1308,127 @@
                 <div class="texto fade-in">
                     <h3 class="verde">El corazón agrícola de Áncash</h3>
                     <p><strong>Lacramarca</strong> es un valle en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra.</p>
-                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
+                    <div style="background:var(--beige); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
                         <p><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
                     </div>
                     <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
+                    <p><strong>Extensión agrícola:</strong> Más de <strong>16,000 hectáreas cultivables</strong> en el valle.</p>
                 </div>
                 <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/W786HaT.jpeg');"></div>
             </div>
 
-            <!-- NOTICIA 1: RESTAURACIÓN DE MURALES -->
+            <!-- ============================================================ -->
+            <!-- CULTIVOS DEL VALLE -->
+            <!-- ============================================================ -->
+            <h3 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro); font-size:2rem; text-align:center; margin:3rem 0 1.5rem 0;">🌱 Cultivos del valle de Lacramarca</h3>
+            <p style="text-align:center; color:var(--marron-claro); margin-bottom:2rem;">El valle de Santa-Lacramarca tiene más de 16,000 hectáreas cultivables</p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1rem; margin-bottom:2rem;">
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--verde);">
+                    <span style="font-size:2.5rem;">🌾</span>
+                    <p style="font-weight:700; color:var(--marron);">Arroz</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Tradicional</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--naranja);">
+                    <span style="font-size:2.5rem;">🍈</span>
+                    <p style="font-weight:700; color:var(--marron);">Maracuyá</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Exportación</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--verde);">
+                    <span style="font-size:2.5rem;">🥬</span>
+                    <p style="font-weight:700; color:var(--marron);">Espárragos</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Agroexportación</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--verde-oscuro);">
+                    <span style="font-size:2.5rem;">🥑</span>
+                    <p style="font-weight:700; color:var(--marron);">Palta</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Demanda internacional</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--morado);">
+                    <span style="font-size:2.5rem;">🫐</span>
+                    <p style="font-weight:700; color:var(--marron);">Arándanos</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">5,000 kg/ha</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--dorado);">
+                    <span style="font-size:2.5rem;">🌽</span>
+                    <p style="font-weight:700; color:var(--marron);">Maíz</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Panllevar</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--azul);">
+                    <span style="font-size:2.5rem;">🥔</span>
+                    <p style="font-weight:700; color:var(--marron);">Papa</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Sierra</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:16px; padding:1.2rem; text-align:center; box-shadow:var(--sombra); border-bottom:4px solid var(--amarillo);">
+                    <span style="font-size:2.5rem;">🫘</span>
+                    <p style="font-weight:700; color:var(--marron);">Frijol</p>
+                    <p style="font-size:0.8rem; color:var(--marron-claro);">Proteico</p>
+                </div>
+            </div>
+
+            <!-- ARÁNDANOS -->
+            <div class="badge-info fade-in" style="border-left-color:var(--morado);">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--morado);">🫐 Producción de arándanos en Lacramarca</h4>
+                <p>Productores de la <strong>Cooperativa de Servicios Múltiples Apaes</strong> incrementaron la producción de arándanos a <strong>5 mil kilos por hectárea</strong> mediante un proyecto de innovación financiado por el MINAGRI.</p>
+                <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
+                    <li>Reducción de la acidez (pH) de los suelos de <strong>7.5 a 5.3</strong></li>
+                    <li>Implementación de <strong>riego tecnificado</strong></li>
+                    <li>Instalación de <strong>mini-estación meteorológica</strong></li>
+                    <li>Elaboración de guía técnica para el manejo del arándano</li>
+                </ul>
+                <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--marron-claro);">📌 Inversión de más de <strong>S/ 280,000</strong> soles en el proyecto</p>
+            </div>
+
+            <!-- PALTA -->
+            <div class="badge-info fade-in" style="border-left-color:var(--verde-oscuro); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro);">🥑 El cultivo de palta en el valle</h4>
+                <p>Los agricultores del valle Santa-Lacramarca están apostando por el cultivo de <strong>palta</strong> debido a la demanda del mercado internacional.</p>
+                <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
+                    <li><strong>16,000 hectáreas</strong> cultivables en el valle</li>
+                    <li><strong>350 hectáreas</strong> de la Asociación Apaes, con 55 socios</li>
+                    <li>El valle tiene condiciones climáticas ideales para el cultivo</li>
+                </ul>
+            </div>
+
+            <!-- INVESTIGACIÓN AGRÍCOLA -->
+            <div class="badge-info fade-in" style="border-left-color:var(--azul); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul-oscuro);">🔬 Investigación agrícola en el valle</h4>
+                <p>El valle Lacramarca es escenario de investigaciones universitarias que buscan mejorar la producción:</p>
+                <ul style="margin:0.5rem 0 0 1.5rem; color:var(--marron-claro);">
+                    <li><strong>Frijol:</strong> Aplicación de bioestimulantes para incrementar el rendimiento (hasta <strong>2,661.67 kg/ha</strong>)</li>
+                    <li><strong>Salinidad de suelos:</strong> Cultivo de frejol canario y garbanzo para reducir la salinidad</li>
+                    <li><strong>Maíz:</strong> Control de plagas</li>
+                    <li><strong>Ají páprika:</strong> Factores que afectan la pérdida en postcosecha</li>
+                </ul>
+            </div>
+
+            <!-- PROYECTOS DE RIEGO -->
+            <div class="badge-info fade-in" style="border-left-color:var(--dorado); margin-top:1.5rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--dorado);">💧 Proyectos de riego en Lacramarca</h4>
+                <p>El Gobierno Regional de Áncash ha invertido en infraestructura hídrica para fortalecer la agricultura:</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.5rem; font-size:0.9rem;">
+                    <div style="background:var(--beige); padding:0.8rem; border-radius:12px;">
+                        <strong>Canal Puente Roto</strong>
+                        <p style="margin:0; color:var(--marron-claro);">S/ 2 millones · 1,300 agricultores · 89% avance</p>
+                    </div>
+                    <div style="background:var(--beige); padding:0.8rem; border-radius:12px;">
+                        <strong>Canal Alto</strong>
+                        <p style="margin:0; color:var(--marron-claro);">S/ 2.2 millones · 132 hectáreas · 3 km</p>
+                    </div>
+                    <div style="background:var(--beige); padding:0.8rem; border-radius:12px;">
+                        <strong>Canal Ramal 5</strong>
+                        <p style="margin:0; color:var(--marron-claro);">S/ 1.8 millones · Lacramarca Baja</p>
+                    </div>
+                    <div style="background:var(--beige); padding:0.8rem; border-radius:12px;">
+                        <strong>4 canales de riego</strong>
+                        <p style="margin:0; color:var(--marron-claro);">S/ 9.18 millones · Más de 5,000 agricultores</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESTAURACIÓN DE MURALES -->
             <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro);">🎨 Restauración de murales en Monte Zarumo</h4>
                 <div style="margin:1rem 0; text-align:center;">
                     <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; max-width:100%; border-radius:16px; box-shadow:var(--sombra); display:block;">
                     <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Restauración de murales en Monte Zarumo</p>
@@ -1149,7 +1436,7 @@
                 <p>El <strong>presidente Carlos Budinich</strong> y la <strong>nueva junta directiva de la Comunidad Campesina de Lacramarca</strong> (período 2026-2027) vienen liderando la restauración de los murales informativos en Monte Zarumo. Esta iniciativa, que cuenta con el apoyo de artistas locales, busca fortalecer la identidad cultural y el turismo en la zona.</p>
             </div>
 
-            <!-- NOTICIA 2: NUEVA JUNTA DIRECTIVA -->
+            <!-- NUEVA JUNTA DIRECTIVA -->
             <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:1.5rem;">
                 <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:0.5rem;">
                     <span style="background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📌 Oficial</span>
@@ -1162,11 +1449,11 @@
                     <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales Lacramarca 3" style="width:100%; height:auto; border-radius:8px; display:block;">
                 </div>
                 
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
                 
                 <p>El Comité Electoral de la Comunidad Campesina de Lacramarca informa que la nueva junta directiva para el período <strong>2026-2027</strong> ha sido inscrita satisfactoriamente ante <strong>SUNARP</strong> (Título Nº 2026-00563665), quedando formalmente constituida y facultada para ejercer sus funciones desde el <strong>25 de mayo de 2026</strong>.</p>
                 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--crema); padding:1.2rem; border-radius:16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--beige); padding:1.2rem; border-radius:16px;">
                     <div>
                         <p style="margin:0; font-weight:700; color:var(--marron);">👤 Presidente</p>
                         <p style="margin:0; color:var(--marron-claro);">Carlos Alberto Budinich Salas</p>
@@ -1193,19 +1480,18 @@
                     <span><i class="fas fa-building"></i> Oficina Registral Chimbote</span>
                 </div>
                 
-                <div style="margin-top:1rem; padding:1rem; background:#e8f5e9; border-radius:12px; border-left:4px solid #2e7d32;">
+                <div style="margin-top:1rem; padding:1rem; background:#e8f5e9; border-radius:12px; border-left:4px solid var(--verde-oscuro);">
                     <p style="font-size:0.9rem; color:var(--marron-claro); margin:0;">
                         <strong>📢 Comunicado oficial:</strong> El Comité Electoral agradece a todos los comuneros que participaron en la Asamblea Aclaratoria. La ceremonia de juramentación se realizará próximamente en el local comunal.
                     </p>
                 </div>
             </div>
 
-            <!-- CARDS DE AGRICULTURA -->
             <div class="card-grid">
                 <div class="card fade-in"><i class="fas fa-tractor"></i><h4>Agricultura</h4><span class="dato verde">5,000+</span><p>Agricultores</p></div>
                 <div class="card fade-in"><i class="fas fa-water"></i><h4>Cuenca</h4><span class="dato verde">963 km²</span><p>Área total</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>Río</h4><span class="dato verde">76 km</span><p>Longitud</p></div>
-                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">4+</span><p>Alfalfa, maíz, papa, trigo</p></div>
+                <div class="card fade-in"><i class="fas fa-seedling"></i><h4>Cultivos</h4><span class="dato verde">16,000</span><p>Hectáreas cultivables</p></div>
             </div>
 
         </div>
@@ -1223,11 +1509,24 @@
             <div class="info-grid">
                 <div class="texto fade-in">
                     <h3 class="azul">Un descubrimiento monumental</h3>
-                    <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa.</p>
+                    <p><strong>Pueblo Viejo</strong> fue descubierto en <strong>noviembre de 2010</strong> por el Área de Proyectos Arqueológicos de la Municipalidad del Santa, con el asesoramiento del arqueólogo <strong>Régulo Franco Jordán</strong> de la Fundación Wiese.</p>
                     <p>Se encuentra a <strong>2 horas de Chimbote</strong>, con <strong>5 hectáreas</strong> de extensión y una antigüedad de <strong>5,000 años</strong> confirmada por Ruth Shady.</p>
-                    <p><strong>Estructuras principales:</strong> Pirámide de 15 metros, plaza cuadrangular y anfiteatro circular hundido.</p>
+                    <p><strong>Estructuras principales:</strong></p>
+                    <ul>
+                        <li>🏛️ Pirámide de <strong>15 metros</strong></li>
+                        <li>📐 Plaza <strong>cuadrangular</strong></li>
+                        <li>🔄 Anfiteatro <strong>circular hundido</strong></li>
+                    </ul>
+                    <p style="margin-top:1rem;">El arqueólogo <strong>Régulo Franco</strong> calificó el hallazgo como <em>"impresionante"</em> y señaló que Pueblo Viejo podría convertirse en un <strong>destino arqueológico de importancia</strong> para la provincia, con potencial para adherirse a la <strong>Ruta Moche</strong>.</p>
                 </div>
                 <div class="imagen fade-in" style="background-image: url('https://i.imgur.com/W786HaT.jpeg');"></div>
+            </div>
+            
+            <div class="badge-info fade-in" style="border-left-color:var(--azul); margin-top:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul-oscuro);">👩‍🔬 Investigadores</h4>
+                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años y que la civilización Caral tiene relación hasta la provincia del Santa.</p>
+                <p><strong>Régulo Franco Jordán</strong> (Fundación Wiese) asesoró el proyecto "Identidad Chimbote" y calificó el hallazgo como "impresionante".</p>
+                <p><strong>Alberto Jorge Estrada</strong> (Coordinador de Proyectos Arqueológicos) lideró el equipo municipal que descubrió Pueblo Viejo.</p>
             </div>
             
             <div class="card-grid">
@@ -1235,11 +1534,6 @@
                 <div class="card fade-in"><i class="fas fa-vector-square"></i><h4>5 ha</h4><span class="dato azul">5</span><p>Extensión</p></div>
                 <div class="card fade-in"><i class="fas fa-mountain"></i><h4>15 m</h4><span class="dato azul">15</span><p>Pirámide</p></div>
                 <div class="card fade-in"><i class="fas fa-route"></i><h4>2 horas</h4><span class="dato azul">2</span><p>Desde Chimbote</p></div>
-            </div>
-            
-            <div class="badge-info fade-in" style="border-left-color:var(--azul);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
-                <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
             </div>
         </div>
     </section>
@@ -1314,6 +1608,85 @@
     </section>
 
     <!-- ============================================================ -->
+    <!-- SECCIÓN: NOTICIAS (TODAS) -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-noticias" id="seccion-noticias">
+        <div class="container">
+            <span class="icono-seccion">📰</span>
+            <h2 class="section-title fade-in"><span class="highlight">Todas las Noticias</span></h2>
+            <p class="section-subtitle fade-in">Mantente informado sobre los avances en Palamenco, Lacramarca y Pueblo Viejo</p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+
+                <div class="noticia-card" style="border-left-color:var(--naranja);">
+                    <span class="tag" style="background:var(--naranja);">🪨 Palamenco</span>
+                    <h4>Restauración de murales en Monte Zarumo</h4>
+                    <p>El presidente Carlos Budinich y la nueva junta directiva iniciaron la restauración de los murales informativos.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> Julio 2026</span>
+                    <a onclick="mostrarSeccion('lacramarca')" class="leer-mas" style="color:var(--naranja);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--verde);">
+                    <span class="tag" style="background:var(--verde);">🌾 Lacramarca</span>
+                    <h4>Nueva junta directiva inscrita en SUNARP</h4>
+                    <p>El Comité Electoral de Lacramarca informa que la nueva junta directiva (2026-2027) fue inscrita satisfactoriamente.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 25 de mayo 2026</span>
+                    <a onclick="mostrarSeccion('lacramarca')" class="leer-mas" style="color:var(--verde);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--azul);">
+                    <span class="tag" style="background:var(--azul);">🏛️ Pueblo Viejo</span>
+                    <h4>Investigaciones en Pueblo Viejo</h4>
+                    <p>Arqueólogos de la UNT iniciaron nuevos estudios en el sitio de 5,000 años.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 5 de julio 2026</span>
+                    <a onclick="mostrarSeccion('puebloviejo')" class="leer-mas" style="color:var(--azul);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--morado);">
+                    <span class="tag" style="background:var(--morado);">🫐 Lacramarca</span>
+                    <h4>Arándanos: 5,000 kg/ha</h4>
+                    <p>Productores de la Cooperativa Apaes incrementaron la producción con un proyecto de innovación.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 15 de julio 2026</span>
+                    <a onclick="mostrarSeccion('lacramarca')" class="leer-mas" style="color:var(--morado);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--verde-oscuro);">
+                    <span class="tag" style="background:var(--verde-oscuro);">🥑 Lacramarca</span>
+                    <h4>Cultivo de palta en expansión</h4>
+                    <p>Agricultores del valle apuestan por la palta de exportación con 350 hectáreas ya sembradas.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 12 de julio 2026</span>
+                    <a onclick="mostrarSeccion('lacramarca')" class="leer-mas" style="color:var(--verde-oscuro);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--naranja-oscuro);">
+                    <span class="tag" style="background:var(--naranja-oscuro);">🏗️ Palamenco</span>
+                    <h4>Puesta en valor de Palamenco</h4>
+                    <p>Autoridades trabajan en el saneamiento físico legal, mejora de vías y señalización del sitio arqueológico.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 8 de julio 2026</span>
+                    <a onclick="mostrarSeccion('palamenco')" class="leer-mas" style="color:var(--naranja-oscuro);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--dorado);">
+                    <span class="tag" style="background:var(--dorado);">🔮 Palamenco</span>
+                    <h4>Palamenco: un oráculo ancestral</h4>
+                    <p>El sitio arqueológico funcionaba como un oráculo para la meditación, oración y observación astronómica.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 3 de julio 2026</span>
+                    <a onclick="mostrarSeccion('palamenco')" class="leer-mas" style="color:var(--dorado);">Leer más →</a>
+                </div>
+
+                <div class="noticia-card" style="border-left-color:var(--amarillo);">
+                    <span class="tag" style="background:var(--amarillo); color:var(--marron);">🏛️ Pueblo Viejo</span>
+                    <h4>Confirmación de antigüedad de Pueblo Viejo</h4>
+                    <p>Ruth Shady confirmó que Pueblo Viejo tiene 5,000 años de antigüedad, similar a Caral.</p>
+                    <span class="fecha"><i class="far fa-calendar-alt"></i> 28 de junio 2026</span>
+                    <a onclick="mostrarSeccion('puebloviejo')" class="leer-mas" style="color:var(--amarillo);">Leer más →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
     <!-- SECCIÓN: MAPA -->
     <!-- ============================================================ -->
     <section class="seccion seccion-mapa" id="seccion-mapa">
@@ -1327,6 +1700,126 @@
                 <span><span class="punto palamenco"></span> Palamenco</span>
                 <span><span class="punto puebloviejo"></span> Pueblo Viejo</span>
             </div></div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECCIÓN: TURISMO -->
+    <!-- ============================================================ -->
+    <section class="seccion seccion-turismo" id="seccion-turismo">
+        <div class="container">
+            <span class="icono-seccion">🧳</span>
+            <h2 class="section-title fade-in"><span class="highlight">Turismo</span> en Palamenco</h2>
+            <p class="section-subtitle fade-in">Descubre los atractivos de Lacramarca, Palamenco y Pueblo Viejo</p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem; margin-bottom:2rem;">
+                <div style="background:var(--blanco); border-radius:24px; padding:2rem; box-shadow:var(--sombra); border-top:6px solid var(--naranja);">
+                    <div style="font-size:3rem; text-align:center;">🪨</div>
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--marron); text-align:center;">Ruta Arqueológica</h4>
+                    <ul style="list-style:none; padding:0; color:var(--marron-claro);">
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-clock" style="color:var(--naranja);"></i> <strong>Duración:</strong> 4 horas</li>
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-route" style="color:var(--naranja);"></i> <strong>Recorrido:</strong> Palamenco → Pueblo Viejo</li>
+                        <li style="padding:0.3rem 0;"><i class="fas fa-user" style="color:var(--naranja);"></i> <strong>Guía:</strong> Arqueólogo local</li>
+                    </ul>
+                    <p style="font-size:0.9rem; color:var(--marron-claro); margin-top:0.5rem;">Conoce los petroglifos de 3,000 años y el sitio arqueológico de 5,000 años.</p>
+                </div>
+
+                <div style="background:var(--blanco); border-radius:24px; padding:2rem; box-shadow:var(--sombra); border-top:6px solid var(--verde);">
+                    <div style="font-size:3rem; text-align:center;">🌾</div>
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--marron); text-align:center;">Ruta Campesina</h4>
+                    <ul style="list-style:none; padding:0; color:var(--marron-claro);">
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-clock" style="color:var(--verde);"></i> <strong>Duración:</strong> 3 horas</li>
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-route" style="color:var(--verde);"></i> <strong>Recorrido:</strong> Lacramarca Alta → Monte Zarumo</li>
+                        <li style="padding:0.3rem 0;"><i class="fas fa-user" style="color:var(--verde);"></i> <strong>Guía:</strong> Campesino local</li>
+                    </ul>
+                    <p style="font-size:0.9rem; color:var(--marron-claro); margin-top:0.5rem;">Vive la experiencia agrícola, conoce los cultivos y la restauración de murales.</p>
+                </div>
+
+                <div style="background:var(--blanco); border-radius:24px; padding:2rem; box-shadow:var(--sombra); border-top:6px solid var(--azul);">
+                    <div style="font-size:3rem; text-align:center;">🏛️</div>
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--marron); text-align:center;">Ruta Panorámica</h4>
+                    <ul style="list-style:none; padding:0; color:var(--marron-claro);">
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-clock" style="color:var(--azul);"></i> <strong>Duración:</strong> 5 horas</li>
+                        <li style="padding:0.3rem 0; border-bottom:1px solid #f0ebe0;"><i class="fas fa-route" style="color:var(--azul);"></i> <strong>Recorrido:</strong> Miradores naturales</li>
+                        <li style="padding:0.3rem 0;"><i class="fas fa-camera" style="color:var(--azul);"></i> <strong>Ideal para:</strong> Fotografía y paisajes</li>
+                    </ul>
+                    <p style="font-size:0.9rem; color:var(--marron-claro); margin-top:0.5rem;">Disfruta de las mejores vistas del valle de Lacramarca y la Cordillera Negra.</p>
+                </div>
+            </div>
+
+            <div style="background:var(--blanco); border-radius:24px; padding:2rem; box-shadow:var(--sombra); margin-bottom:2rem;">
+                <h3 style="font-family:'Playfair Display',serif; color:var(--dorado); font-size:2rem; text-align:center; margin-bottom:1rem;">📋 Guía Práctica para tu visita</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1.5rem;">
+                    <div><i class="fas fa-calendar-alt" style="color:var(--naranja); font-size:1.5rem;"></i><br><strong>Mejor época</strong><br>Abril - Noviembre (temporada seca)</div>
+                    <div><i class="fas fa-sun" style="color:var(--dorado); font-size:1.5rem;"></i><br><strong>Clima</strong><br>Templado, 18-25°C</div>
+                    <div><i class="fas fa-hiking" style="color:var(--verde); font-size:1.5rem;"></i><br><strong>Qué llevar</strong><br>Ropa cómoda, bloqueador, agua, cámara</div>
+                    <div><i class="fas fa-car" style="color:var(--azul); font-size:1.5rem;"></i><br><strong>Cómo llegar</strong><br>Desde Chimbote: 35 km (1.5 horas)</div>
+                    <div><i class="fas fa-mountain" style="color:var(--morado); font-size:1.5rem;"></i><br><strong>Altitud</strong><br>325 - 1,200 m s.n.m.</div>
+                    <div><i class="fas fa-ticket-alt" style="color:var(--dorado); font-size:1.5rem;"></i><br><strong>Costo</strong><br>Visitas guiadas desde S/ 20</div>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:2rem; margin-bottom:2rem;">
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; border:2px solid var(--naranja);">
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🌄 Básico</h4>
+                    <p style="font-size:2rem; font-weight:900; color:var(--naranja);">S/ 20</p>
+                    <p style="color:var(--marron-claro); font-size:0.9rem;">Visita guiada a Palamenco (2 horas)</p>
+                    <ul style="list-style:none; padding:0; font-size:0.85rem; color:var(--marron-claro);">
+                        <li>✅ Transporte ida/vuelta</li>
+                        <li>✅ Guía local</li>
+                    </ul>
+                </div>
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; border:2px solid var(--verde);">
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🌾 Completo</h4>
+                    <p style="font-size:2rem; font-weight:900; color:var(--verde);">S/ 50</p>
+                    <p style="color:var(--marron-claro); font-size:0.9rem;">Palamenco + Lacramarca (5 horas)</p>
+                    <ul style="list-style:none; padding:0; font-size:0.85rem; color:var(--marron-claro);">
+                        <li>✅ Transporte ida/vuelta</li>
+                        <li>✅ Guía arqueólogo</li>
+                        <li>✅ Almuerzo campesino</li>
+                    </ul>
+                </div>
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; border:2px solid var(--azul);">
+                    <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🏛️ Premium</h4>
+                    <p style="font-size:2rem; font-weight:900; color:var(--azul);">S/ 80</p>
+                    <p style="color:var(--marron-claro); font-size:0.9rem;">Los 3 patrimonios (8 horas)</p>
+                    <ul style="list-style:none; padding:0; font-size:0.85rem; color:var(--marron-claro);">
+                        <li>✅ Transporte ida/vuelta</li>
+                        <li>✅ Guía especializado</li>
+                        <li>✅ Almuerzo + refrigerio</li>
+                        <li>✅ Fotos profesionales</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:2rem; margin-bottom:2rem;">
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; font-style:italic;">
+                    <i class="fas fa-quote-left" style="color:var(--naranja); font-size:2rem;"></i>
+                    <p style="color:var(--marron-claro);">"Una experiencia increíble. Los petroglifos de Palamenco son únicos y la comunidad es muy acogedora."</p>
+                    <p style="font-weight:700; color:var(--marron); margin-top:0.5rem; font-style:normal;">— María López, Lima</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; font-style:italic;">
+                    <i class="fas fa-quote-left" style="color:var(--verde); font-size:2rem;"></i>
+                    <p style="color:var(--marron-claro);">"Pueblo Viejo es impresionante. No sabía que en Áncash había un sitio tan antiguo como Caral."</p>
+                    <p style="font-weight:700; color:var(--marron); margin-top:0.5rem; font-style:normal;">— Carlos Ruiz, Trujillo</p>
+                </div>
+                <div style="background:var(--blanco); border-radius:24px; padding:1.8rem; box-shadow:var(--sombra); text-align:center; font-style:italic;">
+                    <i class="fas fa-quote-left" style="color:var(--azul); font-size:2rem;"></i>
+                    <p style="color:var(--marron-claro);">"La ruta campesina fue mi favorita. Conocer el trabajo de los agricultores y los murales fue muy enriquecedor."</p>
+                    <p style="font-weight:700; color:var(--marron); margin-top:0.5rem; font-style:normal;">— Ana Torres, Chimbote</p>
+                </div>
+            </div>
+
+            <div style="background:linear-gradient(135deg, var(--naranja), var(--dorado)); padding:2rem; border-radius:24px; color:white; text-align:center;">
+                <h3 style="font-family:'Playfair Display',serif; font-size:2rem; margin-bottom:0.5rem;">📞 Guías Locales Certificados</h3>
+                <p style="opacity:0.9;">Contáctanos para reservar tu visita guiada</p>
+                <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin-top:1rem;">
+                    <a href="https://wa.me/51987654321" style="background:white; color:var(--marron); padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; text-decoration:none; transition:var(--transition);"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</a>
+                    <a href="tel:+51987654321" style="background:white; color:var(--marron); padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; text-decoration:none; transition:var(--transition);"><i class="fas fa-phone"></i> Llamar</a>
+                    <a onclick="mostrarSeccion('contacto')" style="background:rgba(255,255,255,0.2); color:white; padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; cursor:pointer; border:2px solid rgba(255,255,255,0.3); transition:var(--transition);">📩 Enviar mensaje</a>
+                </div>
+                <p style="font-size:0.8rem; opacity:0.7; margin-top:0.5rem;">📌 También puedes escribirnos a <strong>turismo@parlamenco.org</strong></p>
+            </div>
         </div>
     </section>
 
@@ -1399,10 +1892,21 @@
     <!-- FOOTER -->
     <!-- ============================================================ -->
     <footer>
-        <p style="font-size:1.1rem; font-family:'Playfair Display',serif; color:var(--dorado); margin-bottom:0.5rem;">Junta de Campesinos · Lacramarca</p>
+        <p style="font-size:1.1rem; font-family:'Playfair Display',serif; color:var(--naranja); margin-bottom:0.5rem;">Junta de Campesinos · Lacramarca</p>
         <div class="footer-divider"></div>
         <p>
-            <a onclick="mostrarSeccion('inicio')">Inicio</a> · <a onclick="mostrarSeccion('palamenco')">Palamenco</a> · <a onclick="mostrarSeccion('lacramarca')">Lacramarca</a> · <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · <a onclick="mostrarSeccion('videos')">Videos</a> · <a onclick="mostrarSeccion('galeria')">Galería</a> · <a onclick="mostrarSeccion('eventos')">Eventos</a> · <a onclick="mostrarSeccion('investigacion')">Investigación</a> · <a onclick="mostrarSeccion('mapa')">Mapa</a> · <a onclick="mostrarSeccion('contacto')">Contacto</a>
+            <a onclick="mostrarSeccion('inicio')">Inicio</a> · 
+            <a onclick="mostrarSeccion('palamenco')">Palamenco</a> · 
+            <a onclick="mostrarSeccion('lacramarca')">Lacramarca</a> · 
+            <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · 
+            <a onclick="mostrarSeccion('videos')">Videos</a> · 
+            <a onclick="mostrarSeccion('galeria')">Galería</a> · 
+            <a onclick="mostrarSeccion('eventos')">Eventos</a> · 
+            <a onclick="mostrarSeccion('investigacion')">Investigación</a> · 
+            <a onclick="mostrarSeccion('noticias')">Noticias</a> · 
+            <a onclick="mostrarSeccion('mapa')">Mapa</a> · 
+            <a onclick="mostrarSeccion('turismo')">Turismo</a> · 
+            <a onclick="mostrarSeccion('contacto')">Contacto</a>
         </p>
         <div class="footer-divider"></div>
         <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:1rem 0;">
@@ -1424,13 +1928,15 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const grid = document.getElementById('galeriaGrid');
-            imagenesGaleria.forEach((url, index) => {
-                const item = document.createElement('div');
-                item.className = 'galeria-item fade-in';
-                item.innerHTML = `<img src="${url}" alt="Palamenco ${index + 1}" loading="lazy"><div class="overlay-hover"><span>📸 Palamenco · ${index + 1}/${imagenesGaleria.length}</span></div>`;
-                item.onclick = () => abrirLightbox(index);
-                grid.appendChild(item);
-            });
+            if (grid) {
+                imagenesGaleria.forEach((url, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'galeria-item fade-in';
+                    item.innerHTML = `<img src="${url}" alt="Palamenco ${index + 1}" loading="lazy"><div class="overlay-hover"><span>📸 Palamenco · ${index + 1}/${imagenesGaleria.length}</span></div>`;
+                    item.onclick = () => abrirLightbox(index);
+                    grid.appendChild(item);
+                });
+            }
             setTimeout(() => {
                 document.querySelectorAll('#seccion-inicio .fade-in').forEach(el => el.classList.add('visible'));
             }, 300);
@@ -1442,7 +1948,7 @@
             if (seccion) { seccion.classList.add('activa'); seccion.style.display = 'block'; }
             document.querySelectorAll('nav a').forEach(el => el.className = '');
             const enlaces = document.querySelectorAll('nav a');
-            const mapa = { 'inicio':0, 'palamenco':1, 'lacramarca':2, 'puebloviejo':3, 'videos':4, 'galeria':5, 'eventos':6, 'investigacion':7, 'mapa':8, 'contacto':9 };
+            const mapa = { 'inicio':0, 'palamenco':1, 'lacramarca':2, 'puebloviejo':3, 'videos':4, 'galeria':5, 'eventos':6, 'investigacion':7, 'noticias':8, 'mapa':9, 'turismo':10, 'contacto':11 };
             if (mapa[nombre] !== undefined) { const idx = mapa[nombre]; if (enlaces[idx]) enlaces[idx].classList.add('activo-' + nombre); }
             if (nombre === 'inicio') { document.getElementById('hero').scrollIntoView({ behavior: 'smooth' }); return; }
             setTimeout(() => { seccion.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible')); }, 200);
