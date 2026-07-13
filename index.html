@@ -75,7 +75,10 @@
     </div>
 
     <script>
+        // ===== CONFIGURACIÓN =====
         const API_BASE = 'https://miruro-api-roan.vercel.app/api';
+
+        // ===== ELEMENTOS DOM =====
         const searchInput = document.getElementById('searchInput');
         const statusDiv = document.getElementById('status');
         const grid = document.getElementById('animeGrid');
@@ -85,10 +88,11 @@
         const episodeCount = document.getElementById('episodeCount');
         const videoPlayer = document.getElementById('videoPlayer');
 
-        let currentAnimeId = null;
         let currentEpisodes = [];
-        let currentEpisodeIndex = 0;
 
+        // ===== FUNCIONES PRINCIPALES =====
+
+        // Buscar animes
         async function searchAnime() {
             const query = searchInput.value.trim();
             if (!query) { setStatus('⚠️ Escribe el nombre de un anime.', true); return; }
@@ -114,6 +118,7 @@
             }
         }
 
+        // Renderizar grid de animes
         function renderAnimeGrid(animes) {
             grid.innerHTML = animes.map(anime => {
                 const title = anime.title?.romaji || anime.title?.english || 'Sin título';
@@ -132,8 +137,8 @@
             }).join('');
         }
 
+        // Abrir modal y cargar episodios
         async function openAnime(animeId, title) {
-            currentAnimeId = animeId;
             modalTitle.textContent = title;
             modal.classList.add('active');
             episodeList.innerHTML = '<span class="loading-text">⏳ Cargando episodios...</span>';
@@ -141,6 +146,7 @@
             videoPlayer.pause();
             videoPlayer.removeAttribute('src');
             videoPlayer.load();
+
             try {
                 const url = `${API_BASE}/episodes/${animeId}`;
                 const response = await fetch(url);
@@ -162,7 +168,7 @@
                         </button>
                     `;
                 }).join('');
-                if (currentEpisodes.length > 0) { playEpisode(0); }
+                if (currentEpisodes.length > 0) playEpisode(0);
             } catch (error) {
                 console.error('Error al cargar episodios:', error);
                 episodeList.innerHTML = `<span class="error-text">❌ Error al cargar los episodios: ${error.message}</span>`;
@@ -170,87 +176,101 @@
             }
         }
 
+        // Reproducir episodio (con múltiples intentos)
         async function playEpisode(index) {
             if (index < 0 || index >= currentEpisodes.length) return;
-            currentEpisodeIndex = index;
             const episode = currentEpisodes[index];
-            document.querySelectorAll('.episode-btn').forEach((btn, i) => {
-                btn.classList.toggle('active', i === index);
-            });
             const epNum = episode.number || episode.episode || index + 1;
             modalTitle.textContent = `${document.querySelector('.modal-title').textContent.split('—')[0].trim()} — Episodio ${epNum}`;
 
-            // INTENTO 1: /anime/gogoanime/watch
-            try {
-                const watchUrl = `${API_BASE}/anime/gogoanime/watch/${episode.id}`;
-                const response = await fetch(watchUrl);
-                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-                const data = await response.json();
-                if (data.success && data.results?.sources?.length > 0) {
-                    const source = data.results.sources[0];
-                    const videoUrl = source.url;
-                    if (videoUrl) {
-                        videoPlayer.src = videoUrl;
-                        videoPlayer.load();
-                        videoPlayer.play().catch(() => {});
-                        setStatus(`▶️ Reproduciendo episodio ${epNum}`);
-                        return;
-                    }
-                }
-                throw new Error('No se encontraron fuentes en /anime/gogoanime/watch');
-            } catch (error) {
-                console.warn('Fallo /anime/gogoanime/watch, intentando con /watch...', error.message);
-                // INTENTO 2: /watch
+            // Resaltar botón activo
+            document.querySelectorAll('.episode-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            // Lista de endpoints a probar (en orden)
+            const endpoints = [
+                `${API_BASE}/anime/gogoanime/watch/${episode.id}`,
+                `${API_BASE}/watch/${episode.id}`,
+                `${API_BASE}/episodes/${episode.id}/sources`,
+                `${API_BASE}/stream/${episode.id}`
+            ];
+
+            let videoUrl = null;
+            let lastError = null;
+
+            for (const endpoint of endpoints) {
                 try {
-                    const watchUrl = `${API_BASE}/watch/${episode.id}`;
-                    const response = await fetch(watchUrl);
-                    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                    console.log(`Intentando: ${endpoint}`);
+                    const response = await fetch(endpoint);
+                    if (!response.ok) continue;
                     const data = await response.json();
-                    if (data.success && data.results?.sources?.length > 0) {
-                        const source = data.results.sources[0];
-                        const videoUrl = source.url;
-                        if (videoUrl) {
-                            videoPlayer.src = videoUrl;
-                            videoPlayer.load();
-                            videoPlayer.play().catch(() => {});
-                            setStatus(`▶️ Reproduciendo episodio ${epNum}`);
-                            return;
+                    // Buscar sources en diferentes estructuras
+                    let sources = data.sources || data.results?.sources || data.data?.sources || [];
+                    if (sources.length === 0) {
+                        // Intentar obtener de data.results directamente si es un array
+                        if (Array.isArray(data.results)) {
+                            sources = data.results;
                         }
                     }
-                    throw new Error('No se encontraron fuentes en /watch');
-                } catch (error2) {
-                    console.error('Ambos endpoints fallaron:', error2);
-                    const confirmOpen = confirm(
-                        `No se pudo obtener el video del episodio ${epNum}.\n` +
-                        `¿Quieres abrirlo directamente en Gogoanime?`
-                    );
-                    if (confirmOpen) {
-                        const animeTitle = document.querySelector('.modal-title').textContent.split('—')[0].trim();
-                        const searchQuery = encodeURIComponent(`${animeTitle} episode ${epNum}`);
-                        window.open(`https://gogoanime3.net/search.html?keyword=${searchQuery}`, '_blank');
-                    } else {
-                        alert(`No se pudo cargar el episodio ${epNum}.`);
+                    if (sources.length > 0) {
+                        const source = sources[0];
+                        videoUrl = source.url || source.file || source.link;
+                        if (videoUrl) break;
                     }
-                    setStatus(`❌ Error al cargar el episodio ${epNum}`, true);
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`Fallo ${endpoint}:`, err.message);
                 }
             }
+
+            if (videoUrl) {
+                // Reproducir
+                try {
+                    videoPlayer.src = videoUrl;
+                    videoPlayer.load();
+                    await videoPlayer.play();
+                    setStatus(`▶️ Reproduciendo episodio ${epNum}`);
+                    return;
+                } catch (playError) {
+                    console.warn('Error al reproducir:', playError);
+                    // Si falla la reproducción, ofrecer abrir en Gogoanime
+                }
+            }
+
+            // Si llegamos aquí, no se pudo obtener video o reproducir
+            console.error('No se encontró video para el episodio', episode.id);
+            const confirmOpen = confirm(
+                `No se pudo obtener el video del episodio ${epNum}.\n` +
+                `¿Quieres abrirlo directamente en Gogoanime?`
+            );
+            if (confirmOpen) {
+                const animeTitle = document.querySelector('.modal-title').textContent.split('—')[0].trim();
+                const searchQuery = encodeURIComponent(`${animeTitle} episode ${epNum}`);
+                window.open(`https://gogoanime3.net/search.html?keyword=${searchQuery}`, '_blank');
+            } else {
+                alert(`No se pudo cargar el episodio ${epNum}.`);
+            }
+            setStatus(`❌ Error al cargar el episodio ${epNum}`, true);
         }
 
+        // Cerrar modal
         function closeModal() {
             modal.classList.remove('active');
             videoPlayer.pause();
             videoPlayer.removeAttribute('src');
             videoPlayer.load();
             currentEpisodes = [];
-            currentAnimeId = null;
             setStatus('🔍 Busca otro anime para continuar.');
         }
 
+        // Actualizar estado
         function setStatus(message, isError = false) {
             statusDiv.textContent = message;
             statusDiv.style.color = isError ? '#f87171' : '#94a3b8';
         }
 
+        // Eventos
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') searchAnime();
         });
@@ -261,6 +281,7 @@
             if (e.target === modal) closeModal();
         });
 
+        // Mensaje inicial
         window.onload = () => {
             grid.innerHTML = `
                 <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#64748b;">
