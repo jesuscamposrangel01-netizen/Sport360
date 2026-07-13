@@ -2,19 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineTrend · Tendencias</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🎬 Mi Cine - Tendencias</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
         body {
             background: #0a0a0a;
             color: #fff;
-            padding: 20px 30px;
+            padding: 12px;
+            min-height: 100vh;
         }
 
         /* HEADER */
@@ -22,32 +23,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
         .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, #e50914, #b20710);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
         }
         .logo span {
             background: none;
-            -webkit-text-fill-color: #fff;
+            -webkit-text-fill-color: #888;
             font-weight: 300;
-            font-size: 1rem;
-            margin-left: 8px;
+            font-size: 0.8rem;
         }
         .search-box {
             display: flex;
             align-items: center;
             background: #1a1a1a;
             border-radius: 30px;
-            padding: 5px 20px;
+            padding: 5px 15px;
             border: 1px solid #2a2a2a;
+            width: 100%;
+            max-width: 280px;
         }
         .search-box input {
             background: transparent;
@@ -55,39 +56,35 @@
             padding: 10px 0;
             color: #fff;
             font-size: 0.95rem;
-            width: 220px;
+            width: 100%;
             outline: none;
         }
         .search-box input::placeholder {
             color: #666;
         }
-        .search-box span {
-            color: #666;
-            font-size: 1.2rem;
-        }
 
-        /* PESTAÑAS PRINCIPALES */
+        /* TABS */
         .tabs {
             display: flex;
-            gap: 30px;
+            gap: 15px;
             border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
         }
         .tab {
             background: none;
             border: none;
             color: #888;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             padding: 4px 0;
             transition: 0.3s;
             position: relative;
-        }
-        .tab:hover {
-            color: #fff;
+            flex-shrink: 0;
         }
         .tab.active {
             color: #fff;
@@ -95,7 +92,7 @@
         .tab.active::after {
             content: '';
             position: absolute;
-            bottom: -14px;
+            bottom: -11px;
             left: 0;
             width: 100%;
             height: 3px;
@@ -103,84 +100,61 @@
             border-radius: 4px;
         }
 
-        /* FILAS DE FILTROS */
+        /* FILTROS */
         .filter-row {
             display: flex;
-            gap: 15px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             align-items: center;
         }
         .filter-label {
             color: #888;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 5px;
+            margin-right: 4px;
         }
         .filter-btn {
             background: none;
             border: none;
             color: #888;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            padding: 4px 12px;
+            padding: 3px 12px;
             border-radius: 20px;
             transition: 0.3s;
-        }
-        .filter-btn:hover {
-            color: #fff;
-            background: #1a1a1a;
         }
         .filter-btn.active {
             color: #fff;
             background: #e50914;
         }
-
-        /* CONTENEDOR PRINCIPAL: Grid + Lista */
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 40px;
-            margin-top: 20px;
-        }
-
-        /* SECCIÓN RECOMENDADOS (GRID) */
-        .section-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-title .badge {
-            font-size: 0.7rem;
-            background: #e50914;
-            padding: 2px 10px;
-            border-radius: 30px;
+        .filter-btn:hover {
             color: #fff;
-            font-weight: 600;
+            background: #1a1a1a;
         }
 
+        /* GRID RECOMENDADOS */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 18px 0 12px;
+        }
         .grid-recom {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
         }
         .card-rec {
             background: #141414;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.25s, box-shadow 0.25s;
+            transition: transform 0.2s;
             border: 1px solid #1a1a1a;
         }
-        .card-rec:hover {
-            transform: scale(1.04);
-            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
-            border-color: #e50914;
+        .card-rec:active {
+            transform: scale(0.96);
         }
         .card-rec img {
             width: 100%;
@@ -189,155 +163,124 @@
             display: block;
         }
         .card-rec .info {
-            padding: 10px 12px;
+            padding: 8px 10px;
         }
         .card-rec .info h4 {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .card-rec .info p {
             color: #888;
-            font-size: 0.75rem;
-            margin-top: 4px;
+            font-size: 0.7rem;
         }
 
-        /* LISTA DE TENDENCIAS */
+        /* LISTA TENDENCIAS */
         .trending-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 10px;
+            margin-top: 8px;
         }
         .trend-item {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             background: #111;
-            padding: 12px 18px;
-            border-radius: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
             border: 1px solid #1a1a1a;
             cursor: pointer;
             transition: 0.2s;
         }
-        .trend-item:hover {
+        .trend-item:active {
             background: #1a1a1a;
-            border-color: #333;
-            transform: translateX(4px);
+            transform: scale(0.98);
         }
         .trend-rank {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #333;
-            min-width: 45px;
+            min-width: 35px;
             text-align: center;
         }
-        .trend-rank.top1 {
-            color: #f5c518;
-        }
-        .trend-rank.top2 {
-            color: #ccc;
-        }
-        .trend-rank.top3 {
-            color: #cd7f32;
-        }
+        .trend-rank.top1 { color: #f5c518; }
+        .trend-rank.top2 { color: #ccc; }
+        .trend-rank.top3 { color: #cd7f32; }
         .trend-info {
             flex: 1;
+            overflow: hidden;
         }
         .trend-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .trend-info .meta {
             display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
+            gap: 8px;
+            font-size: 0.7rem;
             color: #888;
-            margin-top: 4px;
             flex-wrap: wrap;
         }
-        .trend-info .meta .date {
-            color: #666;
-        }
-        .trend-info .meta .country {
-            background: #1a1a1a;
-            padding: 0 10px;
-            border-radius: 30px;
-            color: #aaa;
-        }
-        .trend-info .meta .genre {
-            color: #e50914;
-        }
+        .trend-info .meta .date { color: #666; }
+        .trend-info .meta .genre { color: #e50914; }
 
-        /* REPRODUCTOR (MODAL MEJORADO) */
+        /* REPRODUCTOR */
         .reproductor {
             display: none;
-            margin-top: 40px;
+            margin-top: 20px;
             background: #0d0d0d;
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             border: 1px solid #2a2a2a;
         }
         .reproductor.active {
             display: block;
         }
-
         .player-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 20px;
+            padding: 10px 14px;
             background: #111;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             border-bottom: 1px solid #1a1a1a;
-        }
-        .player-header .left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
         .btn-volver {
             background: none;
             border: none;
             color: #e50914;
-            font-size: 1.2rem;
             font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
         }
         .player-controls {
             display: flex;
-            gap: 12px;
-            align-items: center;
+            gap: 6px;
             flex-wrap: wrap;
         }
         .player-controls button {
             background: #1a1a1a;
             border: none;
             color: #ccc;
-            padding: 4px 16px;
+            padding: 3px 12px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-        }
-        .player-controls button:hover {
-            background: #333;
-            color: #fff;
         }
         .player-controls .highlight {
             background: #e50914;
             color: #fff;
         }
-        .player-controls .highlight:hover {
-            background: #b20710;
-        }
-
         .player-video {
             width: 100%;
-            height: 55vh;
-            min-height: 300px;
+            height: 45vh;
+            min-height: 220px;
             background: #000;
         }
         .player-video iframe {
@@ -345,69 +288,48 @@
             height: 100%;
             border: none;
         }
-
         .player-footer {
-            padding: 16px 22px;
+            padding: 12px 16px;
             background: #111;
             border-top: 1px solid #1a1a1a;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
         }
         .player-footer .info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
+            font-size: 1rem;
+            margin-bottom: 2px;
         }
         .player-footer .info p {
             color: #888;
-            font-size: 0.9rem;
-            max-width: 600px;
-        }
-        .player-footer .episode-list {
-            background: #1a1a1a;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            color: #aaa;
-            border: 1px solid #2a2a2a;
-            cursor: pointer;
-        }
-        .player-footer .episode-list:hover {
-            border-color: #e50914;
+            font-size: 0.8rem;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-            }
-            .grid-recom {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        /* SELECTOR DE FUENTE */
+        .source-selector {
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: 6px;
         }
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
+
+        @media (max-width: 480px) {
             .grid-recom {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            .logo {
+                font-size: 1.4rem;
+            }
+            .search-box {
+                max-width: 180px;
             }
             .tabs {
-                gap: 15px;
-            }
-            .search-box input {
-                width: 140px;
-            }
-        }
-        @media (max-width: 500px) {
-            .grid-recom {
-                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
-            .player-controls button {
-                padding: 2px 10px;
-                font-size: 0.7rem;
+            .trend-item {
+                padding: 8px 10px;
             }
         }
     </style>
@@ -415,40 +337,29 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 CineTrend <span>| Tendencias</span></div>
+        <div class="logo">🎬 Mi Cine <span>| Tendencias</span></div>
         <div class="search-box">
             <input id="buscador" type="text" placeholder="Buscar...">
-            <span>🔍</span>
         </div>
     </div>
 
-    <!-- PESTAÑAS -->
+    <!-- TABS -->
     <div class="tabs" id="tabsContainer">
         <button class="tab active" data-tab="all">Todo</button>
         <button class="tab" data-tab="movie">Películas</button>
         <button class="tab" data-tab="tv">Series</button>
         <button class="tab" data-tab="anime">Anime</button>
-        <button class="tab" data-tab="shorts">Shorts</button>
     </div>
 
     <!-- FILTROS -->
-    <div class="filter-row" id="genreRow">
+    <div class="filter-row">
         <span class="filter-label">Género</span>
         <button class="filter-btn active" data-genre="all">Recomendados</button>
-        <button class="filter-btn" data-genre="10751">Niños</button>
         <button class="filter-btn" data-genre="28">Acción</button>
-        <button class="filter-btn" data-genre="18">Drama</button>
         <button class="filter-btn" data-genre="35">Comedia</button>
+        <button class="filter-btn" data-genre="18">Drama</button>
         <button class="filter-btn" data-genre="16">Animación</button>
-    </div>
-
-    <div class="filter-row">
-        <span class="filter-label">País</span>
-        <button class="filter-btn active" data-country="all">Todo</button>
-        <button class="filter-btn" data-country="US">EE.UU.</button>
-        <button class="filter-btn" data-country="JP">Japón</button>
-        <button class="filter-btn" data-country="GB">Reino Unido</button>
-        <button class="filter-btn" data-country="PH">Filipinas</button>
+        <button class="filter-btn" data-genre="10751">Niños</button>
     </div>
 
     <div class="filter-row">
@@ -457,41 +368,31 @@
         <button class="filter-btn" data-year="2026">2026</button>
         <button class="filter-btn" data-year="2025">2025</button>
         <button class="filter-btn" data-year="2024">2024</button>
-        <button class="filter-btn" data-year="2023">2023</button>
-        <button class="filter-btn" data-year="2022">2022</button>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="content-wrapper" id="mainContent">
-        <!-- COLUMNA IZQUIERDA: Recomendados (Grid) -->
-        <div>
-            <div class="section-title">
-                📌 Recomendados <span class="badge">Popular</span>
-            </div>
-            <div class="grid-recom" id="gridRecom"></div>
-        </div>
+    <!-- CONTENIDO -->
+    <div class="section-title">📌 Recomendados</div>
+    <div class="grid-recom" id="gridRecom"></div>
 
-        <!-- COLUMNA DERECHA: Tendencias (Lista numerada) -->
-        <div>
-            <div class="section-title">
-                🔥 Tendencias
-            </div>
-            <div class="trending-list" id="trendingList"></div>
-        </div>
-    </div>
+    <div class="section-title" style="margin-top:20px;">🔥 Tendencias</div>
+    <div class="trending-list" id="trendingList"></div>
 
-    <!-- REPRODUCTOR MEJORADO (Estilo Screenshot 1) -->
+    <!-- REPRODUCTOR -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <div class="left">
                 <button class="btn-volver" id="btnCerrarReproductor">← Volver</button>
-                <span style="color:#888; font-size:0.8rem;">|</span>
-                <span style="color:#e50914; font-weight:600;">Nube: Más fluida</span>
+                <span style="color:#888; font-size:0.7rem;">|</span>
+                <span style="color:#e50914; font-weight:600;">Nube</span>
+                <select id="sourceSelector" class="source-selector">
+                    <option value="vidsrc.xyz">vidsrc.xyz</option>
+                    <option value="embed.su">embed.su</option>
+                    <option value="vidsrc.cc">vidsrc.cc</option>
+                    <option value="vidsrc.vip">vidsrc.vip</option>
+                    <option value="vidsrc.in">vidsrc.in</option>
+                </select>
             </div>
             <div class="player-controls">
-                <button class="highlight">Descargar</button>
-                <button>Doblaje Español</button>
-                <button>Subtítulo</button>
                 <button class="highlight">HD</button>
             </div>
         </div>
@@ -500,29 +401,18 @@
         </div>
         <div class="player-footer">
             <div class="info">
-                <h3 id="peliTitulo">Título de la película</h3>
+                <h3 id="peliTitulo">Título</h3>
                 <p id="peliSinopsis">Sinopsis aquí...</p>
-            </div>
-            <div class="episode-list">
-                📋 Lista de reproducción (1 Episodio)
             </div>
         </div>
     </div>
 
     <script>
-        // ================================================================
-        //  CONFIGURACIÓN
-        // ================================================================
+        // ============================================================
+        //  TU CLAVE DE TMDb (colócala aquí)
+        // ============================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
-
-        // Estado
-        let currentTab = 'all';
-        let currentGenre = 'all';
-        let currentCountry = 'all';
-        let currentYear = 'all';
-        let currentData = [];
-        let allTrending = [];
 
         // DOM
         const gridRecom = document.getElementById('gridRecom');
@@ -532,10 +422,15 @@
         const peliTitulo = document.getElementById('peliTitulo');
         const peliSinopsis = document.getElementById('peliSinopsis');
         const buscador = document.getElementById('buscador');
+        const sourceSelector = document.getElementById('sourceSelector');
 
-        // ================================================================
-        //  FUNCIONES API
-        // ================================================================
+        let allMovies = [];
+        let allTrending = [];
+        let currentYear = 'all';
+
+        // ============================================================
+        //  API
+        // ============================================================
         async function fetchApi(endpoint) {
             const url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
             const res = await fetch(url);
@@ -543,18 +438,18 @@
             return res.json();
         }
 
-        // Obtener populares (para el grid izquierdo)
+        // Cargar películas populares (para recomendados)
         async function loadPopular() {
             try {
                 const data = await fetchApi('movie/popular');
-                currentData = data.results || [];
-                renderGrid(currentData);
+                allMovies = data.results || [];
+                renderGrid(allMovies);
             } catch (e) {
                 gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
             }
         }
 
-        // Obtener tendencias (para la lista derecha)
+        // Cargar tendencias
         async function loadTrending() {
             try {
                 const data = await fetchApi('trending/movie/week');
@@ -565,54 +460,40 @@
             }
         }
 
-        // ================================================================
-        //  RENDERIZAR GRID (Recomendados)
-        // ================================================================
+        // ============================================================
+        //  RENDER
+        // ============================================================
         function renderGrid(lista) {
-            if (!lista.length) {
-                gridRecom.innerHTML = `<p style="color:#888;">Sin resultados</p>`;
-                return;
-            }
-            // Filtrar por año si está seleccionado
             let filtered = lista;
             if (currentYear !== 'all') {
                 filtered = filtered.filter(item => {
-                    const date = item.release_date || item.first_air_date || '';
+                    const date = item.release_date || '';
                     return date.startsWith(currentYear);
                 });
             }
-            // Si hay menos de 3, mostrar los que haya
-            const show = filtered.slice(0, 6);
+            const show = filtered.slice(0, 8);
 
             gridRecom.innerHTML = show.map(item => `
-                <div class="card-rec" data-id="${item.id}" data-titulo="${item.title || item.name}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-media="movie">
-                    <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title || item.name}" loading="lazy">
+                <div class="card-rec" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}">
+                    <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title}" loading="lazy">
                     <div class="info">
-                        <h4>${item.title || item.name}</h4>
+                        <h4>${item.title}</h4>
                         <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'}</p>
                     </div>
                 </div>
             `).join('');
 
-            // Evento de clic para reproducir
             document.querySelectorAll('.card-rec').forEach(card => {
                 card.addEventListener('click', () => {
                     const id = card.dataset.id;
                     const titulo = card.dataset.titulo;
                     const sinopsis = card.dataset.sinopsis;
-                    abrirReproductor(id, titulo, sinopsis, 'movie');
+                    abrirReproductor(id, titulo, sinopsis);
                 });
             });
         }
 
-        // ================================================================
-        //  RENDERIZAR LISTA DE TENDENCIAS (Numerada)
-        // ================================================================
         function renderTrending(lista) {
-            if (!lista.length) {
-                trendingList.innerHTML = `<p style="color:#888;">Sin tendencias</p>`;
-                return;
-            }
             const top10 = lista.slice(0, 10);
             trendingList.innerHTML = top10.map((item, index) => {
                 const rank = index + 1;
@@ -621,20 +502,18 @@
                 else if (rank === 2) rankClass += ' top2';
                 else if (rank === 3) rankClass += ' top3';
 
-                const date = item.release_date || item.first_air_date || '2026-TBC';
+                const date = item.release_date || '2026-TBC';
                 const genreIds = item.genre_ids || [];
-                // Sacar un género de ejemplo (no tenemos los nombres, los ponemos genéricos)
                 const genreMap = { 28: 'Acción', 12: 'Aventura', 16: 'Animación', 35: 'Comedia', 18: 'Drama', 10751: 'Niños', 14: 'Fantasía' };
                 const genreName = genreMap[genreIds[0]] || 'Anime';
 
                 return `
-                    <div class="trend-item" data-id="${item.id}" data-titulo="${item.title || item.name}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-media="movie">
+                    <div class="trend-item" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}">
                         <div class="${rankClass}">${rank}</div>
                         <div class="trend-info">
-                            <h4>${item.title || item.name}</h4>
+                            <h4>${item.title}</h4>
                             <div class="meta">
                                 <span class="date">${date}</span>
-                                <span class="country">🇯🇵 JP</span>
                                 <span class="genre">${genreName}</span>
                             </div>
                         </div>
@@ -642,23 +521,22 @@
                 `;
             }).join('');
 
-            // Evento de clic en tendencia para reproducir
             document.querySelectorAll('.trend-item').forEach(item => {
                 item.addEventListener('click', () => {
                     const id = item.dataset.id;
                     const titulo = item.dataset.titulo;
                     const sinopsis = item.dataset.sinopsis;
-                    abrirReproductor(id, titulo, sinopsis, 'movie');
+                    abrirReproductor(id, titulo, sinopsis);
                 });
             });
         }
 
-        // ================================================================
-        //  REPRODUCTOR (con Selector de fuente)
-        // ================================================================
-        function abrirReproductor(id, titulo, sinopsis, media = 'movie') {
-            // Usamos una fuente estable (vidsrc.xyz)
-            const videoSrc = `https://vidsrc.xyz/embed/${media}/${id}`;
+        // ============================================================
+        //  REPRODUCTOR (con selector de fuente)
+        // ============================================================
+        function abrirReproductor(id, titulo, sinopsis, type = 'movie') {
+            const domain = sourceSelector.value;
+            const videoSrc = `https://${domain}/embed/${type}/${id}`;
             iframe.src = videoSrc;
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis;
@@ -671,76 +549,76 @@
             iframe.src = '';
         });
 
-        // ================================================================
-        //  FILTROS Y TABS
-        // ================================================================
-        // Pestañas
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentTab = tab.dataset.tab;
-                // Por ahora, recargamos populares (en versión completa filtraríamos por tipo)
-                loadPopular();
-                loadTrending();
-            });
+        // Cambiar fuente y recargar automáticamente
+        sourceSelector.addEventListener('change', () => {
+            const currentSrc = iframe.src;
+            if (currentSrc) {
+                const url = new URL(currentSrc);
+                const pathParts = url.pathname.split('/');
+                const type = pathParts[1] || 'movie';
+                const id = pathParts[2];
+                if (id) {
+                    const newSrc = `https://${sourceSelector.value}/embed/${type}/${id}`;
+                    iframe.src = newSrc;
+                }
+            }
         });
 
-        // Filtros de género
-        document.querySelectorAll('#genreRow .filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('#genreRow .filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentGenre = btn.dataset.genre;
-                loadPopular();
-            });
-        });
-
-        // Filtros de país (solo UI, en TMDb se filtra por región con 'region' en discover)
-        document.querySelectorAll('.filter-row:nth-child(3) .filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-row:nth-child(3) .filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCountry = btn.dataset.country;
-                // Podríamos recargar con región, pero lo dejamos visual por ahora
-                loadPopular();
-            });
-        });
-
-        // Filtros de año
-        document.querySelectorAll('.filter-row:nth-child(4) .filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-row:nth-child(4) .filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentYear = btn.dataset.year;
-                loadPopular();
-            });
-        });
-
-        // Buscador
+        // ============================================================
+        //  BUSCADOR
+        // ============================================================
         buscador.addEventListener('input', (e) => {
             const texto = e.target.value.toLowerCase().trim();
             if (!texto) {
-                renderGrid(currentData);
+                renderGrid(allMovies);
                 renderTrending(allTrending);
                 return;
             }
-            const filtradas = currentData.filter(item => {
-                const title = (item.title || item.name || '').toLowerCase();
+            const filtradas = allMovies.filter(item => {
+                const title = (item.title || '').toLowerCase();
                 return title.includes(texto);
             });
             renderGrid(filtradas);
-            // También filtrar tendencias
             const filtradasTrend = allTrending.filter(item => {
-                const title = (item.title || item.name || '').toLowerCase();
+                const title = (item.title || '').toLowerCase();
                 return title.includes(texto);
             });
             renderTrending(filtradasTrend);
         });
 
-        // ================================================================
+        // ============================================================
+        //  FILTROS
+        // ============================================================
+        document.querySelectorAll('.filter-btn[data-year]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-year]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentYear = btn.dataset.year;
+                renderGrid(allMovies);
+            });
+        });
+
+        // Filtros de género (solo UI)
+        document.querySelectorAll('.filter-btn[data-genre]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-genre]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // En una versión completa, filtraríamos por género aquí
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Cambiar categoría (solo UI)
+            });
+        });
+
+        // ============================================================
         //  INICIO
-        // ================================================================
+        // ============================================================
         loadPopular();
         loadTrending();
     </script>
