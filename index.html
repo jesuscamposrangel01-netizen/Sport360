@@ -113,20 +113,6 @@
             font-size: 0.95rem;
             max-width: 800px;
         }
-        .cerrar {
-            background: #e50914;
-            border: none;
-            color: #fff;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-left: 15px;
-            transition: 0.2s;
-        }
-        .cerrar:hover {
-            background: #b20710;
-        }
         .back-top {
             display: flex;
             align-items: center;
@@ -163,10 +149,8 @@
         <input class="buscar" id="buscador" type="text" placeholder="Buscar película...">
     </div>
 
-    <!-- Grid de películas -->
     <div id="catalogo" class="grid"></div>
 
-    <!-- Reproductor (oculto hasta que se elija una película) -->
     <div id="reproductor" class="reproductor">
         <div class="back-top">
             <button id="btnCerrarReproductor">← Volver</button>
@@ -181,16 +165,9 @@
 
     <script>
         // ============================================================
-        //  CONFIGURACIÓN: ELIGE UN MÉTODO Y PON TU CLAVE
+        //  CLAVE API (YA COLOCADA)
         // ============================================================
-
-        // 🔹 OPCIÓN 1 (RECOMENDADA): Usa tu API Key v3 (la ves en la web de TMDb)
-        //    Ejemplo: '1234567890abcdef1234567890abcdef'
-        const API_KEY_V3 = 'PON_AQUI_TU_API_KEY_V3';
-
-        // 🔹 OPCIÓN 2 (Alternativa): Usa tu Token Bearer (empieza por eyJ...)
-        // const TMDB_TOKEN = 'PON_AQUI_TU_TOKEN_BEARER';
-
+        const API_KEY_V3 = 'bda7a5fa2507ebcef3fcebd2287d72c9'; // <--- TU CLAVE AQUÍ
         // ============================================================
 
         const catalogo = document.getElementById('catalogo');
@@ -202,25 +179,11 @@
 
         let peliculas = [];
 
-        // Obtener películas populares
         async function cargarPeliculas() {
             try {
-                let url = `https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1`;
-                let options = {};
-
-                // Si pusiste API Key v3, úsala en la URL
-                if (API_KEY_V3 && API_KEY_V3 !== 'PON_AQUI_TU_API_KEY_V3') {
-                    url += `&api_key=${API_KEY_V3}`;
-                } 
-                // Si no, intenta con el Token Bearer (descomenta la línea de arriba)
-                // else if (TMDB_TOKEN && TMDB_TOKEN !== 'PON_AQUI_TU_TOKEN_BEARER') {
-                //     options.headers = { 'Authorization': `Bearer ${TMDB_TOKEN}` };
-                // }
-                else {
-                    throw new Error('No has configurado ninguna clave de API válida.');
-                }
-
-                const res = await fetch(url, options);
+                const url = `https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1&api_key=${API_KEY_V3}`;
+                const res = await fetch(url);
+                
                 if (!res.ok) {
                     const errorText = await res.text();
                     throw new Error(`Error ${res.status}: ${errorText}`);
@@ -233,7 +196,7 @@
                     <div style="color:#e50914; font-size:1.2rem; grid-column: 1/-1; text-align:center; padding:40px;">
                         ❌ Error: ${e.message}<br>
                         <span style="color:#888; font-size:0.9rem;">
-                            Revisa que hayas puesto tu API Key correctamente en el código.
+                            Revisa tu conexión o la clave de API.
                         </span>
                     </div>`;
                 console.error(e);
@@ -285,7 +248,6 @@
             iframe.src = '';
         });
 
-        // Iniciar
         cargarPeliculas();
     </script>
 
