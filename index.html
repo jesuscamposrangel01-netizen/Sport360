@@ -40,6 +40,7 @@
         .episode-list::-webkit-scrollbar { width: 6px; }
         .episode-list::-webkit-scrollbar-track { background: #0f172a; }
         .episode-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .catalog-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #94a3b8; }
         @media (max-width: 600px) { header { flex-direction: column; align-items: stretch; } .search-box { max-width: 100%; } .anime-grid { grid-template-columns: 1fr 1fr; gap: 15px; } .anime-card img { height: 200px; } }
         @media (max-width: 420px) { .anime-grid { grid-template-columns: 1fr; } }
     </style>
@@ -49,14 +50,15 @@
         <header>
             <div class="logo">🎬 AnimeStream</div>
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Busca tu anime... (ej: Naruto)" />
+                <input type="text" id="searchInput" placeholder="Busca tu anime..." />
                 <button onclick="searchAnime()">Buscar</button>
             </div>
         </header>
-        <div class="status" id="status">🔍 Escribe el nombre de un anime y presiona "Buscar".</div>
+        <div class="status" id="status">🌟 Cargando catálogo...</div>
         <div class="anime-grid" id="animeGrid"></div>
     </div>
 
+    <!-- MODAL -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -75,10 +77,14 @@
     </div>
 
     <script>
-        // ===== CONFIGURACIÓN =====
+        // ============================================================
+        //  CONFIGURACIÓN
+        // ============================================================
         const API_BASE = 'https://miruro-api-roan.vercel.app/api';
 
-        // ===== ELEMENTOS DOM =====
+        // ============================================================
+        //  ELEMENTOS DOM
+        // ============================================================
         const searchInput = document.getElementById('searchInput');
         const statusDiv = document.getElementById('status');
         const grid = document.getElementById('animeGrid');
@@ -89,10 +95,56 @@
         const videoPlayer = document.getElementById('videoPlayer');
 
         let currentEpisodes = [];
+        let currentAnimeTitle = '';
 
-        // ===== FUNCIONES PRINCIPALES =====
+        // ============================================================
+        //  CATÁLOGO DE ANIMES POPULARES (para mostrar al inicio)
+        // ============================================================
+        const CATALOG_QUERIES = [
+            'Naruto', 'One Piece', 'Demon Slayer', 'Attack on Titan',
+            'Jujutsu Kaisen', 'My Hero Academia', 'Death Note',
+            'Fullmetal Alchemist', 'Dragon Ball', 'One Punch Man',
+            'Tokyo Ghoul', 'Sword Art Online'
+        ];
 
-        // Buscar animes
+        // ============================================================
+        //  FUNCIONES PRINCIPALES
+        // ============================================================
+
+        // ----- Cargar catálogo al inicio -----
+        async function loadCatalog() {
+            setStatus('🌟 Cargando catálogo de animes populares...');
+            grid.innerHTML = '';
+            try {
+                // Hacemos búsqueda para cada término y combinamos resultados
+                const allResults = [];
+                for (const query of CATALOG_QUERIES) {
+                    const url = `${API_BASE}/search?query=${encodeURIComponent(query)}&per_page=3`;
+                    const response = await fetch(url);
+                    if (!response.ok) continue;
+                    const data = await response.json();
+                    if (data.success && data.results?.results) {
+                        for (const anime of data.results.results) {
+                            // Evitar duplicados por ID
+                            if (!allResults.some(a => a.id === anime.id)) {
+                                allResults.push(anime);
+                            }
+                        }
+                    }
+                }
+                if (allResults.length === 0) {
+                    setStatus('⚠️ No se pudo cargar el catálogo. Intenta buscar manualmente.', true);
+                    return;
+                }
+                setStatus(`✅ Catálogo cargado: ${allResults.length} animes populares. Haz clic en una tarjeta.`);
+                renderAnimeGrid(allResults);
+            } catch (error) {
+                console.error('Error al cargar catálogo:', error);
+                setStatus('❌ Error al cargar catálogo. Usa la búsqueda manual.', true);
+            }
+        }
+
+        // ----- Buscar animes -----
         async function searchAnime() {
             const query = searchInput.value.trim();
             if (!query) { setStatus('⚠️ Escribe el nombre de un anime.', true); return; }
@@ -109,16 +161,16 @@
                     return;
                 }
                 const animes = data.results.results;
-                setStatus(`✅ ${animes.length} resultados encontrados. Haz clic en una tarjeta para ver los episodios.`);
+                setStatus(`✅ ${animes.length} resultados encontrados.`);
                 renderAnimeGrid(animes);
             } catch (error) {
                 console.error('Error en búsqueda:', error);
-                setStatus('❌ Error de conexión con la API. Intenta de nuevo más tarde.', true);
+                setStatus('❌ Error de conexión. Intenta de nuevo.', true);
                 grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#f87171;">⚠️ No se pudo conectar con el servidor.</div>`;
             }
         }
 
-        // Renderizar grid de animes
+        // ----- Renderizar grid -----
         function renderAnimeGrid(animes) {
             grid.innerHTML = animes.map(anime => {
                 const title = anime.title?.romaji || anime.title?.english || 'Sin título';
@@ -137,8 +189,9 @@
             }).join('');
         }
 
-        // Abrir modal y cargar episodios
+        // ----- Abrir modal y cargar episodios (con fallback) -----
         async function openAnime(animeId, title) {
+            currentAnimeTitle = title;
             modalTitle.textContent = title;
             modal.classList.add('active');
             episodeList.innerHTML = '<span class="loading-text">⏳ Cargando episodios...</span>';
@@ -148,47 +201,80 @@
             videoPlayer.load();
 
             try {
+                // INTENTO 1: endpoint principal de episodios
                 const url = `${API_BASE}/episodes/${animeId}`;
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+                if (!response.ok) {
+                    // Si da 500, intentamos con Gogoanime directamente
+                    throw new Error(`Error ${response.status}`);
+                }
                 const data = await response.json();
-                if (!data.success || !data.results || data.results.length === 0) {
-                    episodeList.innerHTML = '<span class="error-text">❌ No se encontraron episodios para este anime.</span>';
-                    episodeCount.textContent = '0 episodios';
+                if (data.success && data.results && data.results.length > 0) {
+                    currentEpisodes = data.results;
+                    renderEpisodes(currentEpisodes);
                     return;
                 }
-                currentEpisodes = data.results;
-                episodeCount.textContent = `${currentEpisodes.length} episodios`;
-                episodeList.innerHTML = currentEpisodes.map((ep, index) => {
-                    const epNumber = ep.number || ep.episode || index + 1;
-                    const epTitle = ep.title ? ` - ${ep.title}` : '';
-                    return `
-                        <button class="episode-btn" data-index="${index}" onclick="playEpisode(${index})">
-                            ${epNumber}${epTitle}
-                        </button>
-                    `;
-                }).join('');
-                if (currentEpisodes.length > 0) playEpisode(0);
+                // Si no hay episodios, intentar Gogoanime
+                throw new Error('No hay episodios en el endpoint principal');
             } catch (error) {
-                console.error('Error al cargar episodios:', error);
-                episodeList.innerHTML = `<span class="error-text">❌ Error al cargar los episodios: ${error.message}</span>`;
-                episodeCount.textContent = 'Error';
+                console.warn('Fallo el endpoint de episodios, intentando con Gogoanime...', error.message);
+                // INTENTO 2: obtener episodios desde Gogoanime (usando búsqueda por título)
+                try {
+                    const searchQuery = encodeURIComponent(currentAnimeTitle);
+                    const gogoUrl = `${API_BASE}/anime/gogoanime/info?query=${searchQuery}`;
+                    const gogoResponse = await fetch(gogoUrl);
+                    if (!gogoResponse.ok) throw new Error(`Error Gogo: ${gogoResponse.status}`);
+                    const gogoData = await gogoResponse.json();
+                    if (gogoData.results && gogoData.results.episodes) {
+                        // Convertir episodios de Gogo al formato esperado
+                        currentEpisodes = gogoData.results.episodes.map(ep => ({
+                            id: ep.episodeId || ep.id,
+                            number: ep.number || ep.episode,
+                            title: ep.title || `Episodio ${ep.number}`
+                        }));
+                        if (currentEpisodes.length > 0) {
+                            renderEpisodes(currentEpisodes);
+                            return;
+                        }
+                    }
+                    throw new Error('No se encontraron episodios en Gogoanime');
+                } catch (gogoError) {
+                    console.error('Ambos endpoints fallaron:', gogoError);
+                    episodeList.innerHTML = `<span class="error-text">❌ No se pudieron cargar los episodios. El anime puede no tener episodios indexados.</span>`;
+                    episodeCount.textContent = 'Error';
+                    setStatus('❌ Error al cargar episodios', true);
+                }
             }
         }
 
-        // Reproducir episodio (con múltiples intentos)
+        // ----- Renderizar lista de episodios -----
+        function renderEpisodes(episodes) {
+            episodeCount.textContent = `${episodes.length} episodios`;
+            episodeList.innerHTML = episodes.map((ep, index) => {
+                const epNumber = ep.number || ep.episode || index + 1;
+                const epTitle = ep.title ? ` - ${ep.title}` : '';
+                return `
+                    <button class="episode-btn" data-index="${index}" onclick="playEpisode(${index})">
+                        ${epNumber}${epTitle}
+                    </button>
+                `;
+            }).join('');
+            if (episodes.length > 0) playEpisode(0);
+        }
+
+        // ----- Reproducir episodio (con múltiples endpoints) -----
         async function playEpisode(index) {
             if (index < 0 || index >= currentEpisodes.length) return;
             const episode = currentEpisodes[index];
             const epNum = episode.number || episode.episode || index + 1;
-            modalTitle.textContent = `${document.querySelector('.modal-title').textContent.split('—')[0].trim()} — Episodio ${epNum}`;
+            modalTitle.textContent = `${currentAnimeTitle} — Episodio ${epNum}`;
 
             // Resaltar botón activo
             document.querySelectorAll('.episode-btn').forEach((btn, i) => {
                 btn.classList.toggle('active', i === index);
             });
 
-            // Lista de endpoints a probar (en orden)
+            // Endpoints a probar
             const endpoints = [
                 `${API_BASE}/anime/gogoanime/watch/${episode.id}`,
                 `${API_BASE}/watch/${episode.id}`,
@@ -197,7 +283,6 @@
             ];
 
             let videoUrl = null;
-            let lastError = null;
 
             for (const endpoint of endpoints) {
                 try {
@@ -205,13 +290,9 @@
                     const response = await fetch(endpoint);
                     if (!response.ok) continue;
                     const data = await response.json();
-                    // Buscar sources en diferentes estructuras
                     let sources = data.sources || data.results?.sources || data.data?.sources || [];
-                    if (sources.length === 0) {
-                        // Intentar obtener de data.results directamente si es un array
-                        if (Array.isArray(data.results)) {
-                            sources = data.results;
-                        }
+                    if (sources.length === 0 && Array.isArray(data.results)) {
+                        sources = data.results;
                     }
                     if (sources.length > 0) {
                         const source = sources[0];
@@ -219,13 +300,11 @@
                         if (videoUrl) break;
                     }
                 } catch (err) {
-                    lastError = err;
                     console.warn(`Fallo ${endpoint}:`, err.message);
                 }
             }
 
             if (videoUrl) {
-                // Reproducir
                 try {
                     videoPlayer.src = videoUrl;
                     videoPlayer.load();
@@ -234,19 +313,15 @@
                     return;
                 } catch (playError) {
                     console.warn('Error al reproducir:', playError);
-                    // Si falla la reproducción, ofrecer abrir en Gogoanime
                 }
             }
 
-            // Si llegamos aquí, no se pudo obtener video o reproducir
-            console.error('No se encontró video para el episodio', episode.id);
+            // Fallback: abrir en Gogoanime
             const confirmOpen = confirm(
-                `No se pudo obtener el video del episodio ${epNum}.\n` +
-                `¿Quieres abrirlo directamente en Gogoanime?`
+                `No se pudo obtener el video del episodio ${epNum}.\n¿Quieres abrirlo en Gogoanime?`
             );
             if (confirmOpen) {
-                const animeTitle = document.querySelector('.modal-title').textContent.split('—')[0].trim();
-                const searchQuery = encodeURIComponent(`${animeTitle} episode ${epNum}`);
+                const searchQuery = encodeURIComponent(`${currentAnimeTitle} episode ${epNum}`);
                 window.open(`https://gogoanime3.net/search.html?keyword=${searchQuery}`, '_blank');
             } else {
                 alert(`No se pudo cargar el episodio ${epNum}.`);
@@ -254,23 +329,25 @@
             setStatus(`❌ Error al cargar el episodio ${epNum}`, true);
         }
 
-        // Cerrar modal
+        // ----- Cerrar modal -----
         function closeModal() {
             modal.classList.remove('active');
             videoPlayer.pause();
             videoPlayer.removeAttribute('src');
             videoPlayer.load();
             currentEpisodes = [];
-            setStatus('🔍 Busca otro anime para continuar.');
+            setStatus('🔍 Busca otro anime o explora el catálogo.');
         }
 
-        // Actualizar estado
+        // ----- Actualizar estado -----
         function setStatus(message, isError = false) {
             statusDiv.textContent = message;
             statusDiv.style.color = isError ? '#f87171' : '#94a3b8';
         }
 
-        // Eventos
+        // ============================================================
+        //  EVENTOS
+        // ============================================================
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') searchAnime();
         });
@@ -281,15 +358,11 @@
             if (e.target === modal) closeModal();
         });
 
-        // Mensaje inicial
+        // ============================================================
+        //  INICIO
+        // ============================================================
         window.onload = () => {
-            grid.innerHTML = `
-                <div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#64748b;">
-                    <h2 style="font-weight:400; margin-bottom:10px;">🌟 Busca tu anime favorito</h2>
-                    <p style="font-size:15px;">Escribe el nombre en el campo de búsqueda y presiona "Buscar".</p>
-                </div>
-            `;
-            setStatus('🔍 Escribe el nombre de un anime y presiona "Buscar".');
+            loadCatalog();
         };
     </script>
 </body>
