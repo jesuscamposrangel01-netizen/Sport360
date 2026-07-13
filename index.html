@@ -6,39 +6,33 @@
     <title>Palamenco · Patrimonio de Áncash</title>
     <meta name="description" content="Descubre Palamenco, el complejo de petroglifos más extenso de Áncash. 3,000 años de historia, 300 rocas grabadas y un legado ancestral.">
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Lato', sans-serif; background: #FFF8F0; color: #2C1810; line-height: 1.8; overflow-x: hidden; }
+        body { font-family: 'Lato', sans-serif; background: #F5F0E1; color: #2C1810; line-height: 1.8; overflow-x: hidden; }
 
         :root {
-            --naranja: #F49B36;
-            --naranja-claro: #FFB74D;
-            --naranja-oscuro: #E67E22;
-            --verde: #2ECC71;
-            --verde-oscuro: #27AE60;
-            --azul: #3498DB;
-            --azul-oscuro: #2980B9;
-            --morado: #9B59B6;
-            --amarillo: #F1C40F;
-            --dorado: #F39C12;
+            --terracota: #A0522D;
+            --terracota-light: #C47A5A;
+            --verde: #4A7A2E;
+            --verde-light: #6A9A4E;
+            --azul: #1A5A7A;
+            --azul-light: #3A7A9A;
+            --dorado: #C49A6C;
+            --dorado-light: #E8C97A;
             --marron: #2C1810;
             --marron-claro: #5D4037;
-            --beige: #FFF8F0;
+            --beige: #F5F0E1;
+            --crema: #FAF6EE;
             --blanco: #FFFFFF;
-            --sombra: 0 8px 30px rgba(0,0,0,0.08);
-            --sombra-hover: 0 16px 50px rgba(0,0,0,0.15);
-            --glass: rgba(255, 255, 255, 0.8);
+            --sombra: 0 8px 40px rgba(44, 24, 16, 0.08);
+            --sombra-hover: 0 16px 60px rgba(44, 24, 16, 0.16);
+            --glass: rgba(255, 255, 255, 0.7);
             --border-glass: rgba(255, 255, 255, 0.3);
             --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --radius: 24px;
@@ -62,7 +56,7 @@
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--beige); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--naranja), var(--dorado)); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--terracota), var(--dorado)); border-radius: 10px; }
 
         header {
             background: rgba(44, 24, 16, 0.92);
@@ -73,7 +67,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border-bottom: 2px solid rgba(244, 155, 54, 0.3);
+            border-bottom: 2px solid rgba(196, 154, 108, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -87,16 +81,16 @@
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
             font-weight: 900;
-            color: var(--naranja);
+            color: var(--dorado);
             text-decoration: none;
             cursor: pointer;
             transition: var(--transition);
         }
         .logo:hover { transform: scale(1.02); }
-        .logo svg { width: 45px; height: 45px; flex-shrink: 0; filter: drop-shadow(0 2px 12px rgba(244, 155, 54, 0.3)); }
+        .logo svg { width: 45px; height: 45px; flex-shrink: 0; filter: drop-shadow(0 2px 12px rgba(196, 154, 108, 0.3)); }
         .logo .logo-texto { display: flex; flex-direction: column; line-height: 1.2; }
         .logo .logo-texto small { font-size: 0.7rem; font-weight: 400; color: rgba(255,255,255,0.7); font-family: 'Lato', sans-serif; letter-spacing: 1px; }
-        .logo .logo-texto .sub { font-size: 0.6rem; color: var(--naranja); font-weight: 300; letter-spacing: 3px; text-transform: uppercase; }
+        .logo .logo-texto .sub { font-size: 0.6rem; color: var(--dorado); font-weight: 300; letter-spacing: 3px; text-transform: uppercase; }
 
         nav { display: flex; flex-wrap: wrap; gap: 0.2rem; align-items: center; }
         nav a {
@@ -120,22 +114,22 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background: var(--naranja);
+            background: var(--dorado);
             transition: var(--transition);
             border-radius: 4px;
         }
         nav a:hover::after { width: 60%; }
         nav a:hover { color: white; transform: translateY(-2px); }
         
-        nav a.activo-inicio { background: var(--naranja); color: white; border-color: var(--naranja-claro); }
-        nav a.activo-palamenco { background: var(--naranja-oscuro); color: white; border-color: var(--naranja-claro); }
-        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: #82E0AA; }
-        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: #85C1E9; }
+        nav a.activo-inicio { background: var(--dorado); color: var(--marron); border-color: var(--dorado-light); }
+        nav a.activo-palamenco { background: var(--terracota); color: white; border-color: var(--terracota-light); }
+        nav a.activo-lacramarca { background: var(--verde); color: white; border-color: var(--verde-light); }
+        nav a.activo-puebloviejo { background: var(--azul); color: white; border-color: var(--azul-light); }
         nav a.activo-videos { background: #E63946; color: white; border-color: #FF6B6B; }
-        nav a.activo-galeria { background: var(--morado); color: white; border-color: #BB8FCE; }
+        nav a.activo-galeria { background: var(--terracota); color: white; border-color: var(--terracota-light); }
         nav a.activo-eventos { background: #8B6B4D; color: white; border-color: #A8896A; }
         nav a.activo-investigacion { background: #6B4C7A; color: white; border-color: #8B6B9A; }
-        nav a.activo-mapa { background: var(--amarillo); color: var(--marron); border-color: #F9E79F; }
+        nav a.activo-mapa { background: #D4A24C; color: var(--marron); border-color: #E8C97A; }
         nav a.activo-contacto { background: #4A6B7A; color: white; border-color: #6A8B9A; }
 
         .hero {
@@ -165,7 +159,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(244, 155, 54, 0.7), rgba(231, 76, 60, 0.5));
+            background: radial-gradient(ellipse at center, rgba(44, 24, 16, 0.3) 0%, rgba(44, 24, 16, 0.7) 100%);
             z-index: 1;
         }
         .hero::after {
@@ -175,8 +169,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(244, 155, 54, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 50%, rgba(231, 76, 60, 0.2) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(196, 154, 108, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(160, 82, 45, 0.1) 0%, transparent 50%);
             z-index: 1;
             animation: pulse 8s ease-in-out infinite;
         }
@@ -189,14 +183,14 @@
         }
         .hero-content .badge {
             display: inline-block;
-            background: rgba(255,255,255,0.15);
+            background: rgba(196, 154, 108, 0.2);
             backdrop-filter: blur(10px);
             padding: 0.4rem 1.5rem;
             border-radius: 50px;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(196, 154, 108, 0.2);
             margin-bottom: 1.5rem;
         }
         .hero-content h1 {
@@ -208,7 +202,10 @@
             margin-bottom: 1rem;
         }
         .hero-content h1 .destacado {
-            color: var(--amarillo);
+            background: linear-gradient(135deg, var(--dorado), var(--dorado-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .hero-content p {
             font-size: 1.4rem;
@@ -237,13 +234,14 @@
             border: none;
         }
         .hero-content .btn-primary {
-            background: linear-gradient(135deg, var(--naranja), var(--dorado));
+            background: var(--terracota);
             color: white;
-            box-shadow: 0 4px 30px rgba(244, 155, 54, 0.3);
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.3);
         }
         .hero-content .btn-primary:hover {
+            background: var(--dorado);
             transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(244, 155, 54, 0.5);
+            box-shadow: 0 8px 40px rgba(196, 154, 108, 0.4);
         }
         .hero-content .btn-secondary {
             background: transparent;
@@ -267,7 +265,7 @@
             color: var(--marron);
         }
         .section-title .highlight {
-            background: linear-gradient(135deg, var(--naranja), var(--dorado));
+            background: linear-gradient(135deg, var(--terracota), var(--dorado));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -279,7 +277,7 @@
             height: 4px;
             margin: 0.5rem auto 0 auto;
             border-radius: 4px;
-            background: linear-gradient(90deg, var(--naranja), var(--dorado));
+            background: linear-gradient(90deg, var(--dorado), var(--terracota));
         }
         .section-subtitle {
             text-align: center;
@@ -311,7 +309,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Videos */
         .videos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -340,7 +337,7 @@
         }
         .video-card .info .tag {
             display: inline-block;
-            background: var(--naranja);
+            background: #E63946;
             color: white;
             padding: 0.2rem 1rem;
             border-radius: 50px;
@@ -360,7 +357,6 @@
             font-size: 0.95rem;
         }
 
-        /* Galería */
         .galeria-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -438,7 +434,7 @@
             transition: var(--transition);
             z-index: 10000;
         }
-        .lightbox .cerrar:hover { transform: rotate(90deg); color: var(--naranja); }
+        .lightbox .cerrar:hover { transform: rotate(90deg); color: var(--dorado); }
         .lightbox .nav {
             position: absolute;
             top: 50%;
@@ -484,9 +480,9 @@
             font-size: 2rem;
             margin-bottom: 1rem;
         }
-        .info-grid .texto h3.terracota { color: var(--naranja-oscuro); }
-        .info-grid .texto h3.verde { color: var(--verde-oscuro); }
-        .info-grid .texto h3.azul { color: var(--azul-oscuro); }
+        .info-grid .texto h3.terracota { color: var(--terracota); }
+        .info-grid .texto h3.verde { color: var(--verde); }
+        .info-grid .texto h3.azul { color: var(--azul); }
         .info-grid .texto p {
             color: var(--marron-claro);
             margin-bottom: 1rem;
@@ -512,7 +508,7 @@
             border: 1px solid var(--border-glass);
             padding: 2rem;
             border-radius: var(--radius);
-            border-left: 6px solid var(--naranja);
+            border-left: 6px solid var(--dorado);
             margin-top: 1.5rem;
             box-shadow: var(--sombra);
             transition: var(--transition);
@@ -544,10 +540,6 @@
             margin-bottom: 1rem;
             display: block;
         }
-        .card i.fa-tractor { color: var(--verde-oscuro); }
-        .card i.fa-water { color: var(--azul); }
-        .card i.fa-route { color: var(--naranja); }
-        .card i.fa-seedling { color: var(--verde); }
         .card h4 {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
@@ -559,9 +551,9 @@
             display: block;
             margin: 0.5rem 0;
         }
-        .card .dato.terracota { color: var(--naranja-oscuro); }
-        .card .dato.verde { color: var(--verde-oscuro); }
-        .card .dato.azul { color: var(--azul-oscuro); }
+        .card .dato.terracota { color: var(--terracota); }
+        .card .dato.verde { color: var(--verde); }
+        .card .dato.azul { color: var(--azul); }
         .card .dato.dorado { color: var(--dorado); }
 
         .estado {
@@ -614,9 +606,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         .mapa-leyenda .punto.chimbote { background: #2196F3; }
-        .mapa-leyenda .punto.lacramarca { background: var(--verde-oscuro); }
-        .mapa-leyenda .punto.palamenco { background: var(--naranja-oscuro); }
-        .mapa-leyenda .punto.puebloviejo { background: var(--azul-oscuro); }
+        .mapa-leyenda .punto.lacramarca { background: #4A7A2E; }
+        .mapa-leyenda .punto.palamenco { background: #A0522D; }
+        .mapa-leyenda .punto.puebloviejo { background: #1A5A7A; }
 
         .form-contact {
             background: var(--blanco);
@@ -632,16 +624,16 @@
             margin-top: 0.3rem;
             font-family: 'Lato', sans-serif;
             transition: var(--transition);
-            background: var(--beige);
+            background: var(--crema);
         }
         .form-contact input:focus, .form-contact textarea:focus {
-            border-color: var(--naranja);
+            border-color: var(--dorado);
             outline: none;
-            box-shadow: 0 0 0 4px rgba(244, 155, 54, 0.15);
+            box-shadow: 0 0 0 4px rgba(196, 154, 108, 0.15);
         }
         .form-contact button {
             margin-top: 1rem;
-            background: linear-gradient(135deg, var(--naranja), var(--dorado));
+            background: var(--terracota);
             color: white;
             padding: 0.8rem 2.5rem;
             border: none;
@@ -652,8 +644,9 @@
             transition: var(--transition);
         }
         .form-contact button:hover {
+            background: var(--dorado);
             transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(244, 155, 54, 0.3);
+            box-shadow: 0 4px 20px rgba(196, 154, 108, 0.3);
         }
 
         .social-grid {
@@ -700,7 +693,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             z-index: 9999;
-            border-top: 2px solid rgba(244, 155, 54, 0.3);
+            border-top: 2px solid rgba(196, 154, 108, 0.3);
             transform: translateY(0);
             transition: transform 0.6s ease;
         }
@@ -712,7 +705,7 @@
             margin: 0;
         }
         .cookies-banner p a {
-            color: var(--naranja);
+            color: var(--dorado);
             text-decoration: underline;
         }
         .cookies-banner .cookies-buttons {
@@ -730,11 +723,11 @@
             transition: var(--transition);
         }
         .cookies-banner .btn-cookie.aceptar {
-            background: var(--naranja);
-            color: white;
+            background: var(--dorado);
+            color: var(--marron);
         }
         .cookies-banner .btn-cookie.aceptar:hover {
-            background: var(--dorado);
+            background: var(--dorado-light);
             transform: scale(1.05);
         }
         .cookies-banner .btn-cookie.rechazar {
@@ -753,20 +746,20 @@
             text-align: center;
             padding: 3rem 2rem;
             margin-top: 2rem;
-            border-top: 2px solid rgba(244, 155, 54, 0.2);
+            border-top: 2px solid rgba(196, 154, 108, 0.2);
         }
         footer a {
-            color: var(--naranja);
+            color: var(--dorado);
             text-decoration: none;
             margin: 0 0.5rem;
             cursor: pointer;
             transition: var(--transition);
         }
-        footer a:hover { color: var(--naranja-claro); }
+        footer a:hover { color: var(--dorado-light); }
         footer .footer-divider {
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--naranja), transparent);
+            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
             margin: 1rem auto;
             border-radius: 4px;
         }
@@ -798,9 +791,9 @@
             display: block;
             line-height: 1.2;
         }
-        .stat-item .number.terracota { color: var(--naranja-oscuro); }
-        .stat-item .number.verde { color: var(--verde-oscuro); }
-        .stat-item .number.azul { color: var(--azul-oscuro); }
+        .stat-item .number.terracota { color: var(--terracota); }
+        .stat-item .number.verde { color: var(--verde); }
+        .stat-item .number.azul { color: var(--azul); }
         .stat-item .number.dorado { color: var(--dorado); }
         .stat-item .label {
             font-size: 1rem;
@@ -863,16 +856,16 @@
     <header>
         <a class="logo" onclick="mostrarSeccion('inicio')">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#F49B36" stroke-width="3" opacity="0.3"/>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#C49A6C" stroke-width="3" opacity="0.3"/>
                 <path d="M10 70 L30 30 L50 55 L65 25 L90 70 Z" fill="#556B2F" opacity="0.8"/>
                 <path d="M10 70 L90 70 L90 90 L10 90 Z" fill="#3E2723" opacity="0.5"/>
-                <circle cx="65" cy="30" r="10" fill="#F49B36" opacity="0.6"/>
-                <circle cx="65" cy="30" r="6" fill="#FFF8F0"/>
-                <path d="M30 50 Q35 40 40 50 Q45 60 50 50 Q55 40 60 50 Q65 60 70 50" stroke="#E67E22" stroke-width="3" fill="none"/>
-                <line x1="20" y1="75" x2="80" y2="75" stroke="#F49B36" stroke-width="2" opacity="0.4"/>
-                <line x1="25" y1="82" x2="75" y2="82" stroke="#F49B36" stroke-width="2" opacity="0.3"/>
-                <circle cx="20" cy="55" r="3" fill="#E67E22" opacity="0.5"/>
-                <circle cx="80" cy="60" r="3" fill="#3498DB" opacity="0.5"/>
+                <circle cx="65" cy="30" r="10" fill="#C49A6C" opacity="0.6"/>
+                <circle cx="65" cy="30" r="6" fill="#F5F0E1"/>
+                <path d="M30 50 Q35 40 40 50 Q45 60 50 50 Q55 40 60 50 Q65 60 70 50" stroke="#A0522D" stroke-width="3" fill="none"/>
+                <line x1="20" y1="75" x2="80" y2="75" stroke="#C49A6C" stroke-width="2" opacity="0.4"/>
+                <line x1="25" y1="82" x2="75" y2="82" stroke="#C49A6C" stroke-width="2" opacity="0.3"/>
+                <circle cx="20" cy="55" r="3" fill="#A0522D" opacity="0.5"/>
+                <circle cx="80" cy="60" r="3" fill="#2C6E8F" opacity="0.5"/>
             </svg>
             <div class="logo-texto">
                 <span>Parlamenco</span>
@@ -916,7 +909,7 @@
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECCIÓN: INICIO (CONTENIDO COMPLETO CON DISEÑO ALEGRE) -->
+    <!-- SECCIÓN: INICIO -->
     <!-- ============================================================ -->
     <section class="seccion seccion-inicio activa" id="seccion-inicio">
         <div class="container">
@@ -940,7 +933,7 @@
             <!-- NOTICIA BREVE: NUEVA JUNTA DIRECTIVA -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:0.8rem;">
-                    <span style="background:var(--verde); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">✅ Oficial</span>
+                    <span style="background:#4A7A2E; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">✅ Oficial</span>
                     <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.7;">📅 25 de mayo 2026</span>
                 </div>
                 
@@ -961,7 +954,9 @@
                 </div>
             </div>
 
+            <!-- ============================================================ -->
             <!-- NOTICIA DESTACADA: RESTAURACIÓN DE MURALES (VERTICAL) -->
+            <!-- ============================================================ -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                     <span style="background:#E63946; color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🔥 Destacado</span>
@@ -969,7 +964,7 @@
                 </div>
                 
                 <div style="background:white; border-radius:24px; overflow:hidden; box-shadow:var(--sombra); border:1px solid var(--border-glass);">
-                    <!-- IMAGEN COMPLETA ARRIBA -->
+                    <!-- IMAGEN COMPLETA ARRIBA (100% ancho) -->
                     <div style="width:100%; background:#f0ebe0; padding:1rem; display:flex; align-items:center; justify-content:center;">
                         <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" 
                              style="width:100%; max-width:100%; height:auto; max-height:500px; object-fit:contain; border-radius:16px; display:block;">
@@ -987,7 +982,7 @@
                             <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-map-marker-alt"></i> Monte Zarumo</span>
                             <span style="font-size:0.8rem; color:var(--marron-claro);"><i class="fas fa-calendar-alt"></i> En curso</span>
                         </div>
-                        <a onclick="mostrarSeccion('lacramarca')" style="margin-top:1rem; color:var(--naranja); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
+                        <a onclick="mostrarSeccion('lacramarca')" style="margin-top:1rem; color:var(--terracota); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
                             Leer más <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -1011,7 +1006,7 @@
                             <h4 style="font-family:'Playfair Display',serif; color:var(--marron);">🪨 Recorrido por Palamenco</h4>
                             <p style="color:var(--marron-claro); font-size:0.9rem; margin:0;">Explora los petroglifos más extensos de Áncash</p>
                         </div>
-                        <a onclick="mostrarSeccion('videos')" style="background:var(--naranja); color:white; padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; font-size:0.85rem; cursor:pointer; border:none; transition:var(--transition);">Ver más videos →</a>
+                        <a onclick="mostrarSeccion('videos')" style="background:var(--terracota); color:white; padding:0.5rem 1.5rem; border-radius:50px; font-weight:700; font-size:0.85rem; cursor:pointer; border:none; transition:var(--transition);">Ver más videos →</a>
                     </div>
                 </div>
             </div>
@@ -1019,7 +1014,7 @@
             <!-- GALERÍA RÁPIDA -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
-                    <span style="background:var(--morado); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🖼️ Galería</span>
+                    <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">🖼️ Galería</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">📸 Imágenes de Palamenco</span>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:var(--glass); backdrop-filter:blur(10px); padding:1.5rem; border-radius:24px; border:1px solid var(--border-glass); box-shadow:var(--sombra);">
@@ -1031,7 +1026,7 @@
                     <div style="border-radius:16px; overflow:hidden; aspect-ratio:4/3; cursor:pointer;" onclick="abrirLightbox(5)"><img src="https://i.imgur.com/Lm3ThCj.jpeg" alt="Palamenco 6" style="width:100%; height:100%; object-fit:cover; transition:var(--transition);"></div>
                 </div>
                 <div style="text-align:center; margin-top:1rem;">
-                    <a onclick="mostrarSeccion('galeria')" style="color:var(--morado); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
+                    <a onclick="mostrarSeccion('galeria')" style="color:var(--terracota); font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:0.5rem;">
                         Ver galería completa (36 fotos) <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -1040,24 +1035,24 @@
             <!-- NOTICIAS SECUNDARIAS -->
             <div class="fade-in" style="margin-bottom:3rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-                    <span style="background:var(--dorado); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📰 Noticias</span>
+                    <span style="background:var(--dorado); color:var(--marron); padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📰 Noticias</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">Últimas actualizaciones</span>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
                     <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('palamenco')">
-                        <span style="display:inline-block; background:var(--naranja-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🪨 Palamenco</span>
+                        <span style="display:inline-block; background:var(--terracota); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🪨 Palamenco</span>
                         <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Nuevos petroglifos descubiertos</h4>
                         <p style="color:var(--marron-claro); font-size:0.9rem;">Se han encontrado nuevas rocas grabadas en la zona norte del complejo arqueológico.</p>
                         <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 10 de julio 2026</span>
                     </div>
                     <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('puebloviejo')">
-                        <span style="display:inline-block; background:var(--azul-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Pueblo Viejo</span>
+                        <span style="display:inline-block; background:var(--azul); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🏛️ Pueblo Viejo</span>
                         <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Investigaciones en Pueblo Viejo</h4>
                         <p style="color:var(--marron-claro); font-size:0.9rem;">Arqueólogos de la UNT iniciaron nuevos estudios en el sitio de 5,000 años.</p>
                         <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 5 de julio 2026</span>
                     </div>
                     <div style="background:white; border-radius:20px; padding:1.5rem; box-shadow:var(--sombra); border:1px solid var(--border-glass); transition:var(--transition); cursor:pointer;" onclick="mostrarSeccion('lacramarca')">
-                        <span style="display:inline-block; background:var(--verde-oscuro); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🌾 Lacramarca</span>
+                        <span style="display:inline-block; background:var(--verde); color:white; padding:0.2rem 0.8rem; border-radius:50px; font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">🌾 Lacramarca</span>
                         <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; margin:0.5rem 0; color:var(--marron);">Nuevo canal de riego</h4>
                         <p style="color:var(--marron-claro); font-size:0.9rem;">Se inauguró el nuevo canal que beneficiará a más de 1,300 agricultores del valle.</p>
                         <span style="font-size:0.75rem; color:var(--marron-claro); opacity:0.6;"><i class="far fa-calendar-alt"></i> 1 de julio 2026</span>
@@ -1068,7 +1063,7 @@
             <!-- ESTADÍSTICAS -->
             <div class="fade-in" style="margin-bottom:2rem;">
                 <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
-                    <span style="background:var(--naranja-oscuro); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📊 Datos</span>
+                    <span style="background:var(--terracota); color:white; padding:0.2rem 1rem; border-radius:50px; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;">📊 Datos</span>
                     <span style="font-size:0.8rem; color:var(--marron-claro); opacity:0.7;">Números que hablan</span>
                 </div>
                 <div class="stats-grid">
@@ -1080,12 +1075,12 @@
             </div>
 
             <!-- LLAMADA A LA ACCIÓN -->
-            <div class="fade-in" style="text-align:center; background:linear-gradient(135deg, var(--naranja), var(--dorado)); padding:3rem 2rem; border-radius:24px; color:white; border:2px solid rgba(255,255,255,0.1);">
+            <div class="fade-in" style="text-align:center; background:linear-gradient(135deg, var(--marron), #1a0f0c); padding:3rem 2rem; border-radius:24px; color:white; border:2px solid rgba(196,154,108,0.2);">
                 <h3 style="font-family:'Playfair Display',serif; font-size:2rem;">¿Listo para explorar?</h3>
-                <p style="opacity:0.9; max-width:600px; margin:0.5rem auto 1.5rem auto;">Sumérgete en la historia y la cultura de Palamenco, Lacramarca y Pueblo Viejo</p>
+                <p style="opacity:0.8; max-width:600px; margin:0.5rem auto 1.5rem auto;">Sumérgete en la historia y la cultura de Palamenco, Lacramarca y Pueblo Viejo</p>
                 <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-                    <a onclick="mostrarSeccion('videos')" style="background:white; color:var(--marron); padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🎬 Ver Videos</a>
-                    <a onclick="mostrarSeccion('galeria')" style="background:rgba(255,255,255,0.2); color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:2px solid rgba(255,255,255,0.2); transition:var(--transition);">🖼️ Ver Galería</a>
+                    <a onclick="mostrarSeccion('videos')" style="background:var(--terracota); color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🎬 Ver Videos</a>
+                    <a onclick="mostrarSeccion('galeria')" style="background:var(--dorado); color:var(--marron); padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:none; transition:var(--transition);">🖼️ Ver Galería</a>
                     <a onclick="mostrarSeccion('palamenco')" style="background:transparent; color:white; padding:0.8rem 2rem; border-radius:50px; font-weight:700; cursor:pointer; border:2px solid rgba(255,255,255,0.2); transition:var(--transition);">🪨 Conocer más</a>
                 </div>
             </div>
@@ -1106,7 +1101,7 @@
                 <div class="texto fade-in">
                     <h3 class="terracota">Guardianes de la piedra escrita</h3>
                     <p><strong>Palamenco</strong> se ubica a <strong>45 km al este de Chimbote</strong>, con <strong>36 hectáreas</strong> y más de <strong>300 rocas grabadas</strong>.</p>
-                    <div style="background:var(--beige); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--naranja);">
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--terracota);">
                         <p><strong>🏛️ Significado espiritual:</strong> Palamenco era un lugar donde los sacerdotes servían de vínculo entre los hombres y sus dioses.</p>
                     </div>
                     <p><strong>Figuras representadas:</strong> Serpientes, camélidos, águilas, loros, lagartijas, oso de anteojos, sacerdote chavinense, Sol, Luna, constelaciones y divinidades.</p>
@@ -1136,7 +1131,7 @@
                 <div class="texto fade-in">
                     <h3 class="verde">El corazón agrícola de Áncash</h3>
                     <p><strong>Lacramarca</strong> es un valle en el distrito de Chimbote, provincia del Santa, región Áncash. Su nombre proviene del río Lacramarca que nace en la Cordillera Negra.</p>
-                    <div style="background:var(--beige); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
+                    <div style="background:var(--crema); padding:1.5rem; border-radius:16px; margin:1rem 0; border-left:4px solid var(--verde);">
                         <p><strong>🏛️ Origen ancestral:</strong> Habitado por culturas Moche, Wari, Inca y Recuay. La Huaca San Pedro fue construida entre los siglos II y VIII d.C.</p>
                     </div>
                     <p><strong>Ubicación:</strong> 8°53'20"S, 78°15'52"O · Valle de Lacramarca, Chimbote, Áncash.</p>
@@ -1145,8 +1140,8 @@
             </div>
 
             <!-- NOTICIA 1: RESTAURACIÓN DE MURALES -->
-            <div class="badge-info fade-in" style="border-left-color:var(--verde);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro);">🎨 Restauración de murales en Monte Zarumo</h4>
+            <div class="badge-info fade-in" style="border-left-color:var(--verde); margin-top:2rem;">
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde);">🎨 Restauración de murales en Monte Zarumo</h4>
                 <div style="margin:1rem 0; text-align:center;">
                     <img src="https://i.imgur.com/n9nHRUg.jpeg" alt="Restauración de murales en Monte Zarumo" style="width:100%; max-width:100%; border-radius:16px; box-shadow:var(--sombra); display:block;">
                     <p style="font-size:0.85rem; color:var(--marron-claro); margin-top:0.5rem; opacity:0.7;">📸 Restauración de murales en Monte Zarumo</p>
@@ -1167,11 +1162,11 @@
                     <img src="https://i.imgur.com/Xiq5wpA.jpeg" alt="Elecciones comunales Lacramarca 3" style="width:100%; height:auto; border-radius:8px; display:block;">
                 </div>
                 
-                <h4 style="font-family:'Playfair Display',serif; color:var(--verde-oscuro); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
+                <h4 style="font-family:'Playfair Display',serif; color:var(--verde); font-size:1.6rem; margin:0.5rem 0;">Nueva junta directiva 2026-2027</h4>
                 
                 <p>El Comité Electoral de la Comunidad Campesina de Lacramarca informa que la nueva junta directiva para el período <strong>2026-2027</strong> ha sido inscrita satisfactoriamente ante <strong>SUNARP</strong> (Título Nº 2026-00563665), quedando formalmente constituida y facultada para ejercer sus funciones desde el <strong>25 de mayo de 2026</strong>.</p>
                 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--beige); padding:1.2rem; border-radius:16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; background:var(--crema); padding:1.2rem; border-radius:16px;">
                     <div>
                         <p style="margin:0; font-weight:700; color:var(--marron);">👤 Presidente</p>
                         <p style="margin:0; color:var(--marron-claro);">Carlos Alberto Budinich Salas</p>
@@ -1198,7 +1193,7 @@
                     <span><i class="fas fa-building"></i> Oficina Registral Chimbote</span>
                 </div>
                 
-                <div style="margin-top:1rem; padding:1rem; background:#e8f5e9; border-radius:12px; border-left:4px solid var(--verde-oscuro);">
+                <div style="margin-top:1rem; padding:1rem; background:#e8f5e9; border-radius:12px; border-left:4px solid #2e7d32;">
                     <p style="font-size:0.9rem; color:var(--marron-claro); margin:0;">
                         <strong>📢 Comunicado oficial:</strong> El Comité Electoral agradece a todos los comuneros que participaron en la Asamblea Aclaratoria. La ceremonia de juramentación se realizará próximamente en el local comunal.
                     </p>
@@ -1243,7 +1238,7 @@
             </div>
             
             <div class="badge-info fade-in" style="border-left-color:var(--azul);">
-                <h4 style="font-family:'Playfair Display',serif; color:var(--azul-oscuro);">👩‍🔬 Investigadores</h4>
+                <h4 style="font-family:'Playfair Display',serif; color:var(--azul);">👩‍🔬 Investigadores</h4>
                 <p><strong>Ruth Shady</strong> (Caral-Supe) confirmó la antigüedad de 5,000 años. <strong>Régulo Franco</strong> (Fundación Wiese) calificó el hallazgo como "impresionante".</p>
             </div>
         </div>
@@ -1404,7 +1399,7 @@
     <!-- FOOTER -->
     <!-- ============================================================ -->
     <footer>
-        <p style="font-size:1.1rem; font-family:'Playfair Display',serif; color:var(--naranja); margin-bottom:0.5rem;">Junta de Campesinos · Lacramarca</p>
+        <p style="font-size:1.1rem; font-family:'Playfair Display',serif; color:var(--dorado); margin-bottom:0.5rem;">Junta de Campesinos · Lacramarca</p>
         <div class="footer-divider"></div>
         <p>
             <a onclick="mostrarSeccion('inicio')">Inicio</a> · <a onclick="mostrarSeccion('palamenco')">Palamenco</a> · <a onclick="mostrarSeccion('lacramarca')">Lacramarca</a> · <a onclick="mostrarSeccion('puebloviejo')">Pueblo Viejo</a> · <a onclick="mostrarSeccion('videos')">Videos</a> · <a onclick="mostrarSeccion('galeria')">Galería</a> · <a onclick="mostrarSeccion('eventos')">Eventos</a> · <a onclick="mostrarSeccion('investigacion')">Investigación</a> · <a onclick="mostrarSeccion('mapa')">Mapa</a> · <a onclick="mostrarSeccion('contacto')">Contacto</a>
