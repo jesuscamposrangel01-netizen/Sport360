@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seekee · Películas</title>
+    <title>Mi Cine · Catálogo</title>
     <style>
         * {
             margin: 0;
@@ -132,6 +132,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
+            padding: 10px 15px;
         }
         .back-top button {
             background: none;
@@ -158,7 +159,7 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 Seekee</div>
+        <div class="logo">🎬 Mi Cine</div>
         <input class="buscar" id="buscador" type="text" placeholder="Buscar película...">
     </div>
 
@@ -179,10 +180,18 @@
     </div>
 
     <script>
-        // ========== CONFIGURACIÓN ==========
-        // ⚠️ REEMPLAZA "TU_TOKEN_AQUI" por el NUEVO token de TMDb (el que regeneraste)
-        const TMDB_TOKEN = 'TU_TOKEN_AQUI';
-        // ===================================
+        // ============================================================
+        //  CONFIGURACIÓN: ELIGE UN MÉTODO Y PON TU CLAVE
+        // ============================================================
+
+        // 🔹 OPCIÓN 1 (RECOMENDADA): Usa tu API Key v3 (la ves en la web de TMDb)
+        //    Ejemplo: '1234567890abcdef1234567890abcdef'
+        const API_KEY_V3 = 'PON_AQUI_TU_API_KEY_V3';
+
+        // 🔹 OPCIÓN 2 (Alternativa): Usa tu Token Bearer (empieza por eyJ...)
+        // const TMDB_TOKEN = 'PON_AQUI_TU_TOKEN_BEARER';
+
+        // ============================================================
 
         const catalogo = document.getElementById('catalogo');
         const buscador = document.getElementById('buscador');
@@ -196,21 +205,44 @@
         // Obtener películas populares
         async function cargarPeliculas() {
             try {
-                const res = await fetch('https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1', {
-                    headers: { 'Authorization': `Bearer ${TMDB_TOKEN}` }
-                });
+                let url = `https://api.themoviedb.org/3/movie/popular?language=es-MX&page=1`;
+                let options = {};
+
+                // Si pusiste API Key v3, úsala en la URL
+                if (API_KEY_V3 && API_KEY_V3 !== 'PON_AQUI_TU_API_KEY_V3') {
+                    url += `&api_key=${API_KEY_V3}`;
+                } 
+                // Si no, intenta con el Token Bearer (descomenta la línea de arriba)
+                // else if (TMDB_TOKEN && TMDB_TOKEN !== 'PON_AQUI_TU_TOKEN_BEARER') {
+                //     options.headers = { 'Authorization': `Bearer ${TMDB_TOKEN}` };
+                // }
+                else {
+                    throw new Error('No has configurado ninguna clave de API válida.');
+                }
+
+                const res = await fetch(url, options);
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`Error ${res.status}: ${errorText}`);
+                }
                 const data = await res.json();
                 peliculas = data.results || [];
                 renderizar(peliculas);
             } catch (e) {
-                catalogo.innerHTML = `<p style="color:#e50914; font-size:1.2rem;">❌ Error al cargar películas. Revisa tu token.</p>`;
+                catalogo.innerHTML = `
+                    <div style="color:#e50914; font-size:1.2rem; grid-column: 1/-1; text-align:center; padding:40px;">
+                        ❌ Error: ${e.message}<br>
+                        <span style="color:#888; font-size:0.9rem;">
+                            Revisa que hayas puesto tu API Key correctamente en el código.
+                        </span>
+                    </div>`;
                 console.error(e);
             }
         }
 
         function renderizar(lista) {
             if (!lista.length) {
-                catalogo.innerHTML = `<p style="color:#aaa;">No se encontraron películas.</p>`;
+                catalogo.innerHTML = `<p style="color:#aaa; grid-column:1/-1; text-align:center;">No se encontraron películas.</p>`;
                 return;
             }
             catalogo.innerHTML = lista.map(p => `
@@ -223,7 +255,6 @@
                 </div>
             `).join('');
 
-            // Añadir evento a cada tarjeta
             document.querySelectorAll('.card').forEach(card => {
                 card.addEventListener('click', () => {
                     const id = card.dataset.id;
@@ -234,7 +265,6 @@
             });
         }
 
-        // Buscar en tiempo real (filtra localmente)
         buscador.addEventListener('input', (e) => {
             const texto = e.target.value.toLowerCase().trim();
             const filtradas = peliculas.filter(p => p.title.toLowerCase().includes(texto));
@@ -242,23 +272,20 @@
         });
 
         function abrirReproductor(id, titulo, sinopsis) {
-            // URL de fuente de video (iframe) - cambia el dominio si deja de funcionar
             const videoSrc = `https://vidsrc.xyz/embed/movie/${id}`;
             iframe.src = videoSrc;
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis;
             reproductor.classList.add('active');
-            // scroll suave al reproductor
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Cerrar reproductor
         document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
             reproductor.classList.remove('active');
-            iframe.src = ''; // detiene la carga del video
+            iframe.src = '';
         });
 
-        // Cargar todo al inicio
+        // Iniciar
         cargarPeliculas();
     </script>
 
