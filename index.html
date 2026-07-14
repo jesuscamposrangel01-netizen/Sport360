@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎬 Cine Pro - Buscador Inteligente</title>
+    <title>🎬 Cine Pro</title>
     <style>
         * {
             margin: 0;
@@ -82,7 +82,7 @@
 
         .tabs {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-bottom: 10px;
             margin: 20px 0 16px;
@@ -92,7 +92,7 @@
             background: none;
             border: none;
             color: #888;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             padding: 8px 14px;
@@ -119,7 +119,7 @@
             border-radius: 4px;
         }
         .tab .emoji {
-            margin-right: 5px;
+            margin-right: 4px;
         }
 
         .section-title {
@@ -411,10 +411,6 @@
         .player-footer .aviso-idioma strong {
             color: #fff;
         }
-        .player-footer .aviso-idioma .fuentes-destacadas {
-            color: #0f0;
-            font-weight: 600;
-        }
 
         .btn-cargar {
             background: linear-gradient(135deg, #e50914, #b20710);
@@ -461,10 +457,10 @@
                 font-size: 0.8rem;
             }
             .tabs {
-                gap: 8px;
+                gap: 6px;
             }
             .tab {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 padding: 6px 10px;
             }
             .player-video {
@@ -498,11 +494,12 @@
         </div>
     </div>
 
-    <!-- ========== PESTAÑAS ========== -->
+    <!-- ========== PESTAÑAS (NUEVO ORDEN) ========== -->
     <div class="tabs" id="tabsContainer">
-        <button class="tab active" data-tipo="espanol"><span class="emoji">🇪🇸</span>Películas Español</button>
-        <button class="tab" data-tipo="movie"><span class="emoji">🌍</span>Películas</button>
+        <button class="tab active" data-tipo="movie"><span class="emoji">🌍</span>Películas</button>
+        <button class="tab" data-tipo="espanol"><span class="emoji">🇪🇸</span>Películas Español</button>
         <button class="tab" data-tipo="tv"><span class="emoji">📺</span>Series</button>
+        <button class="tab" data-tipo="tv_es"><span class="emoji">🇪🇸</span>Series Español</button>
         <button class="tab" data-tipo="anime"><span class="emoji">🎌</span>Anime</button>
     </div>
 
@@ -582,9 +579,10 @@
         // FUENTES POR PESTAÑA
         // ================================================================
         const FUENTES = {
-            espanol: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            espanol: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             tv: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            tv_es: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             anime: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc']
         };
 
@@ -620,7 +618,7 @@
         // ================================================================
         let allItems = [];
         let currentPage = 1;
-        let currentTipo = 'espanol';
+        let currentTipo = 'movie';
         let modoBusqueda = false;
         let currentSerieId = null;
         let currentSeason = null;
@@ -629,6 +627,7 @@
         let idxFuenteActual = 0;
         let timeoutBusqueda = null;
         let fuentesActuales = [];
+        let timeoutAuto = null;
         const MAX_PAGES = 5;
 
         // ================================================================
@@ -650,15 +649,18 @@
                 let endpoint;
                 let extra = `page=${page}`;
 
-                if (currentTipo === 'espanol') {
-                    endpoint = 'discover/movie';
-                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
-                } else if (currentTipo === 'movie') {
+                if (currentTipo === 'movie') {
                     endpoint = 'movie/popular';
                     extra = `page=${page}`;
+                } else if (currentTipo === 'espanol') {
+                    endpoint = 'discover/movie';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
                 } else if (currentTipo === 'tv') {
                     endpoint = 'tv/popular';
                     extra = `page=${page}`;
+                } else if (currentTipo === 'tv_es') {
+                    endpoint = 'discover/tv';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
                 } else {
                     endpoint = 'discover/tv';
                     extra = `page=${page}&with_genres=16&with_original_language=ja`;
@@ -700,13 +702,17 @@
 
             try {
                 let data;
-                if (currentTipo === 'espanol') {
+                const tipo = currentTipo;
+                if (tipo === 'movie') {
+                    data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                } else if (tipo === 'espanol') {
                     data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
                     data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
-                } else if (currentTipo === 'movie') {
-                    data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
-                } else if (currentTipo === 'tv') {
+                } else if (tipo === 'tv') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                } else if (tipo === 'tv_es') {
+                    data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
                 } else {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
                     data.results = (data.results || []).filter(item =>
@@ -775,6 +781,7 @@
             currentSerieData = { titulo, sinopsis };
             currentSeason = null;
             currentEpisode = null;
+            currentTipo = document.querySelector('.tab.active').dataset.tipo;
 
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis || 'Sin sinopsis.';
@@ -785,7 +792,6 @@
             loadingVideo.style.display = 'flex';
             loadingText.textContent = '🔍 Buscando fuente...';
 
-            // Obtener las fuentes según la pestaña actual
             fuentesActuales = FUENTES[currentTipo] || FUENTES.movie;
 
             if (sourceSelector.value === 'auto') {
@@ -801,7 +807,7 @@
         }
 
         // ================================================================
-        // BUSCADOR INTELIGENTE (VERIFICA FUENTES)
+        // BUSCADOR INTELIGENTE (CON iframe onload)
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -826,30 +832,36 @@
 
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${fuentesActuales.length}: ${dominio}...`;
 
-            // Verificar si la fuente existe usando un proxy
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-            fetch(proxyUrl, { signal: AbortSignal.timeout(4000) })
-                .then(res => res.json())
-                .then(data => {
-                    const html = data.contents || '';
-                    // Si el HTML no tiene 404 o error, la fuente funciona
-                    if (!html.includes('404') && !html.includes('not found') && html.length > 200) {
-                        // Fuente encontrada
-                        iframe.src = url;
-                        fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
-                        loadingVideo.style.display = 'none';
-                        return;
-                    } else {
-                        // Esta fuente no funciona, pasar a la siguiente
-                        idxFuenteActual++;
-                        probarSiguienteFuente(id, tipo, season, episode);
-                    }
-                })
-                .catch(() => {
-                    // Error en la verificación, pasar a la siguiente
-                    idxFuenteActual++;
-                    probarSiguienteFuente(id, tipo, season, episode);
-                });
+            // Cargar el iframe y esperar a que cargue o falle
+            iframe.src = url;
+
+            // Limpiar timeout anterior
+            if (timeoutAuto) clearTimeout(timeoutAuto);
+
+            // Si carga bien, se oculta el loading
+            iframe.onload = () => {
+                clearTimeout(timeoutAuto);
+                loadingVideo.style.display = 'none';
+                fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
+                iframe.onload = null;
+                iframe.onerror = null;
+            };
+
+            // Si hay error, pasar a la siguiente
+            iframe.onerror = () => {
+                clearTimeout(timeoutAuto);
+                idxFuenteActual++;
+                probarSiguienteFuente(id, tipo, season, episode);
+                iframe.onerror = null;
+            };
+
+            // Timeout de seguridad: si no carga en 5s, pasar a la siguiente
+            timeoutAuto = setTimeout(() => {
+                iframe.onload = null;
+                iframe.onerror = null;
+                idxFuenteActual++;
+                probarSiguienteFuente(id, tipo, season, episode);
+            }, 5000);
         }
 
         // ================================================================
@@ -948,6 +960,7 @@
             currentSeason = season;
             currentEpisode = episode;
             currentSerieData = currentSerieData || { titulo: 'Serie', sinopsis: '' };
+            currentTipo = document.querySelector('.tab.active').dataset.tipo;
 
             const nombre = `${currentSerieData.titulo} - T${season}E${episode}: ${titulo}`;
             peliTitulo.textContent = nombre;
@@ -977,25 +990,21 @@
         // FUNCIONES REPRODUCTOR
         // ================================================================
         function recargar() {
-            if (currentTipo === 'movie' || currentTipo === 'espanol') {
-                if (currentSerieId) {
-                    reproducirPelicula(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
-                }
+            if (currentSerieId && !currentSeason) {
+                reproducirPelicula(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
             } else if (currentSerieId && currentSeason !== null && currentEpisode !== null) {
                 reproducirEpisodio(currentSerieId, currentSeason, currentEpisode, 'Episodio', '');
             }
         }
 
         function siguienteFuente() {
-            if (currentTipo === 'movie' || currentTipo === 'espanol') {
-                if (currentSerieId) {
-                    idxFuenteActual++;
-                    if (idxFuenteActual >= fuentesActuales.length) {
-                        fuenteInfo.textContent = '❌ No hay más fuentes.';
-                        return;
-                    }
-                    probarSiguienteFuente(currentSerieId, 'movie');
+            if (currentSerieId && !currentSeason) {
+                idxFuenteActual++;
+                if (idxFuenteActual >= fuentesActuales.length) {
+                    fuenteInfo.textContent = '❌ No hay más fuentes.';
+                    return;
                 }
+                probarSiguienteFuente(currentSerieId, 'movie');
             } else if (currentSerieId && currentSeason !== null && currentEpisode !== null) {
                 idxFuenteActual++;
                 if (idxFuenteActual >= fuentesActuales.length) {
@@ -1011,6 +1020,7 @@
             iframe.src = '';
             loadingVideo.style.display = 'none';
             fuenteInfo.textContent = '';
+            if (timeoutAuto) clearTimeout(timeoutAuto);
         });
 
         btnRecargar.addEventListener('click', recargar);
@@ -1063,7 +1073,7 @@
         });
 
         // ================================================================
-        // TABS
+        // TABS (con el nuevo orden)
         // ================================================================
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
