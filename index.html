@@ -290,6 +290,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .episodio-card .sinopsis {
+            font-size: 0.6rem;
+            color: #555;
+            margin-top: 4px;
+            display: none;
+        }
 
         /* TEMPORADAS */
         .temporadas {
@@ -463,6 +469,16 @@
             margin-top: 4px;
         }
 
+        .error-msg {
+            color: #e50914;
+            text-align: center;
+            padding: 20px;
+            background: rgba(229,9,20,0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(229,9,20,0.2);
+            margin: 10px 0;
+        }
+
         @media (max-width: 480px) {
             .grid-recom {
                 grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
@@ -499,7 +515,6 @@
 
     <div class="tabs" id="tabsContainer">
         <button class="tab" data-tab="all">Todo</button>
-        <button class="tab" data-tab="movie">Películas</button>
         <button class="tab active" data-tab="tv">Series</button>
         <button class="tab" data-tab="anime">Anime</button>
     </div>
@@ -554,6 +569,8 @@
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
                     <option value="vidsrc.cc">vidsrc.cc</option>
                     <option value="vidsrc.vip">vidsrc.vip</option>
+                    <option value="vidsrc.pm">vidsrc.pm</option>
+                    <option value="vidsrc.io">vidsrc.io</option>
                 </select>
                 <button id="btnRecargar" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#ccc;padding:4px 14px;border-radius:40px;font-size:0.7rem;cursor:pointer;">🔄 Recargar</button>
             </div>
@@ -704,7 +721,7 @@
         }
 
         // ================================================================
-        //  CARGAR TEMPORADAS Y EPISODIOS
+        //  CARGAR TEMPORADAS Y EPISODIOS (MEJORADO)
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentMediaId = serieId;
@@ -720,19 +737,40 @@
                 serieTitulo.textContent = data.name;
                 serieAno.textContent = data.first_air_date ? data.first_air_date.split('-')[0] : '';
 
-                // Mostrar temporadas
-                const temporadas = data.seasons || [];
+                // Mostrar temporadas (ordenadas)
+                const temporadas = (data.seasons || []).filter(t => t.season_number > 0); // Ignorar especiales
+                temporadas.sort((a, b) => a.season_number - b.season_number);
+
+                if (temporadas.length === 0) {
+                    temporadasContainer.innerHTML = `<p style="color:#888;">No hay temporadas disponibles.</p>`;
+                    episodiosGrid.innerHTML = `<p style="color:#888; text-align:center; padding:20px;">Sin episodios</p>`;
+                    return;
+                }
+
                 temporadasContainer.innerHTML = temporadas.map((t, index) => `
                     <button class="temp-btn ${index === 0 ? 'active' : ''}" data-season="${t.season_number}">
                         T${t.season_number} ${t.name ? '- ' + t.name : ''}
                     </button>
                 `).join('');
 
-                // Cargar primera temporada
-                if (temporadas.length > 0) {
-                    const primeraTemp = temporadas[0].season_number;
-                    cargarEpisodios(serieId, primeraTemp);
+                // Cargar la primera temporada (o la que tenga más episodios)
+                let mejorTemp = temporadas[0];
+                for (const t of temporadas) {
+                    if (t.episode_count > mejorTemp.episode_count) {
+                        mejorTemp = t;
+                    }
                 }
+                // Seleccionar la que tenga más episodios por defecto
+                const tempInicial = mejorTemp.season_number;
+                currentSeason = tempInicial;
+                document.querySelectorAll('.temp-btn').forEach(btn => {
+                    if (parseInt(btn.dataset.season) === tempInicial) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                cargarEpisodios(serieId, tempInicial);
 
                 // Eventos de temporadas
                 document.querySelectorAll('.temp-btn').forEach(btn => {
@@ -747,6 +785,7 @@
 
             } catch (e) {
                 console.error('Error cargando temporadas:', e);
+                episodiosGrid.innerHTML = `<div class="error-msg">❌ Error al cargar temporadas: ${e.message}</div>`;
             }
         }
 
@@ -762,7 +801,7 @@
                 }
 
                 episodiosGrid.innerHTML = episodios.map(ep => `
-                    <div class="episodio-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Episodio ' + ep.episode_number}">
+                    <div class="episodio-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Episodio ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
                         <div class="num">${ep.episode_number}</div>
                         <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
                     </div>
@@ -773,19 +812,19 @@
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
-                        const epData = episodios.find(e => e.episode_number === epNum);
-                        reproducirEpisodio(serieId, season, epNum, epTitulo, epData ? epData.overview : '');
+                        const epSinopsis = card.dataset.sinopsis;
+                        reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
 
             } catch (e) {
                 console.error('Error cargando episodios:', e);
-                episodiosGrid.innerHTML = `<p style="color:#e50914;">Error al cargar episodios</p>`;
+                episodiosGrid.innerHTML = `<div class="error-msg">❌ Error al cargar episodios: ${e.message}</div>`;
             }
         }
 
         // ================================================================
-        //  REPRODUCIR EPISODIO
+        //  REPRODUCIR EPISODIO (CON MANEJO DE ERRORES)
         // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentMediaId = serieId;
@@ -804,7 +843,19 @@
 
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
-            setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000);
+
+            // Si el iframe no carga en 10 segundos, mostrar mensaje de error
+            setTimeout(() => {
+                loadingVideo.style.display = 'none';
+                // Verificar si el iframe cargó algo
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                    if (!iframeDoc || iframeDoc.body?.innerHTML?.includes('404') || iframeDoc.body?.innerHTML?.includes('error')) {
+                        peliSinopsis.textContent = '⚠️ No se pudo cargar el video. Prueba con otra fuente.';
+                    }
+                } catch (e) { /* ignorar errores de cross-origin */ }
+            }, 10000);
+
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -853,7 +904,6 @@
             document.getElementById('cargarMasRecom').style.display = 'block';
             btnVolverSeries.style.display = 'none';
             tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
-            // Recargar series
             loadPopular(currentPageRecom);
         });
 
@@ -928,9 +978,6 @@
                     gridRecom.style.display = 'grid';
                     btnVolverSeries.style.display = 'none';
                     loadPopular(1);
-                } else if (tab.dataset.tab === 'movie') {
-                    // Para películas, redirigir a la versión anterior o cargar películas
-                    alert('Para ver películas, usa la versión anterior del código.');
                 } else if (tab.dataset.tab === 'all') {
                     buscador.value = '';
                     modoBusqueda = false;
