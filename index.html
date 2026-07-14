@@ -17,8 +17,6 @@
             padding: 12px;
             min-height: 100vh;
         }
-
-        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -39,8 +37,6 @@
             font-size: 0.7rem;
             font-weight: 300;
         }
-
-        /* BUSCADOR GRANDE */
         .search-box {
             display: flex;
             align-items: center;
@@ -120,7 +116,6 @@
             border-radius: 4px;
         }
 
-        /* SECCIÓN TÍTULO */
         .section-title {
             font-size: 1.3rem;
             font-weight: 700;
@@ -151,7 +146,6 @@
             color: #fff;
         }
 
-        /* GRID */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -196,7 +190,6 @@
             font-size: 0.7rem;
         }
 
-        /* TEMPORADAS */
         .temporadas {
             display: flex;
             gap: 10px;
@@ -224,7 +217,6 @@
             color: #fff;
         }
 
-        /* EPISODIOS */
         .episodios-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -259,7 +251,6 @@
             text-overflow: ellipsis;
         }
 
-        /* REPRODUCTOR */
         .reproductor {
             display: none;
             margin-top: 25px;
@@ -381,7 +372,6 @@
             margin-top: 5px;
         }
 
-        /* BOTÓN CARGAR MÁS */
         .btn-cargar {
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
@@ -407,7 +397,6 @@
             box-shadow: none;
         }
 
-        /* RESULTADOS DE BÚSQUEDA */
         .result-count {
             color: #888;
             font-size: 0.8rem;
@@ -415,7 +404,6 @@
             margin-left: 8px;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 480px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -453,7 +441,7 @@
     <div class="header">
         <div class="logo">🎬 Cine <small>| Pro</small></div>
         <div class="search-box">
-            <input id="buscador" type="text" placeholder="Buscar película o serie...">
+            <input id="buscador" type="text" placeholder="Buscar películas, series o animes...">
             <button id="btnBuscar">Buscar</button>
         </div>
     </div>
@@ -461,6 +449,7 @@
     <div class="tabs" id="tabsContainer">
         <button class="tab active" data-tipo="movie">Películas</button>
         <button class="tab" data-tipo="tv">Series</button>
+        <button class="tab" data-tipo="anime">Anime</button>
     </div>
 
     <div class="section-title" id="tituloSeccion">
@@ -471,7 +460,6 @@
     <div id="grid" class="grid"></div>
     <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
 
-    <!-- CONTENEDOR DE EPISODIOS -->
     <div id="contenedorEpisodios" style="display:none;">
         <div class="section-title" style="margin-top:10px;">
             📺 <span id="serieTitulo"></span>
@@ -481,7 +469,6 @@
         <div class="episodios-grid" id="episodiosGrid"></div>
     </div>
 
-    <!-- REPRODUCTOR -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <button class="volver" id="btnCerrarReproductor">← Volver</button>
@@ -519,15 +506,7 @@
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
-
-        // Fuentes para auto-búsqueda (en orden)
-        const DOMINIOS = [
-            'vidsrc.in',
-            'embed.su',
-            'vidsrc.xyz',
-            'vidsrc.cc',
-            'vidsrc.vip'
-        ];
+        const DOMINIOS = ['vidsrc.in', 'embed.su', 'vidsrc.xyz', 'vidsrc.cc', 'vidsrc.vip'];
 
         // DOM
         const grid = document.getElementById('grid');
@@ -556,14 +535,12 @@
         // Estado
         let allItems = [];
         let currentPage = 1;
-        let currentTipo = 'movie'; // 'movie' o 'tv'
+        let currentTipo = 'movie'; // movie, tv, anime
         let modoBusqueda = false;
         let currentSerieId = null;
         let currentSeason = null;
         let currentEpisode = null;
         let currentSerieData = null;
-        let currentYear = 'all';
-        let currentGenre = 'all';
         let idxFuenteActual = 0;
         let timeoutBusqueda = null;
         const MAX_PAGES = 5;
@@ -580,12 +557,15 @@
         }
 
         // ================================================================
-        // CARGAR PÁGINA (Películas o Series)
+        // CARGAR PÁGINA
         // ================================================================
         async function cargarPagina(page = 1) {
             try {
-                const tipo = currentTipo === 'movie' ? 'movie' : 'tv';
-                const endpoint = currentTipo === 'movie' ? 'movie/popular' : 'tv/popular';
+                let endpoint;
+                if (currentTipo === 'movie') endpoint = 'movie/popular';
+                else if (currentTipo === 'tv') endpoint = 'tv/popular';
+                else endpoint = 'tv/popular'; // anime también es tv
+
                 const data = await fetchApi(endpoint, `page=${page}`);
                 const nuevos = data.results || [];
                 if (page === 1) allItems = nuevos;
@@ -599,7 +579,7 @@
         }
 
         // ================================================================
-        // BUSCAR
+        // BUSCAR (funciona para todo)
         // ================================================================
         async function buscar(query) {
             if (!query.trim()) {
@@ -618,13 +598,20 @@
             contenedorEpisodios.style.display = 'none';
             grid.style.display = 'grid';
             btnVolver.style.display = 'none';
+
+            let tipo = 'multi'; // busca en todo
             tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">Buscando...</span>`;
 
             try {
-                const tipo = currentTipo === 'movie' ? 'movie' : 'tv';
-                const data = await fetchApi(`search/${tipo}`, `query=${encodeURIComponent(query)}&page=1`);
-                const results = data.results || [];
-                tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">${data.total_results || 0} encontrados</span>`;
+                const data = await fetchApi('search/multi', `query=${encodeURIComponent(query)}&page=1`);
+                // Filtrar según la pestaña activa
+                let results = data.results || [];
+                if (currentTipo === 'movie') {
+                    results = results.filter(item => item.media_type === 'movie');
+                } else if (currentTipo === 'tv' || currentTipo === 'anime') {
+                    results = results.filter(item => item.media_type === 'tv');
+                }
+                tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">${results.length} encontrados</span>`;
                 renderGrid(results);
             } catch (e) {
                 tituloSeccion.innerHTML = '❌ Error al buscar';
@@ -641,14 +628,14 @@
                 return;
             }
 
-            const esPelicula = currentTipo === 'movie';
             grid.innerHTML = lista.map(item => {
+                const esPelicula = item.media_type === 'movie' || (item.title && !item.name);
                 const titulo = esPelicula ? item.title : item.name;
                 const fecha = esPelicula ? item.release_date : item.first_air_date;
                 const año = fecha ? fecha.split('-')[0] : '';
                 const id = item.id;
                 return `
-                    <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-año="${año}">
+                    <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-tipo="${esPelicula ? 'movie' : 'tv'}" data-año="${año}">
                         <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${titulo}" loading="lazy">
                         <div class="info">
                             <h4>${titulo}</h4>
@@ -663,7 +650,8 @@
                     const id = card.dataset.id;
                     const titulo = card.dataset.titulo;
                     const sinopsis = card.dataset.sinopsis;
-                    if (currentTipo === 'movie') {
+                    const tipo = card.dataset.tipo;
+                    if (tipo === 'movie') {
                         reproducirPelicula(id, titulo, sinopsis);
                     } else {
                         cargarTemporadas(id, titulo, sinopsis);
@@ -673,7 +661,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR PELÍCULA (DIRECTO)
+        // REPRODUCIR PELÍCULA
         // ================================================================
         function reproducirPelicula(id, titulo, sinopsis) {
             currentSerieId = id;
@@ -702,10 +690,9 @@
         }
 
         // ================================================================
-        // BUSCAR FUENTE AUTO (PELÍCULAS O SERIES)
+        // BUSCAR FUENTE AUTO
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
-            const esSerie = tipo === 'tv' && season !== null && episode !== null;
             idxFuenteActual = 0;
             probarSiguienteFuente(id, tipo, season, episode);
         }
@@ -729,14 +716,11 @@
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${DOMINIOS.length}: ${dominio}...`;
             iframe.src = url;
 
-            // Esperar 5 segundos para ver si carga
             let timeout = setTimeout(() => {
-                // Si no cargó, pasar al siguiente
                 idxFuenteActual++;
                 probarSiguienteFuente(id, tipo, season, episode);
             }, 5000);
 
-            // Si el iframe carga, cancelar el timeout
             iframe.onload = () => {
                 clearTimeout(timeout);
                 loadingVideo.style.display = 'none';
@@ -744,7 +728,6 @@
                 iframe.onload = null;
             };
 
-            // Si hay error, pasar al siguiente
             iframe.onerror = () => {
                 clearTimeout(timeout);
                 idxFuenteActual++;
@@ -754,7 +737,7 @@
         }
 
         // ================================================================
-        // TEMPORADAS Y EPISODIOS (SERIES)
+        // TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -785,7 +768,6 @@
                     </button>
                 `).join('');
 
-                // Elegir temporada con más episodios
                 let mejor = temporadas.reduce((a, b) => a.episode_count > b.episode_count ? a : b);
                 const tempInicial = mejor.season_number;
                 currentSeason = tempInicial;
@@ -958,7 +940,7 @@
         });
 
         // ================================================================
-        // TABS (Películas / Series)
+        // TABS (Películas / Series / Anime)
         // ================================================================
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
