@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🎬 Cine Pro</title>
     <style>
-        /* (Mismo CSS de antes, solo añado estilos para el selector de idioma) */
+        /* (Mismo CSS de antes, solo añado estilo para el mensaje de idioma) */
         * {
             margin: 0;
             padding: 0;
@@ -375,6 +375,21 @@
             color: #f5c518;
             margin-left: 8px;
         }
+        .player-footer .aviso-idioma {
+            background: rgba(245, 197, 24, 0.1);
+            border: 1px solid #f5c518;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #f5c518;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .player-footer .aviso-idioma span {
+            font-size: 1rem;
+        }
 
         .btn-cargar {
             background: linear-gradient(135deg, #e50914, #b20710);
@@ -444,6 +459,10 @@
                 font-size: 0.6rem;
                 padding: 3px 6px;
             }
+            .player-footer .aviso-idioma {
+                font-size: 0.65rem;
+                padding: 6px 10px;
+            }
         }
     </style>
 </head>
@@ -496,7 +515,7 @@
                     <option value="vidsrc.net">vidsrc.net</option>
                     <option value="vidsrc.me">vidsrc.me</option>
                 </select>
-                <!-- NUEVO SELECTOR DE IDIOMA -->
+                <!-- Selector de idioma -->
                 <select id="idiomaSelector">
                     <option value="es">🇪🇸 Español</option>
                     <option value="en">🇺🇸 Inglés</option>
@@ -521,6 +540,11 @@
                 <span id="fuenteInfo"></span>
                 <span class="idioma-info" id="idiomaInfo">🎧 Idioma: Español</span>
             </div>
+            <!-- AVISO IMPORTANTE SOBRE EL IDIOMA -->
+            <div class="aviso-idioma">
+                <span>💡</span>
+                <span>Para cambiar el idioma del audio, usa el botón de configuración <strong>⚙️</strong> dentro del reproductor y selecciona <strong>Español</strong> o <strong>Latino</strong>. El selector de arriba es solo un intento automático.</span>
+            </div>
         </div>
     </div>
 
@@ -531,7 +555,7 @@
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
 
-        // FUENTES (ordenadas por prioridad)
+        // FUENTES
         const DOMINIOS = [
             'vidsrc.in',
             'vidsrc.pm',
@@ -543,8 +567,9 @@
             'vidsrc.me'
         ];
 
-        // MAPEO DE IDIOMAS A PARÁMETROS URL (según cada fuente, pero usamos uno genérico)
+        // MAPEO DE IDIOMAS A PARÁMETROS DE URL (según fuente)
         // La mayoría acepta ?lang=XX, ?audio=XX o ?language=XX
+        // Pero no todas funcionan, por eso el aviso.
         const IDIOMAS = {
             'es': { label: 'Español', param: 'lang=es' },
             'en': { label: 'Inglés', param: 'lang=en' },
@@ -592,7 +617,7 @@
         const MAX_PAGES = 5;
 
         // ================================================================
-        // FUNCIÓN PARA CONSTRUIR URL CON IDIOMA
+        // FUNCIÓN PARA CONSTRUIR URL CON IDIOMA (INTENTO)
         // ================================================================
         function construirUrl(dominio, tipo, id, season = null, episode = null) {
             let baseUrl;
@@ -604,7 +629,8 @@
 
             const idioma = idiomaSelector.value;
             const param = IDIOMAS[idioma]?.param;
-            if (param && dominio !== 'auto') {
+            // Solo añadir parámetro si no es "auto" y la fuente no es vidsrc.in (que no lo soporta bien)
+            if (param && dominio !== 'auto' && dominio !== 'vidsrc.in' && dominio !== 'vidsrc.pm') {
                 return baseUrl + (baseUrl.includes('?') ? '&' : '?') + param;
             }
             return baseUrl;
@@ -960,6 +986,7 @@
         btnRecargar.addEventListener('click', recargar);
         btnSiguiente.addEventListener('click', siguienteFuente);
         sourceSelector.addEventListener('change', recargar);
+        // Al cambiar el idioma, recargar también
         idiomaSelector.addEventListener('change', recargar);
 
         // ================================================================
