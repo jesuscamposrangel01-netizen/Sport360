@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CineStar · 2026</title>
-    <meta name="description" content="CineStar: La mejor plataforma para ver películas, series y anime online en HD. Estilo 2026.">
-    <meta name="keywords" content="ver películas online, series online, anime online, cine gratis, streaming, CineStar">
+    <meta name="description" content="CineStar: La mejor plataforma para ver películas, series y anime online.">
     <meta property="og:title" content="CineStar · 2026">
-    <meta property="og:description" content="Disfruta del mejor contenido con un diseño de vanguardia.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
@@ -25,11 +23,12 @@
             color: #f0f0f0;
             padding: 16px;
             min-height: 100vh;
-            background-image: radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.05) 0%, transparent 50%),
-                              radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 20% 20%, rgba(229, 9, 20, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 50%);
         }
         ::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #111;
@@ -62,10 +61,10 @@
             letter-spacing: -1px;
         }
         .logo .year {
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.2);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.15);
             font-size: 0.7rem;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             padding: 4px 14px;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -82,12 +81,12 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             width: 100%;
             max-width: 440px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
         .search-box:focus-within {
             border-color: #e50914;
-            box-shadow: 0 0 60px rgba(229, 9, 20, 0.15), inset 0 0 30px rgba(229, 9, 20, 0.03);
+            box-shadow: 0 0 60px rgba(229, 9, 20, 0.12);
             transform: scale(1.01);
         }
         .search-box input {
@@ -102,7 +101,7 @@
             min-width: 100px;
         }
         .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
             font-weight: 300;
         }
         .search-box button {
@@ -132,7 +131,7 @@
             gap: 4px;
             border-radius: 60px;
             padding: 6px 8px;
-            margin: 28px 0 20px;
+            margin: 24px 0 18px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -141,11 +140,11 @@
         .tab {
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.35);
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 40px;
             transition: all 0.3s ease;
             letter-spacing: 0.3px;
@@ -158,20 +157,79 @@
         .tab.active {
             color: #fff;
             background: rgba(229, 9, 20, 0.25);
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.1);
-        }
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 20%;
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(90deg, #e50914, #ff4d4d);
-            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.08);
         }
         .tab .emoji {
             margin-right: 6px;
+        }
+
+        /* ========== CARTELERA (BANNER GRANDE) ========== */
+        .cartelera {
+            width: 100%;
+            border-radius: 28px;
+            overflow: hidden;
+            margin: 18px 0 28px;
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            aspect-ratio: 16/6;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            padding: 30px 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect width="1200" height="400" fill="%231a1a2e"/><circle cx="850" cy="200" r="250" fill="rgba(229,9,20,0.08)"/><circle cx="350" cy="100" r="150" fill="rgba(0,200,255,0.05)"/></svg>');
+            background-size: cover;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .cartelera-content {
+            position: relative;
+            z-index: 2;
+            max-width: 60%;
+        }
+        .cartelera-content .titulo {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+        .cartelera-content .desc {
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: 400;
+            max-width: 500px;
+        }
+        .cartelera-content .btn-ver {
+            margin-top: 16px;
+            background: #e50914;
+            border: none;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
+        }
+        .cartelera-content .btn-ver:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+        }
+        .cartelera .poster-mini {
+            position: absolute;
+            right: 40px;
+            bottom: -20px;
+            width: 180px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            background: #222;
         }
 
         /* ========== SECCIÓN ========== */
@@ -210,7 +268,7 @@
             color: #fff;
         }
         .result-count {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
             font-size: 0.9rem;
             font-weight: 400;
         }
@@ -218,7 +276,7 @@
         /* ========== GRID ========== */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 24px;
         }
         .card {
@@ -234,7 +292,7 @@
         .card:hover {
             transform: translateY(-12px) scale(1.02);
             border-color: rgba(229, 9, 20, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(229, 9, 20, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(229, 9, 20, 0.12);
         }
         .card img {
             width: 100%;
@@ -244,7 +302,7 @@
             transition: 0.4s;
         }
         .card:hover img {
-            transform: scale(1.04);
+            transform: scale(1.03);
         }
         .card .info {
             padding: 16px 16px 18px;
@@ -266,7 +324,7 @@
             gap: 10px;
         }
         .card .info .year {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.25);
             font-size: 0.7rem;
         }
         .card .info .idioma {
@@ -277,7 +335,7 @@
             padding: 2px 12px;
             border-radius: 30px;
             display: inline-block;
-            border: 1px solid rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.08);
         }
 
         /* ========== BOTÓN CARGAR ========== */
@@ -295,12 +353,12 @@
             width: 100%;
             max-width: 340px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.3);
+            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.25);
             letter-spacing: 0.8px;
         }
         .btn-cargar:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 40px rgba(229, 9, 20, 0.5);
+            box-shadow: 0 8px 40px rgba(229, 9, 20, 0.4);
         }
         .btn-cargar:active {
             transform: scale(0.96);
@@ -312,71 +370,7 @@
             box-shadow: none;
         }
 
-        /* ========== TEMPORADAS ========== */
-        .temporadas {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 14px 0 20px;
-        }
-        .temp-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.5);
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .temp-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-        }
-        .temp-btn.active {
-            background: #e50914;
-            border-color: #e50914;
-            color: #fff;
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.2);
-        }
-
-        /* ========== EPISODIOS ========== */
-        .episodios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 14px;
-            margin-top: 10px;
-        }
-        .ep-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 16px 6px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s ease;
-        }
-        .ep-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: #e50914;
-            transform: scale(1.05);
-        }
-        .ep-card .num {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #e50914;
-        }
-        .ep-card .title {
-            font-size: 0.6rem;
-            color: rgba(255, 255, 255, 0.3);
-            margin-top: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* ========== REPRODUCTOR ========== */
+        /* ========== REPRODUCTOR (GRANDE) ========== */
         .reproductor {
             display: none;
             margin-top: 30px;
@@ -450,7 +444,7 @@
         .player-controls button {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.5);
             padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -461,10 +455,12 @@
             background: rgba(255, 255, 255, 0.06);
             color: #fff;
         }
+
+        /* ========== REPRODUCTOR VIDEO (MÁS GRANDE) ========== */
         .player-video {
             width: 100%;
-            height: 58vh;
-            min-height: 320px;
+            height: 70vh;
+            min-height: 400px;
             background: #000;
             position: relative;
         }
@@ -478,7 +474,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.2);
             background: rgba(0, 0, 0, 0.7);
             padding: 24px 36px;
             border-radius: 60px;
@@ -503,49 +499,137 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* ========== FOOTER DEL REPRODUCTOR ========== */
         .player-footer {
             padding: 18px 24px;
             background: rgba(0, 0, 0, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .player-footer h3 {
+        .player-footer .info-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .player-footer .info-top h3 {
             font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.3px;
         }
-        .player-footer p {
-            color: rgba(255, 255, 255, 0.4);
+        .player-footer .info-top .episodio-actual {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .player-footer .sinopsis {
+            color: rgba(255, 255, 255, 0.35);
             font-size: 0.9rem;
             margin-top: 6px;
             line-height: 1.6;
         }
         .player-footer .info-extra {
             color: #00ff88;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             margin-top: 8px;
         }
         .player-footer .info-extra .idioma-info {
             color: #f5c518;
             margin-left: 12px;
         }
-        .player-footer .aviso-idioma {
-            background: rgba(245, 197, 24, 0.04);
-            border: 1px solid rgba(245, 197, 24, 0.06);
-            border-radius: 16px;
-            padding: 14px 20px;
-            margin-top: 14px;
-            font-size: 0.85rem;
-            color: #f5c518;
+
+        /* ========== EPISODIOS (MINIATURAS DEBAJO DEL REPRODUCTOR) ========== */
+        .episodios-wrapper {
+            margin-top: 20px;
+            padding: 0 4px 10px;
+        }
+        .episodios-wrapper .episodios-titulo {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .episodios-scroll {
             display: flex;
-            align-items: center;
-            gap: 14px;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .episodios-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .episodios-scroll::-webkit-scrollbar-thumb {
+            background: #e50914;
+            border-radius: 10px;
+        }
+        .ep-card-mini {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 12px 16px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+        .ep-card-mini:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: #e50914;
+            transform: scale(1.05);
+        }
+        .ep-card-mini.active-ep {
+            background: rgba(229, 9, 20, 0.15);
+            border-color: #e50914;
+        }
+        .ep-card-mini .num {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #e50914;
+        }
+        .ep-card-mini .title {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70px;
+        }
+
+        /* ========== TEMPORADAS (botones pequeños) ========== */
+        .temporadas {
+            display: flex;
+            gap: 8px;
             flex-wrap: wrap;
+            margin: 14px 0 10px;
         }
-        .player-footer .aviso-idioma span {
-            font-size: 1.5rem;
+        .temp-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.4);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .player-footer .aviso-idioma strong {
+        .temp-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
             color: #fff;
+        }
+        .temp-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+            color: #fff;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.15);
         }
 
         /* ========== FOOTER ========== */
@@ -554,15 +638,8 @@
             padding: 30px 0 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.03);
             text-align: center;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.15);
             font-size: 0.8rem;
-        }
-        .footer a {
-            color: #e50914;
-            transition: 0.3s;
-        }
-        .footer a:hover {
-            color: #ff4d4d;
         }
         .footer .social {
             display: flex;
@@ -571,7 +648,7 @@
             margin-bottom: 16px;
         }
         .footer .social a {
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.12);
             font-size: 1.6rem;
             transition: 0.3s;
         }
@@ -581,14 +658,33 @@
         }
 
         /* ========== RESPONSIVE ========== */
-        @media (max-width: 640px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                gap: 14px;
+        @media (max-width: 768px) {
+            .cartelera {
+                aspect-ratio: 16/8;
+                padding: 20px 24px;
+                min-height: 140px;
             }
-            .episodios-grid {
-                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-                gap: 8px;
+            .cartelera-content .titulo {
+                font-size: 1.8rem;
+            }
+            .cartelera-content .desc {
+                font-size: 0.85rem;
+            }
+            .cartelera .poster-mini {
+                width: 100px;
+                right: 20px;
+                bottom: -10px;
+            }
+            .cartelera-content {
+                max-width: 70%;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 16px;
+            }
+            .player-video {
+                height: 50vh;
+                min-height: 250px;
             }
             .logo {
                 font-size: 1.8rem;
@@ -610,35 +706,61 @@
             }
             .tab {
                 font-size: 0.75rem;
-                padding: 8px 12px;
+                padding: 8px 14px;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .ep-card-mini {
+                min-width: 65px;
+                padding: 10px 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+            .cartelera {
+                aspect-ratio: 16/10;
+                padding: 16px 18px;
+                min-height: 120px;
+            }
+            .cartelera-content .titulo {
+                font-size: 1.4rem;
+            }
+            .cartelera-content .desc {
+                font-size: 0.75rem;
+            }
+            .cartelera .poster-mini {
+                width: 70px;
+                right: 12px;
+                bottom: -5px;
+            }
+            .cartelera-content {
+                max-width: 65%;
             }
             .player-video {
                 height: 40vh;
                 min-height: 200px;
             }
-            .section-title {
-                font-size: 1.3rem;
-            }
-            .player-footer .aviso-idioma {
-                font-size: 0.75rem;
-                padding: 10px 14px;
-            }
-        }
-        @media (max-width: 400px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-                gap: 10px;
-            }
             .tab {
                 font-size: 0.65rem;
-                padding: 6px 8px;
+                padding: 6px 10px;
+            }
+            .ep-card-mini {
+                min-width: 55px;
+                padding: 8px 10px;
+            }
+            .ep-card-mini .num {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- ========== HEADER ========== -->
     <header class="header">
         <div class="logo">
             🎬 CineStar
@@ -650,7 +772,7 @@
         </div>
     </header>
 
-    <!-- TABS -->
+    <!-- ========== TABS ========== -->
     <nav class="tabs" id="tabsContainer">
         <button class="tab active" data-tipo="movie"><span class="emoji">🌍</span>Películas</button>
         <button class="tab" data-tipo="espanol"><span class="emoji">🇪🇸</span>Películas Español</button>
@@ -659,73 +781,78 @@
         <button class="tab" data-tipo="anime"><span class="emoji">🎌</span>Anime</button>
     </nav>
 
-    <!-- MAIN -->
-    <main>
-        <div class="section-title" id="tituloSeccion">
-            📌 Populares <span class="badge">🔥</span>
-            <button class="volver" id="btnVolver" style="display:none;">← Volver</button>
+    <!-- ========== CARTELERA (BANNER DESTACADO) ========== -->
+    <div class="cartelera" id="cartelera">
+        <div class="cartelera-content">
+            <div class="titulo" id="carteleraTitulo">Obsesión</div>
+            <div class="desc" id="carteleraDesc">Un thriller psicológico que te mantendrá al borde del asiento.</div>
+            <button class="btn-ver" id="btnVerCartelera">Ver ahora</button>
+        </div>
+        <img id="carteleraPoster" class="poster-mini" src="https://image.tmdb.org/t/p/w300/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
+    </div>
+
+    <!-- ========== SECCIÓN ========== -->
+    <div class="section-title" id="tituloSeccion">
+        📌 Populares <span class="badge">🔥</span>
+        <button class="volver" id="btnVolver" style="display:none;">← Volver</button>
+    </div>
+
+    <!-- ========== GRID ========== -->
+    <div id="grid" class="grid"></div>
+    <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
+
+    <!-- ========== REPRODUCTOR (con episodios debajo) ========== -->
+    <div id="reproductor" class="reproductor">
+        <div class="player-header">
+            <button class="volver" id="btnCerrarReproductor">← Volver</button>
+            <div class="player-controls">
+                <span style="color:#e50914;font-weight:700;font-size:0.7rem;">HD</span>
+                <select id="sourceSelector">
+                    <option value="auto">🤖 Auto</option>
+                    <option value="2embed.skin">2embed.skin</option>
+                    <option value="vidsrc.in">vidsrc.in</option>
+                    <option value="vidlink.pro">vidlink.pro</option>
+                    <option value="vidsrc.pm">vidsrc.pm</option>
+                    <option value="vidfast.pro">vidfast.pro</option>
+                    <option value="vidsrc.xyz">vidsrc.xyz</option>
+                    <option value="vidsrc.cc">vidsrc.cc</option>
+                </select>
+                <button id="btnRecargar">🔄</button>
+                <button id="btnSiguiente">⏩ Siguiente</button>
+            </div>
         </div>
 
-        <div id="grid" class="grid"></div>
-        <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
-
-        <!-- EPISODIOS -->
-        <div id="contenedorEpisodios" style="display:none;">
-            <div class="section-title" style="margin-top:10px;">
-                📺 <span id="serieTitulo"></span>
-                <span class="badge" id="serieAno"></span>
+        <!-- ========== VIDEO ========== -->
+        <div class="player-video">
+            <div class="cargando" id="loadingVideo">
+                <div class="spinner"></div>
+                <span id="loadingText">Cargando...</span>
             </div>
-            <div class="temporadas" id="temporadasContainer"></div>
-            <div class="episodios-grid" id="episodiosGrid"></div>
+            <iframe id="iframeVideo" src="" allowfullscreen></iframe>
         </div>
 
-        <!-- REPRODUCTOR -->
-        <div id="reproductor" class="reproductor">
-            <div class="player-header">
-                <button class="volver" id="btnCerrarReproductor">← Volver</button>
-                <div class="player-controls">
-                    <span style="color:#e50914;font-weight:700;font-size:0.7rem;">HD</span>
-                    <select id="sourceSelector">
-                        <option value="auto">🤖 Auto</option>
-                        <option value="2embed.skin">2embed.skin</option>
-                        <option value="vidsrc.in">vidsrc.in</option>
-                        <option value="vidlink.pro">vidlink.pro</option>
-                        <option value="vidsrc.pm">vidsrc.pm</option>
-                        <option value="vidfast.pro">vidfast.pro</option>
-                        <option value="vidsrc.xyz">vidsrc.xyz</option>
-                        <option value="vidsrc.cc">vidsrc.cc</option>
-                    </select>
-                    <button id="btnRecargar">🔄</button>
-                    <button id="btnSiguiente">⏩ Siguiente</button>
-                </div>
-            </div>
-            <div class="player-video">
-                <div class="cargando" id="loadingVideo">
-                    <div class="spinner"></div>
-                    <span id="loadingText">Cargando...</span>
-                </div>
-                <iframe id="iframeVideo" src="" allowfullscreen></iframe>
-            </div>
-            <div class="player-footer">
+        <!-- ========== FOOTER DEL REPRODUCTOR ========== -->
+        <div class="player-footer">
+            <div class="info-top">
                 <h3 id="peliTitulo">Título</h3>
-                <p id="peliSinopsis">Sinopsis...</p>
-                <div class="info-extra">
-                    <span id="fuenteInfo"></span>
-                    <span class="idioma-info" id="idiomaInfo">🎧 Cambia el idioma dentro del reproductor</span>
-                </div>
-                <div class="aviso-idioma">
-                    <span>💡</span>
-                    <div>
-                        <strong>Para cambiar el audio a español:</strong><br>
-                        1. Toca el video → botón <strong>⚙️</strong>.<br>
-                        2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en "Pista de audio".
-                    </div>
-                </div>
+                <span class="episodio-actual" id="episodioActual"></span>
+            </div>
+            <div class="sinopsis" id="peliSinopsis">Sinopsis...</div>
+            <div class="info-extra">
+                <span id="fuenteInfo"></span>
+                <span class="idioma-info" id="idiomaInfo">🎧 Cambia el idioma dentro del reproductor</span>
             </div>
         </div>
-    </main>
 
-    <!-- FOOTER -->
+        <!-- ========== EPISODIOS (MINIATURAS DEBAJO) ========== -->
+        <div class="episodios-wrapper" id="episodiosWrapper" style="display:none;">
+            <div class="episodios-titulo">📺 Episodios</div>
+            <div class="temporadas" id="temporadasContainer"></div>
+            <div class="episodios-scroll" id="episodiosScroll"></div>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
     <footer class="footer">
         <div class="social">
             <a href="#" aria-label="Facebook">📘</a>
@@ -734,13 +861,13 @@
             <a href="#" aria-label="YouTube">▶️</a>
         </div>
         <p>&copy; 2026 <strong style="color:#e50914;">CineStar</strong>. Todos los derechos reservados.</p>
-        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.1);">
+        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.06);">
             CineStar no aloja archivos. Solo enlazamos a contenido de terceros.
         </p>
     </footer>
 
     <!-- ================================================================ -->
-    <!-- SCRIPT (Mismo código funcional de antes, solo cambia el CSS) -->
+    <!-- SCRIPT COMPLETO -->
     <!-- ================================================================ -->
     <script>
         // ================================================================
@@ -748,6 +875,7 @@
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
+        const BASE_IMG_BACKDROP = 'https://image.tmdb.org/t/p/w1280';
 
         const FUENTES = {
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
@@ -766,24 +894,31 @@
         const btnBuscar = document.getElementById('btnBuscar');
         const tituloSeccion = document.getElementById('tituloSeccion');
         const btnVolver = document.getElementById('btnVolver');
-        const contenedorEpisodios = document.getElementById('contenedorEpisodios');
-        const temporadasContainer = document.getElementById('temporadasContainer');
-        const episodiosGrid = document.getElementById('episodiosGrid');
-        const serieTitulo = document.getElementById('serieTitulo');
-        const serieAno = document.getElementById('serieAno');
         const reproductor = document.getElementById('reproductor');
         const iframe = document.getElementById('iframeVideo');
         const loadingVideo = document.getElementById('loadingVideo');
         const loadingText = document.getElementById('loadingText');
         const peliTitulo = document.getElementById('peliTitulo');
         const peliSinopsis = document.getElementById('peliSinopsis');
+        const episodioActual = document.getElementById('episodioActual');
         const fuenteInfo = document.getElementById('fuenteInfo');
         const idiomaInfo = document.getElementById('idiomaInfo');
         const sourceSelector = document.getElementById('sourceSelector');
         const btnRecargar = document.getElementById('btnRecargar');
         const btnSiguiente = document.getElementById('btnSiguiente');
         const tabs = document.querySelectorAll('.tab');
+        const btnCerrarReproductor = document.getElementById('btnCerrarReproductor');
+        const episodiosWrapper = document.getElementById('episodiosWrapper');
+        const episodiosScroll = document.getElementById('episodiosScroll');
+        const temporadasContainer = document.getElementById('temporadasContainer');
+        const btnVerCartelera = document.getElementById('btnVerCartelera');
+        const carteleraTitulo = document.getElementById('carteleraTitulo');
+        const carteleraDesc = document.getElementById('carteleraDesc');
+        const carteleraPoster = document.getElementById('carteleraPoster');
 
+        // ================================================================
+        // ESTADO
+        // ================================================================
         let allItems = [];
         let currentPage = 1;
         let currentTipo = 'movie';
@@ -796,8 +931,13 @@
         let timeoutBusqueda = null;
         let fuentesActuales = [];
         let timeoutAuto = null;
+        let episodiosCache = [];
+        let temporadasCache = [];
         const MAX_PAGES = 5;
 
+        // ================================================================
+        // API
+        // ================================================================
         async function fetchApi(endpoint, extra = '') {
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
             if (extra) url += `&${extra}`;
@@ -806,19 +946,28 @@
             return res.json();
         }
 
+        // ================================================================
+        // CARGAR PÁGINA
+        // ================================================================
         async function cargarPagina(page = 1) {
             try {
                 let endpoint, extra = `page=${page}`;
-                if (currentTipo === 'movie') { endpoint = 'movie/popular'; extra = `page=${page}`; }
-                else if (currentTipo === 'espanol') { endpoint = 'discover/movie'; extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; }
-                else if (currentTipo === 'tv') { endpoint = 'tv/popular'; extra = `page=${page}`; }
-                else if (currentTipo === 'tv_es') { endpoint = 'discover/tv'; extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; }
-                else { endpoint = 'discover/tv'; extra = `page=${page}&with_genres=16&with_original_language=ja`; }
+                if (currentTipo === 'movie') { endpoint = 'movie/popular';
+                    extra = `page=${page}`; } else if (currentTipo === 'espanol') { endpoint = 'discover/movie';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; } else if (currentTipo ===
+                    'tv') { endpoint = 'tv/popular';
+                    extra = `page=${page}`; } else if (currentTipo === 'tv_es') { endpoint = 'discover/tv';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; } else { endpoint =
+                        'discover/tv';
+                    extra = `page=${page}&with_genres=16&with_original_language=ja`; }
                 const data = await fetchApi(endpoint, extra);
                 const nuevos = data.results || [];
                 if (page === 1) allItems = nuevos;
                 else allItems = allItems.concat(nuevos);
-                if (!modoBusqueda) renderGrid(allItems);
+                if (!modoBusqueda) {
+                    renderGrid(allItems);
+                    actualizarCartelera(allItems);
+                }
                 return nuevos.length > 0;
             } catch (e) {
                 grid.innerHTML = `<p style="color:#e50914;text-align:center;padding:30px;">❌ Error: ${e.message}</p>`;
@@ -826,12 +975,41 @@
             }
         }
 
+        // ================================================================
+        // ACTUALIZAR CARTELERA
+        // ================================================================
+        function actualizarCartelera(lista) {
+            if (!lista || lista.length === 0) return;
+            // Tomar la primera película/serie con póster
+            const destacado = lista.find(item => item.poster_path) || lista[0];
+            const titulo = destacado.title || destacado.name || 'CineStar';
+            const desc = destacado.overview || 'Descubre el mejor contenido en CineStar.';
+            carteleraTitulo.textContent = titulo;
+            carteleraDesc.textContent = desc.length > 120 ? desc.slice(0, 120) + '...' : desc;
+            if (destacado.poster_path) {
+                carteleraPoster.src = BASE_IMG + destacado.poster_path;
+            }
+            btnVerCartelera.onclick = () => {
+                const id = destacado.id;
+                const tipo = destacado.media_type === 'movie' || (destacado.title && !destacado.name) ? 'movie' : 'tv';
+                const tituloCard = destacado.title || destacado.name;
+                const sinopsis = destacado.overview || '';
+                if (tipo === 'movie') {
+                    reproducirPelicula(id, tituloCard, sinopsis);
+                } else {
+                    cargarTemporadas(id, tituloCard, sinopsis);
+                }
+            };
+        }
+
+        // ================================================================
+        // BUSCAR
+        // ================================================================
         async function buscar(query) {
             if (!query.trim()) {
                 modoBusqueda = false;
                 tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
                 btnCargarMas.style.display = 'block';
-                contenedorEpisodios.style.display = 'none';
                 grid.style.display = 'grid';
                 btnVolver.style.display = 'none';
                 await cargarPagina(1);
@@ -839,30 +1017,39 @@
             }
             modoBusqueda = true;
             btnCargarMas.style.display = 'none';
-            contenedorEpisodios.style.display = 'none';
             grid.style.display = 'grid';
             btnVolver.style.display = 'none';
             tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">Buscando...</span>`;
             try {
                 let data;
                 const tipo = currentTipo;
-                if (tipo === 'movie') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`); }
-                else if (tipo === 'espanol') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`); data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la'); }
-                else if (tipo === 'tv') { data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`); }
-                else if (tipo === 'tv_es') { data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`); data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la'); }
-                else { data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`); data.results = (data.results || []).filter(item => item.genre_ids && item.genre_ids.includes(16)); }
+                if (tipo === 'movie') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`); } else if (
+                    tipo === 'espanol') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item
+                        .original_language === 'la'); } else if (tipo === 'tv') { data = await fetchApi('search/tv',
+                        `query=${encodeURIComponent(query)}&page=1`); } else if (tipo === 'tv_es') { data = await fetchApi(
+                        'search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item
+                        .original_language === 'la'); } else { data = await fetchApi('search/tv',
+                        `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.genre_ids && item.genre_ids.includes(16)); }
                 const results = data.results || [];
                 tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">${results.length} encontrados</span>`;
                 renderGrid(results);
+                actualizarCartelera(results);
             } catch (e) {
                 tituloSeccion.innerHTML = '❌ Error al buscar';
                 grid.innerHTML = `<p style="color:#e50914;text-align:center;padding:30px;">Error: ${e.message}</p>`;
             }
         }
 
+        // ================================================================
+        // RENDER GRID
+        // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML = `<p style="color:rgba(255,255,255,0.2);text-align:center;padding:30px;grid-column:1/-1;">No hay resultados.</p>`;
+                grid.innerHTML =
+                    `<p style="color:rgba(255,255,255,0.15);text-align:center;padding:40px;grid-column:1/-1;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -901,6 +1088,9 @@
             });
         }
 
+        // ================================================================
+        // REPRODUCIR PELÍCULA
+        // ================================================================
         function reproducirPelicula(id, titulo, sinopsis) {
             currentSerieId = id;
             currentSerieData = { titulo, sinopsis };
@@ -910,8 +1100,12 @@
 
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis || 'Sin sinopsis.';
+            episodioActual.textContent = '';
             fuenteInfo.textContent = '';
             idiomaInfo.textContent = '🎧 Cambia el idioma dentro del reproductor';
+            episodiosWrapper.style.display = 'none';
+            episodiosScroll.innerHTML = '';
+            temporadasContainer.innerHTML = '';
 
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
@@ -931,6 +1125,9 @@
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // ================================================================
+        // BUSCAR FUENTE AUTO
+        // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
             probarSiguienteFuente(id, tipo, season, episode);
@@ -944,57 +1141,73 @@
                 return;
             }
             const dominio = fuentesActuales[idxFuenteActual];
-            let url = tipo === 'movie' ? `https://${dominio}/embed/movie/${id}` : `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
+            let url = tipo === 'movie' ? `https://${dominio}/embed/movie/${id}` :
+                `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${fuentesActuales.length}: ${dominio}...`;
             iframe.src = url;
             if (timeoutAuto) clearTimeout(timeoutAuto);
-            iframe.onload = () => { clearTimeout(timeoutAuto);
+            iframe.onload = () => {
+                clearTimeout(timeoutAuto);
                 loadingVideo.style.display = 'none';
                 fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
                 iframe.onload = null;
-                iframe.onerror = null; };
-            iframe.onerror = () => { clearTimeout(timeoutAuto);
+                iframe.onerror = null;
+            };
+            iframe.onerror = () => {
+                clearTimeout(timeoutAuto);
                 idxFuenteActual++;
                 probarSiguienteFuente(id, tipo, season, episode);
-                iframe.onerror = null; };
-            timeoutAuto = setTimeout(() => { iframe.onload = null;
+                iframe.onerror = null;
+            };
+            timeoutAuto = setTimeout(() => {
+                iframe.onload = null;
                 iframe.onerror = null;
                 idxFuenteActual++;
-                probarSiguienteFuente(id, tipo, season, episode); }, 5000);
+                probarSiguienteFuente(id, tipo, season, episode);
+            }, 5000);
         }
 
+        // ================================================================
+        // CARGAR TEMPORADAS Y EPISODIOS (CON EPISODIOS DEBAJO)
+        // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
             currentSerieData = { titulo, sinopsis };
-            contenedorEpisodios.style.display = 'block';
             grid.style.display = 'none';
             btnCargarMas.style.display = 'none';
             btnVolver.style.display = 'inline-block';
             tituloSeccion.innerHTML = `📺 ${titulo} <span class="badge">Temporadas</span>`;
+
             try {
                 const data = await fetchApi(`tv/${serieId}`);
-                serieTitulo.textContent = data.name;
-                serieAno.textContent = data.first_air_date ? data.first_air_date.split('-')[0] : '';
                 const temporadas = (data.seasons || []).filter(t => t.episode_count > 0);
                 temporadas.sort((a, b) => a.season_number - b.season_number);
+                temporadasCache = temporadas;
                 if (temporadas.length === 0) {
                     temporadasContainer.innerHTML = `<p style="color:rgba(255,255,255,0.2);">No hay temporadas.</p>`;
-                    episodiosGrid.innerHTML = `<p style="color:rgba(255,255,255,0.2);text-align:center;padding:20px;">Sin episodios</p>`;
                     return;
                 }
+                // Mostrar botones de temporadas
                 temporadasContainer.innerHTML = temporadas.map((t, idx) => `
                     <button class="temp-btn ${idx === 0 ? 'active' : ''}" data-season="${t.season_number}">
-                        T${t.season_number} ${t.name ? '- ' + t.name : ''}
+                        T${t.season_number}
                     </button>
                 `).join('');
+
+                // Seleccionar la mejor temporada
                 let mejor = temporadas.reduce((a, b) => a.episode_count > b.episode_count ? a : b);
                 const tempInicial = mejor.season_number;
                 currentSeason = tempInicial;
+
+                // Activar el botón
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     if (parseInt(btn.dataset.season) === tempInicial) btn.classList.add('active');
                     else btn.classList.remove('active');
                 });
+
                 await cargarEpisodios(serieId, tempInicial);
+
+                // Eventos de cambio de temporada
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
@@ -1004,9 +1217,19 @@
                         cargarEpisodios(serieId, season);
                     });
                 });
+
+                // Mostrar el reproductor con el primer episodio automáticamente
+                if (episodiosCache.length > 0) {
+                    const primerEp = episodiosCache[0];
+                    const epNum = primerEp.episode_number;
+                    const epTitulo = primerEp.name || 'Ep ' + epNum;
+                    const epSinopsis = primerEp.overview || '';
+                    reproducirEpisodio(serieId, tempInicial, epNum, epTitulo, epSinopsis);
+                }
+
             } catch (e) {
                 console.error(e);
-                episodiosGrid.innerHTML = `<div style="color:#e50914;text-align:center;padding:16px;">❌ Error: ${e.message}</div>`;
+                temporadasContainer.innerHTML = `<div style="color:#e50914;text-align:center;padding:16px;">❌ Error: ${e.message}</div>`;
             }
         }
 
@@ -1014,30 +1237,44 @@
             try {
                 const data = await fetchApi(`tv/${serieId}/season/${season}`);
                 const episodios = data.episodes || [];
+                episodiosCache = episodios;
                 if (episodios.length === 0) {
-                    episodiosGrid.innerHTML = `<p style="color:rgba(255,255,255,0.2);text-align:center;padding:20px;">No hay episodios.</p>`;
+                    episodiosScroll.innerHTML = `<p style="color:rgba(255,255,255,0.15);padding:10px;">No hay episodios.</p>`;
                     return;
                 }
-                episodiosGrid.innerHTML = episodios.map(ep => `
-                    <div class="ep-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
+                // Mostrar episodios en scroll horizontal
+                episodiosScroll.innerHTML = episodios.map(ep => `
+                    <div class="ep-card-mini" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
                         <div class="num">${ep.episode_number}</div>
                         <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
                     </div>
                 `).join('');
-                document.querySelectorAll('.ep-card').forEach(card => {
+
+                // Eventos de clic en episodio
+                document.querySelectorAll('.ep-card-mini').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
+                        // Remover active de todos
+                        document.querySelectorAll('.ep-card-mini').forEach(c => c.classList.remove('active-ep'));
+                        card.classList.add('active-ep');
                         reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
+
+                // Mostrar wrapper de episodios
+                episodiosWrapper.style.display = 'block';
+
             } catch (e) {
                 console.error(e);
-                episodiosGrid.innerHTML = `<div style="color:#e50914;text-align:center;padding:16px;">❌ Error: ${e.message}</div>`;
+                episodiosScroll.innerHTML = `<div style="color:#e50914;text-align:center;padding:16px;">❌ Error: ${e.message}</div>`;
             }
         }
 
+        // ================================================================
+        // REPRODUCIR EPISODIO
+        // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
             currentSeason = season;
@@ -1045,9 +1282,10 @@
             currentSerieData = currentSerieData || { titulo: 'Serie', sinopsis: '' };
             currentTipo = document.querySelector('.tab.active').dataset.tipo;
 
-            const nombre = `${currentSerieData.titulo} - T${season}E${episode}: ${titulo}`;
+            const nombre = `${currentSerieData.titulo} - T${season}E${episode}`;
             peliTitulo.textContent = nombre;
             peliSinopsis.textContent = sinopsis || currentSerieData.sinopsis || 'Sin sinopsis.';
+            episodioActual.textContent = `T${season}E${episode}`;
             fuenteInfo.textContent = '';
             idiomaInfo.textContent = '🎧 Cambia el idioma dentro del reproductor';
 
@@ -1069,6 +1307,9 @@
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // ================================================================
+        // FUNCIONES REPRODUCTOR
+        // ================================================================
         function recargar() {
             if (currentSerieId && !currentSeason) {
                 reproducirPelicula(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
@@ -1095,11 +1336,12 @@
             }
         }
 
-        document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
+        btnCerrarReproductor.addEventListener('click', () => {
             reproductor.classList.remove('active');
             iframe.src = '';
             loadingVideo.style.display = 'none';
             fuenteInfo.textContent = '';
+            episodiosWrapper.style.display = 'none';
             if (timeoutAuto) clearTimeout(timeoutAuto);
         });
 
@@ -1108,7 +1350,7 @@
         sourceSelector.addEventListener('change', recargar);
 
         btnVolver.addEventListener('click', () => {
-            contenedorEpisodios.style.display = 'none';
+            episodiosWrapper.style.display = 'none';
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'block';
             btnVolver.style.display = 'none';
@@ -1149,7 +1391,7 @@
                 currentTipo = tab.dataset.tipo;
                 currentPage = 1;
                 modoBusqueda = false;
-                contenedorEpisodios.style.display = 'none';
+                episodiosWrapper.style.display = 'none';
                 grid.style.display = 'grid';
                 btnVolver.style.display = 'none';
                 tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
@@ -1158,6 +1400,9 @@
             });
         });
 
+        // ================================================================
+        // INICIO
+        // ================================================================
         cargarPagina(1);
     </script>
 </body>
