@@ -6,7 +6,7 @@
     <title>CineStar · 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET Y FONDO CON COLORES ===== */
+        /* ===== RESET Y FONDO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body {
             background: linear-gradient(135deg, #0f0c29 0%, #302b63 30%, #24243e 60%, #1a1a3e 80%, #0f0c29 100%);
@@ -17,9 +17,8 @@
         }
         body::before {
             content: '';
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+            position: fixed; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
@@ -44,7 +43,6 @@
             font-size: 2rem; font-weight: 900; letter-spacing: -1px;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         .logo span {
             -webkit-text-fill-color: rgba(255,255,255,0.06);
@@ -53,9 +51,7 @@
             padding: 2px 12px; border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.04);
         }
-        .nav-links {
-            display: flex; gap: 4px; flex-wrap: wrap;
-        }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
         .nav-link {
             background: none; border: none;
             color: rgba(255,255,255,0.4);
@@ -105,7 +101,6 @@
             font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px;
             background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
             line-height: 1.05; margin-top: 4px;
         }
         .hero-content p {
@@ -185,6 +180,22 @@
             object-fit: contain;
             background: rgba(255,255,255,0.05);
             padding: 4px; border: 1px solid rgba(255,255,255,0.06);
+        }
+        /* Placeholder para logos que no cargan */
+        .canal-card .logo-placeholder {
+            display: none;
+            width: 60px; height: 60px;
+            margin: 0 auto 8px; border-radius: 50%;
+            background: rgba(229,9,20,0.1);
+            font-size: 2rem;
+            line-height: 60px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .canal-card .logo-canal[src=""] + .logo-placeholder,
+        .canal-card .logo-canal:not([src]) + .logo-placeholder,
+        .canal-card .logo-canal[src*="error"] + .logo-placeholder {
+            display: block;
         }
         .canal-card .nombre { font-weight: 700; font-size: 1rem; color: #f0f0f0; }
         .canal-card .categoria { color: rgba(255,255,255,0.2); font-size: 0.7rem; margin-top: 2px; }
@@ -319,6 +330,8 @@
             text-align: center; backdrop-filter: blur(30px);
             font-size: 1rem; border: 1px solid rgba(255,255,255,0.03);
             pointer-events: none;
+            max-width: 90%;
+            z-index: 10;
         }
         .player-video .cargando .spinner {
             display: inline-block; width: 34px; height: 34px;
@@ -641,7 +654,8 @@
         function cargarCanalesTV() {
             canalesScroll.innerHTML = CANALES_TV.map(c => `
                 <div class="canal-card" data-stream="${c.stream}" data-nombre="${c.nombre}" data-categoria="${c.categoria}">
-                    <img class="logo-canal" src="${c.logo}" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none'">
+                    <img class="logo-canal" src="${c.logo}" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none'; this.parentElement.querySelector('.logo-placeholder').style.display='block'">
+                    <div class="logo-placeholder">${c.nombre.charAt(0)}</div>
                     <div class="nombre">${c.nombre}</div>
                     <div class="categoria">${c.categoria}</div>
                     <div class="live-label"><span class="live-dot"></span>En vivo</div>
@@ -843,7 +857,7 @@
         }
 
         // ================================================================
-        // BUSCADOR AUTO FUNCIONAL
+        // BUSCADOR AUTO MEJORADO (con reintentos y timeout)
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -853,8 +867,8 @@
         function probarSiguienteFuente(id, tipo, season, episode) {
             if (idxFuenteActual >= fuentesActuales.length) {
                 loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = '❌ No se encontró fuente.';
-                peliSinopsis.textContent = '⚠️ Prueba manual en el selector.';
+                fuenteInfo.textContent = '❌ No se encontró ninguna fuente.';
+                peliSinopsis.textContent = '⚠️ Prueba a seleccionar una fuente manualmente en el selector.';
                 return;
             }
 
@@ -867,27 +881,40 @@
 
             if (timeoutAuto) clearTimeout(timeoutAuto);
 
+            // Marcamos que el iframe ha cargado correctamente
+            let cargado = false;
+
             iframe.onload = () => {
-                clearTimeout(timeoutAuto);
-                loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
-                iframe.onload = null;
-                iframe.onerror = null;
+                if (!cargado) {
+                    cargado = true;
+                    clearTimeout(timeoutAuto);
+                    loadingVideo.style.display = 'none';
+                    fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
+                    iframe.onload = null;
+                    iframe.onerror = null;
+                }
             };
 
             iframe.onerror = () => {
-                clearTimeout(timeoutAuto);
-                idxFuenteActual++;
-                probarSiguienteFuente(id, tipo, season, episode);
-                iframe.onerror = null;
+                if (!cargado) {
+                    cargado = true;
+                    clearTimeout(timeoutAuto);
+                    idxFuenteActual++;
+                    probarSiguienteFuente(id, tipo, season, episode);
+                    iframe.onerror = null;
+                }
             };
 
+            // Timeout de 8 segundos para dar más tiempo
             timeoutAuto = setTimeout(() => {
-                iframe.onload = null;
-                iframe.onerror = null;
-                idxFuenteActual++;
-                probarSiguienteFuente(id, tipo, season, episode);
-            }, 6000);
+                if (!cargado) {
+                    cargado = true;
+                    iframe.onload = null;
+                    iframe.onerror = null;
+                    idxFuenteActual++;
+                    probarSiguienteFuente(id, tipo, season, episode);
+                }
+            }, 8000);
         }
 
         // ================================================================
