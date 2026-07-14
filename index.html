@@ -317,7 +317,12 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-
+        .result-count {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin-left: 10px;
+        }
         @media (max-width: 480px) {
             .grid-recom {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -343,7 +348,7 @@
     <div class="header">
         <div class="logo">🎬 Mi Cine <span>| Tendencias</span></div>
         <div class="search-box">
-            <input id="buscador" type="text" placeholder="Buscar...">
+            <input id="buscador" type="text" placeholder="Buscar película o anime...">
         </div>
     </div>
 
@@ -372,7 +377,7 @@
         <button class="filter-btn" data-year="2024">2024</button>
     </div>
 
-    <div class="section-title">📌 Recomendados</div>
+    <div class="section-title" id="tituloSeccion">📌 Recomendados</div>
     <div class="grid-recom" id="gridRecom"></div>
     <button class="btn-cargar" id="cargarMasRecom">Cargar más</button>
 
@@ -411,7 +416,7 @@
 
     <script>
         // ============================================================
-        //  TU CLAVE DE TMDb (en español)
+        //  TU CLAVE DE TMDb
         // ============================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
@@ -425,21 +430,22 @@
         const peliSinopsis = document.getElementById('peliSinopsis');
         const buscador = document.getElementById('buscador');
         const sourceSelector = document.getElementById('sourceSelector');
+        const tituloSeccion = document.getElementById('tituloSeccion');
 
         let allMovies = [];
         let allTrending = [];
         let currentYear = 'all';
         let currentPageRecom = 1;
         let currentPageTrend = 1;
+        let timeoutBusqueda = null;
+        let modoBusqueda = false;
         const MAX_PAGES = 5;
 
         // ============================================================
-        //  API CORREGIDA: SIEMPRE en español y sin romper la URL
+        //  API (con soporte para búsqueda)
         // ============================================================
         async function fetchApi(endpoint, extraParams = '') {
-            // Construimos la URL base con el idioma español
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
-            // Si hay parámetros extra (como la página), los añadimos con "&"
             if (extraParams) {
                 url += `&${extraParams}`;
             }
@@ -449,11 +455,44 @@
         }
 
         // ============================================================
-        //  CARGAR PELÍCULAS (con página)
+        //  BUSCADOR GLOBAL (consulta directamente la API)
+        // ============================================================
+        async function buscarPeliculas(query) {
+            if (!query.trim()) {
+                // Si el buscador está vacío, volvemos a mostrar los recomendados
+                modoBusqueda = false;
+                tituloSeccion.innerHTML = '📌 Recomendados';
+                document.getElementById('cargarMasRecom').style.display = 'block';
+                renderGrid(allMovies);
+                renderTrending(allTrending);
+                return;
+            }
+
+            modoBusqueda = true;
+            document.getElementById('cargarMasRecom').style.display = 'none';
+            tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">Buscando...</span>`;
+
+            try {
+                const data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                const results = data.results || [];
+                tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">${data.total_results || 0} encontrados</span>`;
+                
+                // Mostrar en el grid de recomendados (ocultamos tendencias)
+                renderGrid(results);
+                // Limpiamos tendencias o las dejamos igual? Ocultamos mejor.
+                trendingList.innerHTML = `<p style="color:#666; text-align:center; padding:20px;">Resultados de búsqueda</p>`;
+                document.getElementById('cargarMasTrend').style.display = 'none';
+            } catch (e) {
+                tituloSeccion.innerHTML = `❌ Error al buscar`;
+                gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
+            }
+        }
+
+        // ============================================================
+        //  CARGAR PELÍCULAS POPULARES
         // ============================================================
         async function loadPopular(page = 1) {
             try {
-                // Pasamos el parámetro "page" como extraParams
                 const data = await fetchApi('movie/popular', `page=${page}`);
                 const newMovies = data.results || [];
                 if (page === 1) {
@@ -461,7 +500,9 @@
                 } else {
                     allMovies = allMovies.concat(newMovies);
                 }
-                renderGrid(allMovies);
+                if (!modoBusqueda) {
+                    renderGrid(allMovies);
+                }
                 return newMovies.length > 0;
             } catch (e) {
                 gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
@@ -478,7 +519,9 @@
                 } else {
                     allTrending = allTrending.concat(newTrend);
                 }
-                renderTrending(allTrending);
+                if (!modoBusqueda) {
+                    renderTrending(allTrending);
+                }
                 return newTrend.length > 0;
             } catch (e) {
                 trendingList.innerHTML = `<p style="color:#e50914;">Error al cargar tendencias</p>`;
@@ -487,15 +530,20 @@
         }
 
         // ============================================================
-        //  RENDERIZAR (ahora con títulos en español)
+        //  RENDERIZAR
         // ============================================================
         function renderGrid(lista) {
             let filtered = lista;
-            if (currentYear !== 'all') {
+            if (currentYear !== 'all' && !modoBusqueda) {
                 filtered = filtered.filter(item => {
                     const date = item.release_date || '';
                     return date.startsWith(currentYear);
                 });
+            }
+
+            if (!filtered || filtered.length === 0) {
+                gridRecom.innerHTML = `<p style="color:#666; text-align:center; padding:20px; grid-column:1/-1;">No hay películas para mostrar.</p>`;
+                return;
             }
 
             gridRecom.innerHTML = filtered.map(item => `
@@ -519,6 +567,10 @@
         }
 
         function renderTrending(lista) {
+            if (!lista || lista.length === 0) {
+                trendingList.innerHTML = `<p style="color:#666; text-align:center; padding:20px;">No hay tendencias.</p>`;
+                return;
+            }
             trendingList.innerHTML = lista.map((item, index) => {
                 const rank = index + 1;
                 let rankClass = 'trend-rank';
@@ -559,6 +611,7 @@
         //  CARGAR MÁS
         // ============================================================
         async function cargarMasRecom() {
+            if (modoBusqueda) return;
             if (currentPageRecom >= MAX_PAGES) {
                 document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
                 document.getElementById('cargarMasRecom').disabled = true;
@@ -573,6 +626,7 @@
         }
 
         async function cargarMasTrend() {
+            if (modoBusqueda) return;
             if (currentPageTrend >= MAX_PAGES) {
                 document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
                 document.getElementById('cargarMasTrend').disabled = true;
@@ -624,33 +678,66 @@
         });
 
         // ============================================================
-        //  BUSCADOR Y FILTROS
+        //  BUSCADOR CON DEBOUNCE (para no saturar la API)
         // ============================================================
         buscador.addEventListener('input', (e) => {
-            const texto = e.target.value.toLowerCase().trim();
-            if (!texto) {
-                renderGrid(allMovies);
-                renderTrending(allTrending);
-                return;
-            }
-            const filtradas = allMovies.filter(item => {
-                const title = (item.title || '').toLowerCase();
-                return title.includes(texto);
-            });
-            renderGrid(filtradas);
-            const filtradasTrend = allTrending.filter(item => {
-                const title = (item.title || '').toLowerCase();
-                return title.includes(texto);
-            });
-            renderTrending(filtradasTrend);
+            clearTimeout(timeoutBusqueda);
+            const texto = e.target.value;
+            timeoutBusqueda = setTimeout(() => {
+                buscarPeliculas(texto);
+            }, 400); // Espera 400ms para que el usuario termine de escribir
         });
 
+        // ============================================================
+        //  FILTROS Y TABS
+        // ============================================================
         document.querySelectorAll('.filter-btn[data-year]').forEach(btn => {
             btn.addEventListener('click', () => {
+                if (modoBusqueda) return;
                 document.querySelectorAll('.filter-btn[data-year]').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentYear = btn.dataset.year;
                 renderGrid(allMovies);
+            });
+        });
+
+        // Filtro de género (solo UI, pero anima a la búsqueda)
+        document.querySelectorAll('.filter-btn[data-genre]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (modoBusqueda) {
+                    // Si estamos en modo búsqueda, volvemos a la vista normal
+                    buscador.value = '';
+                    modoBusqueda = false;
+                    tituloSeccion.innerHTML = '📌 Recomendados';
+                    document.getElementById('cargarMasRecom').style.display = 'block';
+                    document.getElementById('cargarMasTrend').style.display = 'block';
+                    renderGrid(allMovies);
+                    renderTrending(allTrending);
+                }
+                document.querySelectorAll('.filter-btn[data-genre]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // En una versión avanzada, filtraríamos por género aquí
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Buscar animes: escribir "anime" en el buscador o usar el filtro de animación
+                if (tab.dataset.tab === 'anime') {
+                    buscador.value = 'anime';
+                    buscarPeliculas('anime');
+                } else if (tab.dataset.tab === 'all') {
+                    buscador.value = '';
+                    modoBusqueda = false;
+                    tituloSeccion.innerHTML = '📌 Recomendados';
+                    document.getElementById('cargarMasRecom').style.display = 'block';
+                    document.getElementById('cargarMasTrend').style.display = 'block';
+                    renderGrid(allMovies);
+                    renderTrending(allTrending);
+                }
             });
         });
 
