@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CineStar · 2026</title>
-    <meta name="description" content="CineStar: La evolución del entretenimiento. Películas, series y anime en un solo lugar.">
-    <meta property="og:title" content="CineStar · 2026">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="description" content="CineStar: +5000 películas, series y anime gratis en español.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ========== RESET Y BASE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -19,38 +15,25 @@
             font-family: 'Inter', system-ui, sans-serif;
         }
         body {
-            background: #07070d;
+            background: #08080f;
             color: #f0f0f0;
             padding: 16px;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(245, 197, 24, 0.03) 0%, transparent 70%);
-            background-attachment: fixed;
+            background-image: radial-gradient(circle at 20% 20%, rgba(229, 9, 20, 0.06) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.04) 0%, transparent 50%);
         }
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #e50914;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
-        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        ::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
 
-        /* ========== HEADER ========== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
             padding: 12px 0 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
             position: relative;
         }
         .header::after {
@@ -60,63 +43,46 @@
             left: 0;
             width: 100%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.2), rgba(245, 197, 24, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(229,9,20,0.15), rgba(245,197,24,0.08), transparent);
         }
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             font-size: 2.4rem;
             font-weight: 900;
+            letter-spacing: -1.5px;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: none;
-            letter-spacing: -1.5px;
-            position: relative;
-        }
-        .logo::after {
-            content: '✦';
-            -webkit-text-fill-color: #f5c518;
-            font-size: 0.6rem;
-            position: absolute;
-            right: -22px;
-            top: 2px;
-            animation: pulseStar 2s ease-in-out infinite;
-        }
-        @keyframes pulseStar {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .logo .year {
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.08);
+            -webkit-text-fill-color: rgba(255,255,255,0.06);
             font-size: 0.7rem;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             padding: 4px 16px;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
             letter-spacing: 2px;
         }
-
-        /* ========== BUSCADOR ========== */
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             backdrop-filter: blur(30px);
             border-radius: 60px;
             padding: 4px 4px 4px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
             width: 100%;
             max-width: 440px;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            transition: 0.4s ease;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
         }
         .search-box:focus-within {
-            border-color: rgba(229, 9, 20, 0.3);
-            box-shadow: 0 0 80px rgba(229, 9, 20, 0.06), 0 8px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(229,9,20,0.2);
             transform: scale(1.01);
+            box-shadow: 0 0 60px rgba(229,9,20,0.05);
         }
         .search-box input {
             flex: 1;
@@ -125,104 +91,66 @@
             padding: 14px 0;
             color: #fff;
             font-size: 1rem;
-            font-weight: 400;
             outline: none;
             min-width: 100px;
-            letter-spacing: 0.3px;
         }
         .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255,255,255,0.15);
             font-weight: 300;
-            letter-spacing: 0.5px;
         }
         .search-box button {
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
             color: #fff;
-            padding: 12px 32px;
+            padding: 12px 30px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 25px rgba(229, 9, 20, 0.2);
-            letter-spacing: 0.8px;
-            position: relative;
-            overflow: hidden;
-        }
-        .search-box button::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            opacity: 0;
-            transition: 0.4s;
-        }
-        .search-box button:hover::before {
-            opacity: 1;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 25px rgba(229,9,20,0.2);
+            letter-spacing: 0.5px;
         }
         .search-box button:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 35px rgba(229, 9, 20, 0.4);
+            box-shadow: 0 6px 35px rgba(229,9,20,0.35);
         }
-        .search-box button:active {
-            transform: scale(0.94);
-        }
+        .search-box button:active { transform: scale(0.94); }
 
-        /* ========== TABS ========== */
         .tabs {
             display: flex;
-            gap: 2px;
+            gap: 4px;
             border-radius: 60px;
             padding: 5px 6px;
             margin: 24px 0 20px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.03);
             flex-wrap: wrap;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
         .tab {
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255,255,255,0.25);
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 10px 24px;
+            padding: 10px 22px;
             border-radius: 40px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: 0.4s ease;
             letter-spacing: 0.3px;
-            position: relative;
         }
         .tab:hover {
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.03);
         }
         .tab.active {
             color: #fff;
-            background: rgba(229, 9, 20, 0.2);
-            box-shadow: 0 0 40px rgba(229, 9, 20, 0.05);
+            background: rgba(229,9,20,0.15);
+            box-shadow: 0 0 40px rgba(229,9,20,0.05);
         }
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 20%;
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(90deg, #e50914, #ff4d4d);
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
-        }
-        .tab .emoji {
-            margin-right: 6px;
-        }
+        .tab .emoji { margin-right: 6px; }
 
-        /* ========== CARTELERA ========== */
         .cartelera {
             width: 100%;
             border-radius: 32px;
@@ -230,14 +158,14 @@
             margin: 16px 0 28px;
             position: relative;
             background: linear-gradient(135deg, #111120, #1a0a15);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
             aspect-ratio: 16/5.5;
-            min-height: 180px;
+            min-height: 170px;
             display: flex;
             align-items: center;
             padding: 30px 44px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.5s ease;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.5s ease;
         }
         .cartelera::before {
             content: '';
@@ -246,76 +174,68 @@
             right: -20%;
             width: 60%;
             height: 200%;
-            background: radial-gradient(ellipse, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(229,9,20,0.05) 0%, transparent 70%);
             pointer-events: none;
         }
-        .cartelera-content {
-            position: relative;
-            z-index: 2;
-            max-width: 55%;
-        }
+        .cartelera-content { position: relative; z-index: 2; max-width: 55%; }
         .cartelera-content .etiqueta {
             font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.15);
-            margin-bottom: 6px;
+            color: rgba(255,255,255,0.1);
+            margin-bottom: 4px;
         }
         .cartelera-content .titulo {
             font-size: 3rem;
             font-weight: 900;
             letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.6));
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.5));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.05;
         }
         .cartelera-content .desc {
-            color: rgba(255, 255, 255, 0.35);
-            margin-top: 10px;
-            font-size: 0.95rem;
-            font-weight: 400;
+            color: rgba(255,255,255,0.3);
+            margin-top: 8px;
+            font-size: 0.9rem;
             max-width: 460px;
             line-height: 1.6;
         }
         .cartelera-content .btn-ver {
-            margin-top: 18px;
+            margin-top: 16px;
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
             color: #fff;
-            padding: 14px 36px;
+            padding: 14px 34px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.25);
-            letter-spacing: 0.5px;
+            transition: 0.4s ease;
+            box-shadow: 0 4px 30px rgba(229,9,20,0.2);
         }
         .cartelera-content .btn-ver:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 40px rgba(229, 9, 20, 0.4);
+            box-shadow: 0 6px 40px rgba(229,9,20,0.35);
         }
         .cartelera .poster-mini {
             position: absolute;
             right: 40px;
             bottom: -10px;
-            width: 180px;
+            width: 170px;
             border-radius: 18px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
             aspect-ratio: 2/3;
             object-fit: cover;
             background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.04);
             transition: 0.5s ease;
         }
-        .cartelera:hover .poster-mini {
-            transform: scale(1.02) rotate(-1deg);
-        }
+        .cartelera:hover .poster-mini { transform: scale(1.02) rotate(-1deg); }
 
-        /* ========== SECCIÓN TÍTULO ========== */
         .section-title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-weight: 800;
             margin: 28px 0 18px;
             display: flex;
@@ -335,9 +255,9 @@
             letter-spacing: 1px;
         }
         .section-title .volver {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.3);
             padding: 6px 20px;
             border-radius: 40px;
             font-size: 0.8rem;
@@ -345,30 +265,29 @@
             transition: 0.3s;
         }
         .section-title .volver:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             color: #fff;
         }
         .result-count {
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255,255,255,0.12);
             font-size: 0.9rem;
             font-weight: 400;
         }
 
-        /* ========== GRID ========== */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 24px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.5s cubic-bezier(0.25,0.8,0.25,1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
             position: relative;
         }
         .card::before {
@@ -377,7 +296,7 @@
             inset: 0;
             border-radius: 24px;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -385,8 +304,8 @@
         }
         .card:hover {
             transform: translateY(-14px) scale(1.02);
-            border-color: rgba(229, 9, 20, 0.15);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            border-color: rgba(229,9,20,0.12);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
         }
         .card img {
             width: 100%;
@@ -395,12 +314,8 @@
             display: block;
             transition: 0.5s ease;
         }
-        .card:hover img {
-            transform: scale(1.04);
-        }
-        .card .info {
-            padding: 16px 16px 18px;
-        }
+        .card:hover img { transform: scale(1.04); }
+        .card .info { padding: 16px 16px 18px; }
         .card .info h4 {
             font-size: 0.95rem;
             font-weight: 700;
@@ -418,25 +333,21 @@
             align-items: center;
             gap: 10px;
         }
-        .card .info .year {
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 0.7rem;
-        }
+        .card .info .year { color: rgba(255,255,255,0.15); font-size: 0.7rem; }
         .card .info .idioma {
             color: #00ff88;
             font-size: 0.55rem;
             margin-top: 6px;
-            background: rgba(0, 255, 136, 0.06);
+            background: rgba(0,255,136,0.06);
             padding: 2px 12px;
             border-radius: 30px;
             display: inline-block;
-            border: 1px solid rgba(0, 255, 136, 0.06);
+            border: 1px solid rgba(0,255,136,0.06);
         }
 
-        /* ========== BOTÓN CARGAR ========== */
         .btn-cargar {
-            background: linear-gradient(135deg, rgba(229, 9, 20, 0.8), rgba(178, 7, 16, 0.8));
-            border: 1px solid rgba(229, 9, 20, 0.15);
+            background: linear-gradient(135deg, rgba(229,9,20,0.7), rgba(178,7,16,0.7));
+            border: 1px solid rgba(229,9,20,0.1);
             color: #fff;
             padding: 16px;
             border-radius: 60px;
@@ -447,19 +358,17 @@
             display: block;
             width: 100%;
             max-width: 340px;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.1);
+            transition: 0.4s ease;
+            box-shadow: 0 4px 30px rgba(229,9,20,0.08);
             letter-spacing: 0.8px;
             backdrop-filter: blur(10px);
         }
         .btn-cargar:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 40px rgba(229, 9, 20, 0.2);
+            box-shadow: 0 8px 40px rgba(229,9,20,0.15);
             background: linear-gradient(135deg, #e50914, #b20710);
         }
-        .btn-cargar:active {
-            transform: scale(0.94);
-        }
+        .btn-cargar:active { transform: scale(0.94); }
         .btn-cargar:disabled {
             opacity: 0.2;
             cursor: not-allowed;
@@ -467,40 +376,33 @@
             box-shadow: none;
         }
 
-        /* ========== REPRODUCTOR ========== */
         .reproductor {
             display: none;
             margin-top: 30px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(50px);
             border-radius: 32px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255,255,255,0.03);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
         .reproductor.active {
             display: block;
-            animation: fadeSlide 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: fadeSlide 0.6s cubic-bezier(0.25,0.8,0.25,1);
         }
         @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .player-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 24px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0,0,0,0.3);
             flex-wrap: wrap;
             gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
         }
         .player-header .volver {
             background: none;
@@ -514,10 +416,7 @@
             gap: 8px;
             transition: 0.3s;
         }
-        .player-header .volver:hover {
-            color: #ff4d4d;
-            transform: scale(1.04);
-        }
+        .player-header .volver:hover { color: #ff4d4d; transform: scale(1.04); }
         .player-controls {
             display: flex;
             gap: 8px;
@@ -525,9 +424,9 @@
             align-items: center;
         }
         .player-controls select {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
             padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -535,13 +434,11 @@
             outline: none;
             transition: 0.3s;
         }
-        .player-controls select:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        .player-controls select:hover { background: rgba(255,255,255,0.05); }
         .player-controls button {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.4);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.3);
             padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -549,7 +446,7 @@
             transition: 0.3s;
         }
         .player-controls button:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             color: #fff;
         }
 
@@ -570,36 +467,32 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.15);
-            background: rgba(0, 0, 0, 0.6);
+            color: rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.6);
             padding: 28px 40px;
             border-radius: 60px;
             text-align: center;
             backdrop-filter: blur(30px);
             font-size: 1rem;
             max-width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.02);
         }
         .player-video .cargando .spinner {
             display: inline-block;
             width: 34px;
             height: 34px;
-            border: 3px solid rgba(255, 255, 255, 0.04);
+            border: 3px solid rgba(255,255,255,0.04);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 14px;
         }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .player-footer {
             padding: 20px 24px;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.02);
         }
         .player-footer .info-top {
             display: flex;
@@ -612,24 +505,23 @@
             font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.3px;
-            color: #f0f0f0;
         }
         .player-footer .info-top .episodio-actual {
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255,255,255,0.15);
             font-size: 0.8rem;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             padding: 4px 16px;
             border-radius: 40px;
         }
         .player-footer .sinopsis {
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255,255,255,0.2);
             font-size: 0.9rem;
             margin-top: 8px;
             line-height: 1.6;
         }
         .player-footer .info-extra {
-            color: rgba(0, 255, 136, 0.4);
+            color: rgba(0,255,136,0.3);
             font-size: 0.7rem;
             margin-top: 8px;
         }
@@ -638,7 +530,6 @@
             margin-left: 14px;
         }
 
-        /* ========== EPISODIOS ========== */
         .episodios-wrapper {
             margin-top: 16px;
             padding: 0 6px 12px;
@@ -646,7 +537,7 @@
         .episodios-wrapper .episodios-titulo {
             font-size: 0.7rem;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255,255,255,0.1);
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 12px;
@@ -659,43 +550,33 @@
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
-        .episodios-scroll::-webkit-scrollbar {
-            height: 3px;
-        }
-        .episodios-scroll::-webkit-scrollbar-thumb {
-            background: #e50914;
-            border-radius: 10px;
-        }
+        .episodios-scroll::-webkit-scrollbar { height: 3px; }
+        .episodios-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .ep-card-mini {
             flex: 0 0 auto;
             scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             border-radius: 16px;
             padding: 12px 18px;
             text-align: center;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.3s ease;
             min-width: 80px;
         }
         .ep-card-mini:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(229, 9, 20, 0.2);
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(229,9,20,0.15);
             transform: scale(1.04);
         }
         .ep-card-mini.active-ep {
-            background: rgba(229, 9, 20, 0.08);
-            border-color: rgba(229, 9, 20, 0.3);
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.05);
+            background: rgba(229,9,20,0.06);
+            border-color: rgba(229,9,20,0.2);
         }
-        .ep-card-mini .num {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #e50914;
-        }
+        .ep-card-mini .num { font-size: 1.2rem; font-weight: 800; color: #e50914; }
         .ep-card-mini .title {
             font-size: 0.5rem;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255,255,255,0.15);
             margin-top: 4px;
             white-space: nowrap;
             overflow: hidden;
@@ -710,9 +591,9 @@
             margin: 8px 0 12px;
         }
         .temp-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.25);
             padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.7rem;
@@ -721,22 +602,21 @@
             transition: 0.3s;
         }
         .temp-btn:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             color: #fff;
         }
         .temp-btn.active {
-            background: rgba(229, 9, 20, 0.12);
-            border-color: rgba(229, 9, 20, 0.2);
+            background: rgba(229,9,20,0.08);
+            border-color: rgba(229,9,20,0.15);
             color: #fff;
         }
 
-        /* ========== FOOTER ========== */
         .footer {
             margin-top: 60px;
             padding: 30px 0 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255,255,255,0.02);
             text-align: center;
-            color: rgba(255, 255, 255, 0.08);
+            color: rgba(255,255,255,0.06);
             font-size: 0.8rem;
         }
         .footer .social {
@@ -746,7 +626,7 @@
             margin-bottom: 16px;
         }
         .footer .social a {
-            color: rgba(255, 255, 255, 0.06);
+            color: rgba(255,255,255,0.05);
             font-size: 1.6rem;
             transition: 0.4s ease;
         }
@@ -755,123 +635,49 @@
             transform: scale(1.1) translateY(-3px);
         }
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
-            .cartelera {
-                aspect-ratio: 16/8;
-                padding: 20px 24px;
-                min-height: 130px;
-            }
-            .cartelera-content .titulo {
-                font-size: 2rem;
-            }
-            .cartelera-content .desc {
-                font-size: 0.85rem;
-            }
-            .cartelera .poster-mini {
-                width: 110px;
-                right: 16px;
-                bottom: -8px;
-            }
-            .cartelera-content {
-                max-width: 65%;
-            }
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 16px;
-            }
-            .player-video {
-                height: 50vh;
-                min-height: 260px;
-            }
-            .logo {
-                font-size: 2rem;
-            }
-            .search-box {
-                max-width: 100%;
-            }
-            .search-box input {
-                font-size: 0.9rem;
-                padding: 12px 0;
-            }
-            .search-box button {
-                padding: 10px 22px;
-                font-size: 0.8rem;
-            }
-            .tabs {
-                padding: 4px 6px;
-                gap: 2px;
-            }
-            .tab {
-                font-size: 0.75rem;
-                padding: 8px 14px;
-            }
-            .section-title {
-                font-size: 1.3rem;
-            }
-            .ep-card-mini {
-                min-width: 70px;
-                padding: 10px 14px;
-            }
+            .cartelera { aspect-ratio: 16/8; padding: 20px 24px; min-height: 130px; }
+            .cartelera-content .titulo { font-size: 2rem; }
+            .cartelera-content .desc { font-size: 0.85rem; }
+            .cartelera .poster-mini { width: 110px; right: 16px; bottom: -8px; }
+            .cartelera-content { max-width: 65%; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+            .player-video { height: 50vh; min-height: 260px; }
+            .logo { font-size: 2rem; }
+            .search-box { max-width: 100%; }
+            .search-box input { font-size: 0.9rem; padding: 12px 0; }
+            .search-box button { padding: 10px 22px; font-size: 0.8rem; }
+            .tabs { padding: 4px 6px; gap: 2px; }
+            .tab { font-size: 0.75rem; padding: 8px 14px; }
+            .section-title { font-size: 1.3rem; }
+            .ep-card-mini { min-width: 70px; padding: 10px 14px; }
         }
         @media (max-width: 480px) {
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                gap: 12px;
-            }
-            .cartelera {
-                aspect-ratio: 16/10;
-                padding: 16px 18px;
-                min-height: 110px;
-            }
-            .cartelera-content .titulo {
-                font-size: 1.4rem;
-            }
-            .cartelera-content .desc {
-                font-size: 0.7rem;
-                display: none;
-            }
-            .cartelera .poster-mini {
-                width: 80px;
-                right: 10px;
-                bottom: -4px;
-            }
-            .cartelera-content {
-                max-width: 60%;
-            }
-            .player-video {
-                height: 40vh;
-                min-height: 200px;
-            }
-            .tab {
-                font-size: 0.6rem;
-                padding: 6px 10px;
-            }
-            .ep-card-mini {
-                min-width: 60px;
-                padding: 8px 10px;
-            }
-            .ep-card-mini .num {
-                font-size: 1rem;
-            }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+            .cartelera { aspect-ratio: 16/10; padding: 16px 18px; min-height: 110px; }
+            .cartelera-content .titulo { font-size: 1.4rem; }
+            .cartelera-content .desc { display: none; }
+            .cartelera .poster-mini { width: 80px; right: 10px; bottom: -4px; }
+            .cartelera-content { max-width: 60%; }
+            .player-video { height: 40vh; min-height: 200px; }
+            .tab { font-size: 0.6rem; padding: 6px 10px; }
+            .ep-card-mini { min-width: 60px; padding: 8px 10px; }
+            .ep-card-mini .num { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ========== HEADER ========== -->
+    <!-- HEADER -->
     <header class="header">
-        <div class="logo">
-            🎬 CineStar
-            <span class="year">2026</span>
-        </div>
+        <div class="logo">🎬 CineStar <span class="year">2026</span></div>
         <div class="search-box">
-            <input id="buscador" type="text" placeholder="Buscar...">
+            <input id="buscador" type="text" placeholder="Buscar entre +5000 títulos...">
             <button id="btnBuscar">Buscar</button>
         </div>
     </header>
 
-    <!-- ========== TABS ========== -->
+    <!-- TABS -->
     <nav class="tabs" id="tabsContainer">
         <button class="tab active" data-tipo="movie"><span class="emoji">🌍</span>Películas</button>
         <button class="tab" data-tipo="espanol"><span class="emoji">🇪🇸</span>Películas Español</button>
@@ -880,28 +686,28 @@
         <button class="tab" data-tipo="anime"><span class="emoji">🎌</span>Anime</button>
     </nav>
 
-    <!-- ========== CARTELERA ========== -->
+    <!-- CARTELERA -->
     <div class="cartelera" id="cartelera">
         <div class="cartelera-content">
             <div class="etiqueta">★ Destacado</div>
             <div class="titulo" id="carteleraTitulo">CineStar</div>
-            <div class="desc" id="carteleraDesc">Descubre el mejor contenido de entretenimiento.</div>
+            <div class="desc" id="carteleraDesc">+5000 películas, series y anime gratis en español.</div>
             <button class="btn-ver" id="btnVerCartelera">Ver ahora</button>
         </div>
         <img id="carteleraPoster" class="poster-mini" src="https://image.tmdb.org/t/p/w300/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
     </div>
 
-    <!-- ========== SECCIÓN ========== -->
+    <!-- SECCIÓN -->
     <div class="section-title" id="tituloSeccion">
         📌 Populares <span class="badge">🔥</span>
         <button class="volver" id="btnVolver" style="display:none;">← Volver</button>
     </div>
 
-    <!-- ========== GRID ========== -->
+    <!-- GRID -->
     <div id="grid" class="grid"></div>
-    <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
+    <button class="btn-cargar" id="btnCargarMas">Cargar más (hasta 5000+)</button>
 
-    <!-- ========== REPRODUCTOR ========== -->
+    <!-- REPRODUCTOR -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <button class="volver" id="btnCerrarReproductor">← Volver</button>
@@ -921,7 +727,6 @@
                 <button id="btnSiguiente">⏩ Siguiente</button>
             </div>
         </div>
-
         <div class="player-video">
             <div class="cargando" id="loadingVideo">
                 <div class="spinner"></div>
@@ -929,7 +734,6 @@
             </div>
             <iframe id="iframeVideo" src="" allowfullscreen></iframe>
         </div>
-
         <div class="player-footer">
             <div class="info-top">
                 <h3 id="peliTitulo">Título</h3>
@@ -941,7 +745,6 @@
                 <span class="idioma-info" id="idiomaInfo">🎧 Cambia el idioma dentro del reproductor</span>
             </div>
         </div>
-
         <div class="episodios-wrapper" id="episodiosWrapper" style="display:none;">
             <div class="episodios-titulo">📺 Episodios</div>
             <div class="temporadas" id="temporadasContainer"></div>
@@ -949,30 +752,21 @@
         </div>
     </div>
 
-    <!-- ========== FOOTER ========== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="social">
-            <a href="#" aria-label="Facebook">📘</a>
-            <a href="#" aria-label="Twitter">🐦</a>
-            <a href="#" aria-label="Instagram">📸</a>
-            <a href="#" aria-label="YouTube">▶️</a>
+            <a href="#">📘</a><a href="#">🐦</a><a href="#">📸</a><a href="#">▶️</a>
         </div>
         <p>&copy; 2026 <strong style="color:#e50914;">CineStar</strong>. Todos los derechos reservados.</p>
-        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.04);">
-            CineStar no aloja archivos. Solo enlazamos a contenido de terceros.
-        </p>
+        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.03);">CineStar no aloja archivos. Solo enlazamos a contenido de terceros.</p>
     </footer>
 
-    <!-- ================================================================ -->
-    <!-- SCRIPT COMPLETO (mismo código funcional de antes) -->
-    <!-- ================================================================ -->
     <script>
         // ================================================================
         // CONFIGURACIÓN
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
-        const BASE_IMG_BACKDROP = 'https://image.tmdb.org/t/p/w1280';
 
         const FUENTES = {
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
@@ -1030,7 +824,7 @@
         let timeoutAuto = null;
         let episodiosCache = [];
         let temporadasCache = [];
-        const MAX_PAGES = 5;
+        const MAX_PAGES = 500; // ¡500 páginas = 10,000 películas/series!
 
         // ================================================================
         // API
@@ -1049,14 +843,22 @@
         async function cargarPagina(page = 1) {
             try {
                 let endpoint, extra = `page=${page}`;
-                if (currentTipo === 'movie') { endpoint = 'movie/popular';
-                    extra = `page=${page}`; } else if (currentTipo === 'espanol') { endpoint = 'discover/movie';
-                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; } else if (currentTipo ===
-                    'tv') { endpoint = 'tv/popular';
-                    extra = `page=${page}`; } else if (currentTipo === 'tv_es') { endpoint = 'discover/tv';
-                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`; } else { endpoint =
-                        'discover/tv';
-                    extra = `page=${page}&with_genres=16&with_original_language=ja`; }
+                if (currentTipo === 'movie') {
+                    endpoint = 'movie/popular';
+                    extra = `page=${page}`;
+                } else if (currentTipo === 'espanol') {
+                    endpoint = 'discover/movie';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
+                } else if (currentTipo === 'tv') {
+                    endpoint = 'tv/popular';
+                    extra = `page=${page}`;
+                } else if (currentTipo === 'tv_es') {
+                    endpoint = 'discover/tv';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
+                } else {
+                    endpoint = 'discover/tv';
+                    extra = `page=${page}&with_genres=16&with_original_language=ja`;
+                }
                 const data = await fetchApi(endpoint, extra);
                 const nuevos = data.results || [];
                 if (page === 1) allItems = nuevos;
@@ -1119,16 +921,20 @@
             try {
                 let data;
                 const tipo = currentTipo;
-                if (tipo === 'movie') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`); } else if (
-                    tipo === 'espanol') { data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
-                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item
-                        .original_language === 'la'); } else if (tipo === 'tv') { data = await fetchApi('search/tv',
-                        `query=${encodeURIComponent(query)}&page=1`); } else if (tipo === 'tv_es') { data = await fetchApi(
-                        'search/tv', `query=${encodeURIComponent(query)}&page=1`);
-                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item
-                        .original_language === 'la'); } else { data = await fetchApi('search/tv',
-                        `query=${encodeURIComponent(query)}&page=1`);
-                    data.results = (data.results || []).filter(item => item.genre_ids && item.genre_ids.includes(16)); }
+                if (tipo === 'movie') {
+                    data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                } else if (tipo === 'espanol') {
+                    data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
+                } else if (tipo === 'tv') {
+                    data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                } else if (tipo === 'tv_es') {
+                    data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
+                } else {
+                    data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.genre_ids && item.genre_ids.includes(16));
+                }
                 const results = data.results || [];
                 tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">${results.length} encontrados</span>`;
                 renderGrid(results);
@@ -1144,8 +950,7 @@
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML =
-                    `<p style="color:rgba(255,255,255,0.08);text-align:center;padding:40px;grid-column:1/-1;">No hay resultados.</p>`;
+                grid.innerHTML = `<p style="color:rgba(255,255,255,0.08);text-align:center;padding:40px;grid-column:1/-1;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -1237,8 +1042,7 @@
                 return;
             }
             const dominio = fuentesActuales[idxFuenteActual];
-            let url = tipo === 'movie' ? `https://${dominio}/embed/movie/${id}` :
-                `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
+            let url = tipo === 'movie' ? `https://${dominio}/embed/movie/${id}` : `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${fuentesActuales.length}: ${dominio}...`;
             iframe.src = url;
             if (timeoutAuto) clearTimeout(timeoutAuto);
@@ -1445,18 +1249,26 @@
             cargarPagina(1);
         });
 
+        // ================================================================
+        // CARGAR MÁS (hasta 500 páginas)
+        // ================================================================
         btnCargarMas.addEventListener('click', async () => {
             if (modoBusqueda) return;
             if (currentPage >= MAX_PAGES) {
-                btnCargarMas.textContent = 'Ya no hay más';
+                btnCargarMas.textContent = '¡Ya tienes más de 5000 títulos!';
                 btnCargarMas.disabled = true;
                 return;
             }
             currentPage++;
             const hayMas = await cargarPagina(currentPage);
             if (!hayMas) {
-                btnCargarMas.textContent = 'Ya no hay más';
+                btnCargarMas.textContent = 'No hay más títulos.';
                 btnCargarMas.disabled = true;
+            } else {
+                btnCargarMas.textContent = `Cargando... (${currentPage * 20} títulos)`;
+                setTimeout(() => {
+                    btnCargarMas.textContent = 'Cargar más (hasta 5000+)';
+                }, 500);
             }
         });
 
@@ -1483,6 +1295,8 @@
                 btnVolver.style.display = 'none';
                 tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
                 buscador.value = '';
+                btnCargarMas.textContent = 'Cargar más (hasta 5000+)';
+                btnCargarMas.disabled = false;
                 cargarPagina(1);
             });
         });
