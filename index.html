@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎬 Cine Pro</title>
+    <title>🎬 Cine Pro - Buscador en Español</title>
     <style>
         * {
             margin: 0;
@@ -187,6 +187,10 @@
         .card .info .year {
             color: #666;
             font-size: 0.7rem;
+        }
+        .card .info .idioma {
+            color: #0f0;
+            font-size: 0.65rem;
         }
 
         .temporadas {
@@ -476,9 +480,9 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 Cine <small>| Pro</small></div>
+        <div class="logo">🎬 Cine <small>| Buscador en Español</small></div>
         <div class="search-box">
-            <input id="buscador" type="text" placeholder="Buscar películas, series o animes...">
+            <input id="buscador" type="text" placeholder="Buscar películas en español...">
             <button id="btnBuscar">Buscar</button>
         </div>
     </div>
@@ -490,7 +494,7 @@
     </div>
 
     <div class="section-title" id="tituloSeccion">
-        📌 Populares <span class="badge">🔥</span>
+        📌 Populares en Español <span class="badge">🎙️</span>
         <button class="volver" id="btnVolver" style="display:none;">← Volver</button>
     </div>
 
@@ -512,7 +516,7 @@
             <div class="player-controls">
                 <span style="color:#e50914;font-weight:600;font-size:0.7rem;">HD</span>
                 <select id="sourceSelector">
-                    <option value="auto">🤖 Auto</option>
+                    <option value="auto">🤖 Auto (Español)</option>
                     <option value="vidsrc.in">vidsrc.in</option>
                     <option value="vidlink.pro">vidlink.pro</option>
                     <option value="vidsrc.pm">vidsrc.pm</option>
@@ -521,7 +525,6 @@
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
                     <option value="vidsrc.cc">vidsrc.cc</option>
                     <option value="autoembed.co">autoembed.co</option>
-                    <option value="embed.su">embed.su</option>
                 </select>
                 <button id="btnRecargar">🔄</button>
                 <button id="btnSiguiente">⏩ Siguiente</button>
@@ -544,7 +547,7 @@
             <div class="aviso-idioma">
                 <span>💡</span>
                 <div>
-                    <strong>Para cambiar el audio a español:</strong><br>
+                    <strong>Para escuchar en español:</strong><br>
                     1. Toca el video → botón <strong>⚙️</strong> (configuración) en la esquina inferior derecha.<br>
                     2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en "Pista de audio".<br>
                     <span style="color:#aaa; font-size:0.75rem;">
@@ -564,18 +567,17 @@
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
 
         // ================================================================
-        // FUENTES DE VIDEO (priorizadas por fiabilidad y español)
+        // FUENTES DE VIDEO (priorizadas por español)
         // ================================================================
         const DOMINIOS = [
-            'vidsrc.in',       // #1 - La que mejor te funciona
-            'vidlink.pro',     // #2 - Buena para contenido en español
-            'vidsrc.pm',       // #3 - La que pediste
-            'vidfast.pro',     // #4 - Alternativa rápida
-            '2embed.skin',     // #5 - Suelo tener doblaje
-            'vidsrc.xyz',      // #6 - Clásica
-            'vidsrc.cc',       // #7 - Alternativa
-            'autoembed.co',    // #8 - Especializada en multi-idioma
-            'embed.su'         // #9 - Backup
+            'vidsrc.in',
+            'vidlink.pro',
+            'vidsrc.pm',
+            'vidfast.pro',
+            '2embed.skin',
+            'vidsrc.xyz',
+            'vidsrc.cc',
+            'autoembed.co'
         ];
 
         // DOM
@@ -617,9 +619,10 @@
         const MAX_PAGES = 5;
 
         // ================================================================
-        // API
+        // API (SIEMPRE EN ESPAÑOL)
         // ================================================================
         async function fetchApi(endpoint, extra = '') {
+            // Forzar idioma español en todas las peticiones
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
             if (extra) url += `&${extra}`;
             const res = await fetch(url);
@@ -628,20 +631,27 @@
         }
 
         // ================================================================
-        // CARGAR PÁGINA
+        // CARGAR PÁGINA (con idioma original español)
         // ================================================================
         async function cargarPagina(page = 1) {
             try {
                 let endpoint;
                 let extra = `page=${page}`;
+
                 if (currentTipo === 'movie') {
-                    endpoint = 'movie/popular';
+                    // Películas con idioma original español
+                    endpoint = 'discover/movie';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
                 } else if (currentTipo === 'tv') {
-                    endpoint = 'tv/popular';
+                    // Series con idioma original español
+                    endpoint = 'discover/tv';
+                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
                 } else {
+                    // Anime: animación japonesa (como antes)
                     endpoint = 'discover/tv';
                     extra = `page=${page}&with_genres=16&with_original_language=ja`;
                 }
+
                 const data = await fetchApi(endpoint, extra);
                 const nuevos = data.results || [];
                 if (page === 1) allItems = nuevos;
@@ -655,12 +665,12 @@
         }
 
         // ================================================================
-        // BUSCAR
+        // BUSCAR (en español)
         // ================================================================
         async function buscar(query) {
             if (!query.trim()) {
                 modoBusqueda = false;
-                tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
+                tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
                 btnCargarMas.style.display = 'block';
                 contenedorEpisodios.style.display = 'none';
                 grid.style.display = 'grid';
@@ -668,6 +678,7 @@
                 await cargarPagina(1);
                 return;
             }
+
             modoBusqueda = true;
             btnCargarMas.style.display = 'none';
             contenedorEpisodios.style.display = 'none';
@@ -697,13 +708,14 @@
         }
 
         // ================================================================
-        // RENDER GRID
+        // RENDER GRID (con indicador de idioma)
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML = `<p style="color:#888;text-align:center;padding:30px;grid-column:1/-1;">No hay resultados.</p>`;
+                grid.innerHTML = `<p style="color:#888;text-align:center;padding:30px;grid-column:1/-1;">No hay resultados en español.</p>`;
                 return;
             }
+
             grid.innerHTML = lista.map(item => {
                 const esPelicula = item.media_type === 'movie' || (item.title && !item.name);
                 const titulo = esPelicula ? item.title : item.name;
@@ -711,12 +723,15 @@
                 const año = fecha ? fecha.split('-')[0] : '';
                 const id = item.id;
                 const tipo = esPelicula ? 'movie' : 'tv';
+                const idiomaOriginal = item.original_language || '';
+                const esEspanol = idiomaOriginal === 'es' || idiomaOriginal === 'la';
                 return `
                     <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-tipo="${tipo}" data-año="${año}">
                         <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${titulo}" loading="lazy">
                         <div class="info">
                             <h4>${titulo}</h4>
                             <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'} <span class="year">${año}</span></p>
+                            ${esEspanol ? '<div class="idioma">🎙️ Español</div>' : ''}
                         </div>
                     </div>
                 `;
@@ -738,7 +753,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR PELÍCULA
+        // REPRODUCIR PELÍCULA (con intento de español)
         // ================================================================
         function reproducirPelicula(id, titulo, sinopsis) {
             currentSerieId = id;
@@ -759,7 +774,8 @@
                 buscarFuenteAuto(id, 'movie');
             } else {
                 const dominio = sourceSelector.value;
-                const url = `https://${dominio}/embed/movie/${id}`;
+                // Intentar forzar español en la URL (si la fuente lo soporta)
+                const url = `https://${dominio}/embed/movie/${id}?lang=es`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -768,7 +784,7 @@
         }
 
         // ================================================================
-        // BUSCAR FUENTE AUTO
+        // BUSCAR FUENTE AUTO (priorizando español)
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -786,9 +802,9 @@
             const dominio = DOMINIOS[idxFuenteActual];
             let url;
             if (tipo === 'movie') {
-                url = `https://${dominio}/embed/movie/${id}`;
+                url = `https://${dominio}/embed/movie/${id}?lang=es`;
             } else {
-                url = `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
+                url = `https://${dominio}/embed/tv/${id}/${season}/${episode}?lang=es`;
             }
 
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${DOMINIOS.length}: ${dominio}...`;
@@ -802,7 +818,7 @@
             iframe.onload = () => {
                 clearTimeout(timeout);
                 loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
+                fuenteInfo.textContent = `✅ Fuente: ${dominio} (intento español)`;
                 iframe.onload = null;
             };
 
@@ -925,7 +941,7 @@
                 buscarFuenteAuto(serieId, 'tv', season, episode);
             } else {
                 const dominio = sourceSelector.value;
-                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
+                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}?lang=es`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -981,7 +997,7 @@
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'block';
             btnVolver.style.display = 'none';
-            tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
+            tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
             cargarPagina(1);
         });
 
@@ -1031,7 +1047,7 @@
                 contenedorEpisodios.style.display = 'none';
                 grid.style.display = 'grid';
                 btnVolver.style.display = 'none';
-                tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
+                tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
                 buscador.value = '';
                 cargarPagina(1);
             });
