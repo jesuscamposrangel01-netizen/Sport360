@@ -6,34 +6,25 @@
     <title>CineStar · 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET Y FONDO ===== */
+        /* ===== RESET Y FONDO BLANCO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body {
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 30%, #24243e 60%, #1a1a3e 80%, #0f0c29 100%);
-            color: #fff;
+            background: #f5f7fa;
+            color: #1a1a2e;
             min-height: 100vh;
             padding-bottom: 70px;
-            background-attachment: fixed;
         }
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
         ::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
 
         /* ===== HEADER ===== */
         .header {
             position: sticky; top: 0; z-index: 100;
-            background: rgba(15, 12, 41, 0.92);
+            background: rgba(255,255,255,0.92);
             backdrop-filter: blur(20px);
             padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .header-inner {
             display: flex; justify-content: space-between; align-items: center;
@@ -45,66 +36,65 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .logo span {
-            -webkit-text-fill-color: rgba(255,255,255,0.06);
+            -webkit-text-fill-color: rgba(0,0,0,0.1);
             font-size: 0.6rem; font-weight: 700;
-            background: rgba(255,255,255,0.03);
+            background: rgba(0,0,0,0.03);
             padding: 2px 12px; border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
         .nav-link {
             background: none; border: none;
-            color: rgba(255,255,255,0.4);
+            color: rgba(0,0,0,0.4);
             font-size: 0.8rem; font-weight: 600;
             cursor: pointer; padding: 6px 14px;
             border-radius: 40px; transition: 0.3s;
         }
-        .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
-        .nav-link.active { color: #fff; background: rgba(229,9,20,0.2); }
+        .nav-link:hover { color: rgba(0,0,0,0.7); background: rgba(0,0,0,0.04); }
+        .nav-link.active { color: #fff; background: #e50914; }
         .search-icon {
-            color: rgba(255,255,255,0.2); font-size: 1.4rem;
+            color: rgba(0,0,0,0.2); font-size: 1.4rem;
             cursor: pointer; background: none; border: none; padding: 4px 8px;
         }
-        .search-icon:hover { color: #fff; }
+        .search-icon:hover { color: #000; }
 
         /* ===== HERO ===== */
         .hero {
             position: relative; margin: 16px 16px 28px;
             border-radius: 28px; overflow: hidden;
-            background: linear-gradient(145deg, #1a0a40, #2a0a30, #0a1a50);
+            background: linear-gradient(145deg, #e8ecf1, #d5dce4);
             aspect-ratio: 16/5.5; min-height: 180px;
             display: flex; align-items: center;
             padding: 32px 44px;
-            border: 1px solid rgba(255,255,255,0.04);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
         }
         .hero::before {
             content: ''; position: absolute; inset: 0;
-            background: radial-gradient(ellipse at 70% 30%, rgba(229,9,20,0.1) 0%, rgba(0,180,255,0.05) 60%, transparent 80%);
+            background: radial-gradient(ellipse at 70% 30%, rgba(229,9,20,0.05) 0%, rgba(0,180,255,0.03) 60%, transparent 80%);
             pointer-events: none;
         }
         .hero::after {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(90deg, rgba(15,12,41,0.5) 0%, transparent 60%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, transparent 60%);
             pointer-events: none;
         }
         .hero-content { position: relative; z-index: 2; max-width: 55%; }
         .hero-content .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
         .hero-content .badges span {
             font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-            color: rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.04);
+            color: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.04);
             padding: 2px 14px; border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
         }
         .hero-content h2 {
             font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            color: #1a1a2e;
             line-height: 1.05; margin-top: 4px;
         }
         .hero-content p {
-            color: rgba(255,255,255,0.3); font-size: 1rem;
+            color: rgba(0,0,0,0.4); font-size: 1rem;
             margin-top: 8px; max-width: 480px; line-height: 1.6;
         }
         .hero-content .btn-hero {
@@ -114,17 +104,17 @@
             padding: 14px 38px; border-radius: 60px;
             font-weight: 700; font-size: 1.05rem;
             cursor: pointer; transition: 0.3s;
-            box-shadow: 0 4px 25px rgba(229,9,20,0.15);
+            box-shadow: 0 4px 15px rgba(229,9,20,0.2);
         }
-        .hero-content .btn-hero:hover { transform: scale(1.04); box-shadow: 0 6px 35px rgba(229,9,20,0.25); }
+        .hero-content .btn-hero:hover { transform: scale(1.04); box-shadow: 0 6px 25px rgba(229,9,20,0.3); }
         .hero-poster {
             position: absolute; right: 30px; bottom: -10px;
             width: 200px; border-radius: 18px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             aspect-ratio: 2/3; object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
             z-index: 2; transition: 0.4s ease;
-            background: #1a1a1a;
+            background: #f0f0f0;
         }
         .hero:hover .hero-poster { transform: scale(1.02) rotate(-1deg); }
 
@@ -137,19 +127,19 @@
         .section-header h3 {
             font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
             display: flex; align-items: center; gap: 10px;
-            color: #fff;
+            color: #1a1a2e;
         }
         .section-header h3 .badge {
-            font-size: 0.55rem; background: rgba(229,9,20,0.2);
+            font-size: 0.55rem; background: rgba(229,9,20,0.1);
             padding: 3px 14px; border-radius: 40px;
             color: #e50914; font-weight: 700; text-transform: uppercase;
-            border: 1px solid rgba(229,9,20,0.15);
+            border: 1px solid rgba(229,9,20,0.1);
         }
         .section-header .ver-todo {
-            color: rgba(255,255,255,0.2); font-size: 0.8rem; font-weight: 600;
+            color: rgba(0,0,0,0.2); font-size: 0.8rem; font-weight: 600;
             cursor: pointer; transition: 0.3s; background: none; border: none;
         }
-        .section-header .ver-todo:hover { color: rgba(255,255,255,0.5); }
+        .section-header .ver-todo:hover { color: rgba(0,0,0,0.5); }
 
         /* ===== CANALES ===== */
         .canales-scroll {
@@ -161,44 +151,44 @@
         .canales-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .canal-card {
             flex: 0 0 auto; scroll-snap-align: start;
-            background: rgba(255,255,255,0.04);
+            background: #fff;
             border-radius: 20px; padding: 20px 24px;
             min-width: 160px; text-align: center;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer; border: 1px solid rgba(0,0,0,0.04);
             transition: 0.4s ease;
-            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .canal-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(229,9,20,0.2);
+            background: #f8f9fa;
+            border-color: rgba(229,9,20,0.1);
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
         .canal-card .logo-canal {
             display: block; width: 60px; height: 60px;
             margin: 0 auto 8px; border-radius: 50%;
             object-fit: contain;
-            background: rgba(255,255,255,0.05);
-            padding: 4px; border: 1px solid rgba(255,255,255,0.06);
+            background: #f0f2f5;
+            padding: 4px; border: 1px solid rgba(0,0,0,0.04);
         }
-        /* Placeholder para logos que no cargan */
         .canal-card .logo-placeholder {
             display: none;
             width: 60px; height: 60px;
             margin: 0 auto 8px; border-radius: 50%;
-            background: rgba(229,9,20,0.1);
+            background: rgba(229,9,20,0.05);
             font-size: 2rem;
             line-height: 60px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
+            color: #e50914;
+            border: 1px solid rgba(0,0,0,0.04);
         }
         .canal-card .logo-canal[src=""] + .logo-placeholder,
         .canal-card .logo-canal:not([src]) + .logo-placeholder,
         .canal-card .logo-canal[src*="error"] + .logo-placeholder {
             display: block;
         }
-        .canal-card .nombre { font-weight: 700; font-size: 1rem; color: #f0f0f0; }
-        .canal-card .categoria { color: rgba(255,255,255,0.2); font-size: 0.7rem; margin-top: 2px; }
+        .canal-card .nombre { font-weight: 700; font-size: 1rem; color: #1a1a2e; }
+        .canal-card .categoria { color: rgba(0,0,0,0.2); font-size: 0.7rem; margin-top: 2px; }
         .canal-card .live-dot {
             display: inline-block; width: 8px; height: 8px;
             background: #e50914; border-radius: 50%;
@@ -222,17 +212,16 @@
             gap: 24px;
         }
         .card {
-            background: rgba(255,255,255,0.03);
+            background: #fff;
             border-radius: 24px; overflow: hidden;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer; border: 1px solid rgba(0,0,0,0.04);
             transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
-            backdrop-filter: blur(4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .card:hover {
             transform: translateY(-12px) scale(1.02);
-            border-color: rgba(229,9,20,0.15);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            border-color: rgba(229,9,20,0.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
         }
         .card img {
             width: 100%; aspect-ratio: 2/3; object-fit: cover;
@@ -243,20 +232,20 @@
         .card .info h4 {
             font-size: 1rem; font-weight: 700;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            color: #f0f0f0;
+            color: #1a1a2e;
         }
         .card .info p {
             color: #f5c518; font-size: 0.8rem;
             margin-top: 6px; display: flex; align-items: center; gap: 10px;
         }
-        .card .info .year { color: rgba(255,255,255,0.15); font-size: 0.7rem; }
-        .card .info .idioma-icon { color: #00ff88; font-size: 0.65rem; margin-left: auto; opacity: 0.5; }
+        .card .info .year { color: rgba(0,0,0,0.2); font-size: 0.7rem; }
+        .card .info .idioma-icon { color: #00b894; font-size: 0.65rem; margin-left: auto; opacity: 0.5; }
 
         /* ===== BOTÓN CARGAR MÁS ===== */
         .btn-cargar-mas {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.15);
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.04);
+            color: rgba(0,0,0,0.3);
             padding: 14px;
             border-radius: 60px;
             font-weight: 600; font-size: 0.9rem;
@@ -264,19 +253,18 @@
             width: 100%; max-width: 320px;
             margin: 16px auto 0; display: block;
         }
-        .btn-cargar-mas:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+        .btn-cargar-mas:hover { background: #f8f9fa; color: rgba(0,0,0,0.6); }
         .btn-cargar-mas:disabled { opacity: 0.2; cursor: not-allowed; }
 
         /* ===== REPRODUCTOR ===== */
         .reproductor {
             display: none;
             margin: 20px 16px 10px;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(40px);
+            background: #fff;
             border-radius: 28px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.04);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
         }
         .reproductor.active { display: block; animation: fadeSlide 0.5s ease; }
         @keyframes fadeSlide {
@@ -285,9 +273,9 @@
         }
         .player-header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 24px; background: rgba(0,0,0,0.3);
+            padding: 14px 24px; background: #f8f9fa;
             flex-wrap: wrap; gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
         }
         .player-header .btn-back {
             background: none; border: none;
@@ -295,26 +283,26 @@
             cursor: pointer; display: flex; align-items: center; gap: 8px;
             transition: 0.3s;
         }
-        .player-header .btn-back:hover { color: #ff4d4d; transform: scale(1.04); }
+        .player-header .btn-back:hover { color: #b20710; transform: scale(1.04); }
         .player-controls {
             display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
         }
         .player-controls select {
-            background: rgba(255,255,255,0.06);
-            color: #fff; border: 1px solid rgba(255,255,255,0.08);
+            background: #fff;
+            color: #1a1a2e; border: 1px solid rgba(0,0,0,0.08);
             padding: 6px 16px; border-radius: 40px;
             font-size: 0.75rem; cursor: pointer; outline: none;
             transition: 0.3s;
         }
-        .player-controls select:hover { background: rgba(255,255,255,0.08); }
+        .player-controls select:hover { border-color: #e50914; }
         .player-controls button {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.3);
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.08);
+            color: rgba(0,0,0,0.4);
             padding: 6px 16px; border-radius: 40px;
             font-size: 0.75rem; cursor: pointer; transition: 0.3s;
         }
-        .player-controls button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .player-controls button:hover { background: #f0f0f0; color: #1a1a2e; }
         .player-video {
             width: 100%; height: 75vh; min-height: 420px;
             background: #000; position: relative;
@@ -324,18 +312,20 @@
         .player-video .cargando {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255,255,255,0.08);
-            background: rgba(0,0,0,0.6);
+            color: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.7);
             padding: 24px 36px; border-radius: 60px;
-            text-align: center; backdrop-filter: blur(30px);
-            font-size: 1rem; border: 1px solid rgba(255,255,255,0.03);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
             pointer-events: none;
             max-width: 90%;
             z-index: 10;
         }
         .player-video .cargando .spinner {
             display: inline-block; width: 34px; height: 34px;
-            border: 3px solid rgba(255,255,255,0.05);
+            border: 3px solid rgba(255,255,255,0.1);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -343,14 +333,14 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .player-footer {
-            padding: 18px 24px; background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(255,255,255,0.03);
+            padding: 18px 24px; background: #f8f9fa;
+            border-top: 1px solid rgba(0,0,0,0.04);
         }
-        .player-footer h3 { font-size: 1.3rem; font-weight: 800; color: #f0f0f0; }
-        .player-footer p { color: rgba(255,255,255,0.2); font-size: 0.9rem; margin-top: 6px; line-height: 1.5; }
-        .player-footer .info-extra { color: rgba(0,255,136,0.2); font-size: 0.75rem; margin-top: 8px; }
+        .player-footer h3 { font-size: 1.3rem; font-weight: 800; color: #1a1a2e; }
+        .player-footer p { color: rgba(0,0,0,0.3); font-size: 0.9rem; margin-top: 6px; line-height: 1.5; }
+        .player-footer .info-extra { color: #00b894; font-size: 0.75rem; margin-top: 8px; }
 
-        /* ===== EPISODIOS ===== */
+        /* ===== EPISODIOS (HORIZONTALES) ===== */
         .episodios-wrapper {
             margin: 10px 16px 16px;
             display: none;
@@ -358,73 +348,115 @@
         .episodios-wrapper.active { display: block; }
         .episodios-wrapper .titulo {
             font-size: 0.75rem; font-weight: 700;
-            color: rgba(255,255,255,0.15); text-transform: uppercase;
+            color: rgba(0,0,0,0.2); text-transform: uppercase;
             letter-spacing: 1.5px; margin-bottom: 10px;
         }
         .episodios-wrapper .temporadas {
             display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
         }
         .episodios-wrapper .temp-btn {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.25);
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            color: rgba(0,0,0,0.3);
             padding: 6px 18px; border-radius: 40px;
             font-size: 0.75rem; font-weight: 600;
             cursor: pointer; transition: 0.3s;
         }
-        .episodios-wrapper .temp-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        .episodios-wrapper .temp-btn:hover { background: #f0f0f0; color: #1a1a2e; }
         .episodios-wrapper .temp-btn.active {
-            background: rgba(229,9,20,0.15);
-            border-color: rgba(229,9,20,0.2); color: #fff;
+            background: #e50914; border-color: #e50914; color: #fff;
         }
         .episodios-wrapper .ep-scroll {
             display: flex; gap: 12px; overflow-x: auto;
             padding-bottom: 10px; scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
         .episodios-wrapper .ep-scroll::-webkit-scrollbar { height: 3px; }
         .episodios-wrapper .ep-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .episodios-wrapper .ep-mini {
             flex: 0 0 auto; scroll-snap-align: start;
-            background: rgba(255,255,255,0.04);
+            background: #fff;
             border-radius: 16px; padding: 14px 18px;
             text-align: center; cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s ease; min-width: 80px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: 0.3s ease;
+            min-width: 80px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         .episodios-wrapper .ep-mini:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(229,9,20,0.1); transform: scale(1.04);
+            background: #f8f9fa;
+            border-color: rgba(229,9,20,0.1);
+            transform: scale(1.04);
         }
         .episodios-wrapper .ep-mini.active-ep {
-            background: rgba(229,9,20,0.08);
-            border-color: rgba(229,9,20,0.15);
+            background: rgba(229,9,20,0.05);
+            border-color: #e50914;
         }
         .episodios-wrapper .ep-mini .num { font-size: 1.2rem; font-weight: 800; color: #e50914; }
         .episodios-wrapper .ep-mini .title {
-            font-size: 0.5rem; color: rgba(255,255,255,0.15);
+            font-size: 0.5rem; color: rgba(0,0,0,0.2);
             margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            max-width: 70px;
+        }
+
+        /* ===== EPISODIOS EN LA VISTA DE SERIE (TAMBIÉN HORIZONTALES) ===== */
+        .episodios-horizontal {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 0 16px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .episodios-horizontal::-webkit-scrollbar { height: 3px; }
+        .episodios-horizontal::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
+        .episodios-horizontal .ep-card-h {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: 0.3s ease;
+            min-width: 90px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .episodios-horizontal .ep-card-h:hover {
+            background: #f8f9fa;
+            border-color: rgba(229,9,20,0.1);
+            transform: scale(1.04);
+        }
+        .episodios-horizontal .ep-card-h .num { font-size: 1.4rem; font-weight: 800; color: #e50914; }
+        .episodios-horizontal .ep-card-h .title {
+            font-size: 0.6rem; color: rgba(0,0,0,0.2);
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             max-width: 70px;
         }
 
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(15,12,41,0.92);
+            background: rgba(255,255,255,0.92);
             backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.04);
+            border-top: 1px solid rgba(0,0,0,0.04);
             display: flex; justify-content: space-around;
             padding: 6px 0 12px; z-index: 200;
         }
         .bottom-nav .nav-item {
             background: none; border: none;
-            color: rgba(255,255,255,0.1);
+            color: rgba(0,0,0,0.1);
             font-size: 0.65rem; font-weight: 600;
             cursor: pointer; display: flex; flex-direction: column;
             align-items: center; gap: 2px; padding: 4px 12px;
             transition: 0.3s;
         }
         .bottom-nav .nav-item .icon { font-size: 1.6rem; line-height: 1; }
-        .bottom-nav .nav-item:hover { color: rgba(255,255,255,0.3); }
+        .bottom-nav .nav-item:hover { color: rgba(0,0,0,0.3); }
         .bottom-nav .nav-item.active { color: #e50914; }
 
         /* ===== RESPONSIVE ===== */
@@ -457,6 +489,7 @@
             .card .info h4 { font-size: 0.85rem; }
             .card .info p { font-size: 0.7rem; }
             .episodios-wrapper .ep-mini { min-width: 60px; padding: 10px 12px; }
+            .episodios-horizontal .ep-card-h { min-width: 70px; padding: 12px 14px; }
         }
     </style>
 </head>
@@ -540,7 +573,7 @@
         </div>
     </div>
 
-    <!-- ===== EPISODIOS DEBAJO ===== -->
+    <!-- ===== EPISODIOS DEBAJO DEL REPRODUCTOR (HORIZONTAL) ===== -->
     <div class="episodios-wrapper" id="episodiosWrapper">
         <div class="titulo">📺 Episodios</div>
         <div class="temporadas" id="temporadasContainer"></div>
@@ -781,7 +814,7 @@
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML = `<p style="color:rgba(255,255,255,0.08);text-align:center;padding:40px;">No hay resultados.</p>`;
+                grid.innerHTML = `<p style="color:rgba(0,0,0,0.1);text-align:center;padding:40px;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -857,7 +890,7 @@
         }
 
         // ================================================================
-        // BUSCADOR AUTO MEJORADO (con reintentos y timeout)
+        // BUSCADOR AUTO MEJORADO
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -881,7 +914,6 @@
 
             if (timeoutAuto) clearTimeout(timeoutAuto);
 
-            // Marcamos que el iframe ha cargado correctamente
             let cargado = false;
 
             iframe.onload = () => {
@@ -905,7 +937,6 @@
                 }
             };
 
-            // Timeout de 8 segundos para dar más tiempo
             timeoutAuto = setTimeout(() => {
                 if (!cargado) {
                     cargado = true;
@@ -918,7 +949,7 @@
         }
 
         // ================================================================
-        // TEMPORADAS Y EPISODIOS
+        // TEMPORADAS Y EPISODIOS (HORIZONTALES)
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -936,17 +967,17 @@
                 temporadasCache = temporadas;
 
                 if (temporadas.length === 0) {
-                    grid.innerHTML = `<p style="color:rgba(255,255,255,0.1);text-align:center;padding:30px;">No hay temporadas.</p>`;
+                    grid.innerHTML = `<p style="color:rgba(0,0,0,0.1);text-align:center;padding:30px;">No hay temporadas.</p>`;
                     grid.style.display = 'grid';
                     return;
                 }
 
                 let html = `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;">`;
                 temporadas.forEach((t, idx) => {
-                    html += `<button class="temp-btn" data-season="${t.season_number}" style="background:${idx===0?'rgba(229,9,20,0.15)':'rgba(255,255,255,0.03)'};border:1px solid ${idx===0?'rgba(229,9,20,0.3)':'rgba(255,255,255,0.04)'};color:${idx===0?'#fff':'rgba(255,255,255,0.3)'};padding:8px 20px;border-radius:40px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.3s;">T${t.season_number}</button>`;
+                    html += `<button class="temp-btn" data-season="${t.season_number}" style="background:${idx===0?'#e50914':'#fff'};border:1px solid ${idx===0?'#e50914':'rgba(0,0,0,0.06)'};color:${idx===0?'#fff':'rgba(0,0,0,0.3)'};padding:8px 20px;border-radius:40px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.3s;">T${t.season_number}</button>`;
                 });
                 html += `</div>`;
-                html += `<div id="episodiosContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;"></div>`;
+                html += `<div id="episodiosContainer" class="episodios-horizontal"></div>`;
                 grid.innerHTML = html;
                 grid.style.display = 'grid';
 
@@ -956,12 +987,12 @@
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.temp-btn').forEach(b => {
-                            b.style.background = 'rgba(255,255,255,0.03)';
-                            b.style.borderColor = 'rgba(255,255,255,0.04)';
-                            b.style.color = 'rgba(255,255,255,0.3)';
+                            b.style.background = '#fff';
+                            b.style.borderColor = 'rgba(0,0,0,0.06)';
+                            b.style.color = 'rgba(0,0,0,0.3)';
                         });
-                        btn.style.background = 'rgba(229,9,20,0.15)';
-                        btn.style.borderColor = 'rgba(229,9,20,0.3)';
+                        btn.style.background = '#e50914';
+                        btn.style.borderColor = '#e50914';
                         btn.style.color = '#fff';
                         const season = parseInt(btn.dataset.season);
                         cargarEpisodiosGrid(serieId, season);
@@ -984,18 +1015,18 @@
                 if (!container) return;
 
                 if (episodios.length === 0) {
-                    container.innerHTML = `<p style="color:rgba(255,255,255,0.1);padding:20px;">No hay episodios.</p>`;
+                    container.innerHTML = `<p style="color:rgba(0,0,0,0.1);padding:20px;">No hay episodios.</p>`;
                     return;
                 }
 
                 container.innerHTML = episodios.map(ep => `
-                    <div class="ep-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}" style="background:rgba(255,255,255,0.02);border-radius:16px;padding:16px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);transition:0.3s;">
-                        <div style="font-size:1.4rem;font-weight:800;color:#e50914;">${ep.episode_number}</div>
-                        <div style="font-size:0.6rem;color:rgba(255,255,255,0.15);margin-top:4px;">${ep.name || 'Ep ' + ep.episode_number}</div>
+                    <div class="ep-card-h" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
+                        <div class="num">${ep.episode_number}</div>
+                        <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
                     </div>
                 `).join('');
 
-                document.querySelectorAll('.ep-card').forEach(card => {
+                document.querySelectorAll('.ep-card-h').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
@@ -1069,7 +1100,7 @@
                 const data = await fetchApi(`tv/${serieId}/season/${season}`);
                 const episodios = data.episodes || [];
                 if (episodios.length === 0) {
-                    episodiosScroll.innerHTML = `<p style="color:rgba(255,255,255,0.1);padding:10px;">No hay episodios.</p>`;
+                    episodiosScroll.innerHTML = `<p style="color:rgba(0,0,0,0.1);padding:10px;">No hay episodios.</p>`;
                     return;
                 }
                 episodiosScroll.innerHTML = episodios.map(ep => `
