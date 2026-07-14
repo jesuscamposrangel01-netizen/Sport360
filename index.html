@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🎬 Cine Pro</title>
     <style>
-        /* (Mismo CSS de antes, solo añado un estilo para el mensaje de idioma más visible) */
         * {
             margin: 0;
             padding: 0;
@@ -376,7 +375,7 @@
             margin-left: 8px;
         }
         .player-footer .aviso-idioma {
-            background: rgba(245, 197, 24, 0.15);
+            background: rgba(245, 197, 24, 0.12);
             border: 1px solid #f5c518;
             border-radius: 8px;
             padding: 10px 14px;
@@ -386,12 +385,17 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
         .player-footer .aviso-idioma span {
             font-size: 1.2rem;
         }
         .player-footer .aviso-idioma strong {
             color: #fff;
+        }
+        .player-footer .aviso-idioma .fuentes-destacadas {
+            color: #0f0;
+            font-weight: 600;
         }
 
         .btn-cargar {
@@ -465,7 +469,6 @@
             .player-footer .aviso-idioma {
                 font-size: 0.7rem;
                 padding: 8px 10px;
-                flex-wrap: wrap;
             }
         }
     </style>
@@ -510,21 +513,15 @@
                 <span style="color:#e50914;font-weight:600;font-size:0.7rem;">HD</span>
                 <select id="sourceSelector">
                     <option value="auto">🤖 Auto</option>
-                    <option value="embed.su">embed.su</option>
                     <option value="vidsrc.in">vidsrc.in</option>
+                    <option value="vidlink.pro">vidlink.pro</option>
                     <option value="vidsrc.pm">vidsrc.pm</option>
+                    <option value="vidfast.pro">vidfast.pro</option>
+                    <option value="2embed.skin">2embed.skin</option>
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
                     <option value="vidsrc.cc">vidsrc.cc</option>
-                    <option value="vidsrc.vip">vidsrc.vip</option>
-                    <option value="vidsrc.net">vidsrc.net</option>
-                    <option value="vidsrc.me">vidsrc.me</option>
-                </select>
-                <!-- Selector de idioma -->
-                <select id="idiomaSelector">
-                    <option value="es">🇪🇸 Español</option>
-                    <option value="en">🇺🇸 Inglés</option>
-                    <option value="la">🌎 Latino</option>
-                    <option value="orig">🎌 Original</option>
+                    <option value="autoembed.co">autoembed.co</option>
+                    <option value="embed.su">embed.su</option>
                 </select>
                 <button id="btnRecargar">🔄</button>
                 <button id="btnSiguiente">⏩ Siguiente</button>
@@ -542,16 +539,18 @@
             <p id="peliSinopsis">Sinopsis...</p>
             <div class="info-extra">
                 <span id="fuenteInfo"></span>
-                <span class="idioma-info" id="idiomaInfo">🎧 Idioma: Español</span>
+                <span class="idioma-info" id="idiomaInfo">🎧 Cambia el idioma dentro del reproductor</span>
             </div>
-            <!-- AVISO CLARO SOBRE EL IDIOMA -->
             <div class="aviso-idioma">
                 <span>💡</span>
                 <div>
-                    <strong>Para cambiar el idioma del audio:</strong><br>
-                    1. Usa el botón <strong>⚙️</strong> dentro del reproductor (esquina inferior derecha).<br>
-                    2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en el menú de pistas de audio.<br>
-                    <span style="color:#aaa; font-size:0.75rem;">(El selector de arriba solo funciona con <strong>embed.su</strong> y <strong>vidsrc.xyz</strong>)</span>
+                    <strong>Para cambiar el audio a español:</strong><br>
+                    1. Toca el video → botón <strong>⚙️</strong> (configuración) en la esquina inferior derecha.<br>
+                    2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en "Pista de audio".<br>
+                    <span style="color:#aaa; font-size:0.75rem;">
+                        Fuentes con más probabilidad de tener doblaje español: 
+                        <span class="fuentes-destacadas">vidsrc.in, vidlink.pro, vidfast.pro, 2embed.skin</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -564,26 +563,20 @@
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
 
-        // FUENTES: PRIMERO embed.su (soporta idioma), luego las demás
+        // ================================================================
+        // FUENTES DE VIDEO (priorizadas por fiabilidad y español)
+        // ================================================================
         const DOMINIOS = [
-            'embed.su',     // MEJOR PARA IDIOMA (soporta ?lang=es)
-            'vidsrc.in',
-            'vidsrc.pm',
-            'vidsrc.xyz',   // También soporta ?lang=es
-            'vidsrc.cc',
-            'vidsrc.vip',
-            'vidsrc.net',
-            'vidsrc.me'
+            'vidsrc.in',       // #1 - La que mejor te funciona
+            'vidlink.pro',     // #2 - Buena para contenido en español
+            'vidsrc.pm',       // #3 - La que pediste
+            'vidfast.pro',     // #4 - Alternativa rápida
+            '2embed.skin',     // #5 - Suelo tener doblaje
+            'vidsrc.xyz',      // #6 - Clásica
+            'vidsrc.cc',       // #7 - Alternativa
+            'autoembed.co',    // #8 - Especializada en multi-idioma
+            'embed.su'         // #9 - Backup
         ];
-
-        // MAPEO DE IDIOMAS A PARÁMETROS DE URL
-        // embed.su y vidsrc.xyz soportan ?lang=es, el resto no
-        const IDIOMAS = {
-            'es': { label: 'Español', param: 'lang=es' },
-            'en': { label: 'Inglés', param: 'lang=en' },
-            'la': { label: 'Latino', param: 'lang=la' },
-            'orig': { label: 'Original', param: 'lang=original' }
-        };
 
         // DOM
         const grid = document.getElementById('grid');
@@ -606,7 +599,6 @@
         const fuenteInfo = document.getElementById('fuenteInfo');
         const idiomaInfo = document.getElementById('idiomaInfo');
         const sourceSelector = document.getElementById('sourceSelector');
-        const idiomaSelector = document.getElementById('idiomaSelector');
         const btnRecargar = document.getElementById('btnRecargar');
         const btnSiguiente = document.getElementById('btnSiguiente');
         const tabs = document.querySelectorAll('.tab');
@@ -623,27 +615,6 @@
         let idxFuenteActual = 0;
         let timeoutBusqueda = null;
         const MAX_PAGES = 5;
-
-        // ================================================================
-        // FUNCIÓN PARA CONSTRUIR URL CON IDIOMA (SOLO PARA FUENTES QUE LO SOPORTAN)
-        // ================================================================
-        function construirUrl(dominio, tipo, id, season = null, episode = null) {
-            let baseUrl;
-            if (tipo === 'movie') {
-                baseUrl = `https://${dominio}/embed/movie/${id}`;
-            } else {
-                baseUrl = `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
-            }
-
-            const idioma = idiomaSelector.value;
-            const param = IDIOMAS[idioma]?.param;
-
-            // Solo añadir parámetro si la fuente lo soporta (embed.su, vidsrc.xyz)
-            if (param && (dominio === 'embed.su' || dominio === 'vidsrc.xyz')) {
-                return baseUrl + (baseUrl.includes('?') ? '&' : '?') + param;
-            }
-            return baseUrl;
-        }
 
         // ================================================================
         // API
@@ -778,7 +749,7 @@
             peliTitulo.textContent = titulo;
             peliSinopsis.textContent = sinopsis || 'Sin sinopsis.';
             fuenteInfo.textContent = '';
-            idiomaInfo.textContent = `🎧 Idioma: ${IDIOMAS[idiomaSelector.value].label}`;
+            idiomaInfo.textContent = '🎧 Cambia el idioma dentro del reproductor';
 
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
@@ -788,7 +759,7 @@
                 buscarFuenteAuto(id, 'movie');
             } else {
                 const dominio = sourceSelector.value;
-                const url = construirUrl(dominio, 'movie', id);
+                const url = `https://${dominio}/embed/movie/${id}`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -797,7 +768,7 @@
         }
 
         // ================================================================
-        // BUSCAR FUENTE AUTO (PRIMERO embed.su)
+        // BUSCAR FUENTE AUTO
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -813,7 +784,13 @@
             }
 
             const dominio = DOMINIOS[idxFuenteActual];
-            const url = construirUrl(dominio, tipo, id, season, episode);
+            let url;
+            if (tipo === 'movie') {
+                url = `https://${dominio}/embed/movie/${id}`;
+            } else {
+                url = `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
+            }
+
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${DOMINIOS.length}: ${dominio}...`;
             iframe.src = url;
 
@@ -938,7 +915,7 @@
             peliTitulo.textContent = nombre;
             peliSinopsis.textContent = sinopsis || currentSerieData.sinopsis || 'Sin sinopsis.';
             fuenteInfo.textContent = '';
-            idiomaInfo.textContent = `🎧 Idioma: ${IDIOMAS[idiomaSelector.value].label}`;
+            idiomaInfo.textContent = '🎧 Cambia el idioma dentro del reproductor';
 
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
@@ -948,7 +925,7 @@
                 buscarFuenteAuto(serieId, 'tv', season, episode);
             } else {
                 const dominio = sourceSelector.value;
-                const url = construirUrl(dominio, 'tv', serieId, season, episode);
+                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -995,7 +972,6 @@
         btnRecargar.addEventListener('click', recargar);
         btnSiguiente.addEventListener('click', siguienteFuente);
         sourceSelector.addEventListener('change', recargar);
-        idiomaSelector.addEventListener('change', recargar);
 
         // ================================================================
         // VOLVER A POPULARES
