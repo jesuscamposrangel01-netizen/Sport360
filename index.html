@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎬 Cine Pro - Buscador en Español</title>
+    <title>🎬 Cine Pro - Buscador Inteligente</title>
     <style>
         * {
             margin: 0;
@@ -82,37 +82,44 @@
 
         .tabs {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-bottom: 10px;
             margin: 20px 0 16px;
+            flex-wrap: wrap;
         }
         .tab {
             background: none;
             border: none;
             color: #888;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 0;
+            padding: 8px 14px;
             transition: 0.3s;
             position: relative;
+            border-radius: 30px;
         }
         .tab:hover {
             color: #fff;
+            background: rgba(255, 255, 255, 0.05);
         }
         .tab.active {
             color: #fff;
+            background: rgba(229, 9, 20, 0.2);
         }
         .tab.active::after {
             content: '';
             position: absolute;
             bottom: -11px;
-            left: 0;
-            width: 100%;
+            left: 10%;
+            width: 80%;
             height: 3px;
             background: #e50914;
             border-radius: 4px;
+        }
+        .tab .emoji {
+            margin-right: 5px;
         }
 
         .section-title {
@@ -143,6 +150,12 @@
         .section-title .volver:hover {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
+        }
+        .result-count {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin-left: 8px;
         }
 
         .grid {
@@ -191,6 +204,7 @@
         .card .info .idioma {
             color: #0f0;
             font-size: 0.65rem;
+            margin-top: 2px;
         }
 
         .temporadas {
@@ -427,13 +441,6 @@
             box-shadow: none;
         }
 
-        .result-count {
-            color: #888;
-            font-size: 0.8rem;
-            font-weight: 400;
-            margin-left: 8px;
-        }
-
         @media (max-width: 480px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -454,7 +461,11 @@
                 font-size: 0.8rem;
             }
             .tabs {
-                gap: 12px;
+                gap: 8px;
+            }
+            .tab {
+                font-size: 0.8rem;
+                padding: 6px 10px;
             }
             .player-video {
                 height: 35vh;
@@ -480,27 +491,32 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 Cine <small>| Buscador en Español</small></div>
+        <div class="logo">🎬 Cine <small>| Pro</small></div>
         <div class="search-box">
-            <input id="buscador" type="text" placeholder="Buscar películas en español...">
+            <input id="buscador" type="text" placeholder="Buscar películas, series o animes...">
             <button id="btnBuscar">Buscar</button>
         </div>
     </div>
 
+    <!-- ========== PESTAÑAS ========== -->
     <div class="tabs" id="tabsContainer">
-        <button class="tab active" data-tipo="movie">Películas</button>
-        <button class="tab" data-tipo="tv">Series</button>
-        <button class="tab" data-tipo="anime">Anime</button>
+        <button class="tab active" data-tipo="espanol"><span class="emoji">🇪🇸</span>Películas Español</button>
+        <button class="tab" data-tipo="movie"><span class="emoji">🌍</span>Películas</button>
+        <button class="tab" data-tipo="tv"><span class="emoji">📺</span>Series</button>
+        <button class="tab" data-tipo="anime"><span class="emoji">🎌</span>Anime</button>
     </div>
 
+    <!-- ========== SECCIÓN TÍTULO ========== -->
     <div class="section-title" id="tituloSeccion">
-        📌 Populares en Español <span class="badge">🎙️</span>
+        📌 Populares <span class="badge">🔥</span>
         <button class="volver" id="btnVolver" style="display:none;">← Volver</button>
     </div>
 
+    <!-- ========== GRID ========== -->
     <div id="grid" class="grid"></div>
     <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
 
+    <!-- ========== CONTENEDOR DE EPISODIOS ========== -->
     <div id="contenedorEpisodios" style="display:none;">
         <div class="section-title" style="margin-top:10px;">
             📺 <span id="serieTitulo"></span>
@@ -510,21 +526,21 @@
         <div class="episodios-grid" id="episodiosGrid"></div>
     </div>
 
+    <!-- ========== REPRODUCTOR ========== -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <button class="volver" id="btnCerrarReproductor">← Volver</button>
             <div class="player-controls">
                 <span style="color:#e50914;font-weight:600;font-size:0.7rem;">HD</span>
                 <select id="sourceSelector">
-                    <option value="auto">🤖 Auto (Español)</option>
+                    <option value="auto">🤖 Auto</option>
+                    <option value="2embed.skin">2embed.skin</option>
                     <option value="vidsrc.in">vidsrc.in</option>
                     <option value="vidlink.pro">vidlink.pro</option>
                     <option value="vidsrc.pm">vidsrc.pm</option>
                     <option value="vidfast.pro">vidfast.pro</option>
-                    <option value="2embed.skin">2embed.skin</option>
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
                     <option value="vidsrc.cc">vidsrc.cc</option>
-                    <option value="autoembed.co">autoembed.co</option>
                 </select>
                 <button id="btnRecargar">🔄</button>
                 <button id="btnSiguiente">⏩ Siguiente</button>
@@ -547,13 +563,9 @@
             <div class="aviso-idioma">
                 <span>💡</span>
                 <div>
-                    <strong>Para escuchar en español:</strong><br>
-                    1. Toca el video → botón <strong>⚙️</strong> (configuración) en la esquina inferior derecha.<br>
-                    2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en "Pista de audio".<br>
-                    <span style="color:#aaa; font-size:0.75rem;">
-                        Fuentes con más probabilidad de tener doblaje español: 
-                        <span class="fuentes-destacadas">vidsrc.in, vidlink.pro, vidfast.pro, 2embed.skin</span>
-                    </span>
+                    <strong>Para cambiar el audio a español:</strong><br>
+                    1. Toca el video → botón <strong>⚙️</strong> (configuración).<br>
+                    2. Selecciona <strong>Español</strong> o <strong>Latino</strong> en "Pista de audio".
                 </div>
             </div>
         </div>
@@ -567,20 +579,18 @@
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
 
         // ================================================================
-        // FUENTES DE VIDEO (priorizadas por español)
+        // FUENTES POR PESTAÑA
         // ================================================================
-        const DOMINIOS = [
-            'vidsrc.in',
-            'vidlink.pro',
-            'vidsrc.pm',
-            'vidfast.pro',
-            '2embed.skin',
-            'vidsrc.xyz',
-            'vidsrc.cc',
-            'autoembed.co'
-        ];
+        const FUENTES = {
+            espanol: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            tv: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            anime: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc']
+        };
 
+        // ================================================================
         // DOM
+        // ================================================================
         const grid = document.getElementById('grid');
         const btnCargarMas = document.getElementById('btnCargarMas');
         const buscador = document.getElementById('buscador');
@@ -605,10 +615,12 @@
         const btnSiguiente = document.getElementById('btnSiguiente');
         const tabs = document.querySelectorAll('.tab');
 
-        // Estado
+        // ================================================================
+        // ESTADO
+        // ================================================================
         let allItems = [];
         let currentPage = 1;
-        let currentTipo = 'movie';
+        let currentTipo = 'espanol';
         let modoBusqueda = false;
         let currentSerieId = null;
         let currentSeason = null;
@@ -616,13 +628,13 @@
         let currentSerieData = null;
         let idxFuenteActual = 0;
         let timeoutBusqueda = null;
+        let fuentesActuales = [];
         const MAX_PAGES = 5;
 
         // ================================================================
-        // API (SIEMPRE EN ESPAÑOL)
+        // API
         // ================================================================
         async function fetchApi(endpoint, extra = '') {
-            // Forzar idioma español en todas las peticiones
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
             if (extra) url += `&${extra}`;
             const res = await fetch(url);
@@ -631,23 +643,23 @@
         }
 
         // ================================================================
-        // CARGAR PÁGINA (con idioma original español)
+        // CARGAR PÁGINA
         // ================================================================
         async function cargarPagina(page = 1) {
             try {
                 let endpoint;
                 let extra = `page=${page}`;
 
-                if (currentTipo === 'movie') {
-                    // Películas con idioma original español
+                if (currentTipo === 'espanol') {
                     endpoint = 'discover/movie';
                     extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
+                } else if (currentTipo === 'movie') {
+                    endpoint = 'movie/popular';
+                    extra = `page=${page}`;
                 } else if (currentTipo === 'tv') {
-                    // Series con idioma original español
-                    endpoint = 'discover/tv';
-                    extra = `page=${page}&with_original_language=es&sort_by=popularity.desc`;
+                    endpoint = 'tv/popular';
+                    extra = `page=${page}`;
                 } else {
-                    // Anime: animación japonesa (como antes)
                     endpoint = 'discover/tv';
                     extra = `page=${page}&with_genres=16&with_original_language=ja`;
                 }
@@ -665,12 +677,12 @@
         }
 
         // ================================================================
-        // BUSCAR (en español)
+        // BUSCAR
         // ================================================================
         async function buscar(query) {
             if (!query.trim()) {
                 modoBusqueda = false;
-                tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
+                tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
                 btnCargarMas.style.display = 'block';
                 contenedorEpisodios.style.display = 'none';
                 grid.style.display = 'grid';
@@ -688,7 +700,10 @@
 
             try {
                 let data;
-                if (currentTipo === 'movie') {
+                if (currentTipo === 'espanol') {
+                    data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                    data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
+                } else if (currentTipo === 'movie') {
                     data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
                 } else if (currentTipo === 'tv') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
@@ -708,11 +723,11 @@
         }
 
         // ================================================================
-        // RENDER GRID (con indicador de idioma)
+        // RENDER GRID
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML = `<p style="color:#888;text-align:center;padding:30px;grid-column:1/-1;">No hay resultados en español.</p>`;
+                grid.innerHTML = `<p style="color:#888;text-align:center;padding:30px;grid-column:1/-1;">No hay resultados.</p>`;
                 return;
             }
 
@@ -753,7 +768,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR PELÍCULA (con intento de español)
+        // REPRODUCIR PELÍCULA (CON BUSCADOR INTELIGENTE)
         // ================================================================
         function reproducirPelicula(id, titulo, sinopsis) {
             currentSerieId = id;
@@ -770,12 +785,14 @@
             loadingVideo.style.display = 'flex';
             loadingText.textContent = '🔍 Buscando fuente...';
 
+            // Obtener las fuentes según la pestaña actual
+            fuentesActuales = FUENTES[currentTipo] || FUENTES.movie;
+
             if (sourceSelector.value === 'auto') {
                 buscarFuenteAuto(id, 'movie');
             } else {
                 const dominio = sourceSelector.value;
-                // Intentar forzar español en la URL (si la fuente lo soporta)
-                const url = `https://${dominio}/embed/movie/${id}?lang=es`;
+                const url = `https://${dominio}/embed/movie/${id}`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -784,7 +801,7 @@
         }
 
         // ================================================================
-        // BUSCAR FUENTE AUTO (priorizando español)
+        // BUSCADOR INTELIGENTE (VERIFICA FUENTES)
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -792,42 +809,47 @@
         }
 
         function probarSiguienteFuente(id, tipo, season, episode) {
-            if (idxFuenteActual >= DOMINIOS.length) {
+            if (idxFuenteActual >= fuentesActuales.length) {
                 loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = '❌ No se encontró fuente. Prueba manual.';
-                peliSinopsis.textContent = '⚠️ No se pudo encontrar un enlace. Cambia a una fuente manual.';
+                fuenteInfo.textContent = '❌ No se encontró ninguna fuente.';
+                peliSinopsis.textContent = '⚠️ No se pudo encontrar un enlace. Prueba manual.';
                 return;
             }
 
-            const dominio = DOMINIOS[idxFuenteActual];
+            const dominio = fuentesActuales[idxFuenteActual];
             let url;
             if (tipo === 'movie') {
-                url = `https://${dominio}/embed/movie/${id}?lang=es`;
+                url = `https://${dominio}/embed/movie/${id}`;
             } else {
-                url = `https://${dominio}/embed/tv/${id}/${season}/${episode}?lang=es`;
+                url = `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
             }
 
-            loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${DOMINIOS.length}: ${dominio}...`;
-            iframe.src = url;
+            loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${fuentesActuales.length}: ${dominio}...`;
 
-            let timeout = setTimeout(() => {
-                idxFuenteActual++;
-                probarSiguienteFuente(id, tipo, season, episode);
-            }, 5000);
-
-            iframe.onload = () => {
-                clearTimeout(timeout);
-                loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = `✅ Fuente: ${dominio} (intento español)`;
-                iframe.onload = null;
-            };
-
-            iframe.onerror = () => {
-                clearTimeout(timeout);
-                idxFuenteActual++;
-                probarSiguienteFuente(id, tipo, season, episode);
-                iframe.onerror = null;
-            };
+            // Verificar si la fuente existe usando un proxy
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+            fetch(proxyUrl, { signal: AbortSignal.timeout(4000) })
+                .then(res => res.json())
+                .then(data => {
+                    const html = data.contents || '';
+                    // Si el HTML no tiene 404 o error, la fuente funciona
+                    if (!html.includes('404') && !html.includes('not found') && html.length > 200) {
+                        // Fuente encontrada
+                        iframe.src = url;
+                        fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
+                        loadingVideo.style.display = 'none';
+                        return;
+                    } else {
+                        // Esta fuente no funciona, pasar a la siguiente
+                        idxFuenteActual++;
+                        probarSiguienteFuente(id, tipo, season, episode);
+                    }
+                })
+                .catch(() => {
+                    // Error en la verificación, pasar a la siguiente
+                    idxFuenteActual++;
+                    probarSiguienteFuente(id, tipo, season, episode);
+                });
         }
 
         // ================================================================
@@ -919,7 +941,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR EPISODIO
+        // REPRODUCIR EPISODIO (CON BUSCADOR INTELIGENTE)
         // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -937,11 +959,13 @@
             loadingVideo.style.display = 'flex';
             loadingText.textContent = '🔍 Buscando fuente...';
 
+            fuentesActuales = FUENTES[currentTipo] || FUENTES.tv;
+
             if (sourceSelector.value === 'auto') {
                 buscarFuenteAuto(serieId, 'tv', season, episode);
             } else {
                 const dominio = sourceSelector.value;
-                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}?lang=es`;
+                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
                 iframe.src = url;
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
@@ -953,24 +977,28 @@
         // FUNCIONES REPRODUCTOR
         // ================================================================
         function recargar() {
-            if (currentTipo === 'movie' && currentSerieId) {
-                reproducirPelicula(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
+            if (currentTipo === 'movie' || currentTipo === 'espanol') {
+                if (currentSerieId) {
+                    reproducirPelicula(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
+                }
             } else if (currentSerieId && currentSeason !== null && currentEpisode !== null) {
                 reproducirEpisodio(currentSerieId, currentSeason, currentEpisode, 'Episodio', '');
             }
         }
 
         function siguienteFuente() {
-            if (currentTipo === 'movie' && currentSerieId) {
-                idxFuenteActual++;
-                if (idxFuenteActual >= DOMINIOS.length) {
-                    fuenteInfo.textContent = '❌ No hay más fuentes.';
-                    return;
+            if (currentTipo === 'movie' || currentTipo === 'espanol') {
+                if (currentSerieId) {
+                    idxFuenteActual++;
+                    if (idxFuenteActual >= fuentesActuales.length) {
+                        fuenteInfo.textContent = '❌ No hay más fuentes.';
+                        return;
+                    }
+                    probarSiguienteFuente(currentSerieId, 'movie');
                 }
-                probarSiguienteFuente(currentSerieId, 'movie');
             } else if (currentSerieId && currentSeason !== null && currentEpisode !== null) {
                 idxFuenteActual++;
-                if (idxFuenteActual >= DOMINIOS.length) {
+                if (idxFuenteActual >= fuentesActuales.length) {
                     fuenteInfo.textContent = '❌ No hay más fuentes.';
                     return;
                 }
@@ -997,7 +1025,7 @@
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'block';
             btnVolver.style.display = 'none';
-            tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
+            tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
             cargarPagina(1);
         });
 
@@ -1047,7 +1075,7 @@
                 contenedorEpisodios.style.display = 'none';
                 grid.style.display = 'grid';
                 btnVolver.style.display = 'none';
-                tituloSeccion.innerHTML = `📌 Populares en Español <span class="badge">🎙️</span>`;
+                tituloSeccion.innerHTML = `📌 Populares <span class="badge">🔥</span>`;
                 buscador.value = '';
                 cargarPagina(1);
             });
