@@ -21,7 +21,7 @@
             background-image: radial-gradient(circle at 20% 30%, rgba(229, 9, 20, 0.05) 0%, transparent 60%),
                               radial-gradient(circle at 80% 70%, rgba(0, 180, 255, 0.03) 0%, transparent 50%);
         }
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         ::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
 
@@ -33,7 +33,7 @@
             background: rgba(10, 10, 18, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 12px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
         .header-inner {
@@ -43,13 +43,13 @@
             max-width: 1400px;
             margin: 0 auto;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
         .logo {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 900;
             letter-spacing: -1px;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
@@ -76,13 +76,14 @@
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.2);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 40px;
             transition: all 0.3s ease;
             letter-spacing: 0.2px;
+            white-space: nowrap;
         }
         .nav-link:hover {
             color: rgba(255, 255, 255, 0.5);
@@ -94,28 +95,44 @@
         }
         .search-icon {
             color: rgba(255,255,255,0.08);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             cursor: pointer;
             transition: 0.3s;
             background: none;
             border: none;
+            padding: 4px 8px;
         }
         .search-icon:hover {
             color: rgba(255,255,255,0.3);
+        }
+        .search-input-temp {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 60px;
+            padding: 8px 18px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            width: 180px;
+            transition: 0.3s;
+        }
+        .search-input-temp:focus {
+            border-color: rgba(229,9,20,0.3);
+            width: 220px;
         }
 
         /* ===== HERO ===== */
         .hero {
             position: relative;
-            margin: 16px 20px 28px;
+            margin: 16px 16px 28px;
             border-radius: 24px;
             overflow: hidden;
             background: linear-gradient(145deg, #14141f, #1f0c14);
-            aspect-ratio: 16/6;
-            min-height: 180px;
+            aspect-ratio: 16/5.5;
+            min-height: 200px;
             display: flex;
             align-items: center;
-            padding: 28px 40px;
+            padding: 32px 44px;
             border: 1px solid rgba(255, 255, 255, 0.03);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
@@ -135,21 +152,21 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         .hero-content .badges span {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.04);
-            padding: 2px 12px;
+            padding: 2px 14px;
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .hero-content h2 {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 900;
             letter-spacing: -1.5px;
             background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.4));
@@ -160,24 +177,26 @@
             margin-top: 4px;
         }
         .hero-content p {
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 0.85rem;
-            margin-top: 6px;
-            max-width: 420px;
-            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 1rem;
+            margin-top: 8px;
+            max-width: 480px;
+            line-height: 1.6;
+            font-weight: 400;
         }
         .hero-content .btn-hero {
-            margin-top: 14px;
+            margin-top: 18px;
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
             color: #fff;
-            padding: 12px 34px;
+            padding: 14px 38px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: 0.3s ease;
             box-shadow: 0 4px 25px rgba(229, 9, 20, 0.15);
+            letter-spacing: 0.3px;
         }
         .hero-content .btn-hero:hover {
             transform: scale(1.04);
@@ -187,7 +206,7 @@
             position: absolute;
             right: 30px;
             bottom: -10px;
-            width: 160px;
+            width: 180px;
             border-radius: 18px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
             aspect-ratio: 2/3;
@@ -201,21 +220,21 @@
             transform: scale(1.02) rotate(-1deg);
         }
 
-        /* ===== SECCIÓN CANALES EN VIVO ===== */
+        /* ===== SECCIÓN ===== */
         .section {
-            padding: 0 20px;
+            padding: 0 16px;
             margin-bottom: 30px;
         }
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
             gap: 8px;
         }
         .section-header h3 {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             display: flex;
@@ -223,7 +242,7 @@
             gap: 10px;
         }
         .section-header h3 .badge {
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             background: rgba(229, 9, 20, 0.15);
             padding: 3px 14px;
             border-radius: 40px;
@@ -236,7 +255,7 @@
         }
         .section-header .ver-todo {
             color: rgba(255, 255, 255, 0.08);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
@@ -253,7 +272,7 @@
             display: flex;
             gap: 16px;
             overflow-x: auto;
-            padding: 4px 0 12px;
+            padding: 4px 0 14px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
@@ -269,8 +288,8 @@
             scroll-snap-align: start;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
-            padding: 18px 22px;
-            min-width: 150px;
+            padding: 20px 24px;
+            min-width: 160px;
             text-align: center;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -285,18 +304,18 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
         .canal-card .icono {
-            font-size: 2.2rem;
+            font-size: 2.6rem;
             display: block;
             margin-bottom: 4px;
         }
         .canal-card .nombre {
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 1rem;
             letter-spacing: -0.2px;
         }
         .canal-card .categoria {
             color: rgba(255, 255, 255, 0.08);
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             margin-top: 2px;
         }
         .canal-card .live-dot {
@@ -313,26 +332,26 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
         .canal-card .live-label {
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: #e50914;
-            margin-top: 4px;
+            margin-top: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* ===== GRID PELÍCULAS ===== */
+        /* ===== GRID PELÍCULAS (más grande) ===== */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
         }
         .card {
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -342,9 +361,9 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-12px) scale(1.02);
             border-color: rgba(229, 9, 20, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         .card img {
             width: 100%;
@@ -357,10 +376,10 @@
             transform: scale(1.04);
         }
         .card .info {
-            padding: 14px 14px 16px;
+            padding: 16px 16px 18px;
         }
         .card .info h4 {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
@@ -370,19 +389,19 @@
         }
         .card .info p {
             color: #f5c518;
-            font-size: 0.7rem;
-            margin-top: 4px;
+            font-size: 0.8rem;
+            margin-top: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .card .info .year {
-            color: rgba(255, 255, 255, 0.08);
-            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 0.7rem;
         }
         .card .info .idioma-icon {
             color: #00ff88;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             margin-left: auto;
             opacity: 0.4;
         }
@@ -392,15 +411,15 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
             color: rgba(255, 255, 255, 0.08);
-            padding: 12px;
+            padding: 14px;
             border-radius: 60px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
-            max-width: 300px;
-            margin: 10px auto 0;
+            max-width: 320px;
+            margin: 16px auto 0;
             display: block;
             letter-spacing: 0.5px;
         }
@@ -408,11 +427,15 @@
             background: rgba(255, 255, 255, 0.04);
             color: rgba(255, 255, 255, 0.2);
         }
+        .btn-cargar-mas:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
 
         /* ===== REPRODUCTOR ===== */
         .reproductor {
             display: none;
-            margin: 20px 20px 30px;
+            margin: 20px 16px 30px;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
@@ -444,7 +467,7 @@
             border: none;
             color: #e50914;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -467,7 +490,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 6px 16px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             outline: none;
             transition: 0.3s;
@@ -481,7 +504,7 @@
             color: rgba(255, 255, 255, 0.3);
             padding: 6px 16px;
             border-radius: 40px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: 0.3s;
         }
@@ -491,8 +514,8 @@
         }
         .player-video {
             width: 100%;
-            height: 68vh;
-            min-height: 340px;
+            height: 70vh;
+            min-height: 380px;
             background: #000;
             position: relative;
         }
@@ -525,41 +548,41 @@
         }
         .player-video .cargando .spinner {
             display: inline-block;
-            width: 30px;
-            height: 30px;
+            width: 34px;
+            height: 34px;
             border: 3px solid rgba(255, 255, 255, 0.04);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         .player-footer {
-            padding: 16px 24px;
+            padding: 18px 24px;
             background: rgba(0, 0, 0, 0.2);
             border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
         .player-footer h3 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: -0.3px;
             color: #f0f0f0;
         }
         .player-footer p {
-            color: rgba(255, 255, 255, 0.12);
-            font-size: 0.85rem;
-            margin-top: 4px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.9rem;
+            margin-top: 6px;
             line-height: 1.5;
         }
         .player-footer .info-extra {
             color: rgba(0, 255, 136, 0.15);
-            font-size: 0.7rem;
-            margin-top: 6px;
+            font-size: 0.75rem;
+            margin-top: 8px;
         }
 
-        /* ===== FOOTER BOTTOM NAV (estilo app) ===== */
+        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -571,14 +594,14 @@
             border-top: 1px solid rgba(255, 255, 255, 0.04);
             display: flex;
             justify-content: space-around;
-            padding: 8px 0 12px;
+            padding: 6px 0 12px;
             z-index: 200;
         }
         .bottom-nav .nav-item {
             background: none;
             border: none;
             color: rgba(255, 255, 255, 0.08);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -589,7 +612,7 @@
             padding: 4px 12px;
         }
         .bottom-nav .nav-item .icon {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             line-height: 1;
         }
         .bottom-nav .nav-item:hover {
@@ -601,37 +624,39 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .header { padding: 10px 16px; }
-            .logo { font-size: 1.5rem; }
-            .nav-link { font-size: 0.75rem; padding: 6px 12px; }
-            .hero { aspect-ratio: 16/8; padding: 20px 24px; min-height: 120px; margin: 12px 12px 20px; }
-            .hero-content h2 { font-size: 2rem; }
+            .header { padding: 10px 12px; }
+            .logo { font-size: 1.6rem; }
+            .nav-link { font-size: 0.7rem; padding: 4px 10px; }
+            .hero { aspect-ratio: 16/8; padding: 20px 24px; min-height: 130px; margin: 12px 12px 20px; }
+            .hero-content h2 { font-size: 2.2rem; }
             .hero-content p { display: none; }
-            .hero-poster { width: 100px; right: 16px; bottom: -6px; }
+            .hero-poster { width: 110px; right: 16px; bottom: -6px; }
             .hero-content { max-width: 65%; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
-            .canal-card { min-width: 120px; padding: 14px 16px; }
-            .player-video { height: 48vh; min-height: 220px; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+            .canal-card { min-width: 130px; padding: 16px 18px; }
+            .player-video { height: 50vh; min-height: 250px; }
             .section { padding: 0 12px; }
             .reproductor { margin: 12px; }
             .player-header { padding: 10px 16px; }
             .player-footer { padding: 12px 16px; }
-            .bottom-nav .nav-item { font-size: 0.6rem; }
-            .bottom-nav .nav-item .icon { font-size: 1.2rem; }
+            .section-header h3 { font-size: 1.3rem; }
+            .search-input-temp { width: 130px; font-size: 0.85rem; }
+            .search-input-temp:focus { width: 160px; }
         }
         @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
             .hero { aspect-ratio: 16/10; padding: 14px 16px; min-height: 100px; }
-            .hero-content h2 { font-size: 1.4rem; }
-            .hero-poster { width: 70px; right: 10px; bottom: -4px; }
-            .hero-content .badges span { font-size: 0.45rem; padding: 1px 8px; }
-            .canal-card { min-width: 100px; padding: 12px 12px; }
-            .canal-card .icono { font-size: 1.8rem; }
-            .canal-card .nombre { font-size: 0.75rem; }
-            .nav-link { font-size: 0.65rem; padding: 4px 8px; }
-            .player-video { height: 35vh; min-height: 180px; }
+            .hero-content h2 { font-size: 1.6rem; }
+            .hero-poster { width: 80px; right: 10px; bottom: -4px; }
+            .hero-content .badges span { font-size: 0.5rem; padding: 1px 8px; }
+            .canal-card { min-width: 110px; padding: 12px 14px; }
+            .canal-card .icono { font-size: 2rem; }
+            .canal-card .nombre { font-size: 0.8rem; }
+            .nav-link { font-size: 0.6rem; padding: 4px 8px; }
+            .player-video { height: 35vh; min-height: 200px; }
             .section-header h3 { font-size: 1.1rem; }
-            .card .info h4 { font-size: 0.75rem; }
+            .card .info h4 { font-size: 0.85rem; }
+            .card .info p { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -645,10 +670,11 @@
             </div>
             <div class="nav-links" id="navLinks">
                 <button class="nav-link active" data-tipo="movie">Inicio</button>
-                <button class="nav-link" data-tipo="movie">Películas</button>
-                <button class="nav-link" data-tipo="tv">Series</button>
-                <button class="nav-link" data-tipo="anime">Anime</button>
-                <button class="nav-link" data-tipo="canales">Canales TV</button>
+                <button class="nav-link" data-tipo="espanol">🇪🇸 Películas Español</button>
+                <button class="nav-link" data-tipo="tv">📺 Series</button>
+                <button class="nav-link" data-tipo="tv_es">🇪🇸 Series Español</button>
+                <button class="nav-link" data-tipo="anime">🎌 Anime</button>
+                <button class="nav-link" data-tipo="canales">📡 Canales TV</button>
             </div>
             <button class="search-icon" id="searchToggle">🔍</button>
         </div>
@@ -677,7 +703,7 @@
         <div class="canales-scroll" id="canalesScroll"></div>
     </div>
 
-    <!-- ===== SECCIÓN PELÍCULAS POPULARES ===== -->
+    <!-- ===== SECCIÓN PRINCIPAL ===== -->
     <div class="section" id="seccionPrincipal">
         <div class="section-header">
             <h3 id="tituloSeccion">🎬 Las Pelis Más Vistas <span class="badge">🔥</span></h3>
@@ -692,7 +718,7 @@
         <div class="player-header">
             <button class="btn-back" id="btnCerrarReproductor">← Volver</button>
             <div class="player-controls">
-                <span style="color:#e50914;font-weight:700;font-size:0.7rem;">HD</span>
+                <span style="color:#e50914;font-weight:700;font-size:0.75rem;">HD</span>
                 <select id="sourceSelector">
                     <option value="auto">🤖 Auto</option>
                     <option value="2embed.skin">2embed.skin</option>
@@ -739,6 +765,7 @@
 
         const FUENTES = {
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
+            espanol: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             tv: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             tv_es: ['2embed.skin', 'vidsrc.in', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
             anime: ['vidsrc.in', 'vidlink.pro', 'vidsrc.pm', '2embed.skin', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc']
@@ -774,8 +801,6 @@
         // DOM
         // ================================================================
         const grid = document.getElementById('grid');
-        const buscador = document.getElementById('buscador');
-        const btnBuscar = document.getElementById('btnBuscar');
         const tituloSeccion = document.getElementById('tituloSeccion');
         const verTodo = document.getElementById('verTodo');
         const verCanales = document.getElementById('verCanales');
@@ -893,9 +918,22 @@
         async function cargarPagina(page = 1) {
             try {
                 let endpoint, extra = `page=${page}`;
-                if (currentTipo === 'movie') { endpoint = 'movie/popular'; } else if (currentTipo === 'tv') { endpoint =
-                        'tv/popular'; } else if (currentTipo === 'anime') { endpoint = 'discover/tv';
-                    extra += `&with_genres=16&with_original_language=ja`; } else { return false; }
+                if (currentTipo === 'movie') {
+                    endpoint = 'movie/popular';
+                } else if (currentTipo === 'espanol') {
+                    endpoint = 'discover/movie';
+                    extra += `&with_original_language=es&sort_by=popularity.desc`;
+                } else if (currentTipo === 'tv') {
+                    endpoint = 'tv/popular';
+                } else if (currentTipo === 'tv_es') {
+                    endpoint = 'discover/tv';
+                    extra += `&with_original_language=es&sort_by=popularity.desc`;
+                } else if (currentTipo === 'anime') {
+                    endpoint = 'discover/tv';
+                    extra += `&with_genres=16&with_original_language=ja`;
+                } else {
+                    return false;
+                }
 
                 const data = await fetchApi(endpoint, extra);
                 const nuevos = data.results || [];
@@ -923,7 +961,7 @@
             const fecha = destacado.release_date || destacado.first_air_date || '';
             const año = fecha ? fecha.split('-')[0] : '2026';
             heroTitulo.textContent = titulo;
-            heroDesc.textContent = desc.length > 120 ? desc.slice(0, 120) + '...' : desc;
+            heroDesc.textContent = desc.length > 140 ? desc.slice(0, 140) + '...' : desc;
             heroBadge1.textContent = '★ Destacado';
             heroBadge2.textContent = año;
             if (destacado.poster_path) {
@@ -960,12 +998,16 @@
                 const año = fecha ? fecha.split('-')[0] : '';
                 const id = item.id;
                 const tipo = esPelicula ? 'movie' : 'tv';
+                const idiomaOriginal = item.original_language || '';
+                const esEspanol = idiomaOriginal === 'es' || idiomaOriginal === 'la';
                 return `
                         <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-tipo="${tipo}">
                             <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${titulo}" loading="lazy">
                             <div class="info">
                                 <h4>${titulo}</h4>
-                                <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'} <span class="year">${año}</span></p>
+                                <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'} <span class="year">${año}</span>
+                                    ${esEspanol ? '<span class="idioma-icon">🎙️</span>' : ''}
+                                </p>
                             </div>
                         </div>
                     `;
@@ -1063,7 +1105,7 @@
         }
 
         // ================================================================
-        // CARGAR TEMPORADAS Y EPISODIOS (SERIES)
+        // CARGAR TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -1228,14 +1270,21 @@
             loadingVideo.style.display = 'none';
             fuenteInfo.textContent = '';
             if (timeoutAuto) clearTimeout(timeoutAuto);
-            // Volver a mostrar grid
+            // Volver a mostrar el grid
             if (currentSerieId && currentSeason !== null) {
                 cargarTemporadas(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
             } else {
                 grid.style.display = 'grid';
                 btnCargarMas.style.display = 'block';
                 verTodo.style.display = 'inline-block';
-                tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
+                const tipo = currentTipo;
+                if (tipo === 'movie') tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
+                else if (tipo === 'espanol') tituloSeccion.innerHTML =
+                    `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
+                else if (tipo === 'tv') tituloSeccion.innerHTML = `📺 Series Populares <span class="badge">🔥</span>`;
+                else if (tipo === 'tv_es') tituloSeccion.innerHTML =
+                    `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
+                else if (tipo === 'anime') tituloSeccion.innerHTML = `🎌 Animes Populares <span class="badge">🔥</span>`;
                 cargarPagina(1);
             }
         });
@@ -1254,17 +1303,22 @@
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'block';
             verTodo.style.display = 'inline-block';
-            tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
 
-            // Ocultar sección de canales si no es canales
-            if (tipo === 'canales') {
+            // Título según tipo
+            if (tipo === 'movie') tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
+            else if (tipo === 'espanol') tituloSeccion.innerHTML =
+                `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
+            else if (tipo === 'tv') tituloSeccion.innerHTML = `📺 Series Populares <span class="badge">🔥</span>`;
+            else if (tipo === 'tv_es') tituloSeccion.innerHTML =
+                `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
+            else if (tipo === 'anime') tituloSeccion.innerHTML = `🎌 Animes Populares <span class="badge">🔥</span>`;
+            else if (tipo === 'canales') {
                 document.getElementById('seccionCanales').style.display = 'block';
                 grid.style.display = 'none';
                 btnCargarMas.style.display = 'none';
                 verTodo.style.display = 'none';
                 tituloSeccion.innerHTML = '📡 Canales en Vivo <span class="badge">📺</span>';
                 cargarCanalesTV();
-                // Hero para canales
                 heroTitulo.textContent = '📡 Canales de TV en Vivo';
                 heroDesc.textContent = 'Selecciona un canal de la lista para empezar a ver en directo.';
                 heroPoster.style.display = 'none';
@@ -1272,12 +1326,10 @@
                 heroBadge1.textContent = '📡 En vivo';
                 heroBadge2.textContent = '24/7';
                 return;
-            } else {
-                document.getElementById('seccionCanales').style.display = 'block';
-                // Cargar canales también en la sección
-                cargarCanalesTV();
             }
 
+            document.getElementById('seccionCanales').style.display = 'block';
+            cargarCanalesTV();
             heroPoster.style.display = 'block';
             btnHero.style.display = 'inline-block';
             cargarPagina(1);
@@ -1289,6 +1341,11 @@
                 link.classList.add('active');
                 const tipo = link.dataset.tipo;
                 cambiarTipo(tipo);
+                // Actualizar bottom nav
+                bottomNavItems.forEach(i => {
+                    i.classList.remove('active');
+                    if (i.dataset.tipo === tipo) i.classList.add('active');
+                });
             });
         });
 
@@ -1329,55 +1386,72 @@
         });
 
         verCanales.addEventListener('click', () => {
-            // Scrollear a la sección de canales
             document.getElementById('seccionCanales').scrollIntoView({ behavior: 'smooth' });
         });
 
         // ================================================================
-        // BUSCADOR (Toggle)
+        // BUSCADOR (con input)
         // ================================================================
         let searchActive = false;
-        searchToggle.addEventListener('click', () => {
-            if (!searchActive) {
-                // Crear input de búsqueda temporal
-                const existing = document.getElementById('searchInputTemp');
-                if (existing) existing.remove();
-                const input = document.createElement('input');
-                input.id = 'searchInputTemp';
-                input.type = 'text';
-                input.placeholder = 'Buscar...';
-                input.style.cssText =
-                    'background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:60px;padding:10px 20px;color:#fff;font-size:0.95rem;outline:none;width:200px;transition:0.3s;';
-                input.style.flex = '1';
-                input.style.minWidth = '120px';
-                const parent = searchToggle.parentNode;
-                parent.insertBefore(input, searchToggle);
-                input.focus();
-                searchActive = true;
+        let searchInput = null;
 
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        const query = input.value.trim();
-                        if (query) {
-                            buscar(query);
-                            input.remove();
-                            searchActive = false;
-                        }
+        function crearBuscador() {
+            if (searchInput) return;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Buscar películas, series...';
+            input.className = 'search-input-temp';
+            input.id = 'searchInputTemp';
+            const parent = searchToggle.parentNode;
+            parent.insertBefore(input, searchToggle);
+            input.focus();
+            searchActive = true;
+            searchInput = input;
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const query = input.value.trim();
+                    if (query) {
+                        buscar(query);
+                        input.remove();
+                        searchInput = null;
+                        searchActive = false;
                     }
-                });
-                input.addEventListener('blur', () => {
-                    setTimeout(() => {
-                        if (input.value.trim() === '') {
-                            input.remove();
-                            searchActive = false;
-                        }
-                    }, 200);
-                });
+                }
+            });
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    if (input.value.trim() === '') {
+                        input.remove();
+                        searchInput = null;
+                        searchActive = false;
+                    }
+                }, 200);
+            });
+        }
+
+        searchToggle.addEventListener('click', () => {
+            if (searchActive) {
+                if (searchInput) {
+                    searchInput.remove();
+                    searchInput = null;
+                    searchActive = false;
+                }
+            } else {
+                crearBuscador();
             }
         });
 
         bottomSearch.addEventListener('click', () => {
-            searchToggle.click();
+            if (searchActive) {
+                if (searchInput) {
+                    searchInput.remove();
+                    searchInput = null;
+                    searchActive = false;
+                }
+            } else {
+                crearBuscador();
+            }
         });
 
         // ================================================================
@@ -1395,8 +1469,16 @@
                 const tipo = currentTipo;
                 if (tipo === 'movie' || tipo === 'espanol') {
                     data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                    if (tipo === 'espanol') {
+                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item
+                            .original_language === 'la');
+                    }
                 } else if (tipo === 'tv' || tipo === 'tv_es') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
+                    if (tipo === 'tv_es') {
+                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item
+                            .original_language === 'la');
+                    }
                 } else if (tipo === 'anime') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
                     data.results = (data.results || []).filter(item => item.genre_ids && item.genre_ids.includes(16));
@@ -1420,9 +1502,6 @@
         // ================================================================
         cargarCanalesTV();
         cargarPagina(1);
-
-        // Ajustar hero badge si es película
-        document.querySelector('.nav-link.active')?.click();
     </script>
 </body>
 </html>
