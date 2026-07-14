@@ -6,15 +6,10 @@
     <title>CineStar · 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET Y BASE CON DEGRADADO ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+        /* ===== RESET Y FONDO CON COLOR ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body {
-            background: linear-gradient(145deg, #0d0d1a 0%, #1a0f1a 40%, #0f1a1a 100%);
+            background: linear-gradient(145deg, #0d0d1a 0%, #1a0a2e 25%, #0a1a3a 50%, #1a0a2e 75%, #0d0d1a 100%);
             color: #f0f0f0;
             min-height: 100vh;
             padding-bottom: 70px;
@@ -26,316 +21,185 @@
 
         /* ===== HEADER ===== */
         .header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(13, 13, 26, 0.88);
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(13, 13, 26, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 12px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
         }
         .header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1400px; margin: 0 auto; flex-wrap: wrap; gap: 10px;
         }
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 2rem;
-            font-weight: 900;
-            letter-spacing: -1px;
+            font-size: 2rem; font-weight: 900; letter-spacing: -1px;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         .logo span {
             -webkit-text-fill-color: rgba(255,255,255,0.06);
-            font-size: 0.6rem;
-            font-weight: 700;
+            font-size: 0.6rem; font-weight: 700;
             background: rgba(255,255,255,0.03);
-            padding: 2px 12px;
-            border-radius: 40px;
+            padding: 2px 12px; border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.04);
-            letter-spacing: 1.5px;
         }
-        .nav-links {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
         .nav-link {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 6px 14px;
-            border-radius: 40px;
-            transition: all 0.3s ease;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
+            background: none; border: none;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; padding: 6px 14px;
+            border-radius: 40px; transition: all 0.3s ease;
         }
-        .nav-link:hover {
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .nav-link.active {
-            color: #fff;
-            background: rgba(229, 9, 20, 0.15);
-        }
+        .nav-link:hover { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.03); }
+        .nav-link.active { color: #fff; background: rgba(229,9,20,0.15); }
         .search-icon {
-            color: rgba(255,255,255,0.08);
-            font-size: 1.4rem;
-            cursor: pointer;
+            color: rgba(255,255,255,0.08); font-size: 1.4rem;
+            cursor: pointer; background: none; border: none; padding: 4px 8px;
             transition: 0.3s;
-            background: none;
-            border: none;
-            padding: 4px 8px;
         }
-        .search-icon:hover {
-            color: rgba(255,255,255,0.3);
-        }
+        .search-icon:hover { color: rgba(255,255,255,0.3); }
         .search-input-temp {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 60px;
-            padding: 8px 18px;
-            color: #fff;
-            font-size: 0.95rem;
-            outline: none;
-            width: 180px;
-            transition: 0.3s;
+            border-radius: 60px; padding: 8px 18px;
+            color: #fff; font-size: 0.95rem; outline: none;
+            width: 180px; transition: 0.3s;
         }
-        .search-input-temp:focus {
-            border-color: rgba(229,9,20,0.3);
-            width: 220px;
-        }
+        .search-input-temp:focus { border-color: rgba(229,9,20,0.3); width: 220px; }
 
-        /* ===== HERO CON BRILLO ===== */
+        /* ===== HERO CON FONDO COLORIDO ===== */
         .hero {
             position: relative;
             margin: 16px 16px 28px;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            background: linear-gradient(145deg, #1a1425, #2a1018);
+            background: linear-gradient(145deg, #1a0a30, #2a0a20, #0a1a3a);
             aspect-ratio: 16/5.5;
-            min-height: 200px;
+            min-height: 180px;
             display: flex;
             align-items: center;
             padding: 32px 44px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 70% 50%, rgba(229,9,20,0.08) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 70% 30%, rgba(229,9,20,0.12) 0%, rgba(0,180,255,0.06) 60%, transparent 80%);
             pointer-events: none;
         }
         .hero::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, rgba(13, 13, 26, 0.7) 0%, transparent 65%);
+            background: linear-gradient(90deg, rgba(13,13,26,0.5) 0%, transparent 60%);
             pointer-events: none;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 55%;
-        }
+        .hero-content { position: relative; z-index: 2; max-width: 55%; }
         .hero-content .badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 6px;
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
         }
         .hero-content .badges span {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 2px 14px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            color: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            padding: 2px 14px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .hero-content h2 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.4));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.05;
-            margin-top: 4px;
+            line-height: 1.05; margin-top: 4px;
         }
         .hero-content p {
-            color: rgba(255, 255, 255, 0.25);
-            font-size: 1rem;
-            margin-top: 8px;
-            max-width: 480px;
-            line-height: 1.6;
-            font-weight: 400;
+            color: rgba(255,255,255,0.25); font-size: 1rem;
+            margin-top: 8px; max-width: 480px; line-height: 1.6;
         }
         .hero-content .btn-hero {
             margin-top: 18px;
             background: linear-gradient(135deg, #e50914, #b20710);
-            border: none;
-            color: #fff;
-            padding: 14px 38px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: 0.3s ease;
-            box-shadow: 0 4px 25px rgba(229, 9, 20, 0.15);
-            letter-spacing: 0.3px;
+            border: none; color: #fff;
+            padding: 14px 38px; border-radius: 60px;
+            font-weight: 700; font-size: 1.05rem;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 25px rgba(229,9,20,0.15);
         }
-        .hero-content .btn-hero:hover {
-            transform: scale(1.04);
-            box-shadow: 0 6px 35px rgba(229, 9, 20, 0.25);
-        }
+        .hero-content .btn-hero:hover { transform: scale(1.04); box-shadow: 0 6px 35px rgba(229,9,20,0.25); }
         .hero-poster {
-            position: absolute;
-            right: 30px;
-            bottom: -10px;
-            width: 200px;
-            border-radius: 18px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-            aspect-ratio: 2/3;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            z-index: 2;
-            transition: 0.4s ease;
+            position: absolute; right: 30px; bottom: -10px;
+            width: 200px; border-radius: 18px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            aspect-ratio: 2/3; object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.04);
+            z-index: 2; transition: 0.4s ease;
             background: #1a1a1a;
         }
-        .hero:hover .hero-poster {
-            transform: scale(1.02) rotate(-1deg);
-        }
+        .hero:hover .hero-poster { transform: scale(1.02) rotate(-1deg); }
 
         /* ===== SECCIÓN ===== */
-        .section {
-            padding: 0 16px;
-            margin-bottom: 30px;
-        }
+        .section { padding: 0 16px; margin-bottom: 30px; }
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
         }
         .section-header h3 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
+            display: flex; align-items: center; gap: 10px;
         }
         .section-header h3 .badge {
-            font-size: 0.55rem;
-            background: rgba(229, 9, 20, 0.15);
-            padding: 3px 14px;
-            border-radius: 40px;
-            color: #e50914;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            font-size: 0.55rem; background: rgba(229,9,20,0.15);
+            padding: 3px 14px; border-radius: 40px;
+            color: #e50914; font-weight: 700; text-transform: uppercase;
             -webkit-text-fill-color: #e50914;
-            border: 1px solid rgba(229, 9, 20, 0.1);
+            border: 1px solid rgba(229,9,20,0.1);
         }
         .section-header .ver-todo {
-            color: rgba(255, 255, 255, 0.08);
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            letter-spacing: 0.5px;
-            background: none;
-            border: none;
+            color: rgba(255,255,255,0.08); font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s; background: none; border: none;
         }
-        .section-header .ver-todo:hover {
-            color: rgba(255, 255, 255, 0.3);
-        }
+        .section-header .ver-todo:hover { color: rgba(255,255,255,0.3); }
 
-        /* ===== CANALES EN VIVO CON LOGOS ===== */
+        /* ===== CANALES EN VIVO ===== */
         .canales-scroll {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            padding: 4px 0 14px;
-            scroll-snap-type: x mandatory;
+            display: flex; gap: 16px; overflow-x: auto;
+            padding: 4px 0 14px; scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
-        .canales-scroll::-webkit-scrollbar {
-            height: 3px;
-        }
-        .canales-scroll::-webkit-scrollbar-thumb {
-            background: #e50914;
-            border-radius: 10px;
-        }
+        .canales-scroll::-webkit-scrollbar { height: 3px; }
+        .canales-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .canal-card {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            padding: 20px 24px;
-            min-width: 160px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            flex: 0 0 auto; scroll-snap-align: start;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px; padding: 20px 24px;
+            min-width: 160px; text-align: center;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.04);
             transition: all 0.4s ease;
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
         }
         .canal-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(229, 9, 20, 0.15);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(229,9,20,0.15);
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
         .canal-card .logo-canal {
-            display: block;
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 8px;
-            border-radius: 50%;
+            display: block; width: 60px; height: 60px;
+            margin: 0 auto 8px; border-radius: 50%;
             object-fit: contain;
-            background: rgba(255,255,255,0.05);
-            padding: 4px;
-            border: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.03);
+            padding: 4px; border: 1px solid rgba(255,255,255,0.04);
         }
-        .canal-card .nombre {
-            font-weight: 700;
-            font-size: 1rem;
-            letter-spacing: -0.2px;
-        }
-        .canal-card .categoria {
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 0.7rem;
-            margin-top: 2px;
-        }
+        .canal-card .nombre { font-weight: 700; font-size: 1rem; }
+        .canal-card .categoria { color: rgba(255,255,255,0.1); font-size: 0.7rem; margin-top: 2px; }
         .canal-card .live-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #e50914;
-            border-radius: 50%;
+            display: inline-block; width: 8px; height: 8px;
+            background: #e50914; border-radius: 50%;
             margin-right: 6px;
             animation: pulse-dot 1.5s ease-in-out infinite;
         }
@@ -344,397 +208,227 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
         .canal-card .live-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #e50914;
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+            color: #e50914; margin-top: 6px;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* ===== GRID CON IMÁGENES MEJORADAS ===== */
+        /* ===== GRID ===== */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 24px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 24px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.02);
+            border-radius: 24px; overflow: hidden;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.03);
             transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
         .card:hover {
             transform: translateY(-12px) scale(1.02);
-            border-color: rgba(229, 9, 20, 0.1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(229,9,20,0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
         .card img {
-            width: 100%;
-            aspect-ratio: 2/3;
-            object-fit: cover;
-            display: block;
-            transition: 0.4s ease;
+            width: 100%; aspect-ratio: 2/3; object-fit: cover;
+            display: block; transition: 0.4s ease;
             image-rendering: auto;
         }
-        .card:hover img {
-            transform: scale(1.04);
-        }
-        .card .info {
-            padding: 16px 16px 18px;
-        }
+        .card:hover img { transform: scale(1.04); }
+        .card .info { padding: 16px 16px 18px; }
         .card .info h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #f0f0f0;
-            letter-spacing: -0.2px;
+            font-size: 1rem; font-weight: 700;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            color: #f0f0f0; letter-spacing: -0.2px;
         }
         .card .info p {
-            color: #f5c518;
-            font-size: 0.8rem;
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: #f5c518; font-size: 0.8rem;
+            margin-top: 6px; display: flex; align-items: center; gap: 10px;
         }
-        .card .info .year {
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 0.7rem;
-        }
+        .card .info .year { color: rgba(255,255,255,0.1); font-size: 0.7rem; }
         .card .info .idioma-icon {
-            color: #00ff88;
-            font-size: 0.65rem;
-            margin-left: auto;
-            opacity: 0.4;
+            color: #00ff88; font-size: 0.65rem; margin-left: auto; opacity: 0.4;
         }
 
         /* ===== BOTÓN CARGAR MÁS ===== */
         .btn-cargar-mas {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.08);
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            max-width: 320px;
-            margin: 16px auto 0;
-            display: block;
-            letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.08);
+            padding: 14px; border-radius: 60px;
+            font-weight: 600; font-size: 0.9rem;
+            cursor: pointer; transition: 0.3s;
+            width: 100%; max-width: 320px;
+            margin: 16px auto 0; display: block;
         }
-        .btn-cargar-mas:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.2);
-        }
-        .btn-cargar-mas:disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-        }
+        .btn-cargar-mas:hover { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.2); }
+        .btn-cargar-mas:disabled { opacity: 0.2; cursor: not-allowed; }
 
         /* ===== REPRODUCTOR MEJORADO ===== */
         .reproductor {
             display: none;
             margin: 20px 16px 10px;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
             backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
             border-radius: 28px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255,255,255,0.03);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.9);
         }
-        .reproductor.active {
-            display: block;
-            animation: fadeSlide 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+        .reproductor.active { display: block; animation: fadeSlide 0.5s ease; }
         @keyframes fadeSlide {
-            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .player-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 24px;
-            background: rgba(0, 0, 0, 0.3);
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 24px; background: rgba(0,0,0,0.3);
+            flex-wrap: wrap; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
         }
         .player-header .btn-back {
-            background: none;
-            border: none;
-            color: #e50914;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: none; border: none;
+            color: #e50914; font-weight: 700; font-size: 1rem;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
             transition: 0.3s;
         }
-        .player-header .btn-back:hover {
-            color: #ff4d4d;
-            transform: scale(1.04);
-        }
+        .player-header .btn-back:hover { color: #ff4d4d; transform: scale(1.04); }
         .player-controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
+            display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
         }
         .player-controls select {
-            background: rgba(255, 255, 255, 0.04);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            outline: none;
+            background: rgba(255,255,255,0.04);
+            color: #fff; border: 1px solid rgba(255,255,255,0.05);
+            padding: 6px 16px; border-radius: 40px;
+            font-size: 0.75rem; cursor: pointer; outline: none;
             transition: 0.3s;
         }
-        .player-controls select:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
+        .player-controls select:hover { background: rgba(255,255,255,0.06); }
         .player-controls button {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.3);
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.3);
+            padding: 6px 16px; border-radius: 40px;
+            font-size: 0.75rem; cursor: pointer; transition: 0.3s;
         }
-        .player-controls button:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-        }
+        .player-controls button:hover { background: rgba(255,255,255,0.06); color: #fff; }
         .player-video {
-            width: 100%;
-            height: 75vh;
-            min-height: 420px;
-            background: #000;
-            position: relative;
+            width: 100%; height: 75vh; min-height: 420px;
+            background: #000; position: relative;
         }
-        .player-video iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .player-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: #000;
-        }
+        .player-video iframe { width: 100%; height: 100%; border: none; }
+        .player-video video { width: 100%; height: 100%; object-fit: contain; background: #000; }
         .player-video .cargando {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.06);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 24px 36px;
-            border-radius: 60px;
-            text-align: center;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            color: rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.5);
+            padding: 24px 36px; border-radius: 60px;
+            text-align: center; backdrop-filter: blur(30px);
+            font-size: 1rem; border: 1px solid rgba(255,255,255,0.02);
             pointer-events: none;
         }
         .player-video .cargando .spinner {
-            display: inline-block;
-            width: 34px;
-            height: 34px;
-            border: 3px solid rgba(255, 255, 255, 0.04);
+            display: inline-block; width: 34px; height: 34px;
+            border: 3px solid rgba(255,255,255,0.04);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 14px;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .player-footer {
-            padding: 18px 24px;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 18px 24px; background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.02);
         }
-        .player-footer h3 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            color: #f0f0f0;
-        }
-        .player-footer p {
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 0.9rem;
-            margin-top: 6px;
-            line-height: 1.5;
-        }
-        .player-footer .info-extra {
-            color: rgba(0, 255, 136, 0.15);
-            font-size: 0.75rem;
-            margin-top: 8px;
-        }
+        .player-footer h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.3px; }
+        .player-footer p { color: rgba(255,255,255,0.15); font-size: 0.9rem; margin-top: 6px; line-height: 1.5; }
+        .player-footer .info-extra { color: rgba(0,255,136,0.15); font-size: 0.75rem; margin-top: 8px; }
 
-        /* ===== EPISODIOS Y TEMPORADAS DEBAJO DEL REPRODUCTOR ===== */
+        /* ===== EPISODIOS DEBAJO ===== */
         .episodios-wrapper {
-            margin-top: 10px;
-            padding: 0 16px 16px;
+            margin: 10px 16px 16px;
             display: none;
         }
-        .episodios-wrapper.active {
-            display: block;
-        }
-        .episodios-wrapper .episodios-titulo {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.1);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 10px;
+        .episodios-wrapper.active { display: block; }
+        .episodios-wrapper .titulo {
+            font-size: 0.75rem; font-weight: 700;
+            color: rgba(255,255,255,0.1); text-transform: uppercase;
+            letter-spacing: 1.5px; margin-bottom: 10px;
         }
         .episodios-wrapper .temporadas {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
+            display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
         }
         .episodios-wrapper .temp-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.2);
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.2);
+            padding: 6px 18px; border-radius: 40px;
+            font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
         }
-        .episodios-wrapper .temp-btn:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: #fff;
-        }
+        .episodios-wrapper .temp-btn:hover { background: rgba(255,255,255,0.04); color: #fff; }
         .episodios-wrapper .temp-btn.active {
-            background: rgba(229, 9, 20, 0.15);
-            border-color: rgba(229, 9, 20, 0.2);
-            color: #fff;
+            background: rgba(229,9,20,0.15);
+            border-color: rgba(229,9,20,0.2); color: #fff;
         }
-        .episodios-wrapper .episodios-scroll {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scroll-snap-type: x mandatory;
+        .episodios-wrapper .ep-scroll {
+            display: flex; gap: 12px; overflow-x: auto;
+            padding-bottom: 10px; scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
-        .episodios-wrapper .episodios-scroll::-webkit-scrollbar {
-            height: 3px;
+        .episodios-wrapper .ep-scroll::-webkit-scrollbar { height: 3px; }
+        .episodios-wrapper .ep-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
+        .episodios-wrapper .ep-mini {
+            flex: 0 0 auto; scroll-snap-align: start;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px; padding: 14px 18px;
+            text-align: center; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.3s ease; min-width: 80px;
         }
-        .episodios-wrapper .episodios-scroll::-webkit-scrollbar-thumb {
-            background: #e50914;
-            border-radius: 10px;
+        .episodios-wrapper .ep-mini:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(229,9,20,0.1); transform: scale(1.04);
         }
-        .episodios-wrapper .ep-card-mini {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 14px 18px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: 0.3s ease;
-            min-width: 80px;
+        .episodios-wrapper .ep-mini.active-ep {
+            background: rgba(229,9,20,0.06);
+            border-color: rgba(229,9,20,0.15);
         }
-        .episodios-wrapper .ep-card-mini:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(229, 9, 20, 0.1);
-            transform: scale(1.04);
-        }
-        .episodios-wrapper .ep-card-mini.active-ep {
-            background: rgba(229, 9, 20, 0.06);
-            border-color: rgba(229, 9, 20, 0.15);
-        }
-        .episodios-wrapper .ep-card-mini .num {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #e50914;
-        }
-        .episodios-wrapper .ep-card-mini .title {
-            font-size: 0.5rem;
-            color: rgba(255, 255, 255, 0.12);
-            margin-top: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .episodios-wrapper .ep-mini .num { font-size: 1.2rem; font-weight: 800; color: #e50914; }
+        .episodios-wrapper .ep-mini .title {
+            font-size: 0.5rem; color: rgba(255,255,255,0.12);
+            margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             max-width: 70px;
         }
 
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(13, 13, 26, 0.92);
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(13,13,26,0.92);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            display: flex;
-            justify-content: space-around;
-            padding: 6px 0 12px;
-            z-index: 200;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            display: flex; justify-content: space-around;
+            padding: 6px 0 12px; z-index: 200;
         }
         .bottom-nav .nav-item {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.08);
-            font-size: 0.65rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
+            background: none; border: none;
+            color: rgba(255,255,255,0.08);
+            font-size: 0.65rem; font-weight: 600;
+            cursor: pointer; display: flex; flex-direction: column;
+            align-items: center; gap: 2px; padding: 4px 12px;
             transition: 0.3s;
-            padding: 4px 12px;
         }
-        .bottom-nav .nav-item .icon {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-        .bottom-nav .nav-item:hover {
-            color: rgba(255, 255, 255, 0.2);
-        }
-        .bottom-nav .nav-item.active {
-            color: #e50914;
-        }
+        .bottom-nav .nav-item .icon { font-size: 1.6rem; line-height: 1; }
+        .bottom-nav .nav-item:hover { color: rgba(255,255,255,0.2); }
+        .bottom-nav .nav-item.active { color: #e50914; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .header { padding: 10px 12px; }
-            .logo { font-size: 1.6rem; }
-            .nav-link { font-size: 0.7rem; padding: 4px 10px; }
-            .hero { aspect-ratio: 16/8; padding: 20px 24px; min-height: 130px; margin: 12px 12px 20px; }
+            .hero { aspect-ratio: 16/8; padding: 20px 24px; min-height: 130px; }
             .hero-content h2 { font-size: 2.2rem; }
             .hero-content p { display: none; }
             .hero-poster { width: 120px; right: 16px; bottom: -6px; }
@@ -755,7 +449,6 @@
             .hero { aspect-ratio: 16/10; padding: 14px 16px; min-height: 100px; }
             .hero-content h2 { font-size: 1.6rem; }
             .hero-poster { width: 80px; right: 10px; bottom: -4px; }
-            .hero-content .badges span { font-size: 0.5rem; padding: 1px 8px; }
             .canal-card { min-width: 110px; padding: 12px 14px; }
             .canal-card .logo-canal { width: 40px; height: 40px; }
             .canal-card .nombre { font-size: 0.8rem; }
@@ -764,6 +457,7 @@
             .section-header h3 { font-size: 1.1rem; }
             .card .info h4 { font-size: 0.85rem; }
             .card .info p { font-size: 0.7rem; }
+            .episodios-wrapper .ep-mini { min-width: 60px; padding: 10px 12px; }
         }
     </style>
 </head>
@@ -772,9 +466,7 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-inner">
-            <div class="logo">
-                🎬 CineStar <span>2026</span>
-            </div>
+            <div class="logo">🎬 CineStar <span>2026</span></div>
             <div class="nav-links" id="navLinks">
                 <button class="nav-link active" data-tipo="movie">Inicio</button>
                 <button class="nav-link" data-tipo="espanol">🇪🇸 Películas Español</button>
@@ -790,10 +482,7 @@
     <!-- ===== HERO ===== -->
     <div class="hero" id="hero">
         <div class="hero-content">
-            <div class="badges">
-                <span id="heroBadge1">★ Destacado</span>
-                <span id="heroBadge2">2026</span>
-            </div>
+            <div class="badges"><span id="heroBadge1">★ Destacado</span><span id="heroBadge2">2026</span></div>
             <h2 id="heroTitulo">CineStar</h2>
             <p id="heroDesc">+5000 películas, series, anime y canales de TV en vivo. Todo en español.</p>
             <button class="btn-hero" id="btnHero">Ver ahora</button>
@@ -801,7 +490,7 @@
         <img id="heroPoster" class="hero-poster" src="https://image.tmdb.org/t/p/w500/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
     </div>
 
-    <!-- ===== SECCIÓN CANALES EN VIVO ===== -->
+    <!-- ===== CANALES EN VIVO ===== -->
     <div class="section" id="seccionCanales">
         <div class="section-header">
             <h3>📡 Canales en Vivo <span class="badge">En directo</span></h3>
@@ -841,10 +530,7 @@
             </div>
         </div>
         <div class="player-video" id="playerVideo">
-            <div class="cargando" id="loadingVideo">
-                <div class="spinner"></div>
-                <span id="loadingText">Cargando...</span>
-            </div>
+            <div class="cargando" id="loadingVideo"><div class="spinner"></div><span id="loadingText">Cargando...</span></div>
             <iframe id="iframeVideo" src="" allowfullscreen></iframe>
             <video id="videoPlayer" controls playsinline style="display:none;"></video>
         </div>
@@ -855,11 +541,11 @@
         </div>
     </div>
 
-    <!-- ===== WRAPPER DE EPISODIOS (debajo del reproductor) ===== -->
+    <!-- ===== EPISODIOS DEBAJO ===== -->
     <div class="episodios-wrapper" id="episodiosWrapper">
-        <div class="episodios-titulo">📺 Episodios</div>
+        <div class="titulo">📺 Episodios</div>
         <div class="temporadas" id="temporadasContainer"></div>
-        <div class="episodios-scroll" id="episodiosScroll"></div>
+        <div class="ep-scroll" id="episodiosScroll"></div>
     </div>
 
     <!-- ===== BOTTOM NAV ===== -->
@@ -875,7 +561,7 @@
         // CONFIGURACIÓN
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
-        const BASE_IMG = 'https://image.tmdb.org/t/p/w500'; // <--- MEJOR CALIDAD
+        const BASE_IMG = 'https://image.tmdb.org/t/p/w500';
 
         const FUENTES = {
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
@@ -886,7 +572,7 @@
         };
 
         // ================================================================
-        // CANALES TV CON LOGOS (IMÁGENES REALES)
+        // CANALES TV CON LOGOS REALES
         // ================================================================
         const CANALES_TV = [
             { nombre: 'CNN Internacional', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN_logo.svg/1200px-CNN_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/cnn-intl/playlist.m3u8', categoria: 'Noticias' },
@@ -902,7 +588,7 @@
         ];
 
         // ================================================================
-        // DOM
+        // DOM REFERENCIAS
         // ================================================================
         const grid = document.getElementById('grid');
         const tituloSeccion = document.getElementById('tituloSeccion');
@@ -936,6 +622,9 @@
         const temporadasContainer = document.getElementById('temporadasContainer');
         const episodiosScroll = document.getElementById('episodiosScroll');
 
+        // ================================================================
+        // ESTADO GLOBAL
+        // ================================================================
         let allItems = [];
         let currentPage = 1;
         let currentTipo = 'movie';
@@ -953,7 +642,7 @@
         const MAX_PAGES = 50;
 
         // ================================================================
-        // API
+        // FUNCIONES API
         // ================================================================
         async function fetchApi(endpoint, extra = '') {
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
@@ -964,17 +653,17 @@
         }
 
         // ================================================================
-        // CARGAR CANALES TV
+        // CANALES TV
         // ================================================================
         function cargarCanalesTV() {
             canalesScroll.innerHTML = CANALES_TV.map(c => `
-                    <div class="canal-card" data-stream="${c.stream}" data-nombre="${c.nombre}" data-categoria="${c.categoria}">
-                        <img class="logo-canal" src="${c.logo}" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none'">
-                        <div class="nombre">${c.nombre}</div>
-                        <div class="categoria">${c.categoria}</div>
-                        <div class="live-label"><span class="live-dot"></span>En vivo</div>
-                    </div>
-                `).join('');
+                <div class="canal-card" data-stream="${c.stream}" data-nombre="${c.nombre}" data-categoria="${c.categoria}">
+                    <img class="logo-canal" src="${c.logo}" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none'">
+                    <div class="nombre">${c.nombre}</div>
+                    <div class="categoria">${c.categoria}</div>
+                    <div class="live-label"><span class="live-dot"></span>En vivo</div>
+                </div>
+            `).join('');
 
             document.querySelectorAll('.canal-card').forEach(card => {
                 card.addEventListener('click', () => {
@@ -989,10 +678,9 @@
         function reproducirTV(stream, nombre, categoria) {
             reproductor.classList.add('active');
             peliTitulo.textContent = `${nombre} (${categoria})`;
-            peliSinopsis.textContent = '📡 Transmisión en vivo. Disfruta de este canal de televisión.';
-            fuenteInfo.textContent = '🔴 En vivo · Fuente: ' + stream;
+            peliSinopsis.textContent = '📡 Transmisión en vivo. Disfruta de este canal.';
+            fuenteInfo.textContent = '🔴 En vivo · ' + stream;
             episodiosWrapper.classList.remove('active');
-
             iframe.style.display = 'none';
             videoPlayer.style.display = 'block';
             loadingVideo.style.display = 'flex';
@@ -1096,8 +784,7 @@
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML =
-                    `<p style="color:rgba(255,255,255,0.05);text-align:center;padding:40px;">No hay resultados.</p>`;
+                grid.innerHTML = `<p style="color:rgba(255,255,255,0.05);text-align:center;padding:40px;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -1110,16 +797,16 @@
                 const idiomaOriginal = item.original_language || '';
                 const esEspanol = idiomaOriginal === 'es' || idiomaOriginal === 'la';
                 return `
-                        <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-tipo="${tipo}">
-                            <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${titulo}" loading="lazy">
-                            <div class="info">
-                                <h4>${titulo}</h4>
-                                <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'} <span class="year">${año}</span>
-                                    ${esEspanol ? '<span class="idioma-icon">🎙️</span>' : ''}
-                                </p>
-                            </div>
+                    <div class="card" data-id="${id}" data-titulo="${titulo}" data-sinopsis="${item.overview || ''}" data-tipo="${tipo}">
+                        <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${titulo}" loading="lazy">
+                        <div class="info">
+                            <h4>${titulo}</h4>
+                            <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'} <span class="year">${año}</span>
+                                ${esEspanol ? '<span class="idioma-icon">🎙️</span>' : ''}
+                            </p>
                         </div>
-                    `;
+                    </div>
+                `;
             }).join('');
 
             document.querySelectorAll('.card').forEach(card => {
@@ -1173,7 +860,7 @@
         }
 
         // ================================================================
-        // BUSCAR FUENTE AUTO
+        // BUSCADOR AUTO FUNCIONAL (sin proxies)
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -1183,16 +870,21 @@
         function probarSiguienteFuente(id, tipo, season, episode) {
             if (idxFuenteActual >= fuentesActuales.length) {
                 loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = '❌ No se encontró ninguna fuente.';
-                peliSinopsis.textContent = '⚠️ No se pudo encontrar un enlace. Prueba manual.';
+                fuenteInfo.textContent = '❌ No se encontró fuente.';
+                peliSinopsis.textContent = '⚠️ Prueba manual en el selector.';
                 return;
             }
+
             const dominio = fuentesActuales[idxFuenteActual];
             let url = tipo === 'movie' ? `https://${dominio}/embed/movie/${id}` :
                 `https://${dominio}/embed/tv/${id}/${season}/${episode}`;
+
             loadingText.textContent = `🔍 Probando ${idxFuenteActual+1}/${fuentesActuales.length}: ${dominio}...`;
             iframe.src = url;
+
             if (timeoutAuto) clearTimeout(timeoutAuto);
+
+            // Si el iframe carga, asumimos que funciona
             iframe.onload = () => {
                 clearTimeout(timeoutAuto);
                 loadingVideo.style.display = 'none';
@@ -1200,22 +892,26 @@
                 iframe.onload = null;
                 iframe.onerror = null;
             };
+
+            // Si hay error, pasar al siguiente
             iframe.onerror = () => {
                 clearTimeout(timeoutAuto);
                 idxFuenteActual++;
                 probarSiguienteFuente(id, tipo, season, episode);
                 iframe.onerror = null;
             };
+
+            // Timeout de seguridad: si no carga en 6s, pasar al siguiente
             timeoutAuto = setTimeout(() => {
                 iframe.onload = null;
                 iframe.onerror = null;
                 idxFuenteActual++;
                 probarSiguienteFuente(id, tipo, season, episode);
-            }, 5000);
+            }, 6000);
         }
 
         // ================================================================
-        // CARGAR TEMPORADAS Y EPISODIOS
+        // TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -1233,21 +929,17 @@
                 temporadasCache = temporadas;
 
                 if (temporadas.length === 0) {
-                    grid.innerHTML =
-                        `<p style="color:rgba(255,255,255,0.1);text-align:center;padding:30px;">No hay temporadas.</p>`;
+                    grid.innerHTML = `<p style="color:rgba(255,255,255,0.1);text-align:center;padding:30px;">No hay temporadas.</p>`;
                     grid.style.display = 'grid';
                     return;
                 }
 
-                // Mostrar temporadas en el grid (para seleccionar)
                 let html = `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;">`;
                 temporadas.forEach((t, idx) => {
-                    html +=
-                        `<button class="temp-btn" data-season="${t.season_number}" style="background:${idx===0?'rgba(229,9,20,0.15)':'rgba(255,255,255,0.03)'};border:1px solid ${idx===0?'rgba(229,9,20,0.3)':'rgba(255,255,255,0.04)'};color:${idx===0?'#fff':'rgba(255,255,255,0.3)'};padding:8px 20px;border-radius:40px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.3s;">T${t.season_number}</button>`;
+                    html += `<button class="temp-btn" data-season="${t.season_number}" style="background:${idx===0?'rgba(229,9,20,0.15)':'rgba(255,255,255,0.03)'};border:1px solid ${idx===0?'rgba(229,9,20,0.3)':'rgba(255,255,255,0.04)'};color:${idx===0?'#fff':'rgba(255,255,255,0.3)'};padding:8px 20px;border-radius:40px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.3s;">T${t.season_number}</button>`;
                 });
                 html += `</div>`;
-                html +=
-                    `<div id="episodiosContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;"></div>`;
+                html += `<div id="episodiosContainer" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;"></div>`;
                 grid.innerHTML = html;
                 grid.style.display = 'grid';
 
@@ -1290,18 +982,17 @@
                 }
 
                 container.innerHTML = episodios.map(ep => `
-                        <div class="ep-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}" style="background:rgba(255,255,255,0.02);border-radius:16px;padding:16px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);transition:0.3s;">
-                            <div style="font-size:1.4rem;font-weight:800;color:#e50914;">${ep.episode_number}</div>
-                            <div style="font-size:0.6rem;color:rgba(255,255,255,0.15);margin-top:4px;">${ep.name || 'Ep ' + ep.episode_number}</div>
-                        </div>
-                    `).join('');
+                    <div class="ep-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}" style="background:rgba(255,255,255,0.02);border-radius:16px;padding:16px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);transition:0.3s;">
+                        <div style="font-size:1.4rem;font-weight:800;color:#e50914;">${ep.episode_number}</div>
+                        <div style="font-size:0.6rem;color:rgba(255,255,255,0.15);margin-top:4px;">${ep.name || 'Ep ' + ep.episode_number}</div>
+                    </div>
+                `).join('');
 
                 document.querySelectorAll('.ep-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
-                        // Al hacer clic en episodio, reproducir y mostrar episodios debajo del reproductor
                         reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
@@ -1312,7 +1003,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR EPISODIO CON EPISODIOS DEBAJO
+        // REPRODUCIR EPISODIO (CON EPISODIOS DEBAJO)
         // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -1344,27 +1035,22 @@
                 loadingVideo.style.display = 'none';
             }
 
-            // Mostrar episodios debajo del reproductor
+            // Mostrar episodios debajo
             mostrarEpisodiosDebajo(serieId, season, episode);
-
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function mostrarEpisodiosDebajo(serieId, season, episodeActual) {
             episodiosWrapper.classList.add('active');
             temporadasContainer.innerHTML = temporadasCache.map(t => `
-                    <button class="temp-btn ${t.season_number === season ? 'active' : ''}" data-season="${t.season_number}">
-                        T${t.season_number}
-                    </button>
-                `).join('');
+                <button class="temp-btn ${t.season_number === season ? 'active' : ''}" data-season="${t.season_number}">T${t.season_number}</button>
+            `).join('');
 
-            // Eventos para cambiar temporada desde el wrapper
             temporadasContainer.querySelectorAll('.temp-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const newSeason = parseInt(btn.dataset.season);
                     temporadasContainer.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    // Recargar episodios de esa temporada
                     cargarEpisodiosWrapper(serieId, newSeason, episodeActual);
                 });
             });
@@ -1381,18 +1067,17 @@
                     return;
                 }
                 episodiosScroll.innerHTML = episodios.map(ep => `
-                        <div class="ep-card-mini ${ep.episode_number === episodeActual ? 'active-ep' : ''}" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
-                            <div class="num">${ep.episode_number}</div>
-                            <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
-                        </div>
-                    `).join('');
+                    <div class="ep-mini ${ep.episode_number === episodeActual ? 'active-ep' : ''}" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
+                        <div class="num">${ep.episode_number}</div>
+                        <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
+                    </div>
+                `).join('');
 
-                episodiosScroll.querySelectorAll('.ep-card-mini').forEach(card => {
+                episodiosScroll.querySelectorAll('.ep-mini').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
-                        // Reproducir el nuevo episodio y actualizar la lista
                         reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
@@ -1443,7 +1128,7 @@
             fuenteInfo.textContent = '';
             episodiosWrapper.classList.remove('active');
             if (timeoutAuto) clearTimeout(timeoutAuto);
-            // Volver a mostrar el grid
+            // Volver al grid
             if (currentSerieId && currentSeason !== null) {
                 cargarTemporadas(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
             } else {
@@ -1452,11 +1137,9 @@
                 verTodo.style.display = 'inline-block';
                 const tipo = currentTipo;
                 if (tipo === 'movie') tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
-                else if (tipo === 'espanol') tituloSeccion.innerHTML =
-                    `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
+                else if (tipo === 'espanol') tituloSeccion.innerHTML = `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
                 else if (tipo === 'tv') tituloSeccion.innerHTML = `📺 Series Populares <span class="badge">🔥</span>`;
-                else if (tipo === 'tv_es') tituloSeccion.innerHTML =
-                    `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
+                else if (tipo === 'tv_es') tituloSeccion.innerHTML = `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
                 else if (tipo === 'anime') tituloSeccion.innerHTML = `🎌 Animes Populares <span class="badge">🔥</span>`;
                 cargarPagina(1);
             }
@@ -1479,11 +1162,9 @@
             episodiosWrapper.classList.remove('active');
 
             if (tipo === 'movie') tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
-            else if (tipo === 'espanol') tituloSeccion.innerHTML =
-                `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
+            else if (tipo === 'espanol') tituloSeccion.innerHTML = `🇪🇸 Películas en Español <span class="badge">🎙️</span>`;
             else if (tipo === 'tv') tituloSeccion.innerHTML = `📺 Series Populares <span class="badge">🔥</span>`;
-            else if (tipo === 'tv_es') tituloSeccion.innerHTML =
-                `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
+            else if (tipo === 'tv_es') tituloSeccion.innerHTML = `🇪🇸 Series en Español <span class="badge">🎙️</span>`;
             else if (tipo === 'anime') tituloSeccion.innerHTML = `🎌 Animes Populares <span class="badge">🔥</span>`;
             else if (tipo === 'canales') {
                 document.getElementById('seccionCanales').style.display = 'block';
@@ -1493,7 +1174,7 @@
                 tituloSeccion.innerHTML = '📡 Canales en Vivo <span class="badge">📺</span>';
                 cargarCanalesTV();
                 heroTitulo.textContent = '📡 Canales de TV en Vivo';
-                heroDesc.textContent = 'Selecciona un canal de la lista para empezar a ver en directo.';
+                heroDesc.textContent = 'Selecciona un canal para ver en directo.';
                 heroPoster.style.display = 'none';
                 btnHero.style.display = 'none';
                 heroBadge1.textContent = '📡 En vivo';
@@ -1640,14 +1321,12 @@
                 if (tipo === 'movie' || tipo === 'espanol') {
                     data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
                     if (tipo === 'espanol') {
-                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item
-                            .original_language === 'la');
+                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
                     }
                 } else if (tipo === 'tv' || tipo === 'tv_es') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
                     if (tipo === 'tv_es') {
-                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item
-                            .original_language === 'la');
+                        data.results = (data.results || []).filter(item => item.original_language === 'es' || item.original_language === 'la');
                     }
                 } else if (tipo === 'anime') {
                     data = await fetchApi('search/tv', `query=${encodeURIComponent(query)}&page=1`);
