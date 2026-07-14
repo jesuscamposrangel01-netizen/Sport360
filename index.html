@@ -17,8 +17,6 @@
             padding: 16px;
             min-height: 100vh;
         }
-
-        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -72,8 +70,6 @@
             color: #666;
             margin-right: 10px;
         }
-
-        /* TABS */
         .tabs {
             display: flex;
             gap: 24px;
@@ -109,8 +105,6 @@
             border-radius: 4px;
             box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
         }
-
-        /* FILTROS (más compactos) */
         .filter-row {
             display: flex;
             gap: 8px;
@@ -145,8 +139,6 @@
             border-color: #e50914;
             color: #fff;
         }
-
-        /* SECCIÓN TÍTULO */
         .section-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -184,8 +176,6 @@
             font-weight: 400;
             margin-left: 8px;
         }
-
-        /* GRID */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -225,8 +215,6 @@
             font-size: 0.8rem;
             margin-top: 4px;
         }
-
-        /* BOTÓN CARGAR MÁS */
         .btn-cargar {
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
@@ -255,8 +243,6 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(229, 9, 20, 0.5);
         }
-
-        /* TEMPORADAS (estilo de la captura) */
         .temporadas {
             display: flex;
             gap: 10px;
@@ -284,8 +270,6 @@
             color: #fff;
             box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         }
-
-        /* EPISODIOS (numerados, estilo captura) */
         .episodios-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -319,8 +303,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
-        /* REPRODUCTOR */
         .reproductor {
             display: none;
             margin-top: 30px;
@@ -452,8 +434,21 @@
             border: 1px solid rgba(229, 9, 20, 0.15);
             margin: 12px 0;
         }
+        .btn-siguiente {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-siguiente:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
 
-        /* RESPONSIVE */
         @media (max-width: 480px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
@@ -545,8 +540,10 @@
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
                     <option value="vidsrc.cc">vidsrc.cc</option>
                     <option value="vidsrc.vip">vidsrc.vip</option>
+                    <option value="vidsrc.pm">vidsrc.pm</option>
                 </select>
                 <button id="btnRecargar">🔄 Recargar</button>
+                <button id="btnSiguiente" class="btn-siguiente">⏩ Siguiente fuente</button>
             </div>
         </div>
         <div class="player-video">
@@ -569,7 +566,20 @@
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
-        const DOMINIOS = ['vidsrc.in', 'embed.su', 'vidsrc.xyz', 'vidsrc.cc', 'vidsrc.vip'];
+        // Lista de dominios para probar (en orden de preferencia)
+        const DOMINIOS = [
+            'vidsrc.in',
+            'embed.su',
+            'vidsrc.xyz',
+            'vidsrc.cc',
+            'vidsrc.vip',
+            'vidsrc.pm'
+        ];
+        // Proxies para verificar las URLs (si uno falla, usa el siguiente)
+        const PROXIES = [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?'
+        ];
 
         // DOM
         const grid = document.getElementById('grid');
@@ -591,6 +601,7 @@
         const fuenteInfo = document.getElementById('fuenteInfo');
         const sourceSelector = document.getElementById('sourceSelector');
         const btnRecargar = document.getElementById('btnRecargar');
+        const btnSiguiente = document.getElementById('btnSiguiente');
 
         let allSeries = [];
         let currentPage = 1;
@@ -602,6 +613,8 @@
         let currentSerieData = null;
         let currentYear = 'all';
         let currentGenre = 'all';
+        let dominiosIntentados = [];
+        let indiceDominioActual = 0;
         const MAX_PAGES = 5;
 
         // ================================================================
@@ -673,11 +686,6 @@
             if (currentYear !== 'all' && !modoBusqueda) {
                 filtered = filtered.filter(item => (item.first_air_date || '').startsWith(currentYear));
             }
-            if (currentGenre !== 'all' && !modoBusqueda) {
-                // Solo para UI, TMDb no permite filtrar por género en la lista popular (requiere discover)
-                // Lo dejamos visual
-            }
-
             if (!filtered || filtered.length === 0) {
                 grid.innerHTML = `<p style="color:#888;text-align:center;padding:20px;grid-column:1/-1;">No hay resultados.</p>`;
                 return;
@@ -703,7 +711,7 @@
         }
 
         // ================================================================
-        // TEMPORADAS Y EPISODIOS (MEJORADO)
+        // TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -719,7 +727,6 @@
                 serieTitulo.textContent = data.name;
                 serieAno.textContent = data.first_air_date ? data.first_air_date.split('-')[0] : '';
 
-                // Mostrar todas las temporadas con episodios > 0
                 const temporadas = (data.seasons || []).filter(t => t.episode_count > 0);
                 temporadas.sort((a, b) => a.season_number - b.season_number);
 
@@ -729,30 +736,23 @@
                     return;
                 }
 
-                // Mostrar botones de temporadas
                 temporadasContainer.innerHTML = temporadas.map((t, idx) => `
                     <button class="temp-btn ${idx === 0 ? 'active' : ''}" data-season="${t.season_number}">
                         T${t.season_number} ${t.name ? '- ' + t.name : ''}
                     </button>
                 `).join('');
 
-                // Seleccionar la temporada con más episodios por defecto
                 let mejorTemp = temporadas.reduce((a, b) => a.episode_count > b.episode_count ? a : b);
                 const tempInicial = mejorTemp.season_number;
                 currentSeason = tempInicial;
 
-                // Activar el botón correspondiente
                 document.querySelectorAll('.temp-btn').forEach(btn => {
-                    if (parseInt(btn.dataset.season) === tempInicial) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
+                    if (parseInt(btn.dataset.season) === tempInicial) btn.classList.add('active');
+                    else btn.classList.remove('active');
                 });
 
                 await cargarEpisodios(serieId, tempInicial);
 
-                // Eventos de cambio de temporada
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
@@ -764,7 +764,7 @@
                 });
 
             } catch (e) {
-                console.error('Error cargando temporadas:', e);
+                console.error(e);
                 episodiosGrid.innerHTML = `<div class="error-msg">❌ Error al cargar temporadas: ${e.message}</div>`;
             }
         }
@@ -773,12 +773,10 @@
             try {
                 const data = await fetchApi(`tv/${serieId}/season/${season}`);
                 const episodios = data.episodes || [];
-
                 if (episodios.length === 0) {
-                    episodiosGrid.innerHTML = `<p style="color:#888;text-align:center;padding:20px;grid-column:1/-1;">No hay episodios en esta temporada.</p>`;
+                    episodiosGrid.innerHTML = `<p style="color:#888;text-align:center;padding:20px;grid-column:1/-1;">No hay episodios.</p>`;
                     return;
                 }
-
                 episodiosGrid.innerHTML = episodios.map(ep => `
                     <div class="ep-card" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
                         <div class="num">${ep.episode_number}</div>
@@ -786,7 +784,6 @@
                     </div>
                 `).join('');
 
-                // Evento de clic en episodio
                 document.querySelectorAll('.ep-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
@@ -799,15 +796,14 @@
                         }
                     });
                 });
-
             } catch (e) {
-                console.error('Error cargando episodios:', e);
+                console.error(e);
                 episodiosGrid.innerHTML = `<div class="error-msg">❌ Error al cargar episodios: ${e.message}</div>`;
             }
         }
 
         // ================================================================
-        // REPRODUCCIÓN INTELIGENTE
+        // REPRODUCCIÓN INTELIGENTE (MEJORADA)
         // ================================================================
         async function reproducirInteligente(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -820,39 +816,56 @@
             peliSinopsis.textContent = sinopsis || currentSerieData.sinopsis || 'Sin sinopsis.';
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
-            loadingText.textContent = '🔍 Buscando fuente...';
             fuenteInfo.textContent = '';
             iframe.src = '';
+            dominiosIntentados = [];
+            indiceDominioActual = 0;
 
-            // Probar dominios
-            let encontrado = false;
-            for (const dominio of DOMINIOS) {
-                loadingText.textContent = `🔍 Probando ${dominio}...`;
-                const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
-                // Verificar con proxy
+            await probarSiguienteDominio(serieId, season, episode);
+            reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        async function probarSiguienteDominio(serieId, season, episode) {
+            if (indiceDominioActual >= DOMINIOS.length) {
+                loadingVideo.style.display = 'none';
+                fuenteInfo.textContent = '❌ No se encontró ninguna fuente. Prueba manual.';
+                peliSinopsis.textContent = '⚠️ No se pudo encontrar un enlace. Cambia a una fuente manual.';
+                return;
+            }
+
+            const dominio = DOMINIOS[indiceDominioActual];
+            const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
+            loadingText.textContent = `🔍 Probando ${indiceDominioActual+1}/${DOMINIOS.length}: ${dominio}...`;
+
+            // Probar con proxies
+            let contenido = null;
+            for (const proxy of PROXIES) {
                 try {
-                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-                    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(4000) });
-                    const data = await res.json();
-                    if (data.contents && !data.contents.toLowerCase().includes('404') && data.contents.length > 200) {
-                        iframe.src = url;
-                        fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
-                        encontrado = true;
-                        loadingVideo.style.display = 'none';
-                        break;
+                    const proxyUrl = `${proxy}${encodeURIComponent(url)}`;
+                    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(6000) });
+                    if (res.ok) {
+                        const text = await res.text();
+                        if (text && text.length > 100 && !text.toLowerCase().includes('404') && !text.toLowerCase().includes('not found')) {
+                            contenido = text;
+                            break;
+                        }
                     }
                 } catch (e) {
                     continue;
                 }
             }
 
-            if (!encontrado) {
+            if (contenido) {
+                // Fuente encontrada
+                iframe.src = url;
+                fuenteInfo.textContent = `✅ Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
-                fuenteInfo.textContent = '❌ No se encontró fuente. Prueba manual.';
-                peliSinopsis.textContent = '⚠️ No se pudo encontrar un enlace para este episodio. Cambia a una fuente manual.';
+                return;
+            } else {
+                // Falló, pasar al siguiente
+                indiceDominioActual++;
+                await probarSiguienteDominio(serieId, season, episode);
             }
-
-            reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // ================================================================
@@ -890,6 +903,21 @@
             }
         }
 
+        function siguienteFuente() {
+            if (!currentSerieId || currentEpisode === null) return;
+            if (sourceSelector.value !== 'inteligente') {
+                // Si está en manual, cambiar a auto y luego siguiente
+                sourceSelector.value = 'inteligente';
+            }
+            // Reiniciar el proceso desde el siguiente dominio
+            indiceDominioActual++;
+            if (indiceDominioActual >= DOMINIOS.length) {
+                fuenteInfo.textContent = '❌ No hay más fuentes.';
+                return;
+            }
+            probarSiguienteDominio(currentSerieId, currentSeason, currentEpisode);
+        }
+
         document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
             reproductor.classList.remove('active');
             iframe.src = '';
@@ -897,6 +925,7 @@
         });
 
         btnRecargar.addEventListener('click', recargar);
+        btnSiguiente.addEventListener('click', siguienteFuente);
         sourceSelector.addEventListener('change', recargar);
 
         // ================================================================
