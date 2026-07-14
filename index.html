@@ -3,459 +3,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎬 Cine Pro</title>
-    <!-- HLS.js para reproducción nativa -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <title>🎬 Cine Premium</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
-        body { background:#0a0a0a; color:#fff; padding:12px; min-height:100vh; }
-        .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
-        .logo { font-size:2rem; font-weight:800; background:linear-gradient(135deg,#e50914,#ff4d4d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .search-box { display:flex; align-items:center; background:rgba(255,255,255,0.06); border-radius:40px; padding:4px 18px; border:1px solid rgba(255,255,255,0.08); width:100%; max-width:280px; }
-        .search-box input { background:transparent; border:none; padding:12px 0; color:#fff; font-size:0.95rem; width:100%; outline:none; }
-        .search-box input::placeholder { color:#888; }
-        .tabs { display:flex; gap:15px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:10px; margin-bottom:15px; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
-        .tab { background:none; border:none; color:#888; font-size:1rem; font-weight:600; cursor:pointer; padding:4px 0; transition:0.3s; position:relative; flex-shrink:0; }
-        .tab.active { color:#fff; }
-        .tab.active::after { content:''; position:absolute; bottom:-11px; left:0; width:100%; height:3px; background:#e50914; border-radius:4px; }
-        .filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; align-items:center; }
-        .filter-label { color:#888; font-size:0.7rem; font-weight:700; text-transform:uppercase; }
-        .filter-btn { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); color:#aaa; font-size:0.8rem; cursor:pointer; padding:4px 16px; border-radius:30px; transition:0.3s; }
-        .filter-btn.active { background:#e50914; border-color:#e50914; color:#fff; }
-        .section-title { font-size:1.4rem; font-weight:700; margin:20px 0 14px; }
-        .grid-recom { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:14px; }
-        .card-rec { background:rgba(255,255,255,0.03); border-radius:14px; overflow:hidden; cursor:pointer; transition:0.25s; border:1px solid rgba(255,255,255,0.05); }
-        .card-rec:hover { transform:translateY(-4px); box-shadow:0 8px 25px rgba(0,0,0,0.5); }
-        .card-rec img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
-        .card-rec .info { padding:10px 12px; }
-        .card-rec .info h4 { font-size:0.85rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .card-rec .info p { color:#f5c518; font-size:0.75rem; }
-        .trending-list { display:flex; flex-direction:column; gap:10px; margin-top:8px; }
-        .trend-item { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:14px; border:1px solid rgba(255,255,255,0.05); cursor:pointer; transition:0.25s; }
-        .trend-item:hover { background:rgba(255,255,255,0.07); transform:translateX(4px); }
-        .trend-rank { font-size:1.6rem; font-weight:800; color:#333; min-width:40px; text-align:center; }
-        .trend-rank.top1 { color:#f5c518; }
-        .trend-rank.top2 { color:#ccc; }
-        .trend-rank.top3 { color:#cd7f32; }
-        .trend-info { flex:1; overflow:hidden; }
-        .trend-info h4 { font-size:1rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .trend-info .meta { display:flex; gap:10px; font-size:0.75rem; color:#888; flex-wrap:wrap; }
-        .trend-info .meta .genre { color:#e50914; font-weight:600; }
-        .reproductor { display:none; margin-top:25px; background:#0d0d0d; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); }
-        .reproductor.active { display:block; }
-        .player-header { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#111; flex-wrap:wrap; gap:8px; border-bottom:1px solid #1a1a1a; }
-        .btn-volver { background:none; border:none; color:#e50914; font-weight:700; font-size:1.1rem; cursor:pointer; }
-        .player-controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-        .source-selector { background:#1a1a1a; color:#fff; border:1px solid #333; padding:4px 12px; border-radius:40px; font-size:0.7rem; cursor:pointer; }
-        .player-video { width:100%; height:50vh; min-height:280px; background:#000; position:relative; }
-        .player-video video { width:100%; height:100%; object-fit:contain; background:#000; }
-        .player-footer { padding:14px 18px; background:#111; border-top:1px solid #1a1a1a; }
-        .player-footer .info h3 { font-size:1.1rem; margin-bottom:4px; }
-        .player-footer .info p { color:#aaa; font-size:0.85rem; }
-        .btn-cargar { background:linear-gradient(135deg,#e50914,#b20710); border:none; color:#fff; padding:12px; border-radius:40px; font-weight:700; font-size:1rem; cursor:pointer; margin:15px auto 0; display:block; width:100%; max-width:300px; transition:0.3s; }
-        .btn-cargar:disabled { opacity:0.4; cursor:not-allowed; }
-        @media (max-width:480px) { .grid-recom { grid-template-columns:repeat(auto-fill,minmax(105px,1fr)); gap:10px; } .logo { font-size:1.6rem; } .search-box { max-width:180px; } }
-        .result-count { color:#888; font-size:0.9rem; font-weight:400; margin-left:8px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: #0b0b0b;
+            color: #fff;
+            padding: 12px;
+            min-height: 100vh;
+        }
+
+        /* HEADER PREMIUM */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e50914, #ff4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            background: none;
+            -webkit-text-fill-color: #888;
+            font-weight: 300;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 4px 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            width: 100%;
+            max-width: 300px;
+            transition: 0.3s;
+        }
+        .search-box:focus-within {
+            border-color: #e50914;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.2);
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 12px 0;
+            color: #fff;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+        }
+        .search-box input::placeholder {
+            color: #888;
+        }
+        .search-box .icon {
+            color: #666;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        /* TABS PREMIUM */
+        .tabs {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tab {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 0;
+            transition: 0.3s;
+            position: relative;
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+        }
+        .tab:hover {
+            color: #fff;
+        }
+        .tab.active {
+            color: #fff;
+        }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -13px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #e50914, #ff4d4d);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+
+        /* FILTROS */
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .filter-label {
+            color: #888;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 4px;
+        }
+        .filter-btn {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #aaa;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 4px 16px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+        .filter-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+        }
+
+        /* SECCIONES */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 22px 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .badge {
+            font-size: 0.7rem;
+            background: linear-gradient(135deg, #e50914, #b20710);
+            padding: 2px 14px;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .result-count {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        /* GRID PREMIUM */
+        .grid-recom {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+        }
+        .card-rec {
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+        }
+        .card-rec:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 0 1px rgba(229,9,20,0.3);
+        }
+        .card-rec:active {
+            transform: scale(0.96);
+        }
+        .card-rec img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            display: block;
+        }
+        .card-rec .info {
+            padding: 10px 12px 12px;
+        }
+        .card-rec .info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-rec .info p {
+            color: #f5c518;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        /* LISTA TENDENCIAS PREMIUM */
+        .trending-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .trend-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.03);
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: 0.25s;
+            backdrop-filter: blur(5px);
+        }
+        .trend-item:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(229,9,20,0.3);
+            transform: translateX(5px);
+        }
+        .trend-item:active {
+            transform: scale(0.98);
+        }
+        .trend-rank {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #333;
+            min-width: 40px;
+            text-align: center;
+        }
+        .trend-rank.top1 { color: #f5c518; text-shadow: 0 0 20px rgba(245,197,24,0.4); }
+        .trend-rank.top2 { color: #ccc; }
+        .trend-rank.top3 { color: #cd7f32; }
+        .trend-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        .trend-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .trend-info .meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: #888;
+            flex-wrap: wrap;
+            margin-top: 3px;
+        }
+        .trend-info .meta .date { color: #666; }
+        .trend-info .meta .genre { color: #e50914; font-weight: 600; }
+
+        /* REPRODUCTOR PREMIUM */
+        .reproductor {
+            display: none;
+            margin-top: 25px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        }
+        .reproductor.active {
+            display: block;
+        }
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: rgba(0,0,0,0.5);
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .btn-volver {
+            background: none;
+            border: none;
+            color: #e50914;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-volver:hover {
+            color: #ff4d4d;
+            transform: scale(1.05);
+        }
+        .player-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .player-controls button {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #ccc;
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .player-controls button:hover {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border-color: #e50914;
+        }
+        .player-controls .highlight {
+            background: linear-gradient(135deg, #e50914, #b20710);
+            border: none;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(229,9,20,0.4);
+        }
+        .player-controls .highlight:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(229,9,20,0.6);
+        }
+        .source-selector {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            outline: none;
+        }
+        .source-selector option {
+            background: #1a1a1a;
+        }
+        .player-video {
+            width: 100%;
+            height: 50vh;
+            min-height: 280px;
+            background: #000;
+            position: relative;
+        }
+        .player-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .player-video .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #888;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 12px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .player-video .loading .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #e50914;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .player-footer {
+            padding: 14px 20px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .player-footer .info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .player-footer .info p {
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 800px;
+            line-height: 1.4;
+        }
+
+        /* BOTÓN CARGAR MÁS */
+        .btn-cargar {
+            background: linear-gradient(135deg, #e50914, #b20710);
+            border: none;
+            color: #fff;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 18px auto 0;
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(229,9,20,0.3);
+        }
+        .btn-cargar:active {
+            transform: scale(0.96);
+        }
+        .btn-cargar:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-cargar:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(229,9,20,0.5);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .grid-recom {
+                grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+                gap: 10px;
+            }
+            .logo {
+                font-size: 1.6rem;
+            }
+            .search-box {
+                max-width: 180px;
+            }
+            .tabs {
+                gap: 14px;
+            }
+            .trend-item {
+                padding: 10px 12px;
+            }
+            .player-video {
+                height: 40vh;
+                min-height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">🎬 Cine Pro</div>
-    <div class="search-box">
-        <input id="buscador" type="text" placeholder="Buscar...">
-    </div>
-</div>
-
-<div class="tabs" id="tabsContainer">
-    <button class="tab active" data-tab="all">Todo</button>
-    <button class="tab" data-tab="movie">Películas</button>
-    <button class="tab" data-tab="tv">Series</button>
-    <button class="tab" data-tab="anime">Anime</button>
-</div>
-
-<div class="filter-row">
-    <span class="filter-label">Género</span>
-    <button class="filter-btn active" data-genre="all">Recomendados</button>
-    <button class="filter-btn" data-genre="28">Acción</button>
-    <button class="filter-btn" data-genre="35">Comedia</button>
-    <button class="filter-btn" data-genre="18">Drama</button>
-    <button class="filter-btn" data-genre="16">Animación</button>
-    <button class="filter-btn" data-genre="10751">Niños</button>
-</div>
-
-<div class="filter-row">
-    <span class="filter-label">Año</span>
-    <button class="filter-btn active" data-year="all">Todo</button>
-    <button class="filter-btn" data-year="2026">2026</button>
-    <button class="filter-btn" data-year="2025">2025</button>
-    <button class="filter-btn" data-year="2024">2024</button>
-</div>
-
-<div class="section-title" id="tituloSeccion">📌 Recomendados</div>
-<div class="grid-recom" id="gridRecom"></div>
-<button class="btn-cargar" id="cargarMasRecom">Cargar más</button>
-
-<div class="section-title" style="margin-top:20px;">🔥 Tendencias</div>
-<div class="trending-list" id="trendingList"></div>
-<button class="btn-cargar" id="cargarMasTrend">Cargar más tendencias</button>
-
-<!-- REPRODUCTOR CON HLS.JS -->
-<div id="reproductor" class="reproductor">
-    <div class="player-header">
-        <button class="btn-volver" id="btnCerrarReproductor">← Volver</button>
-        <div class="player-controls">
-            <select id="sourceSelector" class="source-selector">
-                <option value="embed.su">embed.su</option>
-                <option value="vidsrc.xyz">vidsrc.xyz</option>
-                <option value="vidsrc.cc">vidsrc.cc</option>
-                <option value="vidsrc.vip">vidsrc.vip</option>
-            </select>
-            <button id="btnRecargar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#ccc;padding:4px 14px;border-radius:40px;font-size:0.7rem;cursor:pointer;">🔄</button>
+    <div class="header">
+        <div class="logo">🎬 Cine Premium <span>| 4K</span></div>
+        <div class="search-box">
+            <span class="icon">🔍</span>
+            <input id="buscador" type="text" placeholder="Buscar película...">
         </div>
     </div>
-    <div class="player-video" id="playerVideo">
-        <video id="videoPlayer" controls playsinline></video>
+
+    <div class="tabs" id="tabsContainer">
+        <button class="tab active" data-tab="all">Todo</button>
+        <button class="tab" data-tab="movie">Películas</button>
+        <button class="tab" data-tab="tv">Series</button>
+        <button class="tab" data-tab="anime">Anime</button>
     </div>
-    <div class="player-footer">
-        <div class="info">
-            <h3 id="peliTitulo">Título</h3>
-            <p id="peliSinopsis">Sinopsis aquí...</p>
-        </div>
+
+    <div class="filter-row">
+        <span class="filter-label">🎭 Género</span>
+        <button class="filter-btn active" data-genre="all">Recomendados</button>
+        <button class="filter-btn" data-genre="28">Acción</button>
+        <button class="filter-btn" data-genre="35">Comedia</button>
+        <button class="filter-btn" data-genre="18">Drama</button>
+        <button class="filter-btn" data-genre="16">Animación</button>
+        <button class="filter-btn" data-genre="10751">Niños</button>
     </div>
-</div>
 
-<script>
-    // ================================================================
-    // CONFIGURACIÓN
-    // ================================================================
-    const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
-    const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
+    <div class="filter-row">
+        <span class="filter-label">📅 Año</span>
+        <button class="filter-btn active" data-year="all">Todo</button>
+        <button class="filter-btn" data-year="2026">2026</button>
+        <button class="filter-btn" data-year="2025">2025</button>
+        <button class="filter-btn" data-year="2024">2024</button>
+    </div>
 
-    // DOM
-    const gridRecom = document.getElementById('gridRecom');
-    const trendingList = document.getElementById('trendingList');
-    const reproductor = document.getElementById('reproductor');
-    const video = document.getElementById('videoPlayer');
-    const peliTitulo = document.getElementById('peliTitulo');
-    const peliSinopsis = document.getElementById('peliSinopsis');
-    const buscador = document.getElementById('buscador');
-    const sourceSelector = document.getElementById('sourceSelector');
-    const tituloSeccion = document.getElementById('tituloSeccion');
-    const btnRecargar = document.getElementById('btnRecargar');
+    <div class="section-title" id="tituloSeccion">📌 Recomendados <span class="badge">Top</span></div>
+    <div class="grid-recom" id="gridRecom"></div>
+    <button class="btn-cargar" id="cargarMasRecom">Cargar más</button>
 
-    let hls = null;
-    let currentMediaId = null;
-    let currentMediaType = 'movie';
-    let allMovies = [];
-    let allTrending = [];
-    let currentYear = 'all';
-    let currentPageRecom = 1;
-    let currentPageTrend = 1;
-    let timeoutBusqueda = null;
-    let modoBusqueda = false;
-    const MAX_PAGES = 5;
+    <div class="section-title" style="margin-top:24px;">🔥 Tendencias</div>
+    <div class="trending-list" id="trendingList"></div>
+    <button class="btn-cargar" id="cargarMasTrend">Cargar más tendencias</button>
 
-    // ================================================================
-    // API
-    // ================================================================
-    async function fetchApi(endpoint, extra = '') {
-        let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
-        if (extra) url += `&${extra}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Error ${res.status}`);
-        return res.json();
-    }
-
-    // ================================================================
-    // BUSCADOR GLOBAL
-    // ================================================================
-    async function buscarPeliculas(query) {
-        if (!query.trim()) {
-            modoBusqueda = false;
-            tituloSeccion.innerHTML = '📌 Recomendados';
-            document.getElementById('cargarMasRecom').style.display = 'block';
-            document.getElementById('cargarMasTrend').style.display = 'block';
-            renderGrid(allMovies);
-            renderTrending(allTrending);
-            return;
-        }
-        modoBusqueda = true;
-        document.getElementById('cargarMasRecom').style.display = 'none';
-        document.getElementById('cargarMasTrend').style.display = 'none';
-        tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">Buscando...</span>`;
-        try {
-            const data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
-            const results = data.results || [];
-            tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">${data.total_results || 0} encontrados</span>`;
-            renderGrid(results);
-            trendingList.innerHTML = `<p style="color:#666;text-align:center;padding:20px;">Resultados de búsqueda</p>`;
-        } catch (e) {
-            tituloSeccion.innerHTML = `❌ Error`;
-            gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
-        }
-    }
-
-    // ================================================================
-    // CARGAR DATOS
-    // ================================================================
-    async function loadPopular(page = 1) {
-        try {
-            const data = await fetchApi('movie/popular', `page=${page}`);
-            const newMovies = data.results || [];
-            if (page === 1) allMovies = newMovies;
-            else allMovies = allMovies.concat(newMovies);
-            if (!modoBusqueda) renderGrid(allMovies);
-            return newMovies.length > 0;
-        } catch (e) {
-            gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
-            return false;
-        }
-    }
-
-    async function loadTrending(page = 1) {
-        try {
-            const data = await fetchApi('trending/movie/week', `page=${page}`);
-            const newTrend = data.results || [];
-            if (page === 1) allTrending = newTrend;
-            else allTrending = allTrending.concat(newTrend);
-            if (!modoBusqueda) renderTrending(allTrending);
-            return newTrend.length > 0;
-        } catch (e) {
-            trendingList.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
-            return false;
-        }
-    }
-
-    // ================================================================
-    // RENDER
-    // ================================================================
-    function renderGrid(lista) {
-        let filtered = lista;
-        if (currentYear !== 'all' && !modoBusqueda) {
-            filtered = filtered.filter(item => (item.release_date || '').startsWith(currentYear));
-        }
-        if (!filtered || filtered.length === 0) {
-            gridRecom.innerHTML = `<p style="color:#666;text-align:center;padding:20px;grid-column:1/-1;">No hay películas.</p>`;
-            return;
-        }
-        gridRecom.innerHTML = filtered.map(item => `
-            <div class="card-rec" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-tipo="movie">
-                <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title}" loading="lazy">
-                <div class="info"><h4>${item.title}</h4><p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'}</p></div>
+    <!-- REPRODUCTOR PREMIUM -->
+    <div id="reproductor" class="reproductor">
+        <div class="player-header">
+            <div>
+                <button class="btn-volver" id="btnCerrarReproductor">← Volver</button>
             </div>
-        `).join('');
-        document.querySelectorAll('.card-rec').forEach(card => {
-            card.addEventListener('click', () => {
-                const id = card.dataset.id;
-                const titulo = card.dataset.titulo;
-                const sinopsis = card.dataset.sinopsis;
-                const tipo = card.dataset.tipo || 'movie';
-                abrirReproductor(id, titulo, sinopsis, tipo);
-            });
-        });
-    }
+            <div class="player-controls">
+                <span style="color:#e50914; font-weight:600; font-size:0.8rem;">HD</span>
+                <button class="highlight" id="btnFullscreen">⛶ Pantalla completa</button>
+                <select id="sourceSelector" class="source-selector">
+                    <option value="embed.su">embed.su</option>
+                    <option value="vidsrc.xyz">vidsrc.xyz</option>
+                    <option value="vidsrc.cc">vidsrc.cc</option>
+                    <option value="vidsrc.vip">vidsrc.vip</option>
+                    <option value="vidsrc.in">vidsrc.in</option>
+                </select>
+                <button id="btnRecargar" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#ccc;padding:4px 14px;border-radius:40px;font-size:0.7rem;cursor:pointer;">🔄 Recargar</button>
+            </div>
+        </div>
+        <div class="player-video" id="playerVideo">
+            <div class="loading" id="loadingVideo">
+                <div class="spinner"></div>
+                Cargando video...
+            </div>
+            <iframe id="iframeVideo" src="" allowfullscreen allow="encrypted-media; fullscreen"></iframe>
+        </div>
+        <div class="player-footer">
+            <div class="info">
+                <h3 id="peliTitulo">Título</h3>
+                <p id="peliSinopsis">Sinopsis aquí...</p>
+            </div>
+        </div>
+    </div>
 
-    function renderTrending(lista) {
-        if (!lista || lista.length === 0) {
-            trendingList.innerHTML = `<p style="color:#666;text-align:center;padding:20px;">No hay tendencias.</p>`;
-            return;
+    <script>
+        // ================================================================
+        //  CONFIGURACIÓN
+        // ================================================================
+        const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
+        const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
+
+        // DOM
+        const gridRecom = document.getElementById('gridRecom');
+        const trendingList = document.getElementById('trendingList');
+        const reproductor = document.getElementById('reproductor');
+        const iframe = document.getElementById('iframeVideo');
+        const peliTitulo = document.getElementById('peliTitulo');
+        const peliSinopsis = document.getElementById('peliSinopsis');
+        const buscador = document.getElementById('buscador');
+        const sourceSelector = document.getElementById('sourceSelector');
+        const tituloSeccion = document.getElementById('tituloSeccion');
+        const loadingVideo = document.getElementById('loadingVideo');
+        const btnRecargar = document.getElementById('btnRecargar');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+
+        let allMovies = [];
+        let allTrending = [];
+        let currentYear = 'all';
+        let currentPageRecom = 1;
+        let currentPageTrend = 1;
+        let timeoutBusqueda = null;
+        let modoBusqueda = false;
+        let currentMediaType = 'movie';
+        let currentMediaId = null;
+        const MAX_PAGES = 5;
+
+        // ================================================================
+        //  API
+        // ================================================================
+        async function fetchApi(endpoint, extraParams = '') {
+            let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
+            if (extraParams) url += `&${extraParams}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Error ${res.status}`);
+            return res.json();
         }
-        trendingList.innerHTML = lista.map((item, index) => {
-            const rank = index + 1;
-            let rankClass = 'trend-rank';
-            if (rank === 1) rankClass += ' top1';
-            else if (rank === 2) rankClass += ' top2';
-            else if (rank === 3) rankClass += ' top3';
-            const date = item.release_date || '2026-TBC';
-            const genreIds = item.genre_ids || [];
-            const genreMap = { 28:'Acción', 12:'Aventura', 16:'Animación', 35:'Comedia', 18:'Drama', 10751:'Niños', 14:'Fantasía' };
-            const genreName = genreMap[genreIds[0]] || 'Anime';
-            return `
-                <div class="trend-item" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-tipo="movie">
-                    <div class="${rankClass}">${rank}</div>
-                    <div class="trend-info">
+
+        // ================================================================
+        //  BUSCADOR GLOBAL
+        // ================================================================
+        async function buscarPeliculas(query) {
+            if (!query.trim()) {
+                modoBusqueda = false;
+                tituloSeccion.innerHTML = '📌 Recomendados <span class="badge">Top</span>';
+                document.getElementById('cargarMasRecom').style.display = 'block';
+                document.getElementById('cargarMasTrend').style.display = 'block';
+                renderGrid(allMovies);
+                renderTrending(allTrending);
+                return;
+            }
+
+            modoBusqueda = true;
+            document.getElementById('cargarMasRecom').style.display = 'none';
+            document.getElementById('cargarMasTrend').style.display = 'none';
+            tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">Buscando...</span>`;
+
+            try {
+                const data = await fetchApi('search/movie', `query=${encodeURIComponent(query)}&page=1`);
+                const results = data.results || [];
+                tituloSeccion.innerHTML = `🔍 Resultados para "${query}" <span class="result-count">${data.total_results || 0} encontrados</span>`;
+                renderGrid(results);
+                trendingList.innerHTML = `<p style="color:#666; text-align:center; padding:20px;">Resultados de búsqueda</p>`;
+            } catch (e) {
+                tituloSeccion.innerHTML = `❌ Error al buscar`;
+                gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
+            }
+        }
+
+        // ================================================================
+        //  CARGAR POPULARES Y TENDENCIAS
+        // ================================================================
+        async function loadPopular(page = 1) {
+            try {
+                const data = await fetchApi('movie/popular', `page=${page}`);
+                const newMovies = data.results || [];
+                if (page === 1) allMovies = newMovies;
+                else allMovies = allMovies.concat(newMovies);
+                if (!modoBusqueda) renderGrid(allMovies);
+                return newMovies.length > 0;
+            } catch (e) {
+                gridRecom.innerHTML = `<p style="color:#e50914;">Error: ${e.message}</p>`;
+                return false;
+            }
+        }
+
+        async function loadTrending(page = 1) {
+            try {
+                const data = await fetchApi('trending/movie/week', `page=${page}`);
+                const newTrend = data.results || [];
+                if (page === 1) allTrending = newTrend;
+                else allTrending = allTrending.concat(newTrend);
+                if (!modoBusqueda) renderTrending(allTrending);
+                return newTrend.length > 0;
+            } catch (e) {
+                trendingList.innerHTML = `<p style="color:#e50914;">Error al cargar tendencias</p>`;
+                return false;
+            }
+        }
+
+        // ================================================================
+        //  RENDER
+        // ================================================================
+        function renderGrid(lista) {
+            let filtered = lista;
+            if (currentYear !== 'all' && !modoBusqueda) {
+                filtered = filtered.filter(item => (item.release_date || '').startsWith(currentYear));
+            }
+            if (!filtered || filtered.length === 0) {
+                gridRecom.innerHTML = `<p style="color:#666; text-align:center; padding:20px; grid-column:1/-1;">No hay películas.</p>`;
+                return;
+            }
+            gridRecom.innerHTML = filtered.map(item => `
+                <div class="card-rec" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-tipo="movie">
+                    <img src="${item.poster_path ? BASE_IMG + item.poster_path : 'https://via.placeholder.com/300x450/222/555?text=No+Image'}" alt="${item.title}" loading="lazy">
+                    <div class="info">
                         <h4>${item.title}</h4>
-                        <div class="meta"><span class="date">${date}</span><span class="genre">${genreName}</span></div>
+                        <p>⭐ ${item.vote_average?.toFixed(1) || 'N/A'}</p>
                     </div>
                 </div>
-            `;
-        }).join('');
-        document.querySelectorAll('.trend-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const id = item.dataset.id;
-                const titulo = item.dataset.titulo;
-                const sinopsis = item.dataset.sinopsis;
-                const tipo = item.dataset.tipo || 'movie';
-                abrirReproductor(id, titulo, sinopsis, tipo);
+            `).join('');
+
+            document.querySelectorAll('.card-rec').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.dataset.id;
+                    const titulo = card.dataset.titulo;
+                    const sinopsis = card.dataset.sinopsis;
+                    const tipo = card.dataset.tipo || 'movie';
+                    abrirReproductor(id, titulo, sinopsis, tipo);
+                });
+            });
+        }
+
+        function renderTrending(lista) {
+            if (!lista || lista.length === 0) {
+                trendingList.innerHTML = `<p style="color:#666; text-align:center; padding:20px;">No hay tendencias.</p>`;
+                return;
+            }
+            trendingList.innerHTML = lista.map((item, index) => {
+                const rank = index + 1;
+                let rankClass = 'trend-rank';
+                if (rank === 1) rankClass += ' top1';
+                else if (rank === 2) rankClass += ' top2';
+                else if (rank === 3) rankClass += ' top3';
+                const date = item.release_date || '2026-TBC';
+                const genreIds = item.genre_ids || [];
+                const genreMap = { 28: 'Acción', 12: 'Aventura', 16: 'Animación', 35: 'Comedia', 18: 'Drama', 10751: 'Niños', 14: 'Fantasía' };
+                const genreName = genreMap[genreIds[0]] || 'Anime';
+                return `
+                    <div class="trend-item" data-id="${item.id}" data-titulo="${item.title}" data-sinopsis="${item.overview || 'Sin sinopsis.'}" data-tipo="movie">
+                        <div class="${rankClass}">${rank}</div>
+                        <div class="trend-info">
+                            <h4>${item.title}</h4>
+                            <div class="meta">
+                                <span class="date">${date}</span>
+                                <span class="genre">${genreName}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.trend-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const id = item.dataset.id;
+                    const titulo = item.dataset.titulo;
+                    const sinopsis = item.dataset.sinopsis;
+                    const tipo = item.dataset.tipo || 'movie';
+                    abrirReproductor(id, titulo, sinopsis, tipo);
+                });
+            });
+        }
+
+        // ================================================================
+        //  REPRODUCTOR
+        // ================================================================
+        function abrirReproductor(id, titulo, sinopsis, tipo = 'movie') {
+            currentMediaId = id;
+            currentMediaType = tipo;
+            const domain = sourceSelector.value;
+            const videoSrc = `https://${domain}/embed/${tipo}/${id}`;
+            iframe.src = videoSrc;
+            peliTitulo.textContent = titulo;
+            peliSinopsis.textContent = sinopsis;
+            reproductor.classList.add('active');
+            loadingVideo.style.display = 'flex';
+            setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000); // ocultar después de 5s
+            reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function recargarReproductor() {
+            if (!currentMediaId) return;
+            const domain = sourceSelector.value;
+            const videoSrc = `https://${domain}/embed/${currentMediaType}/${currentMediaId}`;
+            iframe.src = '';
+            loadingVideo.style.display = 'flex';
+            setTimeout(() => {
+                iframe.src = videoSrc;
+                setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000);
+            }, 300);
+        }
+
+        // Eventos
+        document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
+            reproductor.classList.remove('active');
+            iframe.src = '';
+            loadingVideo.style.display = 'none';
+        });
+
+        btnRecargar.addEventListener('click', recargarReproductor);
+
+        sourceSelector.addEventListener('change', recargarReproductor);
+
+        btnFullscreen.addEventListener('click', () => {
+            const videoEl = document.getElementById('playerVideo');
+            if (videoEl.requestFullscreen) videoEl.requestFullscreen();
+            else if (videoEl.webkitRequestFullscreen) videoEl.webkitRequestFullscreen();
+        });
+
+        // ================================================================
+        //  CARGAR MÁS
+        // ================================================================
+        document.getElementById('cargarMasRecom').addEventListener('click', async () => {
+            if (modoBusqueda) return;
+            if (currentPageRecom >= MAX_PAGES) {
+                document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasRecom').disabled = true;
+                return;
+            }
+            currentPageRecom++;
+            const hayMas = await loadPopular(currentPageRecom);
+            if (!hayMas) {
+                document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasRecom').disabled = true;
+            }
+        });
+
+        document.getElementById('cargarMasTrend').addEventListener('click', async () => {
+            if (modoBusqueda) return;
+            if (currentPageTrend >= MAX_PAGES) {
+                document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasTrend').disabled = true;
+                return;
+            }
+            currentPageTrend++;
+            const hayMas = await loadTrending(currentPageTrend);
+            if (!hayMas) {
+                document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
+                document.getElementById('cargarMasTrend').disabled = true;
+            }
+        });
+
+        // ================================================================
+        //  BUSCADOR CON DEBOUNCE
+        // ================================================================
+        buscador.addEventListener('input', (e) => {
+            clearTimeout(timeoutBusqueda);
+            const texto = e.target.value;
+            timeoutBusqueda = setTimeout(() => buscarPeliculas(texto), 400);
+        });
+
+        // ================================================================
+        //  FILTROS Y TABS
+        // ================================================================
+        document.querySelectorAll('.filter-btn[data-year]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (modoBusqueda) return;
+                document.querySelectorAll('.filter-btn[data-year]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentYear = btn.dataset.year;
+                renderGrid(allMovies);
             });
         });
-    }
 
-    // ================================================================
-    // REPRODUCTOR CON HLS.JS
-    // ================================================================
-    function abrirReproductor(id, titulo, sinopsis, tipo = 'movie') {
-        currentMediaId = id;
-        currentMediaType = tipo;
-        const domain = sourceSelector.value;
-        const videoSrc = `https://${domain}/embed/${tipo}/${id}`;
-        
-        // Mostrar reproductor
-        reproductor.classList.add('active');
-        peliTitulo.textContent = titulo;
-        peliSinopsis.textContent = sinopsis;
-        reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        // Cargar video con HLS.js
-        cargarVideo(videoSrc);
-    }
-
-    function cargarVideo(url) {
-        // Detener reproducción anterior
-        if (hls) {
-            hls.destroy();
-            hls = null;
-        }
-        video.pause();
-        video.removeAttribute('src');
-
-        // Si la URL contiene .m3u8, usamos HLS.js
-        if (url.includes('.m3u8')) {
-            if (Hls.isSupported()) {
-                hls = new Hls();
-                hls.loadSource(url);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => {
-                    video.play().catch(() => {});
-                });
-                hls.on(Hls.Events.ERROR, (e, data) => {
-                    console.warn('HLS error, intentando fallback...', data);
-                    // Fallback: intentar con el iframe (pero no lo tenemos aquí)
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = url;
-                video.play().catch(() => {});
-            }
-        } else {
-            // Si no es .m3u8, intentamos cargar como iframe (pero HLS no lo soporta)
-            // En este caso, redirect a la página de la fuente
-            window.location.href = url;
-        }
-    }
-
-    function recargarVideo() {
-        if (!currentMediaId) return;
-        const domain = sourceSelector.value;
-        const videoSrc = `https://${domain}/embed/${currentMediaType}/${currentMediaId}`;
-        cargarVideo(videoSrc);
-    }
-
-    // Eventos del reproductor
-    document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
-        reproductor.classList.remove('active');
-        if (hls) { hls.destroy(); hls = null; }
-        video.pause();
-        video.removeAttribute('src');
-    });
-
-    btnRecargar.addEventListener('click', recargarVideo);
-    sourceSelector.addEventListener('change', recargarVideo);
-
-    // ================================================================
-    // CARGAR MÁS
-    // ================================================================
-    document.getElementById('cargarMasRecom').addEventListener('click', async () => {
-        if (modoBusqueda) return;
-        if (currentPageRecom >= MAX_PAGES) {
-            document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
-            document.getElementById('cargarMasRecom').disabled = true;
-            return;
-        }
-        currentPageRecom++;
-        const hayMas = await loadPopular(currentPageRecom);
-        if (!hayMas) {
-            document.getElementById('cargarMasRecom').textContent = 'Ya no hay más';
-            document.getElementById('cargarMasRecom').disabled = true;
-        }
-    });
-
-    document.getElementById('cargarMasTrend').addEventListener('click', async () => {
-        if (modoBusqueda) return;
-        if (currentPageTrend >= MAX_PAGES) {
-            document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
-            document.getElementById('cargarMasTrend').disabled = true;
-            return;
-        }
-        currentPageTrend++;
-        const hayMas = await loadTrending(currentPageTrend);
-        if (!hayMas) {
-            document.getElementById('cargarMasTrend').textContent = 'Ya no hay más';
-            document.getElementById('cargarMasTrend').disabled = true;
-        }
-    });
-
-    // ================================================================
-    // BUSCADOR
-    // ================================================================
-    buscador.addEventListener('input', (e) => {
-        clearTimeout(timeoutBusqueda);
-        timeoutBusqueda = setTimeout(() => buscarPeliculas(e.target.value), 400);
-    });
-
-    // ================================================================
-    // FILTROS Y TABS
-    // ================================================================
-    document.querySelectorAll('.filter-btn[data-year]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (modoBusqueda) return;
-            document.querySelectorAll('.filter-btn[data-year]').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentYear = btn.dataset.year;
-            renderGrid(allMovies);
+        document.querySelectorAll('.filter-btn[data-genre]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (modoBusqueda) {
+                    buscador.value = '';
+                    modoBusqueda = false;
+                    tituloSeccion.innerHTML = '📌 Recomendados <span class="badge">Top</span>';
+                    document.getElementById('cargarMasRecom').style.display = 'block';
+                    document.getElementById('cargarMasTrend').style.display = 'block';
+                    renderGrid(allMovies);
+                    renderTrending(allTrending);
+                }
+                document.querySelectorAll('.filter-btn[data-genre]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Aquí podríamos filtrar por género, pero para no complicar, solo UI
+            });
         });
-    });
 
-    document.querySelectorAll('.filter-btn[data-genre]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (modoBusqueda) {
-                buscador.value = '';
-                modoBusqueda = false;
-                tituloSeccion.innerHTML = '📌 Recomendados';
-                document.getElementById('cargarMasRecom').style.display = 'block';
-                document.getElementById('cargarMasTrend').style.display = 'block';
-                renderGrid(allMovies);
-                renderTrending(allTrending);
-            }
-            document.querySelectorAll('.filter-btn[data-genre]').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                if (tab.dataset.tab === 'anime') {
+                    buscador.value = 'anime';
+                    buscarPeliculas('anime');
+                } else if (tab.dataset.tab === 'all') {
+                    buscador.value = '';
+                    modoBusqueda = false;
+                    tituloSeccion.innerHTML = '📌 Recomendados <span class="badge">Top</span>';
+                    document.getElementById('cargarMasRecom').style.display = 'block';
+                    document.getElementById('cargarMasTrend').style.display = 'block';
+                    renderGrid(allMovies);
+                    renderTrending(allTrending);
+                }
+            });
         });
-    });
 
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            if (tab.dataset.tab === 'anime') {
-                buscador.value = 'anime';
-                buscarPeliculas('anime');
-            } else if (tab.dataset.tab === 'all') {
-                buscador.value = '';
-                modoBusqueda = false;
-                tituloSeccion.innerHTML = '📌 Recomendados';
-                document.getElementById('cargarMasRecom').style.display = 'block';
-                document.getElementById('cargarMasTrend').style.display = 'block';
-                renderGrid(allMovies);
-                renderTrending(allTrending);
-            }
-        });
-    });
-
-    // ================================================================
-    // INICIO
-    // ================================================================
-    loadPopular(1);
-    loadTrending(1);
-</script>
+        // ================================================================
+        //  INICIO
+        // ================================================================
+        loadPopular(1);
+        loadTrending(1);
+    </script>
 </body>
 </html>
