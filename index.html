@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CineStar · 2026</title>
-    <meta name="description" content="CineStar: La mejor plataforma para ver películas, series y anime online.">
+    <meta name="description" content="CineStar: La evolución del entretenimiento. Películas, series y anime en un solo lugar.">
     <meta property="og:title" content="CineStar · 2026">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ========== RESET Y BASE ========== */
         * {
@@ -19,23 +19,27 @@
             font-family: 'Inter', system-ui, sans-serif;
         }
         body {
-            background: #0a0a12;
+            background: #07070d;
             color: #f0f0f0;
             padding: 16px;
             min-height: 100vh;
-            background-image: radial-gradient(circle at 20% 20%, rgba(229, 9, 20, 0.05) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 50%);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(245, 197, 24, 0.03) 0%, transparent 70%);
+            background-attachment: fixed;
         }
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #111;
+            background: rgba(255, 255, 255, 0.02);
         }
         ::-webkit-scrollbar-thumb {
             background: #e50914;
             border-radius: 10px;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         }
 
         /* ========== HEADER ========== */
@@ -45,48 +49,73 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 16px;
-            padding: 12px 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 12px 0 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.2), rgba(245, 197, 24, 0.1), transparent);
         }
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 2.2rem;
+            gap: 12px;
+            font-size: 2.4rem;
             font-weight: 900;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 60px rgba(229, 9, 20, 0.2);
-            letter-spacing: -1px;
+            text-shadow: none;
+            letter-spacing: -1.5px;
+            position: relative;
+        }
+        .logo::after {
+            content: '✦';
+            -webkit-text-fill-color: #f5c518;
+            font-size: 0.6rem;
+            position: absolute;
+            right: -22px;
+            top: 2px;
+            animation: pulseStar 2s ease-in-out infinite;
+        }
+        @keyframes pulseStar {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         .logo .year {
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.15);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.08);
             font-size: 0.7rem;
             font-weight: 700;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 4px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 16px;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            letter-spacing: 2px;
         }
 
         /* ========== BUSCADOR ========== */
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
             border-radius: 60px;
             padding: 4px 4px 4px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             width: 100%;
             max-width: 440px;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
         .search-box:focus-within {
-            border-color: #e50914;
-            box-shadow: 0 0 60px rgba(229, 9, 20, 0.12);
+            border-color: rgba(229, 9, 20, 0.3);
+            box-shadow: 0 0 80px rgba(229, 9, 20, 0.06), 0 8px 40px rgba(0, 0, 0, 0.4);
             transform: scale(1.01);
         }
         .search-box input {
@@ -99,176 +128,228 @@
             font-weight: 400;
             outline: none;
             min-width: 100px;
+            letter-spacing: 0.3px;
         }
         .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.15);
             font-weight: 300;
+            letter-spacing: 0.5px;
         }
         .search-box button {
             background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
             color: #fff;
-            padding: 12px 30px;
+            padding: 12px 32px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
-            letter-spacing: 0.5px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 25px rgba(229, 9, 20, 0.2);
+            letter-spacing: 0.8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .search-box button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: 0.4s;
+        }
+        .search-box button:hover::before {
+            opacity: 1;
         }
         .search-box button:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+            box-shadow: 0 6px 35px rgba(229, 9, 20, 0.4);
         }
         .search-box button:active {
-            transform: scale(0.95);
+            transform: scale(0.94);
         }
 
         /* ========== TABS ========== */
         .tabs {
             display: flex;
-            gap: 4px;
+            gap: 2px;
             border-radius: 60px;
-            padding: 6px 8px;
-            margin: 24px 0 18px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 5px 6px;
+            margin: 24px 0 20px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             flex-wrap: wrap;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
         }
         .tab {
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.25);
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            padding: 10px 22px;
+            padding: 10px 24px;
             border-radius: 40px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             letter-spacing: 0.3px;
             position: relative;
         }
         .tab:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.03);
         }
         .tab.active {
             color: #fff;
-            background: rgba(229, 9, 20, 0.25);
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.08);
+            background: rgba(229, 9, 20, 0.2);
+            box-shadow: 0 0 40px rgba(229, 9, 20, 0.05);
+        }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, #e50914, #ff4d4d);
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         }
         .tab .emoji {
             margin-right: 6px;
         }
 
-        /* ========== CARTELERA (BANNER GRANDE) ========== */
+        /* ========== CARTELERA ========== */
         .cartelera {
             width: 100%;
-            border-radius: 28px;
+            border-radius: 32px;
             overflow: hidden;
-            margin: 18px 0 28px;
+            margin: 16px 0 28px;
             position: relative;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            aspect-ratio: 16/6;
+            background: linear-gradient(135deg, #111120, #1a0a15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            aspect-ratio: 16/5.5;
             min-height: 180px;
             display: flex;
             align-items: center;
-            padding: 30px 40px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect width="1200" height="400" fill="%231a1a2e"/><circle cx="850" cy="200" r="250" fill="rgba(229,9,20,0.08)"/><circle cx="350" cy="100" r="150" fill="rgba(0,200,255,0.05)"/></svg>');
-            background-size: cover;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 30px 44px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.5s ease;
+        }
+        .cartelera::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(229, 9, 20, 0.06) 0%, transparent 70%);
+            pointer-events: none;
         }
         .cartelera-content {
             position: relative;
             z-index: 2;
-            max-width: 60%;
+            max-width: 55%;
+        }
+        .cartelera-content .etiqueta {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.15);
+            margin-bottom: 6px;
         }
         .cartelera-content .titulo {
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 900;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff, #f0f0f0);
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.6));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.1;
+            line-height: 1.05;
         }
         .cartelera-content .desc {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.35);
             margin-top: 10px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 400;
-            max-width: 500px;
+            max-width: 460px;
+            line-height: 1.6;
         }
         .cartelera-content .btn-ver {
-            margin-top: 16px;
-            background: #e50914;
+            margin-top: 18px;
+            background: linear-gradient(135deg, #e50914, #b20710);
             border: none;
             color: #fff;
-            padding: 12px 32px;
+            padding: 14px 36px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.25);
+            letter-spacing: 0.5px;
         }
         .cartelera-content .btn-ver:hover {
             transform: scale(1.04);
-            box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+            box-shadow: 0 6px 40px rgba(229, 9, 20, 0.4);
         }
         .cartelera .poster-mini {
             position: absolute;
             right: 40px;
-            bottom: -20px;
+            bottom: -10px;
             width: 180px;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
             aspect-ratio: 2/3;
             object-fit: cover;
-            background: #222;
+            background: #1a1a1a;
+            transition: 0.5s ease;
+        }
+        .cartelera:hover .poster-mini {
+            transform: scale(1.02) rotate(-1deg);
         }
 
-        /* ========== SECCIÓN ========== */
+        /* ========== SECCIÓN TÍTULO ========== */
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 800;
-            margin: 24px 0 18px;
+            margin: 28px 0 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
             letter-spacing: -0.5px;
         }
         .section-title .badge {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             background: linear-gradient(135deg, #e50914, #b20710);
             padding: 4px 16px;
             border-radius: 40px;
             color: #fff;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
         }
         .section-title .volver {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #aaa;
-            padding: 6px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+            padding: 6px 20px;
             border-radius: 40px;
             font-size: 0.8rem;
             cursor: pointer;
             transition: 0.3s;
         }
         .section-title .volver:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
         }
         .result-count {
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.15);
             font-size: 0.9rem;
             font-weight: 400;
         }
@@ -280,29 +361,42 @@
             gap: 24px;
         }
         .card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 24px;
             overflow: hidden;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         .card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: rgba(229, 9, 20, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(229, 9, 20, 0.12);
+            transform: translateY(-14px) scale(1.02);
+            border-color: rgba(229, 9, 20, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
         }
         .card img {
             width: 100%;
             aspect-ratio: 2/3;
             object-fit: cover;
             display: block;
-            transition: 0.4s;
+            transition: 0.5s ease;
         }
         .card:hover img {
-            transform: scale(1.03);
+            transform: scale(1.04);
         }
         .card .info {
             padding: 16px 16px 18px;
@@ -314,6 +408,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             color: #f0f0f0;
+            letter-spacing: -0.3px;
         }
         .card .info p {
             color: #f5c518;
@@ -324,24 +419,24 @@
             gap: 10px;
         }
         .card .info .year {
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.2);
             font-size: 0.7rem;
         }
         .card .info .idioma {
             color: #00ff88;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             margin-top: 6px;
-            background: rgba(0, 255, 136, 0.08);
+            background: rgba(0, 255, 136, 0.06);
             padding: 2px 12px;
             border-radius: 30px;
             display: inline-block;
-            border: 1px solid rgba(0, 255, 136, 0.08);
+            border: 1px solid rgba(0, 255, 136, 0.06);
         }
 
         /* ========== BOTÓN CARGAR ========== */
         .btn-cargar {
-            background: linear-gradient(135deg, #e50914, #b20710);
-            border: none;
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.8), rgba(178, 7, 16, 0.8));
+            border: 1px solid rgba(229, 9, 20, 0.15);
             color: #fff;
             padding: 16px;
             border-radius: 60px;
@@ -352,43 +447,45 @@
             display: block;
             width: 100%;
             max-width: 340px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.25);
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.1);
             letter-spacing: 0.8px;
+            backdrop-filter: blur(10px);
         }
         .btn-cargar:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 40px rgba(229, 9, 20, 0.4);
+            box-shadow: 0 8px 40px rgba(229, 9, 20, 0.2);
+            background: linear-gradient(135deg, #e50914, #b20710);
         }
         .btn-cargar:active {
-            transform: scale(0.96);
+            transform: scale(0.94);
         }
         .btn-cargar:disabled {
-            opacity: 0.3;
+            opacity: 0.2;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
-        /* ========== REPRODUCTOR (GRANDE) ========== */
+        /* ========== REPRODUCTOR ========== */
         .reproductor {
             display: none;
             margin-top: 30px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(40px);
-            border-radius: 28px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(50px);
+            border-radius: 32px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
         }
         .reproductor.active {
             display: block;
-            animation: fadeSlide 0.5s ease;
+            animation: fadeSlide 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         @keyframes fadeSlide {
             from {
                 opacity: 0;
-                transform: translateY(20px) scale(0.96);
+                transform: translateY(30px) scale(0.96);
             }
             to {
                 opacity: 1;
@@ -399,11 +496,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 22px;
-            background: rgba(0, 0, 0, 0.4);
+            padding: 16px 24px;
+            background: rgba(0, 0, 0, 0.3);
             flex-wrap: wrap;
             gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
         .player-header .volver {
             background: none;
@@ -419,7 +516,7 @@
         }
         .player-header .volver:hover {
             color: #ff4d4d;
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
         .player-controls {
             display: flex;
@@ -428,10 +525,10 @@
             align-items: center;
         }
         .player-controls select {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 6px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.7rem;
             cursor: pointer;
@@ -439,24 +536,23 @@
             transition: 0.3s;
         }
         .player-controls select:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
         }
         .player-controls button {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.5);
-            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.4);
+            padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.7rem;
             cursor: pointer;
             transition: 0.3s;
         }
         .player-controls button:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
         }
 
-        /* ========== REPRODUCTOR VIDEO (MÁS GRANDE) ========== */
         .player-video {
             width: 100%;
             height: 70vh;
@@ -474,25 +570,25 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 24px 36px;
+            color: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 28px 40px;
             border-radius: 60px;
             text-align: center;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
             font-size: 1rem;
             max-width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.02);
         }
         .player-video .cargando .spinner {
             display: inline-block;
-            width: 32px;
-            height: 32px;
-            border: 3px solid rgba(255, 255, 255, 0.05);
+            width: 34px;
+            height: 34px;
+            border: 3px solid rgba(255, 255, 255, 0.04);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         @keyframes spin {
             to {
@@ -500,11 +596,10 @@
             }
         }
 
-        /* ========== FOOTER DEL REPRODUCTOR ========== */
         .player-footer {
-            padding: 18px 24px;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 20px 24px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
         .player-footer .info-top {
             display: flex;
@@ -517,51 +612,55 @@
             font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.3px;
+            color: #f0f0f0;
         }
         .player-footer .info-top .episodio-actual {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.2);
             font-size: 0.8rem;
             font-weight: 600;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 4px 16px;
+            border-radius: 40px;
         }
         .player-footer .sinopsis {
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.25);
             font-size: 0.9rem;
-            margin-top: 6px;
+            margin-top: 8px;
             line-height: 1.6;
         }
         .player-footer .info-extra {
-            color: #00ff88;
+            color: rgba(0, 255, 136, 0.4);
             font-size: 0.7rem;
             margin-top: 8px;
         }
         .player-footer .info-extra .idioma-info {
             color: #f5c518;
-            margin-left: 12px;
+            margin-left: 14px;
         }
 
-        /* ========== EPISODIOS (MINIATURAS DEBAJO DEL REPRODUCTOR) ========== */
+        /* ========== EPISODIOS ========== */
         .episodios-wrapper {
-            margin-top: 20px;
-            padding: 0 4px 10px;
+            margin-top: 16px;
+            padding: 0 6px 12px;
         }
         .episodios-wrapper .episodios-titulo {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.15);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin-bottom: 12px;
         }
         .episodios-scroll {
             display: flex;
             gap: 12px;
             overflow-x: auto;
-            padding-bottom: 8px;
+            padding-bottom: 10px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
         }
         .episodios-scroll::-webkit-scrollbar {
-            height: 4px;
+            height: 3px;
         }
         .episodios-scroll::-webkit-scrollbar-thumb {
             background: #e50914;
@@ -570,32 +669,33 @@
         .ep-card-mini {
             flex: 0 0 auto;
             scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 14px;
-            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 12px 18px;
             text-align: center;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             transition: all 0.3s ease;
             min-width: 80px;
         }
         .ep-card-mini:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: #e50914;
-            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(229, 9, 20, 0.2);
+            transform: scale(1.04);
         }
         .ep-card-mini.active-ep {
-            background: rgba(229, 9, 20, 0.15);
-            border-color: #e50914;
+            background: rgba(229, 9, 20, 0.08);
+            border-color: rgba(229, 9, 20, 0.3);
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.05);
         }
         .ep-card-mini .num {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: #e50914;
         }
         .ep-card-mini .title {
-            font-size: 0.55rem;
-            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.2);
             margin-top: 4px;
             white-space: nowrap;
             overflow: hidden;
@@ -603,58 +703,56 @@
             max-width: 70px;
         }
 
-        /* ========== TEMPORADAS (botones pequeños) ========== */
         .temporadas {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin: 14px 0 10px;
+            margin: 8px 0 12px;
         }
         .temp-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.4);
-            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+            padding: 6px 18px;
             border-radius: 40px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
         }
         .temp-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             color: #fff;
         }
         .temp-btn.active {
-            background: #e50914;
-            border-color: #e50914;
+            background: rgba(229, 9, 20, 0.12);
+            border-color: rgba(229, 9, 20, 0.2);
             color: #fff;
-            box-shadow: 0 0 30px rgba(229, 9, 20, 0.15);
         }
 
         /* ========== FOOTER ========== */
         .footer {
             margin-top: 60px;
             padding: 30px 0 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
             text-align: center;
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.08);
             font-size: 0.8rem;
         }
         .footer .social {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 28px;
             margin-bottom: 16px;
         }
         .footer .social a {
-            color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.06);
             font-size: 1.6rem;
-            transition: 0.3s;
+            transition: 0.4s ease;
         }
         .footer .social a:hover {
             color: #fff;
-            transform: scale(1.1);
+            transform: scale(1.1) translateY(-3px);
         }
 
         /* ========== RESPONSIVE ========== */
@@ -662,21 +760,21 @@
             .cartelera {
                 aspect-ratio: 16/8;
                 padding: 20px 24px;
-                min-height: 140px;
+                min-height: 130px;
             }
             .cartelera-content .titulo {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .cartelera-content .desc {
                 font-size: 0.85rem;
             }
             .cartelera .poster-mini {
-                width: 100px;
-                right: 20px;
-                bottom: -10px;
+                width: 110px;
+                right: 16px;
+                bottom: -8px;
             }
             .cartelera-content {
-                max-width: 70%;
+                max-width: 65%;
             }
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -684,10 +782,10 @@
             }
             .player-video {
                 height: 50vh;
-                min-height: 250px;
+                min-height: 260px;
             }
             .logo {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .search-box {
                 max-width: 100%;
@@ -697,7 +795,7 @@
                 padding: 12px 0;
             }
             .search-box button {
-                padding: 10px 20px;
+                padding: 10px 22px;
                 font-size: 0.8rem;
             }
             .tabs {
@@ -712,8 +810,8 @@
                 font-size: 1.3rem;
             }
             .ep-card-mini {
-                min-width: 65px;
-                padding: 10px 12px;
+                min-width: 70px;
+                padding: 10px 14px;
             }
         }
         @media (max-width: 480px) {
@@ -724,36 +822,37 @@
             .cartelera {
                 aspect-ratio: 16/10;
                 padding: 16px 18px;
-                min-height: 120px;
+                min-height: 110px;
             }
             .cartelera-content .titulo {
                 font-size: 1.4rem;
             }
             .cartelera-content .desc {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
+                display: none;
             }
             .cartelera .poster-mini {
-                width: 70px;
-                right: 12px;
-                bottom: -5px;
+                width: 80px;
+                right: 10px;
+                bottom: -4px;
             }
             .cartelera-content {
-                max-width: 65%;
+                max-width: 60%;
             }
             .player-video {
                 height: 40vh;
                 min-height: 200px;
             }
             .tab {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
                 padding: 6px 10px;
             }
             .ep-card-mini {
-                min-width: 55px;
+                min-width: 60px;
                 padding: 8px 10px;
             }
             .ep-card-mini .num {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -781,11 +880,12 @@
         <button class="tab" data-tipo="anime"><span class="emoji">🎌</span>Anime</button>
     </nav>
 
-    <!-- ========== CARTELERA (BANNER DESTACADO) ========== -->
+    <!-- ========== CARTELERA ========== -->
     <div class="cartelera" id="cartelera">
         <div class="cartelera-content">
-            <div class="titulo" id="carteleraTitulo">Obsesión</div>
-            <div class="desc" id="carteleraDesc">Un thriller psicológico que te mantendrá al borde del asiento.</div>
+            <div class="etiqueta">★ Destacado</div>
+            <div class="titulo" id="carteleraTitulo">CineStar</div>
+            <div class="desc" id="carteleraDesc">Descubre el mejor contenido de entretenimiento.</div>
             <button class="btn-ver" id="btnVerCartelera">Ver ahora</button>
         </div>
         <img id="carteleraPoster" class="poster-mini" src="https://image.tmdb.org/t/p/w300/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
@@ -801,7 +901,7 @@
     <div id="grid" class="grid"></div>
     <button class="btn-cargar" id="btnCargarMas">Cargar más</button>
 
-    <!-- ========== REPRODUCTOR (con episodios debajo) ========== -->
+    <!-- ========== REPRODUCTOR ========== -->
     <div id="reproductor" class="reproductor">
         <div class="player-header">
             <button class="volver" id="btnCerrarReproductor">← Volver</button>
@@ -822,7 +922,6 @@
             </div>
         </div>
 
-        <!-- ========== VIDEO ========== -->
         <div class="player-video">
             <div class="cargando" id="loadingVideo">
                 <div class="spinner"></div>
@@ -831,7 +930,6 @@
             <iframe id="iframeVideo" src="" allowfullscreen></iframe>
         </div>
 
-        <!-- ========== FOOTER DEL REPRODUCTOR ========== -->
         <div class="player-footer">
             <div class="info-top">
                 <h3 id="peliTitulo">Título</h3>
@@ -844,7 +942,6 @@
             </div>
         </div>
 
-        <!-- ========== EPISODIOS (MINIATURAS DEBAJO) ========== -->
         <div class="episodios-wrapper" id="episodiosWrapper" style="display:none;">
             <div class="episodios-titulo">📺 Episodios</div>
             <div class="temporadas" id="temporadasContainer"></div>
@@ -861,13 +958,13 @@
             <a href="#" aria-label="YouTube">▶️</a>
         </div>
         <p>&copy; 2026 <strong style="color:#e50914;">CineStar</strong>. Todos los derechos reservados.</p>
-        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.06);">
+        <p style="margin-top:6px; font-size:0.7rem; color:rgba(255,255,255,0.04);">
             CineStar no aloja archivos. Solo enlazamos a contenido de terceros.
         </p>
     </footer>
 
     <!-- ================================================================ -->
-    <!-- SCRIPT COMPLETO -->
+    <!-- SCRIPT COMPLETO (mismo código funcional de antes) -->
     <!-- ================================================================ -->
     <script>
         // ================================================================
@@ -980,7 +1077,6 @@
         // ================================================================
         function actualizarCartelera(lista) {
             if (!lista || lista.length === 0) return;
-            // Tomar la primera película/serie con póster
             const destacado = lista.find(item => item.poster_path) || lista[0];
             const titulo = destacado.title || destacado.name || 'CineStar';
             const desc = destacado.overview || 'Descubre el mejor contenido en CineStar.';
@@ -1049,7 +1145,7 @@
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
                 grid.innerHTML =
-                    `<p style="color:rgba(255,255,255,0.15);text-align:center;padding:40px;grid-column:1/-1;">No hay resultados.</p>`;
+                    `<p style="color:rgba(255,255,255,0.08);text-align:center;padding:40px;grid-column:1/-1;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -1168,7 +1264,7 @@
         }
 
         // ================================================================
-        // CARGAR TEMPORADAS Y EPISODIOS (CON EPISODIOS DEBAJO)
+        // CARGAR TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -1184,22 +1280,19 @@
                 temporadas.sort((a, b) => a.season_number - b.season_number);
                 temporadasCache = temporadas;
                 if (temporadas.length === 0) {
-                    temporadasContainer.innerHTML = `<p style="color:rgba(255,255,255,0.2);">No hay temporadas.</p>`;
+                    temporadasContainer.innerHTML = `<p style="color:rgba(255,255,255,0.1);">No hay temporadas.</p>`;
                     return;
                 }
-                // Mostrar botones de temporadas
                 temporadasContainer.innerHTML = temporadas.map((t, idx) => `
                     <button class="temp-btn ${idx === 0 ? 'active' : ''}" data-season="${t.season_number}">
                         T${t.season_number}
                     </button>
                 `).join('');
 
-                // Seleccionar la mejor temporada
                 let mejor = temporadas.reduce((a, b) => a.episode_count > b.episode_count ? a : b);
                 const tempInicial = mejor.season_number;
                 currentSeason = tempInicial;
 
-                // Activar el botón
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     if (parseInt(btn.dataset.season) === tempInicial) btn.classList.add('active');
                     else btn.classList.remove('active');
@@ -1207,7 +1300,6 @@
 
                 await cargarEpisodios(serieId, tempInicial);
 
-                // Eventos de cambio de temporada
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
@@ -1218,7 +1310,6 @@
                     });
                 });
 
-                // Mostrar el reproductor con el primer episodio automáticamente
                 if (episodiosCache.length > 0) {
                     const primerEp = episodiosCache[0];
                     const epNum = primerEp.episode_number;
@@ -1239,10 +1330,9 @@
                 const episodios = data.episodes || [];
                 episodiosCache = episodios;
                 if (episodios.length === 0) {
-                    episodiosScroll.innerHTML = `<p style="color:rgba(255,255,255,0.15);padding:10px;">No hay episodios.</p>`;
+                    episodiosScroll.innerHTML = `<p style="color:rgba(255,255,255,0.08);padding:10px;">No hay episodios.</p>`;
                     return;
                 }
-                // Mostrar episodios en scroll horizontal
                 episodiosScroll.innerHTML = episodios.map(ep => `
                     <div class="ep-card-mini" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
                         <div class="num">${ep.episode_number}</div>
@@ -1250,20 +1340,17 @@
                     </div>
                 `).join('');
 
-                // Eventos de clic en episodio
                 document.querySelectorAll('.ep-card-mini').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
-                        // Remover active de todos
                         document.querySelectorAll('.ep-card-mini').forEach(c => c.classList.remove('active-ep'));
                         card.classList.add('active-ep');
                         reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
 
-                // Mostrar wrapper de episodios
                 episodiosWrapper.style.display = 'block';
 
             } catch (e) {
