@@ -212,7 +212,7 @@
             position: absolute;
             right: 30px;
             bottom: -10px;
-            width: 180px;
+            width: 200px;
             border-radius: 18px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
             aspect-ratio: 2/3;
@@ -273,7 +273,7 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        /* ===== CANALES EN VIVO ===== */
+        /* ===== CANALES EN VIVO CON LOGOS ===== */
         .canales-scroll {
             display: flex;
             gap: 16px;
@@ -309,11 +309,16 @@
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
-        .canal-card .icono {
-            font-size: 3rem;
+        .canal-card .logo-canal {
             display: block;
-            margin-bottom: 4px;
-            filter: drop-shadow(0 0 10px rgba(229,9,20,0.1));
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: rgba(255,255,255,0.05);
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .canal-card .nombre {
             font-weight: 700;
@@ -350,10 +355,10 @@
             justify-content: center;
         }
 
-        /* ===== GRID ===== */
+        /* ===== GRID CON IMÁGENES MEJORADAS ===== */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 24px;
         }
         .card {
@@ -378,6 +383,7 @@
             object-fit: cover;
             display: block;
             transition: 0.4s ease;
+            image-rendering: auto;
         }
         .card:hover img {
             transform: scale(1.04);
@@ -439,17 +445,17 @@
             cursor: not-allowed;
         }
 
-        /* ===== REPRODUCTOR ===== */
+        /* ===== REPRODUCTOR MEJORADO ===== */
         .reproductor {
             display: none;
-            margin: 20px 16px 30px;
-            background: rgba(0, 0, 0, 0.8);
+            margin: 20px 16px 10px;
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border-radius: 28px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
         }
         .reproductor.active {
             display: block;
@@ -521,8 +527,8 @@
         }
         .player-video {
             width: 100%;
-            height: 70vh;
-            min-height: 380px;
+            height: 75vh;
+            min-height: 420px;
             background: #000;
             position: relative;
         }
@@ -589,6 +595,100 @@
             margin-top: 8px;
         }
 
+        /* ===== EPISODIOS Y TEMPORADAS DEBAJO DEL REPRODUCTOR ===== */
+        .episodios-wrapper {
+            margin-top: 10px;
+            padding: 0 16px 16px;
+            display: none;
+        }
+        .episodios-wrapper.active {
+            display: block;
+        }
+        .episodios-wrapper .episodios-titulo {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+        .episodios-wrapper .temporadas {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .episodios-wrapper .temp-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.2);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .episodios-wrapper .temp-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+        }
+        .episodios-wrapper .temp-btn.active {
+            background: rgba(229, 9, 20, 0.15);
+            border-color: rgba(229, 9, 20, 0.2);
+            color: #fff;
+        }
+        .episodios-wrapper .episodios-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .episodios-wrapper .episodios-scroll::-webkit-scrollbar {
+            height: 3px;
+        }
+        .episodios-wrapper .episodios-scroll::-webkit-scrollbar-thumb {
+            background: #e50914;
+            border-radius: 10px;
+        }
+        .episodios-wrapper .ep-card-mini {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 14px 18px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.3s ease;
+            min-width: 80px;
+        }
+        .episodios-wrapper .ep-card-mini:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(229, 9, 20, 0.1);
+            transform: scale(1.04);
+        }
+        .episodios-wrapper .ep-card-mini.active-ep {
+            background: rgba(229, 9, 20, 0.06);
+            border-color: rgba(229, 9, 20, 0.15);
+        }
+        .episodios-wrapper .ep-card-mini .num {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #e50914;
+        }
+        .episodios-wrapper .ep-card-mini .title {
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.12);
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70px;
+        }
+
         /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
@@ -637,11 +737,11 @@
             .hero { aspect-ratio: 16/8; padding: 20px 24px; min-height: 130px; margin: 12px 12px 20px; }
             .hero-content h2 { font-size: 2.2rem; }
             .hero-content p { display: none; }
-            .hero-poster { width: 110px; right: 16px; bottom: -6px; }
+            .hero-poster { width: 120px; right: 16px; bottom: -6px; }
             .hero-content { max-width: 65%; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
             .canal-card { min-width: 130px; padding: 16px 18px; }
-            .player-video { height: 50vh; min-height: 250px; }
+            .player-video { height: 50vh; min-height: 280px; }
             .section { padding: 0 12px; }
             .reproductor { margin: 12px; }
             .player-header { padding: 10px 16px; }
@@ -651,16 +751,16 @@
             .search-input-temp:focus { width: 160px; }
         }
         @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
             .hero { aspect-ratio: 16/10; padding: 14px 16px; min-height: 100px; }
             .hero-content h2 { font-size: 1.6rem; }
             .hero-poster { width: 80px; right: 10px; bottom: -4px; }
             .hero-content .badges span { font-size: 0.5rem; padding: 1px 8px; }
             .canal-card { min-width: 110px; padding: 12px 14px; }
-            .canal-card .icono { font-size: 2.2rem; }
+            .canal-card .logo-canal { width: 40px; height: 40px; }
             .canal-card .nombre { font-size: 0.8rem; }
             .nav-link { font-size: 0.6rem; padding: 4px 8px; }
-            .player-video { height: 35vh; min-height: 200px; }
+            .player-video { height: 35vh; min-height: 220px; }
             .section-header h3 { font-size: 1.1rem; }
             .card .info h4 { font-size: 0.85rem; }
             .card .info p { font-size: 0.7rem; }
@@ -698,7 +798,7 @@
             <p id="heroDesc">+5000 películas, series, anime y canales de TV en vivo. Todo en español.</p>
             <button class="btn-hero" id="btnHero">Ver ahora</button>
         </div>
-        <img id="heroPoster" class="hero-poster" src="https://image.tmdb.org/t/p/w300/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
+        <img id="heroPoster" class="hero-poster" src="https://image.tmdb.org/t/p/w500/8s4h9fP8ZxQ5ZxQ5ZxQ5ZxQ5ZxQ5.jpg" alt="Poster">
     </div>
 
     <!-- ===== SECCIÓN CANALES EN VIVO ===== -->
@@ -755,6 +855,13 @@
         </div>
     </div>
 
+    <!-- ===== WRAPPER DE EPISODIOS (debajo del reproductor) ===== -->
+    <div class="episodios-wrapper" id="episodiosWrapper">
+        <div class="episodios-titulo">📺 Episodios</div>
+        <div class="temporadas" id="temporadasContainer"></div>
+        <div class="episodios-scroll" id="episodiosScroll"></div>
+    </div>
+
     <!-- ===== BOTTOM NAV ===== -->
     <nav class="bottom-nav">
         <button class="nav-item active" data-tipo="movie"><span class="icon">🏠</span>Inicio</button>
@@ -768,7 +875,7 @@
         // CONFIGURACIÓN
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
-        const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
+        const BASE_IMG = 'https://image.tmdb.org/t/p/w500'; // <--- MEJOR CALIDAD
 
         const FUENTES = {
             movie: ['vidsrc.in', '2embed.skin', 'vidlink.pro', 'vidsrc.pm', 'vidfast.pro', 'vidsrc.xyz', 'vidsrc.cc'],
@@ -779,29 +886,19 @@
         };
 
         // ================================================================
-        // CANALES TV CON ICONOS MEJORADOS
+        // CANALES TV CON LOGOS (IMÁGENES REALES)
         // ================================================================
         const CANALES_TV = [
-            { nombre: 'CNN Internacional', icono: '🌍', stream: 'https://cdn-1.live.hoola.tv/cnn-intl/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'RT en Español', icono: '📡', stream: 'https://rt-glb.rttv.com/live/rtesp/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'EuroNews', icono: '🇪🇺', stream: 'https://cdn-1.live.hoola.tv/euronews/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'NASA TV', icono: '🚀', stream: 'https://ntv1.akamaized.net/hls/live/2013875/NASA-NTV1-HLS/master.m3u8',
-                categoria: 'Ciencia' },
-            { nombre: 'TCM (Cine Clásico)', icono: '🎞️', stream: 'https://tcm-esp.live.hoola.tv/tcm-esp/playlist.m3u8',
-                categoria: 'Cine' },
-            { nombre: 'France 24 Español', icono: '🇫🇷', stream: 'https://cdn-1.live.hoola.tv/france24-es/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'DW Español', icono: '🇩🇪', stream: 'https://dw-esp.live.hoola.tv/dw-esp/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'TeleSUR', icono: '🌎', stream: 'https://cdn-1.live.hoola.tv/telesur/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'Canal 24h (RTVE)', icono: '🇪🇸', stream: 'https://rtve-24h-live.hls.adaptive.level3.net/hls/24h/playlist.m3u8',
-                categoria: 'Noticias' },
-            { nombre: 'Canal Sur', icono: '🇪🇸', stream: 'https://cdn-1.live.hoola.tv/canalsur/playlist.m3u8',
-                categoria: 'Regional' }
+            { nombre: 'CNN Internacional', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN_logo.svg/1200px-CNN_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/cnn-intl/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'RT en Español', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/RT_logo.svg/1200px-RT_logo.svg.png', stream: 'https://rt-glb.rttv.com/live/rtesp/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'EuroNews', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euronews_logo.svg/1200px-Euronews_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/euronews/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'NASA TV', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/1200px-NASA_logo.svg.png', stream: 'https://ntv1.akamaized.net/hls/live/2013875/NASA-NTV1-HLS/master.m3u8', categoria: 'Ciencia' },
+            { nombre: 'TCM (Cine)', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/TCM_Logo_2019.svg/1200px-TCM_Logo_2019.svg.png', stream: 'https://tcm-esp.live.hoola.tv/tcm-esp/playlist.m3u8', categoria: 'Cine' },
+            { nombre: 'France 24', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/France_24_logo.svg/1200px-France_24_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/france24-es/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'DW Español', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Deutsche_Welle_logo.svg/1200px-Deutsche_Welle_logo.svg.png', stream: 'https://dw-esp.live.hoola.tv/dw-esp/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'TeleSUR', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Telesur_logo.svg/1200px-Telesur_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/telesur/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'Canal 24h', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/RTVE_logo_2008.svg/1200px-RTVE_logo_2008.svg.png', stream: 'https://rtve-24h-live.hls.adaptive.level3.net/hls/24h/playlist.m3u8', categoria: 'Noticias' },
+            { nombre: 'Canal Sur', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Canal_Sur_Televisi%C3%B3n_logo.svg/1200px-Canal_Sur_Televisi%C3%B3n_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/canalsur/playlist.m3u8', categoria: 'Regional' }
         ];
 
         // ================================================================
@@ -835,6 +932,9 @@
         const canalesScroll = document.getElementById('canalesScroll');
         const searchToggle = document.getElementById('searchToggle');
         const bottomSearch = document.getElementById('bottomSearch');
+        const episodiosWrapper = document.getElementById('episodiosWrapper');
+        const temporadasContainer = document.getElementById('temporadasContainer');
+        const episodiosScroll = document.getElementById('episodiosScroll');
 
         let allItems = [];
         let currentPage = 1;
@@ -849,6 +949,7 @@
         let fuentesActuales = [];
         let timeoutAuto = null;
         let episodiosCache = [];
+        let temporadasCache = [];
         const MAX_PAGES = 50;
 
         // ================================================================
@@ -868,7 +969,7 @@
         function cargarCanalesTV() {
             canalesScroll.innerHTML = CANALES_TV.map(c => `
                     <div class="canal-card" data-stream="${c.stream}" data-nombre="${c.nombre}" data-categoria="${c.categoria}">
-                        <span class="icono">${c.icono}</span>
+                        <img class="logo-canal" src="${c.logo}" alt="${c.nombre}" loading="lazy" onerror="this.style.display='none'">
                         <div class="nombre">${c.nombre}</div>
                         <div class="categoria">${c.categoria}</div>
                         <div class="live-label"><span class="live-dot"></span>En vivo</div>
@@ -890,6 +991,7 @@
             peliTitulo.textContent = `${nombre} (${categoria})`;
             peliSinopsis.textContent = '📡 Transmisión en vivo. Disfruta de este canal de televisión.';
             fuenteInfo.textContent = '🔴 En vivo · Fuente: ' + stream;
+            episodiosWrapper.classList.remove('active');
 
             iframe.style.display = 'none';
             videoPlayer.style.display = 'block';
@@ -1050,6 +1152,7 @@
             fuenteInfo.textContent = '';
             videoPlayer.style.display = 'none';
             iframe.style.display = 'block';
+            episodiosWrapper.classList.remove('active');
 
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
@@ -1121,11 +1224,13 @@
             btnCargarMas.style.display = 'none';
             verTodo.style.display = 'none';
             tituloSeccion.innerHTML = `📺 ${titulo} <span class="badge">Temporadas</span>`;
+            episodiosWrapper.classList.remove('active');
 
             try {
                 const data = await fetchApi(`tv/${serieId}`);
                 const temporadas = (data.seasons || []).filter(t => t.episode_count > 0);
                 temporadas.sort((a, b) => a.season_number - b.season_number);
+                temporadasCache = temporadas;
 
                 if (temporadas.length === 0) {
                     grid.innerHTML =
@@ -1134,8 +1239,8 @@
                     return;
                 }
 
-                let html =
-                    `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;">`;
+                // Mostrar temporadas en el grid (para seleccionar)
+                let html = `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;">`;
                 temporadas.forEach((t, idx) => {
                     html +=
                         `<button class="temp-btn" data-season="${t.season_number}" style="background:${idx===0?'rgba(229,9,20,0.15)':'rgba(255,255,255,0.03)'};border:1px solid ${idx===0?'rgba(229,9,20,0.3)':'rgba(255,255,255,0.04)'};color:${idx===0?'#fff':'rgba(255,255,255,0.3)'};padding:8px 20px;border-radius:40px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.3s;">T${t.season_number}</button>`;
@@ -1147,7 +1252,7 @@
                 grid.style.display = 'grid';
 
                 const primeraTemp = temporadas[0].season_number;
-                cargarEpisodios(serieId, primeraTemp);
+                cargarEpisodiosGrid(serieId, primeraTemp);
 
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -1160,7 +1265,7 @@
                         btn.style.borderColor = 'rgba(229,9,20,0.3)';
                         btn.style.color = '#fff';
                         const season = parseInt(btn.dataset.season);
-                        cargarEpisodios(serieId, season);
+                        cargarEpisodiosGrid(serieId, season);
                     });
                 });
 
@@ -1171,7 +1276,7 @@
             }
         }
 
-        async function cargarEpisodios(serieId, season) {
+        async function cargarEpisodiosGrid(serieId, season) {
             try {
                 const data = await fetchApi(`tv/${serieId}/season/${season}`);
                 const episodios = data.episodes || [];
@@ -1196,6 +1301,7 @@
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
+                        // Al hacer clic en episodio, reproducir y mostrar episodios debajo del reproductor
                         reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
                     });
                 });
@@ -1205,6 +1311,9 @@
             }
         }
 
+        // ================================================================
+        // REPRODUCIR EPISODIO CON EPISODIOS DEBAJO
+        // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
             currentSeason = season;
@@ -1234,7 +1343,63 @@
                 fuenteInfo.textContent = `🔧 Fuente: ${dominio}`;
                 loadingVideo.style.display = 'none';
             }
+
+            // Mostrar episodios debajo del reproductor
+            mostrarEpisodiosDebajo(serieId, season, episode);
+
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function mostrarEpisodiosDebajo(serieId, season, episodeActual) {
+            episodiosWrapper.classList.add('active');
+            temporadasContainer.innerHTML = temporadasCache.map(t => `
+                    <button class="temp-btn ${t.season_number === season ? 'active' : ''}" data-season="${t.season_number}">
+                        T${t.season_number}
+                    </button>
+                `).join('');
+
+            // Eventos para cambiar temporada desde el wrapper
+            temporadasContainer.querySelectorAll('.temp-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const newSeason = parseInt(btn.dataset.season);
+                    temporadasContainer.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    // Recargar episodios de esa temporada
+                    cargarEpisodiosWrapper(serieId, newSeason, episodeActual);
+                });
+            });
+
+            cargarEpisodiosWrapper(serieId, season, episodeActual);
+        }
+
+        async function cargarEpisodiosWrapper(serieId, season, episodeActual) {
+            try {
+                const data = await fetchApi(`tv/${serieId}/season/${season}`);
+                const episodios = data.episodes || [];
+                if (episodios.length === 0) {
+                    episodiosScroll.innerHTML = `<p style="color:rgba(255,255,255,0.1);padding:10px;">No hay episodios.</p>`;
+                    return;
+                }
+                episodiosScroll.innerHTML = episodios.map(ep => `
+                        <div class="ep-card-mini ${ep.episode_number === episodeActual ? 'active-ep' : ''}" data-episodio="${ep.episode_number}" data-titulo="${ep.name || 'Ep ' + ep.episode_number}" data-sinopsis="${ep.overview || ''}">
+                            <div class="num">${ep.episode_number}</div>
+                            <div class="title">${ep.name || 'Ep ' + ep.episode_number}</div>
+                        </div>
+                    `).join('');
+
+                episodiosScroll.querySelectorAll('.ep-card-mini').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const epNum = parseInt(card.dataset.episodio);
+                        const epTitulo = card.dataset.titulo;
+                        const epSinopsis = card.dataset.sinopsis;
+                        // Reproducir el nuevo episodio y actualizar la lista
+                        reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
+                    });
+                });
+
+            } catch (e) {
+                console.error(e);
+            }
         }
 
         // ================================================================
@@ -1276,6 +1441,7 @@
             iframe.style.display = 'block';
             loadingVideo.style.display = 'none';
             fuenteInfo.textContent = '';
+            episodiosWrapper.classList.remove('active');
             if (timeoutAuto) clearTimeout(timeoutAuto);
             // Volver a mostrar el grid
             if (currentSerieId && currentSeason !== null) {
@@ -1310,6 +1476,7 @@
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'block';
             verTodo.style.display = 'inline-block';
+            episodiosWrapper.classList.remove('active');
 
             if (tipo === 'movie') tituloSeccion.innerHTML = `🎬 Las Pelis Más Vistas <span class="badge">🔥</span>`;
             else if (tipo === 'espanol') tituloSeccion.innerHTML =
@@ -1395,7 +1562,7 @@
         });
 
         // ================================================================
-        // BUSCADOR (con input)
+        // BUSCADOR
         // ================================================================
         let searchActive = false;
         let searchInput = null;
@@ -1459,15 +1626,13 @@
             }
         });
 
-        // ================================================================
-        // BUSCAR (lógica)
-        // ================================================================
         async function buscar(query) {
             if (!query.trim()) return;
             modoBusqueda = true;
             grid.style.display = 'grid';
             btnCargarMas.style.display = 'none';
             verTodo.style.display = 'none';
+            episodiosWrapper.classList.remove('active');
             tituloSeccion.innerHTML = `🔍 "${query}" <span class="result-count">Buscando...</span>`;
             try {
                 let data;
