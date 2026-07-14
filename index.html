@@ -6,25 +6,24 @@
     <title>CineStar · 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET Y FONDO CON COLOR ===== */
+        /* ===== RESET ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
         body {
-            background: linear-gradient(145deg, #0d0d1a 0%, #1a0a2e 25%, #0a1a3a 50%, #1a0a2e 75%, #0d0d1a 100%);
+            background: linear-gradient(145deg, #0d0d1a 0%, #1a0a30 30%, #0a1a3a 60%, #1a0a30 80%, #0d0d1a 100%);
             color: #f0f0f0;
             min-height: 100vh;
             padding-bottom: 70px;
             background-attachment: fixed;
         }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         ::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
 
         /* ===== HEADER ===== */
         .header {
             position: sticky; top: 0; z-index: 100;
-            background: rgba(13, 13, 26, 0.85);
+            background: rgba(13,13,26,0.92);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             padding: 12px 16px;
             border-bottom: 1px solid rgba(255,255,255,0.04);
         }
@@ -36,7 +35,6 @@
             font-size: 2rem; font-weight: 900; letter-spacing: -1px;
             background: linear-gradient(135deg, #e50914, #ff4d4d, #f5c518);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         .logo span {
             -webkit-text-fill-color: rgba(255,255,255,0.06);
@@ -45,67 +43,50 @@
             padding: 2px 12px; border-radius: 40px;
             border: 1px solid rgba(255,255,255,0.04);
         }
-        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+        .nav-links {
+            display: flex; gap: 4px; flex-wrap: wrap;
+        }
         .nav-link {
             background: none; border: none;
-            color: rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.4);
             font-size: 0.8rem; font-weight: 600;
             cursor: pointer; padding: 6px 14px;
-            border-radius: 40px; transition: all 0.3s ease;
+            border-radius: 40px; transition: 0.3s;
         }
-        .nav-link:hover { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.03); }
-        .nav-link.active { color: #fff; background: rgba(229,9,20,0.15); }
+        .nav-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
+        .nav-link.active { color: #fff; background: rgba(229,9,20,0.2); }
         .search-icon {
-            color: rgba(255,255,255,0.08); font-size: 1.4rem;
+            color: rgba(255,255,255,0.2); font-size: 1.4rem;
             cursor: pointer; background: none; border: none; padding: 4px 8px;
-            transition: 0.3s;
         }
-        .search-icon:hover { color: rgba(255,255,255,0.3); }
-        .search-input-temp {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 60px; padding: 8px 18px;
-            color: #fff; font-size: 0.95rem; outline: none;
-            width: 180px; transition: 0.3s;
-        }
-        .search-input-temp:focus { border-color: rgba(229,9,20,0.3); width: 220px; }
+        .search-icon:hover { color: #fff; }
 
-        /* ===== HERO CON FONDO COLORIDO ===== */
+        /* ===== HERO ===== */
         .hero {
-            position: relative;
-            margin: 16px 16px 28px;
-            border-radius: 28px;
-            overflow: hidden;
+            position: relative; margin: 16px 16px 28px;
+            border-radius: 28px; overflow: hidden;
             background: linear-gradient(145deg, #1a0a30, #2a0a20, #0a1a3a);
-            aspect-ratio: 16/5.5;
-            min-height: 180px;
-            display: flex;
-            align-items: center;
+            aspect-ratio: 16/5.5; min-height: 180px;
+            display: flex; align-items: center;
             padding: 32px 44px;
             border: 1px solid rgba(255,255,255,0.04);
             box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: radial-gradient(ellipse at 70% 30%, rgba(229,9,20,0.12) 0%, rgba(0,180,255,0.06) 60%, transparent 80%);
             pointer-events: none;
         }
         .hero::after {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: linear-gradient(90deg, rgba(13,13,26,0.5) 0%, transparent 60%);
             pointer-events: none;
         }
         .hero-content { position: relative; z-index: 2; max-width: 55%; }
-        .hero-content .badges {
-            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
-        }
+        .hero-content .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
         .hero-content .badges span {
             font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-            color: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.2);
             background: rgba(255,255,255,0.04);
             padding: 2px 14px; border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.04);
@@ -114,11 +95,10 @@
             font-size: 3.2rem; font-weight: 900; letter-spacing: -1.5px;
             background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
             line-height: 1.05; margin-top: 4px;
         }
         .hero-content p {
-            color: rgba(255,255,255,0.25); font-size: 1rem;
+            color: rgba(255,255,255,0.3); font-size: 1rem;
             margin-top: 8px; max-width: 480px; line-height: 1.6;
         }
         .hero-content .btn-hero {
@@ -151,40 +131,39 @@
         .section-header h3 {
             font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px;
             display: flex; align-items: center; gap: 10px;
+            color: #fff;
         }
         .section-header h3 .badge {
-            font-size: 0.55rem; background: rgba(229,9,20,0.15);
+            font-size: 0.55rem; background: rgba(229,9,20,0.2);
             padding: 3px 14px; border-radius: 40px;
             color: #e50914; font-weight: 700; text-transform: uppercase;
-            -webkit-text-fill-color: #e50914;
-            border: 1px solid rgba(229,9,20,0.1);
+            border: 1px solid rgba(229,9,20,0.15);
         }
         .section-header .ver-todo {
-            color: rgba(255,255,255,0.08); font-size: 0.8rem; font-weight: 600;
+            color: rgba(255,255,255,0.2); font-size: 0.8rem; font-weight: 600;
             cursor: pointer; transition: 0.3s; background: none; border: none;
         }
-        .section-header .ver-todo:hover { color: rgba(255,255,255,0.3); }
+        .section-header .ver-todo:hover { color: rgba(255,255,255,0.5); }
 
-        /* ===== CANALES EN VIVO ===== */
+        /* ===== CANALES ===== */
         .canales-scroll {
             display: flex; gap: 16px; overflow-x: auto;
             padding: 4px 0 14px; scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
         }
         .canales-scroll::-webkit-scrollbar { height: 3px; }
         .canales-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .canal-card {
             flex: 0 0 auto; scroll-snap-align: start;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.04);
             border-radius: 20px; padding: 20px 24px;
             min-width: 160px; text-align: center;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.4s ease;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.06);
+            transition: 0.4s ease;
             backdrop-filter: blur(4px);
         }
         .canal-card:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(229,9,20,0.15);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(229,9,20,0.2);
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
@@ -192,11 +171,11 @@
             display: block; width: 60px; height: 60px;
             margin: 0 auto 8px; border-radius: 50%;
             object-fit: contain;
-            background: rgba(255,255,255,0.03);
-            padding: 4px; border: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.05);
+            padding: 4px; border: 1px solid rgba(255,255,255,0.06);
         }
-        .canal-card .nombre { font-weight: 700; font-size: 1rem; }
-        .canal-card .categoria { color: rgba(255,255,255,0.1); font-size: 0.7rem; margin-top: 2px; }
+        .canal-card .nombre { font-weight: 700; font-size: 1rem; color: #f0f0f0; }
+        .canal-card .categoria { color: rgba(255,255,255,0.2); font-size: 0.7rem; margin-top: 2px; }
         .canal-card .live-dot {
             display: inline-block; width: 8px; height: 8px;
             background: #e50914; border-radius: 50%;
@@ -220,54 +199,52 @@
             gap: 24px;
         }
         .card {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
             border-radius: 24px; overflow: hidden;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.04);
             transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
             backdrop-filter: blur(4px);
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
         .card:hover {
             transform: translateY(-12px) scale(1.02);
-            border-color: rgba(229,9,20,0.1);
+            border-color: rgba(229,9,20,0.15);
             box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
         .card img {
             width: 100%; aspect-ratio: 2/3; object-fit: cover;
             display: block; transition: 0.4s ease;
-            image-rendering: auto;
         }
         .card:hover img { transform: scale(1.04); }
         .card .info { padding: 16px 16px 18px; }
         .card .info h4 {
             font-size: 1rem; font-weight: 700;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            color: #f0f0f0; letter-spacing: -0.2px;
+            color: #f0f0f0;
         }
         .card .info p {
             color: #f5c518; font-size: 0.8rem;
             margin-top: 6px; display: flex; align-items: center; gap: 10px;
         }
-        .card .info .year { color: rgba(255,255,255,0.1); font-size: 0.7rem; }
-        .card .info .idioma-icon {
-            color: #00ff88; font-size: 0.65rem; margin-left: auto; opacity: 0.4;
-        }
+        .card .info .year { color: rgba(255,255,255,0.15); font-size: 0.7rem; }
+        .card .info .idioma-icon { color: #00ff88; font-size: 0.65rem; margin-left: auto; opacity: 0.5; }
 
         /* ===== BOTÓN CARGAR MÁS ===== */
         .btn-cargar-mas {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.08);
-            padding: 14px; border-radius: 60px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.15);
+            padding: 14px;
+            border-radius: 60px;
             font-weight: 600; font-size: 0.9rem;
             cursor: pointer; transition: 0.3s;
             width: 100%; max-width: 320px;
             margin: 16px auto 0; display: block;
         }
-        .btn-cargar-mas:hover { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.2); }
+        .btn-cargar-mas:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
         .btn-cargar-mas:disabled { opacity: 0.2; cursor: not-allowed; }
 
-        /* ===== REPRODUCTOR MEJORADO ===== */
+        /* ===== REPRODUCTOR ===== */
         .reproductor {
             display: none;
             margin: 20px 16px 10px;
@@ -275,7 +252,7 @@
             backdrop-filter: blur(40px);
             border-radius: 28px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
             box-shadow: 0 30px 80px rgba(0,0,0,0.9);
         }
         .reproductor.active { display: block; animation: fadeSlide 0.5s ease; }
@@ -287,7 +264,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 24px; background: rgba(0,0,0,0.3);
             flex-wrap: wrap; gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         .player-header .btn-back {
             background: none; border: none;
@@ -300,21 +277,21 @@
             display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
         }
         .player-controls select {
-            background: rgba(255,255,255,0.04);
-            color: #fff; border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.06);
+            color: #fff; border: 1px solid rgba(255,255,255,0.08);
             padding: 6px 16px; border-radius: 40px;
             font-size: 0.75rem; cursor: pointer; outline: none;
             transition: 0.3s;
         }
-        .player-controls select:hover { background: rgba(255,255,255,0.06); }
+        .player-controls select:hover { background: rgba(255,255,255,0.08); }
         .player-controls button {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
             color: rgba(255,255,255,0.3);
             padding: 6px 16px; border-radius: 40px;
             font-size: 0.75rem; cursor: pointer; transition: 0.3s;
         }
-        .player-controls button:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        .player-controls button:hover { background: rgba(255,255,255,0.08); color: #fff; }
         .player-video {
             width: 100%; height: 75vh; min-height: 420px;
             background: #000; position: relative;
@@ -324,16 +301,16 @@
         .player-video .cargando {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            color: rgba(255,255,255,0.06);
-            background: rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.6);
             padding: 24px 36px; border-radius: 60px;
             text-align: center; backdrop-filter: blur(30px);
-            font-size: 1rem; border: 1px solid rgba(255,255,255,0.02);
+            font-size: 1rem; border: 1px solid rgba(255,255,255,0.03);
             pointer-events: none;
         }
         .player-video .cargando .spinner {
             display: inline-block; width: 34px; height: 34px;
-            border: 3px solid rgba(255,255,255,0.04);
+            border: 3px solid rgba(255,255,255,0.05);
             border-top-color: #e50914;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -342,11 +319,11 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .player-footer {
             padding: 18px 24px; background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.03);
         }
-        .player-footer h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.3px; }
-        .player-footer p { color: rgba(255,255,255,0.15); font-size: 0.9rem; margin-top: 6px; line-height: 1.5; }
-        .player-footer .info-extra { color: rgba(0,255,136,0.15); font-size: 0.75rem; margin-top: 8px; }
+        .player-footer h3 { font-size: 1.3rem; font-weight: 800; color: #f0f0f0; }
+        .player-footer p { color: rgba(255,255,255,0.2); font-size: 0.9rem; margin-top: 6px; line-height: 1.5; }
+        .player-footer .info-extra { color: rgba(0,255,136,0.2); font-size: 0.75rem; margin-top: 8px; }
 
         /* ===== EPISODIOS DEBAJO ===== */
         .episodios-wrapper {
@@ -356,21 +333,21 @@
         .episodios-wrapper.active { display: block; }
         .episodios-wrapper .titulo {
             font-size: 0.75rem; font-weight: 700;
-            color: rgba(255,255,255,0.1); text-transform: uppercase;
+            color: rgba(255,255,255,0.15); text-transform: uppercase;
             letter-spacing: 1.5px; margin-bottom: 10px;
         }
         .episodios-wrapper .temporadas {
             display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px;
         }
         .episodios-wrapper .temp-btn {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.25);
             padding: 6px 18px; border-radius: 40px;
             font-size: 0.75rem; font-weight: 600;
             cursor: pointer; transition: 0.3s;
         }
-        .episodios-wrapper .temp-btn:hover { background: rgba(255,255,255,0.04); color: #fff; }
+        .episodios-wrapper .temp-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
         .episodios-wrapper .temp-btn.active {
             background: rgba(229,9,20,0.15);
             border-color: rgba(229,9,20,0.2); color: #fff;
@@ -378,29 +355,28 @@
         .episodios-wrapper .ep-scroll {
             display: flex; gap: 12px; overflow-x: auto;
             padding-bottom: 10px; scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
         }
         .episodios-wrapper .ep-scroll::-webkit-scrollbar { height: 3px; }
         .episodios-wrapper .ep-scroll::-webkit-scrollbar-thumb { background: #e50914; border-radius: 10px; }
         .episodios-wrapper .ep-mini {
             flex: 0 0 auto; scroll-snap-align: start;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.04);
             border-radius: 16px; padding: 14px 18px;
             text-align: center; cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s ease; min-width: 80px;
         }
         .episodios-wrapper .ep-mini:hover {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.06);
             border-color: rgba(229,9,20,0.1); transform: scale(1.04);
         }
         .episodios-wrapper .ep-mini.active-ep {
-            background: rgba(229,9,20,0.06);
+            background: rgba(229,9,20,0.08);
             border-color: rgba(229,9,20,0.15);
         }
         .episodios-wrapper .ep-mini .num { font-size: 1.2rem; font-weight: 800; color: #e50914; }
         .episodios-wrapper .ep-mini .title {
-            font-size: 0.5rem; color: rgba(255,255,255,0.12);
+            font-size: 0.5rem; color: rgba(255,255,255,0.15);
             margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             max-width: 70px;
         }
@@ -416,14 +392,14 @@
         }
         .bottom-nav .nav-item {
             background: none; border: none;
-            color: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.1);
             font-size: 0.65rem; font-weight: 600;
             cursor: pointer; display: flex; flex-direction: column;
             align-items: center; gap: 2px; padding: 4px 12px;
             transition: 0.3s;
         }
         .bottom-nav .nav-item .icon { font-size: 1.6rem; line-height: 1; }
-        .bottom-nav .nav-item:hover { color: rgba(255,255,255,0.2); }
+        .bottom-nav .nav-item:hover { color: rgba(255,255,255,0.3); }
         .bottom-nav .nav-item.active { color: #e50914; }
 
         /* ===== RESPONSIVE ===== */
@@ -441,8 +417,6 @@
             .player-header { padding: 10px 16px; }
             .player-footer { padding: 12px 16px; }
             .section-header h3 { font-size: 1.3rem; }
-            .search-input-temp { width: 130px; font-size: 0.85rem; }
-            .search-input-temp:focus { width: 160px; }
         }
         @media (max-width: 480px) {
             .grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
@@ -572,7 +546,7 @@
         };
 
         // ================================================================
-        // CANALES TV CON LOGOS REALES
+        // CANALES TV CON LOGOS
         // ================================================================
         const CANALES_TV = [
             { nombre: 'CNN Internacional', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN_logo.svg/1200px-CNN_logo.svg.png', stream: 'https://cdn-1.live.hoola.tv/cnn-intl/playlist.m3u8', categoria: 'Noticias' },
@@ -588,7 +562,7 @@
         ];
 
         // ================================================================
-        // DOM REFERENCIAS
+        // DOM
         // ================================================================
         const grid = document.getElementById('grid');
         const tituloSeccion = document.getElementById('tituloSeccion');
@@ -622,9 +596,6 @@
         const temporadasContainer = document.getElementById('temporadasContainer');
         const episodiosScroll = document.getElementById('episodiosScroll');
 
-        // ================================================================
-        // ESTADO GLOBAL
-        // ================================================================
         let allItems = [];
         let currentPage = 1;
         let currentTipo = 'movie';
@@ -642,7 +613,7 @@
         const MAX_PAGES = 50;
 
         // ================================================================
-        // FUNCIONES API
+        // API
         // ================================================================
         async function fetchApi(endpoint, extra = '') {
             let url = `https://api.themoviedb.org/3/${endpoint}?api_key=${API_KEY}&language=es-MX`;
@@ -784,7 +755,7 @@
         // ================================================================
         function renderGrid(lista) {
             if (!lista || lista.length === 0) {
-                grid.innerHTML = `<p style="color:rgba(255,255,255,0.05);text-align:center;padding:40px;">No hay resultados.</p>`;
+                grid.innerHTML = `<p style="color:rgba(255,255,255,0.08);text-align:center;padding:40px;">No hay resultados.</p>`;
                 return;
             }
             grid.innerHTML = lista.map(item => {
@@ -860,7 +831,7 @@
         }
 
         // ================================================================
-        // BUSCADOR AUTO FUNCIONAL (sin proxies)
+        // BUSCADOR AUTO FUNCIONAL
         // ================================================================
         function buscarFuenteAuto(id, tipo = 'movie', season = null, episode = null) {
             idxFuenteActual = 0;
@@ -884,7 +855,6 @@
 
             if (timeoutAuto) clearTimeout(timeoutAuto);
 
-            // Si el iframe carga, asumimos que funciona
             iframe.onload = () => {
                 clearTimeout(timeoutAuto);
                 loadingVideo.style.display = 'none';
@@ -893,7 +863,6 @@
                 iframe.onerror = null;
             };
 
-            // Si hay error, pasar al siguiente
             iframe.onerror = () => {
                 clearTimeout(timeoutAuto);
                 idxFuenteActual++;
@@ -901,7 +870,6 @@
                 iframe.onerror = null;
             };
 
-            // Timeout de seguridad: si no carga en 6s, pasar al siguiente
             timeoutAuto = setTimeout(() => {
                 iframe.onload = null;
                 iframe.onerror = null;
@@ -1003,7 +971,7 @@
         }
 
         // ================================================================
-        // REPRODUCIR EPISODIO (CON EPISODIOS DEBAJO)
+        // REPRODUCIR EPISODIO
         // ================================================================
         function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
             currentSerieId = serieId;
@@ -1035,7 +1003,6 @@
                 loadingVideo.style.display = 'none';
             }
 
-            // Mostrar episodios debajo
             mostrarEpisodiosDebajo(serieId, season, episode);
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -1128,7 +1095,6 @@
             fuenteInfo.textContent = '';
             episodiosWrapper.classList.remove('active');
             if (timeoutAuto) clearTimeout(timeoutAuto);
-            // Volver al grid
             if (currentSerieId && currentSeason !== null) {
                 cargarTemporadas(currentSerieId, currentSerieData.titulo, currentSerieData.sinopsis);
             } else {
