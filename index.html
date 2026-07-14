@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎬 Cine Premium - Animes</title>
+    <title>🎬 Cine Premium - Buscador Inteligente</title>
     <style>
         * {
             margin: 0;
@@ -255,8 +255,6 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(229,9,20,0.5);
         }
-
-        /* EPISODIOS */
         .episodios-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -290,14 +288,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .episodio-card .sinopsis {
-            font-size: 0.6rem;
-            color: #555;
-            margin-top: 4px;
-            display: none;
-        }
-
-        /* TEMPORADAS */
         .temporadas {
             display: flex;
             gap: 10px;
@@ -323,8 +313,6 @@
             border-color: #e50914;
             color: #fff;
         }
-
-        /* REPRODUCTOR */
         .reproductor {
             display: none;
             margin-top: 25px;
@@ -435,6 +423,9 @@
             padding: 12px 24px;
             border-radius: 40px;
             backdrop-filter: blur(10px);
+            text-align: center;
+            flex-direction: column;
+            max-width: 90%;
         }
         .player-video .loading .spinner {
             width: 24px;
@@ -468,7 +459,6 @@
             font-size: 0.85rem;
             margin-top: 4px;
         }
-
         .error-msg {
             color: #e50914;
             text-align: center;
@@ -477,6 +467,15 @@
             border-radius: 12px;
             border: 1px solid rgba(229,9,20,0.2);
             margin: 10px 0;
+        }
+        .inteligente-badge {
+            background: #2a2a2a;
+            color: #0f0;
+            font-size: 0.6rem;
+            padding: 2px 10px;
+            border-radius: 30px;
+            margin-left: 8px;
+            border: 1px solid #0f0;
         }
 
         @media (max-width: 480px) {
@@ -506,7 +505,7 @@
 <body>
 
     <div class="header">
-        <div class="logo">🎬 Cine Premium <span>| Anime</span></div>
+        <div class="logo">🎬 Cine Premium <span>| Buscador IA</span></div>
         <div class="search-box">
             <span class="icon">🔍</span>
             <input id="buscador" type="text" placeholder="Buscar anime...">
@@ -540,6 +539,7 @@
     <div class="section-title" id="tituloSeccion">
         📌 Series Populares <span class="badge">Top</span>
         <button class="btn-back" id="btnVolverSeries" style="display:none;">← Volver</button>
+        <span class="inteligente-badge">🤖 Buscador Inteligente</span>
     </div>
     <div class="grid-recom" id="gridRecom"></div>
     <button class="btn-cargar" id="cargarMasRecom">Cargar más</button>
@@ -564,6 +564,7 @@
                 <span style="color:#e50914; font-weight:600; font-size:0.8rem;">HD</span>
                 <button class="highlight" id="btnFullscreen">⛶ Pantalla completa</button>
                 <select id="sourceSelector" class="source-selector">
+                    <option value="inteligente">🤖 Auto</option>
                     <option value="vidsrc.in">vidsrc.in</option>
                     <option value="embed.su">embed.su</option>
                     <option value="vidsrc.xyz">vidsrc.xyz</option>
@@ -578,7 +579,7 @@
         <div class="player-video" id="playerVideo">
             <div class="loading" id="loadingVideo">
                 <div class="spinner"></div>
-                Cargando video...
+                <span id="loadingText">Cargando video...</span>
             </div>
             <iframe id="iframeVideo" src="" allowfullscreen allow="encrypted-media; fullscreen"></iframe>
         </div>
@@ -587,6 +588,7 @@
                 <h3 id="peliTitulo">Título</h3>
                 <p id="peliSinopsis">Sinopsis aquí...</p>
                 <div class="episodio-info" id="episodioInfo"></div>
+                <div id="fuenteUsada" style="color:#0f0; font-size:0.7rem; margin-top:4px;"></div>
             </div>
         </div>
     </div>
@@ -597,6 +599,15 @@
         // ================================================================
         const API_KEY = 'bda7a5fa2507ebcef3fcebd2287d72c9';
         const BASE_IMG = 'https://image.tmdb.org/t/p/w300';
+        const DOMINIOS_INTELIGENTES = [
+            'vidsrc.in',
+            'embed.su',
+            'vidsrc.xyz',
+            'vidsrc.cc',
+            'vidsrc.vip',
+            'vidsrc.pm',
+            'vidsrc.io'
+        ];
 
         // DOM
         const gridRecom = document.getElementById('gridRecom');
@@ -605,10 +616,12 @@
         const peliTitulo = document.getElementById('peliTitulo');
         const peliSinopsis = document.getElementById('peliSinopsis');
         const episodioInfo = document.getElementById('episodioInfo');
+        const fuenteUsada = document.getElementById('fuenteUsada');
         const buscador = document.getElementById('buscador');
         const sourceSelector = document.getElementById('sourceSelector');
         const tituloSeccion = document.getElementById('tituloSeccion');
         const loadingVideo = document.getElementById('loadingVideo');
+        const loadingText = document.getElementById('loadingText');
         const btnRecargar = document.getElementById('btnRecargar');
         const btnFullscreen = document.getElementById('btnFullscreen');
         const contenedorEpisodios = document.getElementById('contenedorEpisodios');
@@ -629,6 +642,7 @@
         let currentEpisode = null;
         let currentSerieData = null;
         let episodiosCargados = [];
+        let timerInteligente = null;
         const MAX_PAGES = 5;
 
         // ================================================================
@@ -643,12 +657,49 @@
         }
 
         // ================================================================
-        //  BUSCADOR (series/animes)
+        //  BUSCADOR INTELIGENTE DE FUENTES (EL CEREBRO)
+        // ================================================================
+        async function buscarFuenteInteligente(serieId, season, episode) {
+            const baseUrl = (dominio) => `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
+            loadingText.textContent = `🔍 Buscando enlace disponible en ${DOMINIOS_INTELIGENTES.length} fuentes...`;
+
+            for (let i = 0; i < DOMINIOS_INTELIGENTES.length; i++) {
+                const dominio = DOMINIOS_INTELIGENTES[i];
+                const url = baseUrl(dominio);
+                loadingText.textContent = `🔍 Probando ${i+1}/${DOMINIOS_INTELIGENTES.length}: ${dominio}...`;
+
+                try {
+                    // Usar un proxy para verificar si la página existe (evita cargar iframes fallidos)
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(5000) });
+                    const data = await res.json();
+
+                    if (data.contents) {
+                        const html = data.contents.toLowerCase();
+                        // Si no contiene "404", "error", "not found" y tiene contenido relevante
+                        if (!html.includes('404') && !html.includes('not found') && !html.includes('error') && html.length > 100) {
+                            loadingText.textContent = `✅ Fuente encontrada: ${dominio}`;
+                            return dominio;
+                        }
+                    }
+                } catch (e) {
+                    // Si falla esta fuente, seguir con la siguiente
+                    console.warn(`Fuente ${dominio} falló:`, e.message);
+                    continue;
+                }
+            }
+
+            loadingText.textContent = '❌ No se encontró ninguna fuente disponible.';
+            return null;
+        }
+
+        // ================================================================
+        //  BUSCADOR DE SERIES (TMDb)
         // ================================================================
         async function buscarSeries(query) {
             if (!query.trim()) {
                 modoBusqueda = false;
-                tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
+                tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span> <span class="inteligente-badge">🤖 Buscador Inteligente</span>';
                 document.getElementById('cargarMasRecom').style.display = 'block';
                 contenedorEpisodios.style.display = 'none';
                 renderGrid(allMovies);
@@ -721,7 +772,7 @@
         }
 
         // ================================================================
-        //  CARGAR TEMPORADAS Y EPISODIOS (MEJORADO)
+        //  CARGAR TEMPORADAS Y EPISODIOS
         // ================================================================
         async function cargarTemporadas(serieId, titulo, sinopsis) {
             currentMediaId = serieId;
@@ -737,8 +788,7 @@
                 serieTitulo.textContent = data.name;
                 serieAno.textContent = data.first_air_date ? data.first_air_date.split('-')[0] : '';
 
-                // Mostrar temporadas (ordenadas)
-                const temporadas = (data.seasons || []).filter(t => t.season_number > 0); // Ignorar especiales
+                const temporadas = (data.seasons || []).filter(t => t.season_number > 0);
                 temporadas.sort((a, b) => a.season_number - b.season_number);
 
                 if (temporadas.length === 0) {
@@ -753,26 +803,18 @@
                     </button>
                 `).join('');
 
-                // Cargar la primera temporada (o la que tenga más episodios)
                 let mejorTemp = temporadas[0];
                 for (const t of temporadas) {
-                    if (t.episode_count > mejorTemp.episode_count) {
-                        mejorTemp = t;
-                    }
+                    if (t.episode_count > mejorTemp.episode_count) mejorTemp = t;
                 }
-                // Seleccionar la que tenga más episodios por defecto
                 const tempInicial = mejorTemp.season_number;
                 currentSeason = tempInicial;
                 document.querySelectorAll('.temp-btn').forEach(btn => {
-                    if (parseInt(btn.dataset.season) === tempInicial) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
+                    if (parseInt(btn.dataset.season) === tempInicial) btn.classList.add('active');
+                    else btn.classList.remove('active');
                 });
                 cargarEpisodios(serieId, tempInicial);
 
-                // Eventos de temporadas
                 document.querySelectorAll('.temp-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
                         document.querySelectorAll('.temp-btn').forEach(b => b.classList.remove('active'));
@@ -807,13 +849,17 @@
                     </div>
                 `).join('');
 
-                // Evento de clic en episodio
                 document.querySelectorAll('.episodio-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const epNum = parseInt(card.dataset.episodio);
                         const epTitulo = card.dataset.titulo;
                         const epSinopsis = card.dataset.sinopsis;
-                        reproducirEpisodio(serieId, season, epNum, epTitulo, epSinopsis);
+                        // Usar el modo inteligente por defecto
+                        if (sourceSelector.value === 'inteligente') {
+                            reproducirEpisodioInteligente(serieId, season, epNum, epTitulo, epSinopsis);
+                        } else {
+                            reproducirEpisodioManual(serieId, season, epNum, epTitulo, epSinopsis, sourceSelector.value);
+                        }
                     });
                 });
 
@@ -824,37 +870,64 @@
         }
 
         // ================================================================
-        //  REPRODUCIR EPISODIO (CON MANEJO DE ERRORES)
+        //  REPRODUCIR EPISODIO (MODO INTELIGENTE)
         // ================================================================
-        function reproducirEpisodio(serieId, season, episode, titulo, sinopsis) {
+        async function reproducirEpisodioInteligente(serieId, season, episode, titulo, sinopsis) {
             currentMediaId = serieId;
             currentSeason = season;
             currentEpisode = episode;
             currentMediaType = 'tv';
+            fuenteUsada.textContent = '';
 
-            const domain = sourceSelector.value;
-            const videoSrc = `https://${domain}/embed/tv/${serieId}/${season}/${episode}`;
-            iframe.src = videoSrc;
+            const nombreCompleto = `${currentSerieData.titulo} - T${season}E${episode}: ${titulo}`;
+            peliTitulo.textContent = nombreCompleto;
+            peliSinopsis.textContent = sinopsis || currentSerieData.sinopsis || 'Sin sinopsis disponible.';
+            episodioInfo.textContent = `Temporada ${season} · Episodio ${episode}`;
+            reproductor.classList.add('active');
+            loadingVideo.style.display = 'flex';
+            loadingText.textContent = '🔍 Buscando enlace disponible en 7 fuentes...';
+            iframe.src = '';
+
+            // 1. Buscar fuente inteligentemente
+            const dominioEncontrado = await buscarFuenteInteligente(serieId, season, episode);
+
+            if (dominioEncontrado) {
+                const url = `https://${dominioEncontrado}/embed/tv/${serieId}/${season}/${episode}`;
+                iframe.src = url;
+                fuenteUsada.textContent = `✅ Fuente automática: ${dominioEncontrado}`;
+                loadingText.textContent = '⏳ Cargando video...';
+                setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000);
+            } else {
+                loadingVideo.style.display = 'none';
+                fuenteUsada.textContent = '❌ No se encontró ninguna fuente.';
+                peliSinopsis.textContent = '⚠️ Este episodio no está disponible en ninguna de las 7 fuentes. Prueba con otro episodio o cambia manualmente la fuente en el selector.';
+                // Si el usuario seleccionó "Auto" y falla, sugerir cambiar manualmente
+            }
+
+            reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ================================================================
+        //  REPRODUCIR EPISODIO (MODO MANUAL)
+        // ================================================================
+        function reproducirEpisodioManual(serieId, season, episode, titulo, sinopsis, dominio) {
+            currentMediaId = serieId;
+            currentSeason = season;
+            currentEpisode = episode;
+            currentMediaType = 'tv';
+            fuenteUsada.textContent = `🔧 Fuente manual: ${dominio}`;
 
             const nombreCompleto = `${currentSerieData.titulo} - T${season}E${episode}: ${titulo}`;
             peliTitulo.textContent = nombreCompleto;
             peliSinopsis.textContent = sinopsis || currentSerieData.sinopsis || 'Sin sinopsis disponible.';
             episodioInfo.textContent = `Temporada ${season} · Episodio ${episode}`;
 
+            const url = `https://${dominio}/embed/tv/${serieId}/${season}/${episode}`;
+            iframe.src = url;
             reproductor.classList.add('active');
             loadingVideo.style.display = 'flex';
-
-            // Si el iframe no carga en 10 segundos, mostrar mensaje de error
-            setTimeout(() => {
-                loadingVideo.style.display = 'none';
-                // Verificar si el iframe cargó algo
-                try {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-                    if (!iframeDoc || iframeDoc.body?.innerHTML?.includes('404') || iframeDoc.body?.innerHTML?.includes('error')) {
-                        peliSinopsis.textContent = '⚠️ No se pudo cargar el video. Prueba con otra fuente.';
-                    }
-                } catch (e) { /* ignorar errores de cross-origin */ }
-            }, 10000);
+            loadingText.textContent = '⏳ Cargando video...';
+            setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000);
 
             reproductor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -864,26 +937,27 @@
         // ================================================================
         function recargarReproductor() {
             if (!currentMediaId) return;
-            const domain = sourceSelector.value;
-            let videoSrc;
-            if (currentMediaType === 'tv' && currentEpisode) {
-                videoSrc = `https://${domain}/embed/tv/${currentMediaId}/${currentSeason}/${currentEpisode}`;
+            const seleccion = sourceSelector.value;
+
+            if (seleccion === 'inteligente') {
+                if (currentEpisode) {
+                    reproducirEpisodioInteligente(currentMediaId, currentSeason, currentEpisode, peliTitulo.textContent.split(' - ')[1] || 'Episodio', '');
+                }
             } else {
-                videoSrc = `https://${domain}/embed/${currentMediaType}/${currentMediaId}`;
+                if (currentEpisode) {
+                    reproducirEpisodioManual(currentMediaId, currentSeason, currentEpisode, peliTitulo.textContent.split(' - ')[1] || 'Episodio', '', seleccion);
+                } else {
+                    // Si es película (no implementado aquí pero por si acaso)
+                    iframe.src = `https://${seleccion}/embed/movie/${currentMediaId}`;
+                }
             }
-            iframe.src = '';
-            loadingVideo.style.display = 'flex';
-            setTimeout(() => {
-                iframe.src = videoSrc;
-                setTimeout(() => { loadingVideo.style.display = 'none'; }, 5000);
-            }, 300);
         }
 
-        // Eventos del reproductor
         document.getElementById('btnCerrarReproductor').addEventListener('click', () => {
             reproductor.classList.remove('active');
             iframe.src = '';
             loadingVideo.style.display = 'none';
+            fuenteUsada.textContent = '';
         });
 
         btnRecargar.addEventListener('click', recargarReproductor);
@@ -903,7 +977,7 @@
             gridRecom.style.display = 'grid';
             document.getElementById('cargarMasRecom').style.display = 'block';
             btnVolverSeries.style.display = 'none';
-            tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
+            tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span> <span class="inteligente-badge">🤖 Buscador Inteligente</span>';
             loadPopular(currentPageRecom);
         });
 
@@ -952,7 +1026,7 @@
                 if (modoBusqueda) {
                     buscador.value = '';
                     modoBusqueda = false;
-                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
+                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span> <span class="inteligente-badge">🤖 Buscador Inteligente</span>';
                     document.getElementById('cargarMasRecom').style.display = 'block';
                     renderGrid(allMovies);
                 }
@@ -972,7 +1046,7 @@
                 } else if (tab.dataset.tab === 'tv') {
                     buscador.value = '';
                     modoBusqueda = false;
-                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
+                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span> <span class="inteligente-badge">🤖 Buscador Inteligente</span>';
                     document.getElementById('cargarMasRecom').style.display = 'block';
                     contenedorEpisodios.style.display = 'none';
                     gridRecom.style.display = 'grid';
@@ -981,7 +1055,7 @@
                 } else if (tab.dataset.tab === 'all') {
                     buscador.value = '';
                     modoBusqueda = false;
-                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span>';
+                    tituloSeccion.innerHTML = '📌 Series Populares <span class="badge">Top</span> <span class="inteligente-badge">🤖 Buscador Inteligente</span>';
                     document.getElementById('cargarMasRecom').style.display = 'block';
                     contenedorEpisodios.style.display = 'none';
                     gridRecom.style.display = 'grid';
